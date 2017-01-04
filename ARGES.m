@@ -26,7 +26,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 	
-	(*Begin["Private`"];*)
+	Begin["Private`"];
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -302,7 +302,7 @@ BeginPackage["ARGES`"];
 			
 			C2[F, igauge_][i1_, i2_] -> If[i1 == i2, C2F[i1, igauge], 0],
 			C2F[ferm_, igauge_] :> Join[
-				{{C2[WeylFermionList[[ferm, 1]], ListGauge[[igauge, 1]]],1}},
+				{{C2[WeylFermionList[[ferm, 1]], ListGauge[[igauge, 1]]],KroneckerDelta[#2,#3]&, 1, WeylFermionList[[ferm,2]], WeylFermionList[[ferm,2]]}},
 				Function[{x}, If[ListGauge[[x, 3]] === 1, {1&, 1, 1, 1}, {KroneckerDelta[#2, #3]&, 1, WeylFermionList[[ferm, 3, x]], WeylFermionList[[ferm, 3, x]]}]]/@Range[NumberOfSubgroups]
 			]
 			
@@ -523,5 +523,5 @@ BeginPackage["ARGES`"];
 		Yukawa::ContractionError = "Number of gauge contractions does not match number of subgroups";
 		Yukawa::UnknownParticle = "Undefined particle in Yukawa sector";
 		
-	(*End[];*)
+	End[];
 EndPackage[];
