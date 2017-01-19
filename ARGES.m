@@ -30,7 +30,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 	
-	(*Begin["Private`"];*)
+	Begin["Private`"];
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -341,7 +341,7 @@ BeginPackage["ARGES`"];
 									subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] + 2)(ListGauge[[i,3]] - 1)/ListGauge[[i,3]]];
 									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> FMultiplicity[f]/WeylFermionList[[f,3,i]] (1/2 ListGauge[[i,3]] + 1)];
 								];
-								(* Asymmetric Representation *)
+								(* Anitsymmetric Representation *)
 								If[WeylFermionList[[f,3,i]] == 1/2 ListGauge[[i,3]] (ListGauge[[i,3]] - 1),
 									subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] - 2)(ListGauge[[i,3]] + 1)/ListGauge[[i,3]]];
 									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> FMultiplicity[f]/WeylFermionList[[f,3,i]] (1/2 ListGauge[[i,3]] - 1)];
@@ -407,7 +407,7 @@ BeginPackage["ARGES`"];
 									subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] + 2)(ListGauge[[i,3]] - 1)/ListGauge[[i,3]]];
 									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> SMultiplicity[s]/RealScalarList[[s,3,i]] (1/2 ListGauge[[i,3]] + 1)];
 								];
-								(* Asymmetric Representation *)
+								(* Antisymmetric Representation *)
 								If[RealScalarList[[s,3,i]] == 1/2 ListGauge[[i,3]] (ListGauge[[i,3]] - 1),
 									subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] - 2)(ListGauge[[i,3]] + 1)/ListGauge[[i,3]]];
 									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> SMultiplicity[s]/RealScalarList[[s,3,i]] (1/2 ListGauge[[i,3]] - 1)];
@@ -657,39 +657,27 @@ BeginPackage["ARGES`"];
 			(** At least one is gauge singlet *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(ListGauge[[gaug,3]] =!= 1 && (RealScalarList[[a[[1]],3,gaug]] == 1 || RealScalarList[[b[[1]],3,gaug]] == 1 || RealScalarList[[c[[1]],3,gaug]] == 1 || RealScalarList[[d[[1]],3,gaug]] == 1)),
 			(** SU(N) -- all in fundamental representation *)
-			(*\[CapitalLambda][gaug_][a_, b_, c_, d_] :> If[
-				((MatchQ[RealScalarList[[a[[1]], 1]], Re[_]] && MatchQ[RealScalarList[[b[[1]], 1]], Re[_]]) || 
-				(MatchQ[RealScalarList[[a[[1]], 1]], Im[_]] && MatchQ[RealScalarList[[b[[1]], 1]], Im[_]])) &&
-				((MatchQ[RealScalarList[[d[[1]], 1]], Re[_]] && MatchQ[RealScalarList[[c[[1]], 1]], Re[_]]) || 
-				(MatchQ[RealScalarList[[d[[1]], 1]], Im[_]] && MatchQ[RealScalarList[[c[[1]], 1]], Im[_]]))
-				,
-				1/2(TensorDelta[a,d] TensorDelta[b,c] - 1/ListGauge[[gaug,3]] TensorDelta[a,c] TensorDelta[b,d]),
-				0
-			]/;(
-				ListGauge[[gaug,2]] === SU && 
-				RealScalarList[[a[[1]], 3, gaug]] == ListGauge[[gaug,3]] && 
-				RealScalarList[[b[[1]], 3, gaug]] == ListGauge[[gaug,3]] && 
-				RealScalarList[[c[[1]], 3, gaug]] == ListGauge[[gaug,3]] && 
-				RealScalarList[[d[[1]], 3, gaug]] == ListGauge[[gaug,3]]
-			),*)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (
 				If[
-					(a[[1]] == c[[1]] && b[[1]] == d[[1]]),
-					1/4(TensorDelta[a[[;;2]],d[[;;2]]] TensorDelta[b[[;;2]],c[[;;2]]] + TensorDelta[a[[;;2]],b[[;;2]]] TensorDelta[c[[;;2]],d[[;;2]]] - 2/ListGauge[[gaug,3]] TensorDelta[a[[;;2]],c[[;;2]]] TensorDelta[b[[;;2]],d[[;;2]]]),
+					(*RealScalarList[[a[[1]], 1]][[0]] === RealScalarList[[c[[1]], 1]][[0]] && RealScalarList[[b[[1]], 1]][[0]] === RealScalarList[[d[[1]], 1]][[0]]*)
+					(a[[1]] == c[[1]] && b[[1]] == d[[1]])
+					,
+					1/4(ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[d[[1]],1]]] ComplexDelta[RealScalarList[[b[[1]],1]], RealScalarList[[c[[1]],1]]] TensorDelta[a[[2;;]],d[[2;;]]] TensorDelta[b[[2;;]],c[[2;;]]]  - ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[b[[1]],1]]] ComplexDelta[RealScalarList[[d[[1]],1]], RealScalarList[[c[[1]],1]]] TensorDelta[a[[2;;]],b[[2;;]]] TensorDelta[c[[2;;]],d[[2;;]]])
+					,
 					0
 				] + If[
-						(RealScalarList[[a[[1]], 1]][[1]] === RealScalarList[[c[[1]], 1]][[1]] && RealScalarList[[b[[1]], 1]][[1]] === RealScalarList[[d[[1]], 1]][[1]] &&
+						(RealScalarList[[a[[1]], 1]][[1]] === RealScalarList[[c[[1]], 1]][[1]] &&  RealScalarList[[b[[1]], 1]][[1]] === RealScalarList[[d[[1]], 1]][[1]] && 
 						RealScalarList[[a[[1]], 1]][[0]] =!= RealScalarList[[c[[1]], 1]][[0]] &&  RealScalarList[[b[[1]], 1]][[0]] =!= RealScalarList[[d[[1]], 1]][[0]] && 
-						RealScalarList[[a[[1]], 1]][[0]] === RealScalarList[[b[[1]], 1]][[0]] && RealScalarList[[c[[1]], 1]][[0]] === RealScalarList[[d[[1]], 1]][[0]] && 
-						RealScalarList[[a[[1]], 1]][[0]] === RealScalarList[[d[[1]], 1]][[0]] && RealScalarList[[c[[1]], 1]][[0]] === RealScalarList[[b[[1]], 1]][[0]]),
-						-1/4(ComplexDelta[RealScalarList[[a[[1]], 1]], RealScalarList[[d[[1]], 1]]] ComplexDelta[RealScalarList[[b[[1]], 1]], RealScalarList[[c[[1]], 1]]] TensorDelta[a[[;;2]],d[[;;2]]] TensorDelta[b[[;;2]],c[[;;2]]] - ComplexDelta[RealScalarList[[a[[1]], 1]], RealScalarList[[b[[1]], 1]]] ComplexDelta[RealScalarList[[c[[1]], 1]], RealScalarList[[d[[1]], 1]]] TensorDelta[a[[;;2]],b[[;;2]]] TensorDelta[c[[;;2]],d[[;;2]]]),
+						RealScalarList[[a[[1]], 1]][[0]] === RealScalarList[[b[[1]], 1]][[0]] && RealScalarList[[c[[1]], 1]][[0]] === RealScalarList[[d[[1]], 1]][[0]]),
+						1/4(ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[d[[1]],1]]] ComplexDelta[RealScalarList[[b[[1]],1]], RealScalarList[[c[[1]],1]]] TensorDelta[a[[2;;]],d[[2;;]]] TensorDelta[b[[2;;]],c[[2;;]]] + ComplexDelta[RealScalarList[[c[[1]],1]], RealScalarList[[d[[1]],1]]] ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[b[[1]],1]]] TensorDelta[a[[2;;]],b[[2;;]]] TensorDelta[c[[2;;]],d[[2;;]]] - 2/ListGauge[[gaug,3]] TensorDelta[a[[2;;]],c[[2;;]]] TensorDelta[b[[2;;]],d[[2;;]]] ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[c[[1]],1]]] ComplexDelta[RealScalarList[[b[[1]],1]], RealScalarList[[d[[1]],1]]])
+						 ,
 						0
 					] + If[
-							(RealScalarList[[a[[1]], 1]][[1]] === RealScalarList[[c[[1]], 1]][[1]] && RealScalarList[[b[[1]], 1]][[1]] === RealScalarList[[d[[1]], 1]][[1]] &&
+							(RealScalarList[[a[[1]], 1]][[1]] === RealScalarList[[c[[1]], 1]][[1]] &&  RealScalarList[[b[[1]], 1]][[1]] === RealScalarList[[d[[1]], 1]][[1]] && 
 							RealScalarList[[a[[1]], 1]][[0]] =!= RealScalarList[[c[[1]], 1]][[0]] &&  RealScalarList[[b[[1]], 1]][[0]] =!= RealScalarList[[d[[1]], 1]][[0]] && 
-							RealScalarList[[a[[1]], 1]][[0]] === RealScalarList[[d[[1]], 1]][[0]] && RealScalarList[[b[[1]], 1]][[0]] === RealScalarList[[c[[1]], 1]][[0]] && 
-							RealScalarList[[a[[1]], 1]][[0]] === RealScalarList[[b[[1]], 1]][[0]] && RealScalarList[[d[[1]], 1]][[0]] === RealScalarList[[c[[1]], 1]][[0]]),
-							1/4(ComplexDelta[RealScalarList[[a[[1]], 1]], RealScalarList[[d[[1]], 1]]] ComplexDelta[RealScalarList[[b[[1]], 1]], RealScalarList[[c[[1]], 1]]] TensorDelta[a[[;;2]],d[[;;2]]] TensorDelta[b[[;;2]],c[[;;2]]] - ComplexDelta[RealScalarList[[a[[1]], 1]], RealScalarList[[b[[1]], 1]]] ComplexDelta[RealScalarList[[c[[1]], 1]], RealScalarList[[d[[1]], 1]]] TensorDelta[a[[;;2]],b[[;;2]]] TensorDelta[c[[;;2]],d[[;;2]]]),
+							RealScalarList[[a[[1]], 1]][[0]] === RealScalarList[[d[[1]], 1]][[0]] && RealScalarList[[b[[1]], 1]][[0]] === RealScalarList[[c[[1]], 1]][[0]]),
+							-1/4(ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[d[[1]],1]]] ComplexDelta[RealScalarList[[b[[1]],1]], RealScalarList[[c[[1]],1]]] TensorDelta[a[[2;;]],d[[2;;]]] TensorDelta[b[[2;;]],c[[2;;]]] + ComplexDelta[RealScalarList[[c[[1]],1]], RealScalarList[[d[[1]],1]]] ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[b[[1]],1]]] TensorDelta[a[[2;;]],b[[2;;]]] TensorDelta[c[[2;;]],d[[2;;]]] - 2/ListGauge[[gaug,3]] TensorDelta[a[[2;;]],c[[2;;]]] TensorDelta[b[[2;;]],d[[2;;]]] ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[c[[1]],1]]] ComplexDelta[RealScalarList[[b[[1]],1]], RealScalarList[[d[[1]],1]]])
+							,
 							0
 						]
 			)/;(
@@ -710,7 +698,16 @@ BeginPackage["ARGES`"];
 				RealScalarList[[d[[1]], 3, gaug]] == ListGauge[[gaug,3]]
 			),
 			(** U(1) *)
-			\[CapitalLambda][gaug_][a_, b_, c_, d_] :>(RealScalarList[[a[[1]],3,gaug]] RealScalarList[[b[[1]],3,gaug]] TensorDelta[a,c] TensorDelta[b,d])/;(ListGauge[[gaug, 3]] === 1),
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :>(
+				(
+					RealScalarList[[a[[1]],3,gaug]] RealScalarList[[b[[1]],3,gaug]] 
+					ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[c[[1]],1]]] ComplexDelta[RealScalarList[[b[[1]],1]], RealScalarList[[d[[1]],1]]] 
+					(If[RealScalarList[[a[[1]],1]][[0]] === RealScalarList[[c[[1]],1]][[0]] || RealScalarList[[b[[1]],1]][[0]] === RealScalarList[[d[[1]],1]][[0]], 0, 
+						If[RealScalarList[[a[[1]],1]][[0]] === RealScalarList[[b[[1]],1]][[0]], 1, -1]
+					])
+					TensorDelta[a[[2;;]],c[[2;;]]] TensorDelta[b[[2;;]],d[[2;;]]]
+				)
+			)/;(ListGauge[[gaug, 3]] === 1),
 			(** unknown gauge group*)
 			\[CapitalLambda][gaug_][a_,b_, c_, d_] :>(\[CapitalLambda][ListGauge[[gaug,1]], RealScalarList[[a[[1]],1]], RealScalarList[[b[[1]],1]], RealScalarList[[c[[1]],1]], RealScalarList[[d[[1]],1]]][a[[2;;]], b[[2;;]], c[[2;;]], d[[2;;]]])
 		};
@@ -962,5 +959,5 @@ BeginPackage["ARGES`"];
 		Quartic::UnknownParticle = "Undefined particle in scalar sector";
 		
 		Reset[];
-	(*End[];*)
+	End[];
 EndPackage[];
