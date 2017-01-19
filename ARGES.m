@@ -59,18 +59,18 @@ BeginPackage["ARGES`"];
 		
 		GetGauge[part_, gauge_] := Module[
 			{posP, posG},
-			posG = Position[ListGauge,_List?(#[[1]] == gauge &)];
+			posG = ListPosition[ListGauge,_List?(#[[1]] == gauge &)];
 			If[posG == {}, Return[0];];
 			posG = posG[[1,1]];
-			posP = Position[ComplexScalarList, part];
+			posP = ListPosition[ComplexScalarList, part];
 			If[posP != {},
-				posP = Position[RealScalarList,_List?(#[[1]] == Re[part] &)];,
-				posP = Position[RealScalarList,_List?(#[[1]] == part &)];
+				posP = ListPosition[RealScalarList,_List?(#[[1]] == Re[part] &)];,
+				posP = ListPosition[RealScalarList,_List?(#[[1]] == part &)];
 			];
 			If[posP != 0,
 				Return[RealScalarList[[posP[[1,1]], 3, posG]]];
 			];
-			posP = Position[WeylFermionList,_List?(#[[1]] == part &)];
+			posP = ListPosition[WeylFermionList,_List?(#[[1]] == part &)];
 			If[posP != 0,
 				Return[WeylFermionList[[posP[[1,1]], 3, posG]]];
 			];
@@ -108,21 +108,21 @@ BeginPackage["ARGES`"];
 				Message[Yukawa::ContractionError];
 				Return[];
 			];
-			posS  = Position[ComplexScalarList, Sa];
+			posS  = ListPosition[ComplexScalarList, Sa];
 			If[posS != {},
 				YukawaYaij[sym, Re[Sa], Fi, Fj, gauge, fak/Sqrt[2]];
 				YukawaYaij[sym, Im[Sa], Fi, Fj, gauge, I fak/Sqrt[2]];
 				Return[];
 			];
-			posS  = Position[adj/@ComplexScalarList, Sa];
+			posS  = ListPosition[adj/@ComplexScalarList, Sa];
 			If[posS != {},
 				YukawaYaij[sym, Re[Sa[[1]]], Fi, Fj, gauge, fak/Sqrt[2]];
 				YukawaYaij[sym, Im[Sa[[1]]], Fi, Fj, gauge, -I fak/Sqrt[2]];
 				Return[];
 			];
-			posS  = Position[RealScalarList,_List?(#[[1]] == Sa &)];
-			posFi = Position[WeylFermionList,_List?(#[[1]] == Fi &)];
-			posFj = Position[WeylFermionList,_List?(#[[1]] == Fj &)];
+			posS  = ListPosition[RealScalarList,_List?(#[[1]] == Sa &)];
+			posFi = ListPosition[WeylFermionList,_List?(#[[1]] == Fi &)];
+			posFj = ListPosition[WeylFermionList,_List?(#[[1]] == Fj &)];
 			If[posS == {} || posFi == {} || posFj == {},
 				Message[Yukawa::UnknownParticle];,
 				ListYukawa = Append[ListYukawa,{sym, posS[[1,1]], posFi[[1,1]], posFj[[1,1]], gauge, (fak KroneckerDelta[#2,1] KroneckerDelta[#3,1])&}];
@@ -135,21 +135,21 @@ BeginPackage["ARGES`"];
 				Message[Yukawa::ContractionError];
 				Return[];
 			];
-			posS  = Position[ComplexScalarList, Sa];
+			posS  = ListPosition[ComplexScalarList, Sa];
 			If[posS != {},
 				YukawaY[sym, Re[Sa], Fi, Fj, gauge, Evaluate[fak[#1,#2,#3]/Sqrt[2]]&];
 				YukawaY[sym, Im[Sa], Fi, Fj, gauge, Evaluate[I fak[#1,#2,#3]/Sqrt[2]]&];
 				Return[];
 			];
-			posS  = Position[adj/@ComplexScalarList, Sa];
+			posS  = ListPosition[adj/@ComplexScalarList, Sa];
 			If[posS != {},
 				YukawaY[sym, Re[Sa[[1]]], Fi, Fj, gauge, Evaluate[fak[#1,#2,#3]/Sqrt[2]]&];
 				YukawaY[sym, Im[Sa[[1]]], Fi, Fj, gauge, Evaluate[-I fak[#1,#2,#3]/Sqrt[2]]&];
 				Return[];
 			];
-			posS  = Position[RealScalarList,_List?(#[[1]] == Sa &)];
-			posFi = Position[WeylFermionList,_List?(#[[1]] == Fi &)];
-			posFj = Position[WeylFermionList,_List?(#[[1]] == Fj &)];
+			posS  = ListPosition[RealScalarList,_List?(#[[1]] == Sa &)];
+			posFi = ListPosition[WeylFermionList,_List?(#[[1]] == Fi &)];
+			posFj = ListPosition[WeylFermionList,_List?(#[[1]] == Fj &)];
 			If[posS == {} || posFi == {} || posFj == {},
 				Message[Yukawa::UnknownParticle];,
 				ListYukawa = Append[ListYukawa,{sym, posS[[1,1]], posFi[[1,1]], posFj[[1,1]], gauge, fak}];
@@ -159,58 +159,58 @@ BeginPackage["ARGES`"];
 		
 		Quartic\[Lambda]abcd[sym_, Sa_, Sb_, Sc_, Sd_, gauge_List, fak_:(1&)] := Module[
 			{posA, posB, posC, posD, permList1, permList2, fakHold, xHold},
-			posA = Position[ComplexScalarList, Sa];
+			posA = ListPosition[ComplexScalarList, Sa];
 			If[posA != {},
 				Quartic\[Lambda]abcd[sym, Re[Sa], Sb, Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Quartic\[Lambda]abcd[sym, Im[Sa], Sb, Sc, Sd, gauge, (I/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Return[];
 			];
-			posA = Position[adj/@ComplexScalarList, Sa];
+			posA = ListPosition[adj/@ComplexScalarList, Sa];
 			If[posA != {},
 				Quartic\[Lambda]abcd[sym, Re[Sa[[1]]], Sb, Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Quartic\[Lambda]abcd[sym, Im[Sa[[1]]], Sb, Sc, Sd, gauge, (-I/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Return[];
 			];
-			posB = Position[ComplexScalarList, Sb];
+			posB = ListPosition[ComplexScalarList, Sb];
 			If[posB != {},
 				Quartic\[Lambda]abcd[sym, Sa, Re[Sb], Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Quartic\[Lambda]abcd[sym, Sa, Im[Sb], Sc, Sd, gauge, (I/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Return[];
 			];
-			posB = Position[adj/@ComplexScalarList, Sb];
+			posB = ListPosition[adj/@ComplexScalarList, Sb];
 			If[posB != {},
 				Quartic\[Lambda]abcd[sym, Sa, Re[Sb[[1]]], Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Quartic\[Lambda]abcd[sym, Sa, Im[Sb[[1]]], Sc, Sd, gauge, (-I/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Return[];
 			];
-			posC = Position[ComplexScalarList, Sc];
+			posC = ListPosition[ComplexScalarList, Sc];
 			If[posC != {},
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Re[Sc], Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Im[Sc], Sd, gauge, (I/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Return[];
 			];
-			posC = Position[adj/@ComplexScalarList, Sc];
+			posC = ListPosition[adj/@ComplexScalarList, Sc];
 			If[posC != {},
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Re[Sc[[1]]], Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Im[Sc[[1]]], Sd, gauge, (-I/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Return[];
 			];
-			posD = Position[ComplexScalarList, Sd];
+			posD = ListPosition[ComplexScalarList, Sd];
 			If[posD != {},
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Sc, Re[Sd], gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Sc, Im[Sd], gauge, (I/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Return[];
 			];
-			posD = Position[adj/@ComplexScalarList, Sd];
+			posD = ListPosition[adj/@ComplexScalarList, Sd];
 			If[posD != {},
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Sc, Re[Sd[[1]]], gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Sc, Im[Sd[[1]]], gauge, (-I/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Return[];
 			];
-			posA = Position[RealScalarList,_List?(#[[1]] == Sa &)];
-			posB = Position[RealScalarList,_List?(#[[1]] == Sb &)];
-			posC = Position[RealScalarList,_List?(#[[1]] == Sc &)];
-			posD = Position[RealScalarList,_List?(#[[1]] == Sd &)];
+			posA = ListPosition[RealScalarList,_List?(#[[1]] == Sa &)];
+			posB = ListPosition[RealScalarList,_List?(#[[1]] == Sb &)];
+			posC = ListPosition[RealScalarList,_List?(#[[1]] == Sc &)];
+			posD = ListPosition[RealScalarList,_List?(#[[1]] == Sd &)];
 			If[posA == {} || posB == {} || posC == {} || posD == {},
 				Message[Quartic::UnknownParticle];,
 				If[Dimensions[gauge][[1]] != NumberOfSubgroups,
@@ -249,7 +249,7 @@ BeginPackage["ARGES`"];
 		
 		\[Beta][\[Alpha][sym_], loop_] := Module[
 			{pos},
-			pos = Position[ListGauge,_List?(#[[1]] == sym &)];
+			pos = ListPosition[ListGauge,_List?(#[[1]] == sym &)];
 			If[pos != {}, 
 				Return[BetaGauge[pos[[1,1]], loop]];
 			];
@@ -258,7 +258,7 @@ BeginPackage["ARGES`"];
 		
 		\[Beta][sym_, loop_] := Module[
 			{pos},
-			pos = Position[ListGauge,_List?(#[[1]] == sym &)];
+			pos = ListPosition[ListGauge,_List?(#[[1]] == sym &)];
 			If[pos != {}, 
 				Return[Expand[(\[Beta][\[Alpha][sym], loop] Sqr[4 Pi]/(2 sym))//.subAlpha]];
 			];
@@ -269,9 +269,9 @@ BeginPackage["ARGES`"];
 			If[MemberQ[ComplexScalarList, _?((# === SType)&)], 
 				Return[Sqrt[2]\[Beta][Re[SType], FType1, FType2, SList, FList1, FList2, loop]];
 			];
-			posS  = Position[RealScalarList,_List?(#[[1]] == SType &)];
-			posF1 = Position[WeylFermionList,_List?(#[[1]] == FType1 &)];
-			posF2 = Position[WeylFermionList,_List?(#[[1]] == FType2 &)];
+			posS  = ListPosition[RealScalarList,_List?(#[[1]] == SType &)];
+			posF1 = ListPosition[WeylFermionList,_List?(#[[1]] == FType1 &)];
+			posF2 = ListPosition[WeylFermionList,_List?(#[[1]] == FType2 &)];
 			If[posS == {} || posF1 == {} || posF2 == {},
 				Message[Yukawa::UnknownParticle];
 				Return[];
@@ -293,10 +293,10 @@ BeginPackage["ARGES`"];
 			If[MemberQ[ComplexScalarList, _?((# === SType4)&)],
 				Return[Sqrt[2] \[Beta][SType1, SType2, SType3, Re[SType4], SList1, SList2, SList3, SList4, loop]];
 			];
-			pos1  = Position[RealScalarList,_List?(#[[1]] == SType1 &)];
-			pos2  = Position[RealScalarList,_List?(#[[1]] == SType2 &)];
-			pos3  = Position[RealScalarList,_List?(#[[1]] == SType3 &)];
-			pos4  = Position[RealScalarList,_List?(#[[1]] == SType4 &)];
+			pos1  = ListPosition[RealScalarList,_List?(#[[1]] == SType1 &)];
+			pos2  = ListPosition[RealScalarList,_List?(#[[1]] == SType2 &)];
+			pos3  = ListPosition[RealScalarList,_List?(#[[1]] == SType3 &)];
+			pos4  = ListPosition[RealScalarList,_List?(#[[1]] == SType4 &)];
 			If[pos1 == {} || pos2 == {} || pos3 == {} || pos4 == {},
 				Message[Quartic::UnknownParticle];
 				Return[];
@@ -1021,6 +1021,9 @@ BeginPackage["ARGES`"];
 		(* number of real scalars and weyl fermions *)
 		SNumber[] := If[RealScalarList == {}, 0, Dimensions[RealScalarList][[1]]];
 		FNumber[] := If[WeylFermionList == {}, 0, Dimensions[WeylFermionList][[1]]];
+		
+		(* workaround a mathematica bug *)
+		ListListPosition[A_, B___] := ListPosition[A//. {{} -> $EMPTYLIST}, B];
 		
 		(* Error Messages *)
 		Gauge::RepMismatch = "Representation list does not match number of subgroups";
