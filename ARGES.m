@@ -10,7 +10,8 @@ BeginPackage["ARGES`"];
 	Reset::usage = "reset/initiate package";
 	ComputeInvariants::usage = "Calculates known invariants for beta functions, saves them as rules in subInvariants";
 	subInvariants::usage = "containts replacement rules for beta function invariants, use ComputeInvariants[] to calculate";
-	GetGauge::usage = "Returns representation / charge for particle"
+	GetGauge::usage = "Returns representation / charge for particle";
+	SimplifyProduct::usage = "Simplifies tr[___] and prod[___] expressions";
 	F::usage = "fermionic";
 	S::usage = "scalar";
 	Y::usage = "Yukawa";
@@ -76,6 +77,8 @@ BeginPackage["ARGES`"];
 			];
 			Return[0];
 		];
+		
+		SimplifyProduct[A_] := (A //. subYukawaClean //. {tr[adj[a_], b] -> tr[b, adj[a]], tr[adj[a_], b_, adj[c_], d_]->tr[b, adj[c], d, adj[a]]} //. subProd);
 		
 		WeylFermion[sym_, Nflavor_, Gauge_List] := Module[
 			{},
@@ -844,7 +847,7 @@ BeginPackage["ARGES`"];
 							{ind2[1], 1, RealScalarList[[ind1[0], 2]]}},
 							Function[{x}, {ind1[x+1], 1, If[ListGauge[[x,3]]===1, 1, RealScalarList[[ind1[0], 3, x]]]}]/@Range[NumberOfSubgroups],
 							Function[{x}, {ind2[x+1], 1, If[ListGauge[[x,3]]===1, 1, RealScalarList[[ind2[0], 3, x]]]}]/@Range[NumberOfSubgroups]
-						]//.sub\[CapitalLambda];
+						]//.sub\[CapitalLambda]S;
 					];
 				];
 				sum
@@ -877,17 +880,40 @@ BeginPackage["ARGES`"];
 				1/2 Sum[YukawaTrace[Yuk[pa[[1]]], adj[Yuk[ss]], Yuk[pb[[1]]], adj[Yuk[ss]], Function[{x}, KroneckerDelta[#1, pa[[x+1]]] KroneckerDelta[#3, pb[[x+1]]] KroneckerDelta[#2,#4] &]/@Range[NumberOfSubgroups+1]] + YukawaTrace[adj[Yuk[pa[[1]]]], Yuk[ss], adj[Yuk[pb[[1]]]], Yuk[ss], Function[{x}, KroneckerDelta[#1, pa[[x+1]]] KroneckerDelta[#3, pb[[x+1]]] KroneckerDelta[#2,#4] &]/@Range[NumberOfSubgroups+1]] ,{ss, 1, SNumber[]}]	
 			],
 			Y2FS[gauge_, pa_, pb_] :> 1/2(YukawaTrace[C2[F, gauge], Yuk[pa[[1]]], adj[Yuk[pb[[1]]]], Function[{x}, KroneckerDelta[#1,1] KroneckerDelta[#2, pa[[1+x]]] KroneckerDelta[#3, pb[[1+x]]] &]/@Range[NumberOfSubgroups+1]] + YukawaTrace[C2[F, gauge], Yuk[pb[[1]]], adj[Yuk[pa[[1]]]], Function[{x}, KroneckerDelta[#1,1] KroneckerDelta[#2, pb[[1+x]]] KroneckerDelta[#3, pa[[1+x]]] &]/@Range[NumberOfSubgroups+1]]),
-			H2t[___] :> 0
+			H2t[gauge_, pa_, pi_, pj_] :> Module[
+				{ss, ff1, ff2, ff3},
+				Sum[
+					Sum@@Join[
+						{
+							(
+								Refine[Conjugate[\[CapitalLambda][gauge][pi, ff2/@Range[0, NumberOfSubgroups+1], ff1/@Range[0, NumberOfSubgroups+1], ff3/@Range[0, NumberOfSubgroups+1]]//.sub\[CapitalLambda]F]] YukawaProd[Yuk[pa[[1]]], adj[Yuk[ss[0]]], ff1[1], ff2[1], ff1/@Range[2,NumberOfSubgroups+1], ff2/@Range[2,NumberOfSubgroups+1], Function[{x}, KroneckerDelta[#1, pa[[x+1]]] KroneckerDelta[#2, ss[x]] &]/@Range[NumberOfSubgroups+1]] BetaYukawa[ss[0], ff3[0], pj[[1]], ss/@Range[NumberOfSubgroups+1], ff3/@Range[NumberOfSubgroups+1], pj[[2;;]], 0] + 
+								(\[CapitalLambda][gauge][ff1/@Range[0, NumberOfSubgroups+1], ff3/@Range[0, NumberOfSubgroups+1], ff2/@Range[0, NumberOfSubgroups+1], pj]//.sub\[CapitalLambda]F) YukawaProd[adj[Yuk[ss[0]]], Yuk[pa[[1]]], ff2[1], ff3[1], ff2/@Range[2,NumberOfSubgroups+1], ff3/@Range[2,NumberOfSubgroups+1], Function[{x}, KroneckerDelta[#2, pa[[x+1]]] KroneckerDelta[#1, ss[x]] &]/@Range[NumberOfSubgroups+1]] BetaYukawa[ss[0], pi[[1]], ff1[0], ss/@Range[NumberOfSubgroups+1], pi[[2;;]], ff1/@Range[NumberOfSubgroups+1], 0]
+							),
+							{ff1[1], 1, WeylFermionList[[ff1[0], 2]]},
+							{ff2[1], 1, WeylFermionList[[ff2[0], 2]]},
+							{ff3[1], 1, WeylFermionList[[ff3[0], 2]]},
+							{ss[1], 1, RealScalarList[[ss[0], 2]]}
+						},
+						Function[{x}, {ff1[x+1], 1, FMultiplicity[ff1[0], gauge]}]/@Range[NumberOfSubgroups],
+						Function[{x}, {ff2[x+1], 1, FMultiplicity[ff2[0], gauge]}]/@Range[NumberOfSubgroups],
+						Function[{x}, {ff3[x+1], 1, FMultiplicity[ff3[0], gauge]}]/@Range[NumberOfSubgroups],
+						Function[{x}, {ss[x+1], 1, SMultiplicity[ss[0], gauge]}]/@Range[NumberOfSubgroups]
+					],
+					{ff1[0], 1, FNumber[]},
+					{ff2[0], 1, FNumber[]},
+					{ff3[0], 1, FNumber[]},
+					{ss[0], 1, SNumber[]}
+				]
+			]
 		};
 		
-		sub\[CapitalLambda] := {
-			(* Contraction of two scalar generators, see for instance arXiv:hep-ph/0211440 eq. (117) *)
+		(* Contraction of two scalar generators, see for instance arXiv:hep-ph/0211440 eq. (117) for Scalars and Fermions*)
+		sub\[CapitalLambda]S := {
 			(** At least one is gauge singlet *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(ListGauge[[gaug,3]] =!= 1 && (RealScalarList[[a[[1]],3,gaug]] == 1 || RealScalarList[[b[[1]],3,gaug]] == 1 || RealScalarList[[c[[1]],3,gaug]] == 1 || RealScalarList[[d[[1]],3,gaug]] == 1)),
 			(** SU(N) -- all in fundamental representation *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (
 				If[
-					(*RealScalarList[[a[[1]], 1]][[0]] === RealScalarList[[c[[1]], 1]][[0]] && RealScalarList[[b[[1]], 1]][[0]] === RealScalarList[[d[[1]], 1]][[0]]*)
 					(a[[1]] == c[[1]] && b[[1]] == d[[1]])
 					,
 					1/4(ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[d[[1]],1]]] ComplexDelta[RealScalarList[[b[[1]],1]], RealScalarList[[c[[1]],1]]] TensorDelta[a[[2;;]],d[[2;;]]] TensorDelta[b[[2;;]],c[[2;;]]]  - ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[b[[1]],1]]] ComplexDelta[RealScalarList[[d[[1]],1]], RealScalarList[[c[[1]],1]]] TensorDelta[a[[2;;]],b[[2;;]]] TensorDelta[c[[2;;]],d[[2;;]]])
@@ -939,6 +965,43 @@ BeginPackage["ARGES`"];
 			(** unknown gauge group*)
 			\[CapitalLambda][gaug_][a_,b_, c_, d_] :>(\[CapitalLambda][ListGauge[[gaug,1]], RealScalarList[[a[[1]],1]], RealScalarList[[b[[1]],1]], RealScalarList[[c[[1]],1]], RealScalarList[[d[[1]],1]]][a[[2;;]], b[[2;;]], c[[2;;]], d[[2;;]]])
 		};
+		
+		sub\[CapitalLambda]F := {
+			(** At least one is gauge singlet *)
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(ListGauge[[gaug,3]] =!= 1 && (WeylFermionList[[a[[1]],3,gaug]] == 1 || WeylFermionList[[b[[1]],3,gaug]] == 1 || WeylFermionList[[c[[1]],3,gaug]] == 1 || WeylFermionList[[d[[1]],3,gaug]] == 1)),
+			(** SU(N) -- all in fundamental representation *)
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (
+				If[
+					(a[[1]] == c[[1]] && b[[1]] == d[[1]]),
+					1/2(TensorDelta[a,d] TensorDelta[b,c]  - 1/ListGauge[[gaug,3]] TensorDelta[a,c] TensorDelta[b,d]),
+					0
+				] 
+			)/;(
+				ListGauge[[gaug,2]] === SU && 
+				WeylFermionList[[a[[1]], 3, gaug]] == ListGauge[[gaug,3]] && 
+				WeylFermionList[[b[[1]], 3, gaug]] == ListGauge[[gaug,3]] && 
+				WeylFermionList[[c[[1]], 3, gaug]] == ListGauge[[gaug,3]] && 
+				WeylFermionList[[d[[1]], 3, gaug]] == ListGauge[[gaug,3]]
+			),
+			(** SO(N) -- all in fundamental representation *)
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (
+				TensorDelta[a,d] TensorDelta[b,c] - TensorDelta[a,b] TensorDelta[c,d]
+			)/;(
+				ListGauge[[gaug,2]] === SO && 
+				WeylFermionList[[a[[1]], 3, gaug]] == ListGauge[[gaug,3]] && 
+				WeylFermionList[[b[[1]], 3, gaug]] == ListGauge[[gaug,3]] && 
+				WeylFermionList[[c[[1]], 3, gaug]] == ListGauge[[gaug,3]] && 
+				WeylFermionList[[d[[1]], 3, gaug]] == ListGauge[[gaug,3]]
+			),
+			(** U(1) *)
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :>(
+					WeylFermionList[[a[[1]], 3, gaug]] WeylFermionList[[b[[1]], 3, gaug]] TensorDelta[a,c] TensorDelta[b,d]
+			)/;(ListGauge[[gaug, 3]] === 1),
+			(** unknown gauge group*)
+			\[CapitalLambda][gaug_][a_,b_, c_, d_] :>(\[CapitalLambda][ListGauge[[gaug,1]], WeylFermionList[[a[[1]],1]], WeylFermionList[[b[[1]],1]], WeylFermionList[[c[[1]],1]], WeylFermionList[[d[[1]],1]]][a[[2;;]], b[[2;;]], c[[2;;]], d[[2;;]]])
+		};
+		
+		
 		(* sum over all fermions / scalars *)
 		FSum[a___] := ReleaseHold[If[WeylFermionList == {}, 0, Sum[(a)&[sumindex], {sumindex,1,FNumber[]}]]];
 		SSum[a___] := ReleaseHold[If[RealScalarList == {}, 0, Sum[(a)&[sumindex], {sumindex,1,SNumber[]}]]];
