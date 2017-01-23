@@ -159,7 +159,7 @@ BeginPackage["ARGES`"];
 		];
 		
 		Quartic\[Lambda]abcd[sym_, Sa_, Sb_, Sc_, Sd_, gauge_List, fak_:(1&)] := Module[
-			{posA, posB, posC, posD, permList1, permList2, fakHold, xHold, iter},
+			{posA, posB, posC, posD, permList, permListPos, iter, x, x2},
 			posA = ListPosition[adj/@ComplexScalarList, Sa];
 			If[posA != {},
 				posB = ListPosition[ComplexScalarList, Sb];
@@ -223,13 +223,13 @@ BeginPackage["ARGES`"];
 				If[Dimensions[gauge][[1]] != NumberOfSubgroups,
 					Message[Quartic::ContractionError];,
 					ListQuartic = Append[ListQuartic, {sym, posA[[1,1]], posB[[1,1]], posC[[1,1]], posD[[1,1]], gauge, fak}];
-					permList1 = PermList[List[posA[[1,1]], posB[[1,1]], posC[[1,1]], posD[[1,1]]]];
-					permList2 = PermList[List["a","b","c","d"]];
+					permList = PermList[List[#1,#2,#3,#4]];
+					permListPos[perm_, pos_] := {posA[[1,1]], posB[[1,1]], posC[[1,1]], posD[[1,1]]}[[Position[permList[[perm]], permList[[1,pos]]][[1,1]]]];
 					For[ii=1, ii<= 24, ii++, 
 						AppendSymQuartic[
-							sym, permList1[[ii,1]], permList1[[ii,2]], permList1[[ii,3]], permList1[[ii,4]], 
-							Function[{x}, Evaluate[PermList[xHold[#1,#2,#3,#4]][[ii]]]&/.xHold[a_,b_,c_,d_]->x[a,b,c,d]]/@gauge,
-							Evaluate[PermList[1/24 fakHold[#1,#2,#3,#4]][[ii]]]&/.fakHold[a_,b_,c_,d_]->fak[a,b,c,d]
+							sym, permListPos[ii,1], permListPos[ii,2], permListPos[ii,3], permListPos[ii,4], 
+							Function[{x2}, x2&]/@(Function[{x}, x@@permList[[ii]]]/@gauge),
+							Evaluate[1/24 fak@@permList[[ii]]]&
 						];
 					];
 					(* remove entries with coefficient zero *)
@@ -345,9 +345,9 @@ BeginPackage["ARGES`"];
 		];
 		
 		BetaYukawa[pa_, pi_, pj_, la_, li_, lj_, 0] := ReleaseHold[Yuk[pa][pi,pj] /. subYuk]/.{
-			adj[Yukawa[a_]]:>(adj[ListYukawa[[a, 1]]][lj[[1]], li[[1]]] Refine[Conjugate[ListYukawa[[a,6]][la[[1]], lj[[1]], li[[1]]]]] Times@@(Function[{x}, Refine[Conjugate[ListYukawa[[a,5,x]][la[[1+x]], lj[[1+x]], li[[1+x]]]]]]/@Range[NumberOfSubgroups])),
-			Yukawa[a_]:>(ListYukawa[[a, 1]][li[[1]], lj[[1]]] ListYukawa[[a,6]][la[[1]], li[[1]], lj[[1]]] Times@@(Function[{x}, ListYukawa[[a,5,x]][la[[1+x]], li[[1+x]], lj[[1+x]]]]/@Range[NumberOfSubgroups]))
-		}//.{Mat:>Identity};
+			adj[Yukawa[a_]]:>(adj[ListYukawa[[a, 1]]][lj[[1]], li[[1]]] Refine[Conjugate[ListYukawa[[a,6]][la[[1]], lj[[1]], li[[1]]]//.{Mat:>Identity}]] Times@@(Function[{x}, Refine[Conjugate[ListYukawa[[a,5,x]][la[[1+x]], lj[[1+x]], li[[1+x]]]]]]/@Range[NumberOfSubgroups])),
+			Yukawa[a_]:>(ListYukawa[[a, 1]][li[[1]], lj[[1]]] (ListYukawa[[a,6]][la[[1]], li[[1]], lj[[1]]]//.{Mat:>Identity}) Times@@(Function[{x}, ListYukawa[[a,5,x]][la[[1+x]], li[[1+x]], lj[[1+x]]]]/@Range[NumberOfSubgroups]))
+		};
 		
 		BetaYukawa[pa_, pi_, pj_, la_, li_, lj_, 1] := Module[
 			{beta, ss, ii, x, x2, x3, sumIdx},
