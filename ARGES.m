@@ -384,7 +384,7 @@ BeginPackage["ARGES`"];
 			], {ss[0], 1, SNumber[]}, {ssb, 1, SNumber[]}];
 			beta -= Sum[Sum@@Join[
 				{
-					((Hbar2S[Prepend[la, pa], ss/@Range[0, NumberOfSubgroups+1]] + 3/2 H2S[Prepend[la, pa], ss/@Range[0, NumberOfSubgroups+1]] - 1/2 \[CapitalLambda]2S[Prepend[la, pa], ss/@Range[0, NumberOfSubgroups+1]])//.subScalarInvariants) BetaYukawa[ss[0], pi, pj, ss/@Range[NumberOfSubgroups+1], li, lj, 0],
+					(( Hbar2S[Prepend[la, pa], ss/@Range[0, NumberOfSubgroups+1]] + 3/2 H2S[Prepend[la, pa], ss/@Range[0, NumberOfSubgroups+1]] - 1/2 \[CapitalLambda]2S[Prepend[la, pa], ss/@Range[0, NumberOfSubgroups+1]])//.subScalarInvariants) BetaYukawa[ss[0], pi, pj, ss/@Range[NumberOfSubgroups+1], li, lj, 0],
 					{ss[1], 1, RealScalarList[[ss[0], 2]]}
 				},
 				Function[{x}, {ss[x+1], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups]
@@ -400,7 +400,7 @@ BeginPackage["ARGES`"];
 			], {ss[0], 1, SNumber[]}, {ss2[0], 1, SNumber[]}];
 			beta -= 2 Sum[Sum@@Join[
 				{
-					24 BetaQuartic[pa, ss[0], ss2[0], ss3[0], la, ss/@Range[NumberOfSubgroups+1], ss2/@Range[NumberOfSubgroups+1], ss3/@Range[NumberOfSubgroups+1],0] YukawaProd[Yuk[ss[0]], adj[Yuk[ss2[0]]], Yuk[ss3[0]], pi, pj, li, lj, Function[{x}, KroneckerDelta[#1, ss[x]] KroneckerDelta[#2, ss2[x]] KroneckerDelta[#3, ss[x]] &]/@Range[NumberOfSubgroups+1]],
+					24 BetaQuartic[pa, ss[0], ss2[0], ss3[0], la, ss/@Range[NumberOfSubgroups+1], ss2/@Range[NumberOfSubgroups+1], ss3/@Range[NumberOfSubgroups+1],0] YukawaProd[Yuk[ss[0]], adj[Yuk[ss2[0]]], Yuk[ss3[0]], pi, pj, li, lj, Function[{x}, KroneckerDelta[#1, ss[x]] KroneckerDelta[#2, ss2[x]] KroneckerDelta[#3, ss3[x]] &]/@Range[NumberOfSubgroups+1]],
 					{ss[1], 1, RealScalarList[[ss[0], 2]]},
 					{ss2[1], 1, RealScalarList[[ss2[0], 2]]},
 					{ss3[1], 1, RealScalarList[[ss3[0], 2]]}
@@ -1104,11 +1104,11 @@ BeginPackage["ARGES`"];
 				]]
 			},
 			((Function[{x}, Refine[Sum[
-				ScGauge[[x+1]][scGaugeIdx1, scGaugeIdx2] y1[[x + 1, 1]][scGaugeIdx1, sumInd1[x], sumInd2[x]] y2[[x + 1, 1]][scGaugeIdx2, sumInd2[x], sumInd1[x]], 
+				ScGauge[[x+1]][scGaugeIdx1[x], scGaugeIdx2[x]] y1[[x + 1, 1]][scGaugeIdx1[x], sumInd1[x], sumInd2[x]] y2[[x + 1, 1]][scGaugeIdx2[x], sumInd2[x], sumInd1[x]], 
 				{sumInd1[x], 1, y1[[x+1, 3]]},
 				{sumInd2[x], 1, y1[[x+1, 4]]},
-				{scGaugeIdx1, 1, y1[[x+1, 2]]},
-				{scGaugeIdx2, 1, y2[[x+1, 2]]}
+				{scGaugeIdx1[x], 1, y1[[x+1, 2]]},
+				{scGaugeIdx2[x], 1, y2[[x+1, 2]]}
 			]]]) /@ Range[NumberOfSubgroups])
 		];
 		
@@ -1122,13 +1122,13 @@ BeginPackage["ARGES`"];
 				]]
 			},
 			((Function[{x}, Refine[
-				Sum[ScGauge[[x+1]][scGaugeIdx1, scGaugeIdx2, scGaugeIdx3] y1[[x+1, 1]][scGaugeIdx1, sumInd1[x], sumInd2[x]] y2[[x+1, 1]][scGaugeIdx2, sumInd2[x], sumInd3[x]]  y3[[x+1, 1]][scGaugeIdx3, sumInd3[x], sumInd1[x]], 
+				Sum[ScGauge[[x+1]][scGaugeIdx1[x], scGaugeIdx2[x], scGaugeIdx3[x]] y1[[x+1, 1]][scGaugeIdx1[x], sumInd1[x], sumInd2[x]] y2[[x+1, 1]][scGaugeIdx2[x], sumInd2[x], sumInd3[x]]  y3[[x+1, 1]][scGaugeIdx3[x], sumInd3[x], sumInd1[x]], 
 					{sumInd1[x], 1, y1[[x+1, 3]]}, 
 					{sumInd2[x], 1, y1[[x+1, 4]]},
 					{sumInd3[x], 1, y3[[x+1, 3]]},
-					{scGaugeIdx1, 1, y1[[x+1, 2]]},
-					{scGaugeIdx2, 1, y2[[x+1, 2]]},
-					{scGaugeIdx3, 1, y3[[x+1, 2]]}
+					{scGaugeIdx1[x], 1, y1[[x+1, 2]]},
+					{scGaugeIdx2[x], 1, y2[[x+1, 2]]},
+					{scGaugeIdx3[x], 1, y3[[x+1, 2]]}
 				]
 			]]) /@ Range[NumberOfSubgroups])
 		];
@@ -1144,15 +1144,15 @@ BeginPackage["ARGES`"];
 				]]
 			},
 			((Function[{x}, Refine[
-				Sum[ScGauge[[x+1]][scGaugeIdx1, scGaugeIdx2, scGaugeIdx3, scGaugeIdx4] y1[[x+1, 1]][scGaugeIdx1, sumInd1[x], sumInd2[x]] y2[[x+1, 1]][scGaugeIdx2, sumInd2[x], sumInd3[x]] y3[[x+1, 1]][scGaugeIdx3, sumInd3[x], sumInd4[x]] y4[[x+1, 1]][scGaugeIdx4, sumInd4[x], sumInd1[x]], 
+				Sum[ScGauge[[x+1]][scGaugeIdx1[x], scGaugeIdx2[x], scGaugeIdx3[x], scGaugeIdx4[x]] y1[[x+1, 1]][scGaugeIdx1[x], sumInd1[x], sumInd2[x]] y2[[x+1, 1]][scGaugeIdx2[x], sumInd2[x], sumInd3[x]] y3[[x+1, 1]][scGaugeIdx3[x], sumInd3[x], sumInd4[x]] y4[[x+1, 1]][scGaugeIdx4[x], sumInd4[x], sumInd1[x]], 
 					{sumInd1[x], 1, y1[[x+1, 3]]}, 
 					{sumInd2[x], 1, y1[[x+1, 4]]},
 					{sumInd3[x], 1, y3[[x+1, 3]]},
 					{sumInd4[x], 1, y3[[x+1, 4]]},
-					{scGaugeIdx1, 1, y1[[x+1, 2]]},
-					{scGaugeIdx2, 1, y2[[x+1, 2]]},
-					{scGaugeIdx3, 1, y3[[x+1, 2]]},
-					{scGaugeIdx4, 1, y4[[x+1, 2]]}
+					{scGaugeIdx1[x], 1, y1[[x+1, 2]]},
+					{scGaugeIdx2[x], 1, y2[[x+1, 2]]},
+					{scGaugeIdx3[x], 1, y3[[x+1, 2]]},
+					{scGaugeIdx4[x], 1, y4[[x+1, 2]]}
 				]
 			]]) /@ Range[NumberOfSubgroups])
 		];
@@ -1166,10 +1166,10 @@ BeginPackage["ARGES`"];
 				]]
 			},
 			(Function[{x},Refine[Sum[
-				ScGauge[[x+1]][scGaugeIdx1, scGaugeIdx2] y1[[x+1, 1]][scGaugeIdx1, Ll[[x+1]], sumInd1[x]] y2[[x+1, 1]][scGaugeIdx2, sumInd1[x], Lr[[x+1]]],
+				ScGauge[[x+1]][scGaugeIdx1[x], scGaugeIdx2[x]] y1[[x+1, 1]][scGaugeIdx1[x], Ll[[x+1]], sumInd1[x]] y2[[x+1, 1]][scGaugeIdx2[x], sumInd1[x], Lr[[x+1]]],
 				{sumInd1[x], 1, y2[[x+1, 3]]},
-				{scGaugeIdx1, 1, y1[[x+1, 2]]},
-				{scGaugeIdx2, 1, y2[[x+1, 2]]}
+				{scGaugeIdx1[x], 1, y1[[x+1, 2]]},
+				{scGaugeIdx2[x], 1, y2[[x+1, 2]]}
 			]]]/@Range[NumberOfSubgroups])
 		];
 		
@@ -1183,12 +1183,12 @@ BeginPackage["ARGES`"];
 				]]
 			},
 			(Function[{x},Refine[Sum[
-				ScGauge[[x+1]][scGaugeIdx1, scGaugeIdx2, scGaugeIdx3] y1[[x+1, 1]][scGaugeIdx1, Ll[[x+1]], sumInd1[x]] y2[[x+1, 1]][scGaugeIdx2, sumInd1[x],sumInd2[x]] y3[[x+1, 1]][scGaugeIdx3, sumInd2[x],Lr[[x+1]]],
+				ScGauge[[x+1]][scGaugeIdx1[x], scGaugeIdx2[x], scGaugeIdx3[x]] y1[[x+1, 1]][scGaugeIdx1[x], Ll[[x+1]], sumInd1[x]] y2[[x+1, 1]][scGaugeIdx2[x], sumInd1[x],sumInd2[x]] y3[[x+1, 1]][scGaugeIdx3[x], sumInd2[x],Lr[[x+1]]],
 				{sumInd1[x], 1, y2[[x+1, 3]]},
 				{sumInd2[x], 1, y2[[x+1, 4]]},
-				{scGaugeIdx1, 1, y1[[x+1, 2]]},
-				{scGaugeIdx2, 1, y2[[x+1, 2]]},
-				{scGaugeIdx3, 1, y3[[x+1, 2]]}
+				{scGaugeIdx1[x], 1, y1[[x+1, 2]]},
+				{scGaugeIdx2[x], 1, y2[[x+1, 2]]},
+				{scGaugeIdx3[x], 1, y3[[x+1, 2]]}
 			]]]/@Range[NumberOfSubgroups])
 		];
 		
@@ -1203,14 +1203,14 @@ BeginPackage["ARGES`"];
 				]]
 			},
 			(Function[{x},Refine[Sum[
-				ScGauge[[x+1]][scGaugeIdx1, scGaugeIdx2, scGaugeIdx3, scGaugeIdx4] y1[[x+1, 1]][scGaugeIdx1, Ll[[x+1]], sumInd1[x]] y2[[x+1, 1]][scGaugeIdx2, sumInd1[x],sumInd2[x]] y3[[x+1, 1]][scGaugeIdx3,sumInd2[x],sumInd3[x]] y4[[x+1, 1]][scGaugeIdx4, sumInd3[x], Lr[[x+1]]],
+				ScGauge[[x+1]][scGaugeIdx1[x], scGaugeIdx2[x], scGaugeIdx3[x], scGaugeIdx4[x]] y1[[x+1, 1]][scGaugeIdx1[x], Ll[[x+1]], sumInd1[x]] y2[[x+1, 1]][scGaugeIdx2[x], sumInd1[x],sumInd2[x]] y3[[x+1, 1]][scGaugeIdx3[x],sumInd2[x],sumInd3[x]] y4[[x+1, 1]][scGaugeIdx4[x], sumInd3[x], Lr[[x+1]]],
 				{sumInd1[x], 1, y2[[x+1, 3]]},
 				{sumInd2[x], 1, y2[[x+1, 4]]},
 	 			{sumInd3[x], 1, y4[[x+1, 3]]},
-				{scGaugeIdx1, 1, y1[[x+1, 2]]},
-				{scGaugeIdx2, 1, y2[[x+1, 2]]},
-				{scGaugeIdx3, 1, y3[[x+1, 2]]},
-				{scGaugeIdx4, 1, y4[[x+1, 2]]}
+				{scGaugeIdx1[x], 1, y1[[x+1, 2]]},
+				{scGaugeIdx2[x], 1, y2[[x+1, 2]]},
+				{scGaugeIdx3[x], 1, y3[[x+1, 2]]},
+				{scGaugeIdx4[x], 1, y4[[x+1, 2]]}
 			]]]/@Range[NumberOfSubgroups])
 		];
 		
@@ -1227,16 +1227,16 @@ BeginPackage["ARGES`"];
 				]]
 			},
 			(Function[{x},Refine[Sum[
-				ScGauge[[x+1]][scGaugeIdx1, scGaugeIdx2, scGaugeIdx3, scGaugeIdx4, scGaugeIdx5] y1[[x+1, 1]][scGaugeIdx1, Ll[[x+1]], sumInd1[x]] y2[[x+1, 1]][scGaugeIdx2, sumInd1[x],sumInd2[x]] y3[[x+1, 1]][scGaugeIdx3,sumInd2[x],sumInd3[x]] y4[[x+1, 1]][scGaugeIdx4, sumInd3[x], sumInd4[x]] y5[[x+1, 1]][scGaugeIdx5, sumInd4[x], Lr[[x+1]]],
+				ScGauge[[x+1]][scGaugeIdx1[x], scGaugeIdx2[x], scGaugeIdx3[x], scGaugeIdx4[x], scGaugeIdx5[x]] y1[[x+1, 1]][scGaugeIdx1[x], Ll[[x+1]], sumInd1[x]] y2[[x+1, 1]][scGaugeIdx2[x], sumInd1[x],sumInd2[x]] y3[[x+1, 1]][scGaugeIdx3[x],sumInd2[x],sumInd3[x]] y4[[x+1, 1]][scGaugeIdx4[x], sumInd3[x], sumInd4[x]] y5[[x+1, 1]][scGaugeIdx5[x], sumInd4[x], Lr[[x+1]]],
 				{sumInd1[x], 1, y2[[x+1, 3]]},
 				{sumInd2[x], 1, y2[[x+1, 4]]},
 	 			{sumInd3[x], 1, y4[[x+1, 3]]},
 				{sumInd4[x], 1, y4[[x+1, 4]]},
-				{scGaugeIdx1, 1, y1[[x+1, 2]]},
-				{scGaugeIdx2, 1, y2[[x+1, 2]]},
-				{scGaugeIdx3, 1, y3[[x+1, 2]]},
-				{scGaugeIdx4, 1, y4[[x+1, 2]]},
-				{scGaugeIdx5, 1, y5[[x+1, 2]]}
+				{scGaugeIdx1[x], 1, y1[[x+1, 2]]},
+				{scGaugeIdx2[x], 1, y2[[x+1, 2]]},
+				{scGaugeIdx3[x], 1, y3[[x+1, 2]]},
+				{scGaugeIdx4[x], 1, y4[[x+1, 2]]},
+				{scGaugeIdx5[x], 1, y5[[x+1, 2]]}
 			]]]/@Range[NumberOfSubgroups])
 		];
 		
