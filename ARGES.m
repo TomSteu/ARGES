@@ -899,6 +899,7 @@ BeginPackage["ARGES`"];
 							(
 								Refine[Conjugate[\[CapitalLambda][gauge][pi, ff2/@Range[0, NumberOfSubgroups+1], ff1/@Range[0, NumberOfSubgroups+1], ff3/@Range[0, NumberOfSubgroups+1]]//.sub\[CapitalLambda]F]] YukawaProd[Yuk[pa[[1]]], adj[Yuk[ss[0]]], ff1[1], ff2[1], ff1/@Range[2,NumberOfSubgroups+1], ff2/@Range[2,NumberOfSubgroups+1], Function[{x}, KroneckerDelta[#1, pa[[x+1]]] KroneckerDelta[#2, ss[x]] &]/@Range[NumberOfSubgroups+1]] BetaYukawa[ss[0], ff3[0], pj[[1]], ss/@Range[NumberOfSubgroups+1], ff3/@Range[NumberOfSubgroups+1], pj[[2;;]], 0] + 
 								(\[CapitalLambda][gauge][ff1/@Range[0, NumberOfSubgroups+1], ff3/@Range[0, NumberOfSubgroups+1], ff2/@Range[0, NumberOfSubgroups+1], pj]//.sub\[CapitalLambda]F) YukawaProd[adj[Yuk[ss[0]]], Yuk[pa[[1]]], ff2[1], ff3[1], ff2/@Range[2,NumberOfSubgroups+1], ff3/@Range[2,NumberOfSubgroups+1], Function[{x}, KroneckerDelta[#2, pa[[x+1]]] KroneckerDelta[#1, ss[x]] &]/@Range[NumberOfSubgroups+1]] BetaYukawa[ss[0], pi[[1]], ff1[0], ss/@Range[NumberOfSubgroups+1], pi[[2;;]], ff1/@Range[NumberOfSubgroups+1], 0]
+								(*(\[CapitalLambda][gauge][ff1/@Range[0, NumberOfSubgroups+1], ff3/@Range[0, NumberOfSubgroups+1], ff2/@Range[0, NumberOfSubgroups+1], pj]//.sub\[CapitalLambda]F) YukawaProd[Yuk[ss[0]], adj[Yuk[pa[[1]]]], ff2[1], ff3[1], ff2/@Range[2,NumberOfSubgroups+1], ff3/@Range[2,NumberOfSubgroups+1], Function[{x}, KroneckerDelta[#2, pa[[x+1]]] KroneckerDelta[#1, ss[x]] &]/@Range[NumberOfSubgroups+1]] BetaYukawa[ss[0], ff1[0], pi[[1]], ss/@Range[NumberOfSubgroups+1], pi[[2;;]], ff1/@Range[NumberOfSubgroups+1], 0]*)
 							),
 							{ff1[1], 1, WeylFermionList[[ff1[0], 2]]},
 							{ff2[1], 1, WeylFermionList[[ff2[0], 2]]},
@@ -925,7 +926,7 @@ BeginPackage["ARGES`"];
 			(** SU(N) -- all in fundamental representation *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (
 				If[
-					(a[[1]] == c[[1]] && b[[1]] == d[[1]])
+					(a[[1]] == c[[1]] && b[[1]] == d[[1]] && a[[2]] == c[[2]] && b[[2]] == d[[2]])
 					,
 					1/4(ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[d[[1]],1]]] ComplexDelta[RealScalarList[[b[[1]],1]], RealScalarList[[c[[1]],1]]] TensorDelta[a[[2;;]],d[[2;;]]] TensorDelta[b[[2;;]],c[[2;;]]]  - ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[b[[1]],1]]] ComplexDelta[RealScalarList[[d[[1]],1]], RealScalarList[[c[[1]],1]]] TensorDelta[a[[2;;]],b[[2;;]]] TensorDelta[c[[2;;]],d[[2;;]]])
 					,
@@ -933,14 +934,16 @@ BeginPackage["ARGES`"];
 				] + If[
 						(RealScalarList[[a[[1]], 1]][[1]] === RealScalarList[[c[[1]], 1]][[1]] &&  RealScalarList[[b[[1]], 1]][[1]] === RealScalarList[[d[[1]], 1]][[1]] && 
 						RealScalarList[[a[[1]], 1]][[0]] =!= RealScalarList[[c[[1]], 1]][[0]] &&  RealScalarList[[b[[1]], 1]][[0]] =!= RealScalarList[[d[[1]], 1]][[0]] && 
-						RealScalarList[[a[[1]], 1]][[0]] === RealScalarList[[b[[1]], 1]][[0]] && RealScalarList[[c[[1]], 1]][[0]] === RealScalarList[[d[[1]], 1]][[0]]),
+						RealScalarList[[a[[1]], 1]][[0]] === RealScalarList[[b[[1]], 1]][[0]] && RealScalarList[[c[[1]], 1]][[0]] === RealScalarList[[d[[1]], 1]][[0]] &&
+						a[[2]] == c[[2]] && b[[2]] == d[[2]]),
 						1/4(ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[d[[1]],1]]] ComplexDelta[RealScalarList[[b[[1]],1]], RealScalarList[[c[[1]],1]]] TensorDelta[a[[2;;]],d[[2;;]]] TensorDelta[b[[2;;]],c[[2;;]]] + ComplexDelta[RealScalarList[[c[[1]],1]], RealScalarList[[d[[1]],1]]] ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[b[[1]],1]]] TensorDelta[a[[2;;]],b[[2;;]]] TensorDelta[c[[2;;]],d[[2;;]]] - 2/ListGauge[[gaug,3]] TensorDelta[a[[2;;]],c[[2;;]]] TensorDelta[b[[2;;]],d[[2;;]]] ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[c[[1]],1]]] ComplexDelta[RealScalarList[[b[[1]],1]], RealScalarList[[d[[1]],1]]])
 						 ,
 						0
 					] + If[
 							(RealScalarList[[a[[1]], 1]][[1]] === RealScalarList[[c[[1]], 1]][[1]] &&  RealScalarList[[b[[1]], 1]][[1]] === RealScalarList[[d[[1]], 1]][[1]] && 
 							RealScalarList[[a[[1]], 1]][[0]] =!= RealScalarList[[c[[1]], 1]][[0]] &&  RealScalarList[[b[[1]], 1]][[0]] =!= RealScalarList[[d[[1]], 1]][[0]] && 
-							RealScalarList[[a[[1]], 1]][[0]] === RealScalarList[[d[[1]], 1]][[0]] && RealScalarList[[b[[1]], 1]][[0]] === RealScalarList[[c[[1]], 1]][[0]]),
+							RealScalarList[[a[[1]], 1]][[0]] === RealScalarList[[d[[1]], 1]][[0]] && RealScalarList[[b[[1]], 1]][[0]] === RealScalarList[[c[[1]], 1]][[0]] &&
+							a[[2]] == c[[2]] && b[[2]] == d[[2]]),
 							-1/4(ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[d[[1]],1]]] ComplexDelta[RealScalarList[[b[[1]],1]], RealScalarList[[c[[1]],1]]] TensorDelta[a[[2;;]],d[[2;;]]] TensorDelta[b[[2;;]],c[[2;;]]] + ComplexDelta[RealScalarList[[c[[1]],1]], RealScalarList[[d[[1]],1]]] ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[b[[1]],1]]] TensorDelta[a[[2;;]],b[[2;;]]] TensorDelta[c[[2;;]],d[[2;;]]] - 2/ListGauge[[gaug,3]] TensorDelta[a[[2;;]],c[[2;;]]] TensorDelta[b[[2;;]],d[[2;;]]] ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[c[[1]],1]]] ComplexDelta[RealScalarList[[b[[1]],1]], RealScalarList[[d[[1]],1]]])
 							,
 							0
@@ -954,7 +957,10 @@ BeginPackage["ARGES`"];
 			),
 			(** SO(N) -- all in fundamental representation *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (
-				TensorDelta[a,d] TensorDelta[b,c] - TensorDelta[a,b] TensorDelta[c,d]
+				If[a[[1]] == c[[1]] && b[[1]] == d[[1]] && a[[2]] == c[[2]] && b[[2]] == d[[2]]
+					TensorDelta[a,d] TensorDelta[b,c] - TensorDelta[a,b] TensorDelta[c,d],
+					0
+				]
 			)/;(
 				ListGauge[[gaug,2]] === SO && 
 				RealScalarList[[a[[1]], 3, gaug]] == ListGauge[[gaug,3]] && 
@@ -983,7 +989,7 @@ BeginPackage["ARGES`"];
 			(** SU(N) -- all in fundamental representation *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (
 				If[
-					(a[[1]] == c[[1]] && b[[1]] == d[[1]]),
+					(a[[1]] == c[[1]] && b[[1]] == d[[1]] && a[[2]] == c[[2]] && b[[2]] == d[[2]]),
 					1/2(TensorDelta[a,d] TensorDelta[b,c]  - 1/ListGauge[[gaug,3]] TensorDelta[a,c] TensorDelta[b,d]),
 					0
 				] 
@@ -996,7 +1002,10 @@ BeginPackage["ARGES`"];
 			),
 			(** SO(N) -- all in fundamental representation *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (
-				TensorDelta[a,d] TensorDelta[b,c] - TensorDelta[a,b] TensorDelta[c,d]
+				If[a[[1]] == c[[1]] && b[[1]] == d[[1]] && a[[2]] == c[[2]] && b[[2]] == d[[2]]
+					TensorDelta[a,d] TensorDelta[b,c] - TensorDelta[a,b] TensorDelta[c,d],
+					0
+				]
 			)/;(
 				ListGauge[[gaug,2]] === SO && 
 				WeylFermionList[[a[[1]], 3, gaug]] == ListGauge[[gaug,3]] && 
