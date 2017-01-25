@@ -456,7 +456,7 @@ BeginPackage["ARGES`"];
 			beta += Sum[
 				Power[ListGauge[[ii,1]],4](
 					-97/6 C2[ListGauge[[ii,1]]] + 
-					5/3 S2[WeylFermionList[[pi,1]], ListGauge[[ii,1]]] + 
+					5/3 Sum[S2[WeylFermionList[[ff,1]], ListGauge[[ii,1]]], {ff, 1, FNumber[]}] + 
 					11/12 Sum[S2[RealScalarList[[ssb,1]], ListGauge[[ii,1]]], {ssb, 1, SNumber[]}]
 				) BetaYukawa[pa, pi, pj, la, li, lj, 0] (C2[WeylFermionList[[pi,1]], ListGauge[[ii, 1]]] + C2[WeylFermionList[[pj,1]], ListGauge[[ii, 1]]]),
 				{ii, 1, NumberOfSubgroups}
@@ -469,7 +469,7 @@ BeginPackage["ARGES`"];
 			beta += Sum[
 				Power[ListGauge[[ii,1]],4](
 					49/4 C2[ListGauge[[ii,1]]] -
-					1/4 S2[RealScalarList[[pa,1]], ListGauge[[ii,1]]] -
+					1/4 Sum[S2[RealScalarList[[ssb,1]], ListGauge[[ii,1]]], {ssb, 1, SNumber[]}] -
 					Sum[S2[WeylFermionList[[ff, 1]], ListGauge[[ii,1]]] ,{ff, 1, FNumber[]}]
 				) C2[RealScalarList[[pa,1]], ListGauge[[ii,1]]] BetaYukawa[pa, pi, pj, la, li, lj, 0],
 				{ii, 1, NumberOfSubgroups}
