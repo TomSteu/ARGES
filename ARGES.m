@@ -891,7 +891,7 @@ BeginPackage["ARGES`"];
 				1/2 Sum[YukawaTrace[Yuk[pa[[1]]], adj[Yuk[ss]], Yuk[pb[[1]]], adj[Yuk[ss]], Function[{x}, KroneckerDelta[#1, pa[[x+1]]] KroneckerDelta[#3, pb[[x+1]]] KroneckerDelta[#2,#4] &]/@Range[NumberOfSubgroups+1]] + YukawaTrace[adj[Yuk[pa[[1]]]], Yuk[ss], adj[Yuk[pb[[1]]]], Yuk[ss], Function[{x}, KroneckerDelta[#1, pa[[x+1]]] KroneckerDelta[#3, pb[[x+1]]] KroneckerDelta[#2,#4] &]/@Range[NumberOfSubgroups+1]], {ss, 1, SNumber[]}]	
 			],
 			Y2FS[gauge_, pa_, pb_] :> 1/2(YukawaTrace[C2[F, gauge], Yuk[pa[[1]]], adj[Yuk[pb[[1]]]], Function[{x}, KroneckerDelta[#1,1] KroneckerDelta[#2, pa[[1+x]]] KroneckerDelta[#3, pb[[1+x]]] &]/@Range[NumberOfSubgroups+1]] + YukawaTrace[C2[F, gauge], Yuk[pb[[1]]], adj[Yuk[pa[[1]]]], Function[{x}, KroneckerDelta[#1,1] KroneckerDelta[#2, pb[[1+x]]] KroneckerDelta[#3, pa[[1+x]]] &]/@Range[NumberOfSubgroups+1]]),
-			H2t[gauge_, pa_, pi_, pj_] :> Module[
+(*			H2t[gauge_, pa_, pi_, pj_] :> Module[
 				{ss, ff1, ff2, ff3},
 				 Sum[
 					Sum@@Join[
@@ -914,6 +914,36 @@ BeginPackage["ARGES`"];
 					{ff2[0], 1, FNumber[]},
 					{ff3[0], 1, FNumber[]},
 					{ss[0], 1, SNumber[]}
+				]
+			]*)
+			H2t[gauge_, pa_, pi_, pj_] :> Module[
+				{ss, ff1, ff2, ff3, ff4, scGenIdx, scGaugeIdx, a, A, B, C},
+				Sum[
+					ReleaseHold[(ReleaseHold[SolveProd[Yuk[pa[[1]]], adj[Yuk[ss]], Yuk[ss], pi[[1]], pj[[1]]] //.subProd /.subYuk //.subProd]/.{prod[A___, adj[Yukawa[a_]]]:>prod[A, adj[Yukawa[a]]][ListYukawa[[a,4]]], prod[A___, Yukawa[a_]]:>prod[A, Yukawa[a]][ListYukawa[[a,3]]]}//.subYuk //.{
+						prod[A_, B_, C_][a_] :> Sum@@Join[
+							{
+								Refine[Sum[GetGenProd[{A,B,C}, {pa[[2]], scGenIdx, scGenIdx}, pi[[2]], pj[[2]]] //.subProd, {scGenIdx, 1, C[[1,3]]}]] Refine[Conjugate[\[CapitalLambda][gauge][pi, Join[{a,1},ff3/@Range[NumberOfSubgroups]], Join[pi[[1;;2]], ff1/@Range[NumberOfSubgroups]], Join[{a,1},ff4/@Range[NumberOfSubgroups]]] //.sub\[CapitalLambda]F]] Times@@Function[{x}, A[[x+1, 1]][pa[[x+2]], ff1[x], ff2[x]] B[[x+1,1]][scGaugeIdx[x], ff2[x], ff3[x]] C[[x+1,1]][scGaugeIdx[x], ff4[x], pj[[x+2]]]]/@Range[NumberOfSubgroups]
+							},
+							Function[{x},{scGaugeIdx[x], 1, C[[x+1, 2]]}]/@Range[NumberOfSubgroups],
+							Function[{x},{ff1[x], 1, A[[x+1,3]]}]/@Range[NumberOfSubgroups],
+							Function[{x},{ff2[x], 1, A[[x+1,4]]}]/@Range[NumberOfSubgroups],
+							Function[{x},{ff3[x], 1, B[[x+1,4]]}]/@Range[NumberOfSubgroups],
+							Function[{x},{ff4[x], 1, C[[x+1,3]]}]/@Range[NumberOfSubgroups]
+						]
+					})] + 
+					ReleaseHold[(ReleaseHold[SolveProd[Yuk[ss], adj[Yuk[ss]], Yuk[pa[[1]]], pi[[1]], pj[[1]]] //.subProd /.subYuk //.subProd]/.{prod[adj[Yukawa[a_]], A___]:>prod[adj[Yukawa[a]], A][ListYukawa[[a,3]]], prod[Yukawa[a_], A___]:>prod[Yukawa[a], A][ListYukawa[[a,4]]]}//.subYuk //.{
+						prod[A_, B_, C_][a_] :> Sum@@Join[
+							{
+								Refine[Sum[GetGenProd[{A,B,C}, {scGenIdx, scGenIdx, pa[[2]]}, pi[[2]], pj[[2]]] //.subProd, {scGenIdx, 1, A[[1,3]]}]] (\[CapitalLambda][gauge][Join[{a,1},ff1/@Range[NumberOfSubgroups]], Join[pj[[1;;2]], ff4/@Range[NumberOfSubgroups]], Join[{a,1},ff2/@Range[NumberOfSubgroups]], pj] //.sub\[CapitalLambda]F) Times@@Function[{x}, A[[x+1, 1]][scGaugeIdx[x], pi[[x+2]], ff1[x]] B[[x+1,1]][scGaugeIdx[x], ff2[x], ff3[x]] C[[x+1,1]][pa[[x+2]], ff3[x], ff4[x]]]/@Range[NumberOfSubgroups]
+							},
+							Function[{x},{scGaugeIdx[x], 1, A[[x+1, 2]]}]/@Range[NumberOfSubgroups],
+							Function[{x},{ff1[x], 1, A[[x+1,4]]}]/@Range[NumberOfSubgroups],
+							Function[{x},{ff2[x], 1, B[[x+1,3]]}]/@Range[NumberOfSubgroups],
+							Function[{x},{ff3[x], 1, B[[x+1,4]]}]/@Range[NumberOfSubgroups],
+							Function[{x},{ff4[x], 1, C[[x+1,4]]}]/@Range[NumberOfSubgroups]
+						]
+					})],
+					{ss, 1, SNumber[]}
 				]
 			]
 		};
