@@ -32,7 +32,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 	
- 	Begin["Private`"]; 
+(* 	Begin["Private`"]; *)
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -893,23 +893,23 @@ BeginPackage["ARGES`"];
 			Y2FS[gauge_, pa_, pb_] :> 1/2(YukawaTrace[C2[F, gauge], Yuk[pa[[1]]], adj[Yuk[pb[[1]]]], Function[{x}, KroneckerDelta[#1,1] KroneckerDelta[#2, pa[[1+x]]] KroneckerDelta[#3, pb[[1+x]]] &]/@Range[NumberOfSubgroups+1]] + YukawaTrace[C2[F, gauge], Yuk[pb[[1]]], adj[Yuk[pa[[1]]]], Function[{x}, KroneckerDelta[#1,1] KroneckerDelta[#2, pb[[1+x]]] KroneckerDelta[#3, pa[[1+x]]] &]/@Range[NumberOfSubgroups+1]]),
 			H2t[gauge_, pa_, pi_, pj_] :> Module[
 				{ss, ff1, ff2, ff3},
-				Sum[
+				 Sum[
 					Sum@@Join[
 						{
 							(
-								Refine[Conjugate[\[CapitalLambda][gauge][pi, ff2/@Range[0, NumberOfSubgroups+1], ff1/@Range[0, NumberOfSubgroups+1], ff3/@Range[0, NumberOfSubgroups+1]]//.sub\[CapitalLambda]F]] YukawaProd[Yuk[pa[[1]]], adj[Yuk[ss[0]]], ff1[1], ff2[1], ff1/@Range[2,NumberOfSubgroups+1], ff2/@Range[2,NumberOfSubgroups+1], Function[{x}, KroneckerDelta[#1, pa[[x+1]]] KroneckerDelta[#2, ss[x]] &]/@Range[NumberOfSubgroups+1]] BetaYukawa[ss[0], ff3[0], pj[[1]], ss/@Range[NumberOfSubgroups+1], ff3/@Range[NumberOfSubgroups+1], pj[[2;;]], 0] + 
-								(\[CapitalLambda][gauge][ff1/@Range[0, NumberOfSubgroups+1], ff3/@Range[0, NumberOfSubgroups+1], ff2/@Range[0, NumberOfSubgroups+1], pj]//.sub\[CapitalLambda]F) YukawaProd[adj[Yuk[ss[0]]], Yuk[pa[[1]]], ff2[1], ff3[1], ff2/@Range[2,NumberOfSubgroups+1], ff3/@Range[2,NumberOfSubgroups+1], Function[{x}, KroneckerDelta[#2, pa[[x+1]]] KroneckerDelta[#1, ss[x]] &]/@Range[NumberOfSubgroups+1]] BetaYukawa[ss[0], pi[[1]], ff1[0], ss/@Range[NumberOfSubgroups+1], pi[[2;;]], ff1/@Range[NumberOfSubgroups+1], 0]
-								(*(\[CapitalLambda][gauge][ff1/@Range[0, NumberOfSubgroups+1], ff3/@Range[0, NumberOfSubgroups+1], ff2/@Range[0, NumberOfSubgroups+1], pj]//.sub\[CapitalLambda]F) YukawaProd[Yuk[ss[0]], adj[Yuk[pa[[1]]]], ff2[1], ff3[1], ff2/@Range[2,NumberOfSubgroups+1], ff3/@Range[2,NumberOfSubgroups+1], Function[{x}, KroneckerDelta[#2, pa[[x+1]]] KroneckerDelta[#1, ss[x]] &]/@Range[NumberOfSubgroups+1]] BetaYukawa[ss[0], ff1[0], pi[[1]], ss/@Range[NumberOfSubgroups+1], pi[[2;;]], ff1/@Range[NumberOfSubgroups+1], 0]*)
+								AA Refine[Conjugate[\[CapitalLambda][gauge][pi, ff2/@Range[0, NumberOfSubgroups+1], ff1/@Range[0, NumberOfSubgroups+1], ff3/@Range[0, NumberOfSubgroups+1]]//.sub\[CapitalLambda]F]] YukawaProd[Yuk[pa[[1]]], adj[Yuk[ss[0]]], ff1[0], ff2[0], ff1/@Range[NumberOfSubgroups+1], ff2/@Range[NumberOfSubgroups+1], Function[{x}, KroneckerDelta[#1, pa[[x+1]]] KroneckerDelta[#2, ss[x]] &]/@Range[NumberOfSubgroups+1]] BetaYukawa[ss[0], ff3[0], pj[[1]], ss/@Range[NumberOfSubgroups+1], ff3/@Range[NumberOfSubgroups+1], pj[[2;;]], 0] + 
+								BB (\[CapitalLambda][gauge][ff1/@Range[0, NumberOfSubgroups+1], ff3/@Range[0, NumberOfSubgroups+1], ff2/@Range[0, NumberOfSubgroups+1], pj]//.sub\[CapitalLambda]F) YukawaProd[adj[Yuk[ss[0]]], Yuk[pa[[1]]], ff2[0], ff3[0], ff2/@Range[NumberOfSubgroups+1], ff3/@Range[NumberOfSubgroups+1], Function[{x}, KroneckerDelta[#2, pa[[x+1]]] KroneckerDelta[#1, ss[x]] &]/@Range[NumberOfSubgroups+1]] BetaYukawa[ss[0], pi[[1]], ff1[0], ss/@Range[NumberOfSubgroups+1], pi[[2;;]], ff1/@Range[NumberOfSubgroups+1], 0]
+								(*(\[CapitalLambda][gauge][ff1/@Range[0, NumberOfSubgroups+1], ff3/@Range[0, NumberOfSubgroups+1], ff2/@Range[0, NumberOfSubgroups+1], pj]//.sub\[CapitalLambda]F) YukawaProd[Yuk[ss[0]], adj[Yuk[pa[[1]]]], ff2[0], ff3[0], ff2/@Range[NumberOfSubgroups+1], ff3/@Range[NumberOfSubgroups+1], Function[{x}, KroneckerDelta[#2, pa[[x+1]]] KroneckerDelta[#1, ss[x]] &]/@Range[NumberOfSubgroups+1]] BetaYukawa[ss[0], ff1[0], pi[[1]], ss/@Range[NumberOfSubgroups+1], pi[[2;;]], ff1/@Range[NumberOfSubgroups+1], 0]*)
 							),
 							{ff1[1], 1, WeylFermionList[[ff1[0], 2]]},
 							{ff2[1], 1, WeylFermionList[[ff2[0], 2]]},
 							{ff3[1], 1, WeylFermionList[[ff3[0], 2]]},
 							{ss[1], 1, RealScalarList[[ss[0], 2]]}
 						},
-						Function[{x}, {ff1[x+1], 1, FMultiplicity[ff1[0], gauge]}]/@Range[NumberOfSubgroups],
-						Function[{x}, {ff2[x+1], 1, FMultiplicity[ff2[0], gauge]}]/@Range[NumberOfSubgroups],
-						Function[{x}, {ff3[x+1], 1, FMultiplicity[ff3[0], gauge]}]/@Range[NumberOfSubgroups],
-						Function[{x}, {ss[x+1], 1, SMultiplicity[ss[0], gauge]}]/@Range[NumberOfSubgroups]
+						Function[{x}, {ff1[x+1], 1, FMultiplicity[ff1[0], x]}]/@Range[NumberOfSubgroups],
+						Function[{x}, {ff2[x+1], 1, FMultiplicity[ff2[0], x]}]/@Range[NumberOfSubgroups],
+						Function[{x}, {ff3[x+1], 1, FMultiplicity[ff3[0], x]}]/@Range[NumberOfSubgroups],
+						Function[{x}, {ss[x+1], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups]
 					],
 					{ff1[0], 1, FNumber[]},
 					{ff2[0], 1, FNumber[]},
@@ -1314,5 +1314,5 @@ BeginPackage["ARGES`"];
 		Quartic::UnknownParticle = "Undefined particle in scalar sector";
 		
 		Reset[];
- 	End[]; 
+(* 	End[]; *)
 EndPackage[];
