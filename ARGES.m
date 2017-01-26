@@ -1184,6 +1184,63 @@ BeginPackage["ARGES`"];
 			]]) /@ Range[NumberOfSubgroups])
 		];
 		
+		SolveTrace5[y1_, y2_, y3_, y4_, y5_, ScGauge_] := Join[
+			{
+				Refine[Sum[
+					ScGauge[[1]][scGenIdx1, scGenIdx2, scGenIdx3, scGenIdx4, scGenIdx5] GetGenTrace[{y1, y2, y3, y4, y5}, {scGenIdx1, scGenIdx2, scGenIdx3, scGenIdx4, scGenIdx5}]//.subProd,
+					{scGenIdx1, 1, y1[[1,3]]},
+					{scGenIdx2, 1, y2[[1,3]]},
+					{scGenIdx3, 1, y3[[1,3]]},
+					{scGenIdx4, 1, y4[[1,3]]},
+					{scGenIdx5, 1, y5[[1,3]]}
+				]]
+			},
+			((Function[{x}, Refine[
+				Sum[ScGauge[[x+1]][scGaugeIdx1[x], scGaugeIdx2[x], scGaugeIdx3[x], scGaugeIdx4[x], scGaugeIdx5[x]] y1[[x+1, 1]][scGaugeIdx1[x], sumInd1[x], sumInd2[x]] y2[[x+1, 1]][scGaugeIdx2[x], sumInd2[x], sumInd3[x]] y3[[x+1, 1]][scGaugeIdx3[x], sumInd3[x], sumInd4[x]] y4[[x+1, 1]][scGaugeIdx4[x], sumInd4[x], sumInd5[x]] y5[[x+1, 1]][scGaugeIdx5[x], sumInd5[x], sumInd1[x]], 
+					{sumInd1[x], 1, y1[[x+1, 3]]}, 
+					{sumInd2[x], 1, y1[[x+1, 4]]},
+					{sumInd3[x], 1, y3[[x+1, 3]]},
+					{sumInd4[x], 1, y3[[x+1, 4]]},
+					{sumInd5[x], 1, y5[[x+1, 3]]},
+					{scGaugeIdx1[x], 1, y1[[x+1, 2]]},
+					{scGaugeIdx2[x], 1, y2[[x+1, 2]]},
+					{scGaugeIdx3[x], 1, y3[[x+1, 2]]},
+					{scGaugeIdx4[x], 1, y4[[x+1, 2]]},
+					{scGaugeIdx5[x], 1, y5[[x+1, 2]]}
+				]
+			]]) /@ Range[NumberOfSubgroups])
+		];
+		
+			SolveTrace6[y1_, y2_, y3_, y4_, y5_, y6_, ScGauge_] := Join[
+			{
+				Refine[Sum[
+					ScGauge[[1]][scGenIdx1, scGenIdx2, scGenIdx3, scGenIdx4, scGenIdx5, scGenIdx6] GetGenTrace[{y1, y2, y3, y4, y5, y6}, {scGenIdx1, scGenIdx2, scGenIdx3, scGenIdx4, scGenIdx5, scGenIdx6}]//.subProd,
+					{scGenIdx1, 1, y1[[1,3]]},
+					{scGenIdx2, 1, y2[[1,3]]},
+					{scGenIdx3, 1, y3[[1,3]]},
+					{scGenIdx4, 1, y4[[1,3]]},
+					{scGenIdx5, 1, y5[[1,3]]},
+					{scGenIdx6, 1, y6[[1,3]]}
+				]]
+			},
+			((Function[{x}, Refine[
+				Sum[ScGauge[[x+1]][scGaugeIdx1[x], scGaugeIdx2[x], scGaugeIdx3[x], scGaugeIdx4[x], scGaugeIdx5[x], scGaugeIdx6[x]] y1[[x+1, 1]][scGaugeIdx1[x], sumInd1[x], sumInd2[x]] y2[[x+1, 1]][scGaugeIdx2[x], sumInd2[x], sumInd3[x]] y3[[x+1, 1]][scGaugeIdx3[x], sumInd3[x], sumInd4[x]] y4[[x+1, 1]][scGaugeIdx4[x], sumInd4[x], sumInd5[x]] y5[[x+1, 1]][scGaugeIdx5[x], sumInd5[x], sumInd6[x]] y5[[x+1, 1]][scGaugeIdx6[x], sumInd6[x], sumInd1[x]], 
+					{sumInd1[x], 1, y1[[x+1, 3]]}, 
+					{sumInd2[x], 1, y1[[x+1, 4]]},
+					{sumInd3[x], 1, y3[[x+1, 3]]},
+					{sumInd4[x], 1, y3[[x+1, 4]]},
+					{sumInd5[x], 1, y5[[x+1, 3]]},
+					{sumInd6[x], 1, y5[[x+1, 4]]},
+					{scGaugeIdx1[x], 1, y1[[x+1, 2]]},
+					{scGaugeIdx2[x], 1, y2[[x+1, 2]]},
+					{scGaugeIdx3[x], 1, y3[[x+1, 2]]},
+					{scGaugeIdx4[x], 1, y4[[x+1, 2]]},
+					{scGaugeIdx5[x], 1, y5[[x+1, 2]]},
+					{scGaugeIdx6[x], 1, y6[[x+1, 2]]}
+				]
+			]]) /@ Range[NumberOfSubgroups])
+		];
+		
 		SolveProd2[y1_, y2_, Ll_, Lr_, ScGauge_] := Join[
 			{ 
 				Refine[Sum[
@@ -1314,6 +1371,44 @@ BeginPackage["ARGES`"];
 				]
 			]/@Range[NumberOfSubgroups])
 		];
+		
+		SolveSProd3[Q1_, Q2_, Q3_, SContr_] := Times@@Join[
+			{ (Q1[[1,1]] Q2[[1,1]])
+				Sum[
+					SContr[[1]][q1Idx1[0], q1Idx2[0], q1Idx3[0], q1Idx4[0], q2Idx1[0], q2Idx2[0], q2Idx3[0], q2Idx4[0], q3Idx1[0], q3Idx2[0], q3Idx3[0], q3Idx4[0]] Q1[[1,2]][q1Idx1[0], q1Idx2[0], q1Idx3[0], q1Idx4[0]] Q2[[1,2]][q2Idx1[0], q2Idx2[0], q2Idx3[0], q2Idx4[0]] Q3[[1,2]][q3Idx1[0], q3Idx2[0], q3Idx3[0], q3Idx4[0]],
+					{q1Idx1[0], 1, Q1[[1,3]]},
+					{q1Idx2[0], 1, Q1[[1,4]]},
+					{q1Idx3[0], 1, Q1[[1,5]]},
+					{q1Idx4[0], 1, Q1[[1,6]]},
+					{q2Idx1[0], 1, Q2[[1,3]]},
+					{q2Idx2[0], 1, Q2[[1,4]]},
+					{q2Idx3[0], 1, Q2[[1,5]]},
+					{q2Idx4[0], 1, Q2[[1,6]]},
+					{q3Idx1[0], 1, Q3[[1,3]]},
+					{q3Idx2[0], 1, Q3[[1,4]]},
+					{q3Idx3[0], 1, Q3[[1,5]]},
+					{q3Idx4[0], 1, Q3[[1,6]]}
+				]
+			},
+			(Function[{x},
+				Sum[
+					SContr[[1+x]][q1Idx1[x], q1Idx2[x], q1Idx3[x], q1Idx4[x], q2Idx1[x], q2Idx2[x], q2Idx3[x], q2Idx4[x], q3Idx1[x], q3Idx2[x], q3Idx3[x], q3Idx4[x]] Q1[[1+x,1]][q1Idx1[x], q1Idx2[x], q1Idx3[x], q1Idx4[x]] Q2[[1+x,1]][q2Idx1[x], q2Idx2[x], q2Idx3[x], q2Idx4[x]] Q3[[1+x,1]][q3Idx1[x], q3Idx2[x], q3Idx3[x], q3Idx4[x]],
+					{q1Idx1[x], 1, Q1[[1+x,2]]},
+					{q1Idx2[x], 1, Q1[[1+x,3]]},
+					{q1Idx3[x], 1, Q1[[1+x,4]]},
+					{q1Idx4[x], 1, Q1[[1+x,5]]},
+					{q2Idx1[x], 1, Q2[[1+x,2]]},
+					{q2Idx2[x], 1, Q2[[1+x,3]]},
+					{q2Idx3[x], 1, Q2[[1+x,4]]},
+					{q2Idx4[x], 1, Q2[[1+x,5]]},
+					{q3Idx1[x], 1, Q3[[1+x,2]]},
+					{q3Idx2[x], 1, Q3[[1+x,3]]},
+					{q3Idx3[x], 1, Q3[[1+x,4]]},
+					{q3Idx4[x], 1, Q3[[1+x,5]]}
+				]
+			]/@Range[NumberOfSubgroups])
+		];
+		
 		
 		(* number of real scalars and weyl fermions *)
 		SNumber[] := If[RealScalarList == {}, 0, Dimensions[RealScalarList][[1]]];
