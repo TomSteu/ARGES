@@ -1173,23 +1173,20 @@ BeginPackage["ARGES`"];
 						Function[{x}, {gg[x], 1, A[[x+1,2]]}]/@Range[NumberOfSubgroups]
 					]})] 
 				)
+			],
+			Ag[gauge_][a_, b_, c_, d_] :> Block[
+				{ss1, ss2, ss3, ss4},
+				Sum[
+					(
+						\[CapitalLambda][gauge][a, c, ReplacePart[a, (gauge+2)->ss1], ReplacePart[c, (gauge+2)->ss3]] \[CapitalLambda][gauge][ReplacePart[a, (gauge+2)->ss1], ReplacePart[d, (gauge+2)->ss4], ReplacePart[b, (gauge+2)->ss2], d] \[CapitalLambda][gauge][ReplacePart[b, (gauge+2)->ss2], ReplacePart[c, (gauge+2)->ss3], b, ReplacePart[d, (gauge+2)->ss4]] - 3 \[CapitalLambda][gauge][a, c, ReplacePart[a, (gauge+2)->ss1], ReplacePart[c, (gauge+2)->ss3]] \[CapitalLambda][gauge][ReplacePart[a, (gauge+2)->ss1], ReplacePart[c, (gauge+2)->ss3], ReplacePart[b, (gauge+2)->ss2], ReplacePart[d, (gauge+2)->ss4]] \[CapitalLambda][gauge][ReplacePart[b, (gauge+2)->ss2], ReplacePart[d, (gauge+2)->ss4], b, d]
+					)//.sub\[CapitalLambda]S, 
+					{ss1, 1, SMultiplicity[a[[1]], gauge]},
+					{ss2, 1, SMultiplicity[b[[1]], gauge]},
+					{ss3, 1, SMultiplicity[c[[1]], gauge]},
+					{ss4, 1, SMultiplicity[d[[1]], gauge]}
+				]
 			]
 		};
-		
-		
-		
-(*		ReleaseHold[(ReleaseHold[SolveProd[Yuk[pa[[1]]], adj[Yuk[ss]], Yuk[ss], pi[[1]], pj[[1]]] //.subProd /.subYuk //.subProd]/.{prod[A___, adj[Yukawa[a_]]]:>prod[A, adj[Yukawa[a]]][ListYukawa[[a,4]]], prod[A___, Yukawa[a_]]:>prod[A, Yukawa[a]][ListYukawa[[a,3]]]}//.subYuk //.{
-						prod[A_, B_, C_][a_] :> Sum@@Join[
-							{
-								Refine[Sum[GetGenProd[{A,B,C}, {pa[[2]], scGenIdx, scGenIdx}, pi[[2]], pj[[2]]] //.subProd, {scGenIdx, 1, C[[1,3]]}]] Refine[Conjugate[\[CapitalLambda][gauge][pi, Join[{a,1},ff3/@Range[NumberOfSubgroups]], Join[pi[[1;;2]], ff1/@Range[NumberOfSubgroups]], Join[{a,1},ff4/@Range[NumberOfSubgroups]]] //.sub\[CapitalLambda]F]] Times@@Function[{x}, A[[x+1, 1]][pa[[x+2]], ff1[x], ff2[x]] B[[x+1,1]][scGaugeIdx[x], ff2[x], ff3[x]] C[[x+1,1]][scGaugeIdx[x], ff4[x], pj[[x+2]]]]/@Range[NumberOfSubgroups]
-							},
-							Function[{x},{scGaugeIdx[x], 1, C[[x+1, 2]]}]/@Range[NumberOfSubgroups],
-							Function[{x},{ff1[x], 1, A[[x+1,3]]}]/@Range[NumberOfSubgroups],
-							Function[{x},{ff2[x], 1, A[[x+1,4]]}]/@Range[NumberOfSubgroups],
-							Function[{x},{ff3[x], 1, B[[x+1,4]]}]/@Range[NumberOfSubgroups],
-							Function[{x},{ff4[x], 1, C[[x+1,3]]}]/@Range[NumberOfSubgroups]*)
-		
-		
 		
 		
 		(* Contraction of two scalar generators, see for instance arXiv:hep-ph/0211440 eq. (117) for Scalars and Fermions*)
