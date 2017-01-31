@@ -32,7 +32,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 	
- 	Begin["Private`"];
+(* 	Begin["Private`"];*)
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -513,7 +513,7 @@ BeginPackage["ARGES`"];
 			beta -= 6 Sqr[24] Perm[\[CapitalLambda]bar3[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] //.subScalarInvariants;
 			beta -= 6*24 Perm[\[CapitalLambda]bar2Y[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]]//.subScalarInvariants;
 			beta += 12 Perm[Hbar\[Lambda][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]]//.subScalarInvariants;
-			beta -= BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] Sum[Sum@@Join[
+			beta -= 12 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] Sum[Sum@@Join[
 				{
 					(3 H2S[ss1/@Range[0,NumberOfSubgroups+1], ss1/@Range[0,NumberOfSubgroups+1]] + 2 Hbar2S[ss1/@Range[0,NumberOfSubgroups+1], ss1/@Range[0,NumberOfSubgroups+1]])//.subScalarInvariants,
 					{ss1[1], 1, RealScalarList[[ss1[0], 2]]}
@@ -1105,9 +1105,9 @@ BeginPackage["ARGES`"];
 										SymQuartic[pc[[1]], pd[[1]], ss1, ss2]
 									]//.subProd/.subQuart//.subProd
 								]//.subQuart/.{prod[A_List, B_List]:>(SolveSProd2[A, B, Join[
-									Function[{x}, (KroneckerDelta[pa[[x+1]], #1] KroneckerDelta[pb[[x+1]], #2] KroneckerDelta[#3, #7] KroneckerDelta[#4, #8] KroneckerDelta[pc[[x+1]], #5] KroneckerDelta[pd[[x+1]], #6])&]/@Range[gaug],
-									{(KroneckerDelta[#1, pa[[gaug+2]]] KroneckerDelta[#2, pb[[gaug+2]]] KroneckerDelta[#5, pc[[gaug+2]]] KroneckerDelta[#6, pd[[gaug+2]]] KroneckerDelta[#3, gIdx1] KroneckerDelta[#4, gIdx2] KroneckerDelta[#7, gIdx3] KroneckerDelta[#8, gIdx4])&},
-									Function[{x},(KroneckerDelta[pa[[x+1]], #1] KroneckerDelta[pb[[x+1]], #2] KroneckerDelta[#3, #7] KroneckerDelta[#4, #8] KroneckerDelta[pc[[x+1]], #5] KroneckerDelta[pd[[x+1]], #6])&]/@Range[gaug+2, NumberOfSubgroups+1]
+									Function[{x}, Evaluate[(KroneckerDelta[pa[[x+1]], #1] KroneckerDelta[pb[[x+1]], #2] KroneckerDelta[#3, #7] KroneckerDelta[#4, #8] KroneckerDelta[pc[[x+1]], #5] KroneckerDelta[pd[[x+1]], #6])]&]/@Range[gaug],
+									{Evaluate[(KroneckerDelta[#1, pa[[gaug+2]]] KroneckerDelta[#2, pb[[gaug+2]]] KroneckerDelta[#5, pc[[gaug+2]]] KroneckerDelta[#6, pd[[gaug+2]]] KroneckerDelta[#3, gIdx1] KroneckerDelta[#4, gIdx2] KroneckerDelta[#7, gIdx3] KroneckerDelta[#8, gIdx4])]&},
+									Function[{x}, Evaluate[(KroneckerDelta[pa[[x+1]], #1] KroneckerDelta[pb[[x+1]], #2] KroneckerDelta[#3, #7] KroneckerDelta[#4, #8] KroneckerDelta[pc[[x+1]], #5] KroneckerDelta[pd[[x+1]], #6])]&]/@Range[gaug+2, NumberOfSubgroups+1]
 								]])}
 							),
 							{gIdx1, 1, SMultiplicity[ss1, gaug]},
@@ -1781,5 +1781,5 @@ BeginPackage["ARGES`"];
 		Quartic::UnknownParticle = "Undefined particle in scalar sector";
 		
 		Reset[];
-	End[];
+(*	End[];*)
 EndPackage[];
