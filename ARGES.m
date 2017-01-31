@@ -32,7 +32,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 	
-(* 	Begin["Private`"];*)
+ 	Begin["Private`"];
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -77,7 +77,7 @@ BeginPackage["ARGES`"];
 			Return[0];
 		];
 		
-		SimplifyProduct[A_] := (A //. subProd //.{tr[adj[a_], b_] -> tr[b, adj[a]], tr[adj[a_], b_, adj[c_], d_]->tr[b, adj[c], d, adj[a]], tr[adj[a_], b_, adj[c_], d_, adj[e_], f_]->tr[b, adj[c], d, adj[e], f, adj[a]]});
+		SimplifyProduct[term_] := (term //. subProd //.{tr[adj[a_], b_] -> tr[b, adj[a]], tr[adj[a_], b_, adj[c_], d_]->tr[b, adj[c], d, adj[a]], tr[adj[a_], b_, adj[c_], d_, adj[e_], f_]->tr[b, adj[c], d, adj[e], f, adj[a]], (A_ tr[C___, a_, adj[b_], G___, c_, adj[d_], F___] + B_ tr[G___, c_, adj[d_], F___, C___, a_, adj[b_]]) -> (A+B)tr[C, a, adj[b], G, c, adj[d], F], (A_ tr[C___, a_, adj[b_], G___, c_, adj[d_], F___] + B_ tr[c_, adj[d_], F___, C___, a_, adj[b_], G___]) -> (A+B)tr[C, a, adj[b], G, c, adj[d], F]});
 		
 		WeylFermion[sym_, Nflavor_, Gauge_List] := Module[
 			{},
@@ -523,7 +523,7 @@ BeginPackage["ARGES`"];
 			(*beta += 2(Perm[HY[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] + Perm[HbarY[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] + Perm[H3[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]]) //.subScalarInvariants;*)
 			beta += Sum[
 				Sqr[ListGauge[[ii,1]]](
-					24*6 Perm[\[CapitalLambda]bar2S[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] - 24*18 Perm[\[CapitalLambda]2g[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] - 2 Perm[HF[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] + 1/2 Sum[C2[RealScalarList[[ss1[0], 1]], ListGauge[[ii,1]]], {ss1[0], 1, SNumber[]}] Perm[H[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] + 5*24 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] Sum[
+					24*6 Perm[\[CapitalLambda]bar2S[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] - 24*18 Perm[\[CapitalLambda]2g[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] - 2 Perm[HF[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] + 1/2 Sum[C2[RealScalarList[[ss1[0], 1]] , ListGauge[[ii,1]]] SMultiplicity[ss1[0]], {ss1[0], 1, SNumber[]}] Perm[H[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] + 5*24 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] Sum[
 						Sum@@Join[
 							{
 								Y2FS[ii, ss1/@Range[0,NumberOfSubgroups+1],ss1/@Range[0,NumberOfSubgroups+1]],
@@ -1781,5 +1781,5 @@ BeginPackage["ARGES`"];
 		Quartic::UnknownParticle = "Undefined particle in scalar sector";
 		
 		Reset[];
-(*	End[];*)
+	End[];
 EndPackage[];
