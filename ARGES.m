@@ -520,7 +520,7 @@ BeginPackage["ARGES`"];
 				},
 				Function[{x}, {ss1[x+1], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups]
 			], {ss1[0], 1, SNumber[]}];
-			beta += 2(AA Perm[HY[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] + BB Perm[HbarY[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] + CC Perm[H3[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]]) //.subScalarInvariants;
+			beta += 2(Perm[HY[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] +  Perm[HbarY[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] +  Perm[H3[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]]) //.subScalarInvariants;
 			beta += Sum[
 				Sqr[ListGauge[[ii,1]]](
 					24*6 Perm[\[CapitalLambda]bar2S[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] - 24*18 Perm[\[CapitalLambda]2g[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] - 2 Perm[HF[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] + 1/2 Sum[C2[RealScalarList[[ss1[0], 1]] , ListGauge[[ii,1]]] SMultiplicity[ss1[0]], {ss1[0], 1, SNumber[]}] Perm[H[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] + 5*24 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] Sum[
@@ -538,23 +538,31 @@ BeginPackage["ARGES`"];
 			];
 			beta -= Sum[ 
 				Power[ListGauge[[ii,1]],4] (
-					(35/3 C2[ListGauge[[ii,1]]] - 5/3 Sum[S2[WeylFermionList[[ff,1]], ListGauge[[ii,1]]], {ff, 1, FNumber[]}] - 11/12 Sum[S2[RealScalarList[[ss1[0],1]], ListGauge[[ii,1]]], {ss1[0], 1, SNumber[]}])*24*\[CapitalLambda]S[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 1/2 Perm[BY[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] - 5 Perm[BbarY[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]]	- 36 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] Sum[Sqr[C2[RealScalarList[[ss1[0], 1]], ListGauge[[ii,1]]]] SMultiplicity[ss1[0]], {ss1[0], 1, SNumber[]}] - 15 Perm[A\[Lambda][ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] -
-					3 Perm[Abar\[Lambda][ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] 			
+					(35/3 C2[ListGauge[[ii,1]]] - 5/3 Sum[S2[WeylFermionList[[ff,1]], ListGauge[[ii,1]]], {ff, 1, FNumber[]}] - 11/12 Sum[S2[RealScalarList[[ss1[0],1]], ListGauge[[ii,1]]], {ss1[0], 1, SNumber[]}])*24*\[CapitalLambda]S[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 1/2 Perm[BY[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] - 5 Perm[BbarY[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]]	- 36 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0]*0* Sum[Sqr[C2[RealScalarList[[ss1[0], 1]], ListGauge[[ii,1]]]] SMultiplicity[ss1[0]], {ss1[0], 1, SNumber[]}] (*- 15 Perm[A\[Lambda][ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] -
+					3 Perm[Abar\[Lambda][ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]]*) 	
 				)//.subScalarInvariants,
 				{ii, 1, NumberOfSubgroups}
+			];
+			beta += Sum[
+				Sqr[ListGauge[[ii,1]] ListGauge[[ii2,1]]] (
+					15 Perm[A\[Lambda][ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] +
+					3 Perm[Abar\[Lambda][ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] + 36 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] Sum[C2[RealScalarList[[ss1[0], 1]], ListGauge[[ii,1]]] C2[RealScalarList[[ss1[0], 1]], ListGauge[[ii2,1]]]  SMultiplicity[ss1[0]], {ss1[0], 1, SNumber[]}]
+				)//.subScalarInvariants,
+				{ii, 1, NumberOfSubgroups},
+				{ii2, 1, NumberOfSubgroups}
 			];
 			beta += Sum[
 				1/4 Perm[As[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]](
 					Sqr[ListGauge[[ii2,1]]] Power[ListGauge[[ii,1]],4] (
 						161/6 C2[ListGauge[[ii,1]]] -
 						16/3 Sum[S2[WeylFermionList[[ff,1]], ListGauge[[ii,1]]], {ff, 1, FNumber[]}] -
-						7/3 Sum[S2[WeylFermionList[[ss1[0],1]], ListGauge[[ii,1]]], {ss1[0], 1, SNumber[]}]
+						7/3 Sum[S2[RealScalarList[[ss1[0],1]], ListGauge[[ii,1]]], {ss1[0], 1, SNumber[]}]
 					) - 15/2 Sum[Sqr[ListGauge[[ii,1]] ListGauge[[ii2,1]] ListGauge[[ii3,1]]] C2[RealScalarList[[ss1[0],1]], ListGauge[[ii3,1]]] SMultiplicity[ss1[0]], {ss1[0], 1, SNumber[]}, {ii3, 1, NumberOfSubgroups}]
 				)//.subScalarInvariants,
 				{ii, 1, NumberOfSubgroups},
 				{ii2, 1, NumberOfSubgroups}
 			];
-			beta += 27/2 Sum[Perm[Ag[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]], {ii, 1, NumberOfSubgroups}]//.subScalarInvariants;
+			beta += 27/2 Sum[ Power[ListGauge[[ii,1]], 6] Perm[Ag[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]], {ii, 1, NumberOfSubgroups}]//.subScalarInvariants;
 			Return[beta/(24 Power[4 \[Pi], 4])];
 		]
 		
@@ -1150,6 +1158,27 @@ BeginPackage["ARGES`"];
 					{ss4[0], 1, SNumber[]}
 				]
 			],
+			A\[Lambda][gauge_,gauge2_][a_, b_, c_, d_] :> Block[
+				{ss1, ss2},
+				If[gauge == gauge2, 
+					A\[Lambda][gauge][a, b, c, d]/.subScalarInvariants,
+					Sum[
+						Sum@@Join[
+							{
+								4 BetaQuartic[a[[1]], b[[1]], ss1[0], ss2[0], a[[2;;]], b[[2;;]], ss1/@Range[NumberOfSubgroups+1], ss2/@Range[NumberOfSubgroups+1], 0](
+									\[CapitalLambda][gauge][ReplacePart[ss1/@Range[0,NumberOfSubgroups+1], (gauge2+2)-> 1], ReplacePart[c, (gauge2+2)-> 1], ReplacePart[ss2/@Range[0,NumberOfSubgroups+1], (gauge2+2)-> 1], ReplacePart[d, (gauge2+2)-> 1]] \[CapitalLambda][gauge2][ReplacePart[ss1/@Range[0,NumberOfSubgroups+1], (gauge+2)-> 1], ReplacePart[c, (gauge+2)-> 1], ReplacePart[ss2/@Range[0,NumberOfSubgroups+1], (gauge+2)-> 1], ReplacePart[d, (gauge+2)-> 1]]
+								)//.sub\[CapitalLambda]S,
+								{ss1[1], 1, RealScalarList[[ss1[0], 2]]},
+								{ss2[1], 1, RealScalarList[[ss2[0], 2]]}
+							},
+							Function[{x}, {ss1[x+1], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {ss2[x+1], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+						],
+						{ss1[0], 1, SNumber[]},
+						{ss2[0], 1, SNumber[]}
+					]
+				]
+			],
 			Abar\[Lambda][gauge_][a_, b_, c_, d_] :> Block[
 				{ss1, ss2, ss3, ss4},
 				Sum[
@@ -1175,6 +1204,27 @@ BeginPackage["ARGES`"];
 					{ss2[0], 1, SNumber[]},
 					{ss3[0], 1, SNumber[]},
 					{ss4[0], 1, SNumber[]}
+				]
+			],
+			Abar\[Lambda][gauge_, gauge2_][a_, b_, c_, d_] :> Block[
+				{ss1, ss2, ss3, ss4},
+				If[gauge == gauge2,
+					Abar\[Lambda][gauge][a, b, c, d]/.subScalarInvariants,
+					Sum[
+						Sum@@Join[
+							{
+								4 BetaQuartic[a[[1]], b[[1]], ss1[0], ss2[0], a[[2;;]], b[[2;;]], ss1/@Range[NumberOfSubgroups+1], ss2/@Range[NumberOfSubgroups+1], 0](
+									\[CapitalLambda][gauge][ReplacePart[c, (gauge2+2)->1], ReplacePart[d, (gauge2+2)->1], ReplacePart[ss1/@Range[0,NumberOfSubgroups+1], (gauge2+2)->1], ReplacePart[ss2/@Range[0,NumberOfSubgroups+1], (gauge2+2)->1]] \[CapitalLambda][gauge2][ReplacePart[c, (gauge+2)->1], ReplacePart[d, (gauge+2)->1], ReplacePart[ss1/@Range[0,NumberOfSubgroups+1], (gauge+2)->1], ReplacePart[ss2/@Range[0,NumberOfSubgroups+1], (gauge+2)->1]]
+								)//.sub\[CapitalLambda]S,
+								{ss1[1], 1, RealScalarList[[ss1[0], 2]]},
+								{ss2[1], 1, RealScalarList[[ss2[0], 2]]}
+							},
+							Function[{x}, {ss1[x+1], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {ss2[x+1], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+						],
+						{ss1[0], 1, SNumber[]},
+						{ss2[0], 1, SNumber[]}
+					]
 				]
 			],
 			BY[gauge_][a_, b_, c_, d_] :> Block[
@@ -1230,7 +1280,7 @@ BeginPackage["ARGES`"];
 					]})] 
 				)
 			],
-			Ag[gauge_][a_, b_, c_, d_] :> Block[
+(*			Ag[gauge_][a_, b_, c_, d_] :> Block[
 				{ss1, ss2, ss3, ss4},
 				Sum[
 					(
@@ -1240,6 +1290,30 @@ BeginPackage["ARGES`"];
 					{ss2, 1, SMultiplicity[b[[1]], gauge]},
 					{ss3, 1, SMultiplicity[c[[1]], gauge]},
 					{ss4, 1, SMultiplicity[d[[1]], gauge]}
+				]
+			],*)
+			Ag[gauge_][a_, b_, c_, d_] :> Block[
+				{ss1, ss2, ss3, ss4},
+				Sum[
+					Sum@@Join[
+						{
+							\[CapitalLambda][gauge][a, c, ss1/@Range[0,NumberOfSubgroups+1], ss3/@Range[0,NumberOfSubgroups+1]] (
+								\[CapitalLambda][gauge][ss1/@Range[0,NumberOfSubgroups+1], ss4/@Range[0,NumberOfSubgroups+1], ss2/@Range[0,NumberOfSubgroups+1], d] \[CapitalLambda][gauge][ss2/@Range[0,NumberOfSubgroups+1], ss3/@Range[0,NumberOfSubgroups+1], b, ss4/@Range[0,NumberOfSubgroups+1]] - 3 \[CapitalLambda][gauge][ss1/@Range[0,NumberOfSubgroups+1], ss3/@Range[0,NumberOfSubgroups+1], ss2/@Range[0,NumberOfSubgroups+1], ss4/@Range[0,NumberOfSubgroups+1]] \[CapitalLambda][gauge][ss2/@Range[0,NumberOfSubgroups+1], ss4/@Range[0,NumberOfSubgroups+1], b, d]
+							)//.sub\[CapitalLambda]S,
+							{ss1[1], 1, RealScalarList[[ss1[0], 2]]},
+							{ss2[1], 1, RealScalarList[[ss2[0], 2]]},
+							{ss3[1], 1, RealScalarList[[ss3[0], 2]]},
+							{ss4[1], 1, RealScalarList[[ss4[0], 2]]}
+						},
+						Function[{x}, {ss1[x+1], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+						Function[{x}, {ss2[x+1], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+						Function[{x}, {ss3[x+1], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+						Function[{x}, {ss4[x+1], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
+					],
+					{ss1[0], 1, SNumber[]},
+					{ss2[0], 1, SNumber[]},
+					{ss3[0], 1, SNumber[]},
+					{ss4[0], 1, SNumber[]}
 				]
 			]
 		};
@@ -1781,5 +1855,5 @@ BeginPackage["ARGES`"];
 		Quartic::UnknownParticle = "Undefined particle in scalar sector";
 		
 		Reset[];
-End[];
+	End[];
 EndPackage[];
