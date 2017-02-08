@@ -165,56 +165,86 @@ BeginPackage["ARGES`"];
 			posA = ListPosition[adj/@ComplexScalarList, Sa];
 			If[posA != {},
 				posB = ListPosition[ComplexScalarList, Sb];
-				If[posB != {},
+				If[posB != {} && posB == posA,
 					Quartic\[Lambda]abcd[sym, Re[Sa[[1]]], Re[Sb], Sc, Sd, gauge, (1/2 fak[#1,#2,#3,#4])&];
 					Quartic\[Lambda]abcd[sym, Im[Sa[[1]]], Im[Sb], Sc, Sd, gauge, (1/2 fak[#1,#2,#3,#4])&];
 					Return[];
 				];
+				Quartic\[Lambda]abcd[sym, Re[Sa[[1]]], Sb, Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Quartic\[Lambda]abcd[sym, Im[Sa[[1]]], Sb, Sc, Sd, gauge, (-1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Return[];
 			];
 			posA = ListPosition[ComplexScalarList, Sa];
 			If[posA != {},
 				posB = ListPosition[adj/@ComplexScalarList, Sb];
-				If[posB != {},
+				If[posB != {} && posA == posB,
 					Quartic\[Lambda]abcd[sym, Re[Sa], Re[Sb[[1]]], Sc, Sd, gauge, (1/2 fak[#1,#2,#3,#4])&];
 					Quartic\[Lambda]abcd[sym, Im[Sa], Im[Sb[[1]]], Sc, Sd, gauge, (1/2 fak[#1,#2,#3,#4])&];
 					Return[];
 				];
+				Quartic\[Lambda]abcd[sym, Re[Sa], Sb, Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Quartic\[Lambda]abcd[sym, Im[Sa], Sb, Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Return[];
 			];
 			posB = ListPosition[adj/@ComplexScalarList, Sb];
 			If[posB != {},
 				posC = ListPosition[ComplexScalarList, Sc];
-				If[posC != {},
+				If[posC != {} && posB == posC,
 					Quartic\[Lambda]abcd[sym, Sa, Re[Sb[[1]]], Re[Sc], Sd, gauge, (1/2 fak[#1,#2,#3,#4])&];
 					Quartic\[Lambda]abcd[sym, Sa, Im[Sb[[1]]], Im[Sc], Sd, gauge, (1/2 fak[#1,#2,#3,#4])&];
 					Return[];
 				];
+				Quartic\[Lambda]abcd[sym, Sa, Re[Sb[[1]]], Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Quartic\[Lambda]abcd[sym, Sa, Im[Sb[[1]]], Sc, Sd, gauge, (-1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Return[];
 			];
 			posB = ListPosition[ComplexScalarList, Sb];
 			If[posB != {},
 				posC = ListPosition[adj/@ComplexScalarList, Sc];
-				If[posC != {},
+				If[posC != {} && posB == posC,
 					Quartic\[Lambda]abcd[sym, Sa, Re[Sb], Re[Sc[[1]]], Sd, gauge, (1/2 fak[#1,#2,#3,#4])&];
 					Quartic\[Lambda]abcd[sym, Sa, Im[Sb], Im[Sc[[1]]], Sd, gauge, (1/2 fak[#1,#2,#3,#4])&];
 					Return[];
 				];
+				Quartic\[Lambda]abcd[sym, Sa, Re[Sb], Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Quartic\[Lambda]abcd[sym, Sa, Im[Sb], Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Return[];
 			];
 			posC = ListPosition[adj/@ComplexScalarList, Sc];
 			If[posC != {},
 				posD = ListPosition[ComplexScalarList, Sd];
-				If[posD != {},
+				If[posD != {} && posC == posD,
 					Quartic\[Lambda]abcd[sym, Sa, Sb, Re[Sc[[1]]], Re[Sd], gauge, (1/2 fak[#1,#2,#3,#4])&];
 					Quartic\[Lambda]abcd[sym, Sa, Sb, Im[Sc[[1]]], Im[Sd], gauge, (1/2 fak[#1,#2,#3,#4])&];
 					Return[];
 				];
+				Quartic\[Lambda]abcd[sym, Sa, Sb, Re[Sc[[1]]], Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Quartic\[Lambda]abcd[sym, Sa, Sb, Im[Sc[[1]]], Sd, gauge, (-1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Return[];
 			];
 			posC = ListPosition[ComplexScalarList, Sc];
 			If[posC != {},
 				posD = ListPosition[adj/@ComplexScalarList, Sd];
-				If[posD != {},
+				If[posD != {} && posC == posD,
 					Quartic\[Lambda]abcd[sym, Sa, Sb, Re[Sc], Re[Sd[[1]]], gauge, (1/2 fak[#1,#2,#3,#4])&];
 					Quartic\[Lambda]abcd[sym, Sa, Sb, Im[Sc], Im[Sd[[1]]], gauge, (1/2 fak[#1,#2,#3,#4])&];
 					Return[];
 				];
+				Quartic\[Lambda]abcd[sym, Sa, Sb, Re[Sc], Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Quartic\[Lambda]abcd[sym, Sa, Sb, Im[Sc], Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Return[];
+			];
+			posD = ListPosition[adj/@ComplexScalarList, Sc];
+			If[posD != 0,
+				Quartic\[Lambda]abcd[sym, Sa, Sb, Sc, Re[Sd[[1]]], gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Quartic\[Lambda]abcd[sym, Sa, Sb, Sc, Im[Sd[[1]]], gauge, (-1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Return[];
+			];
+			posD = ListPosition[ComplexScalarList, Sd];
+			If[posD != 0,
+				Quartic\[Lambda]abcd[sym, Sa, Sb, Sc, Re[Sd], gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Quartic\[Lambda]abcd[sym, Sa, Sb, Sc, Im[Sd], gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Return[];
 			];
 			posA = ListPosition[RealScalarList,_List?(#[[1]] == Sa &)];
 			posB = ListPosition[RealScalarList,_List?(#[[1]] == Sb &)];
