@@ -16,4 +16,3 @@ YukawaYaij[Ye, H, L, E, {1 &, KroneckerDelta[#1, #2] &, 1 &}];
 YukawaYaij[Yu, adj[H], Q, U, {1 &, Eps[#1, #2] &, KroneckerDelta[#2, #3] &}];
 Quartic\[Lambda]abcd[\[Lambda], adj[H], H, adj[H], H, {1&, (KroneckerDelta[#1, #2] KroneckerDelta[#3, #4])&, 1&}, 1/2 &];
 ComputeInvariants[];
-subInvariants

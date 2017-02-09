@@ -559,7 +559,7 @@ BeginPackage["ARGES`"];
 			];
 			beta -= Sum[ 
 				Power[ListGauge[[ii,1]],4] (
-					(35/3 C2[ListGauge[[ii,1]]] - 5/3 Sum[S2[WeylFermionList[[ff,1]], ListGauge[[ii,1]]], {ff, 1, FNumber[]}] - 11/12 Sum[S2[RealScalarList[[ss1[0],1]], ListGauge[[ii,1]]], {ss1[0], 1, SNumber[]}])*24*\[CapitalLambda]S[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] (*+ 1/2 Perm[BY[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] - 5 Perm[BbarY[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]]*)
+					(35/3 C2[ListGauge[[ii,1]]] - 5/3 Sum[S2[WeylFermionList[[ff,1]], ListGauge[[ii,1]]], {ff, 1, FNumber[]}] - 11/12 Sum[S2[RealScalarList[[ss1[0],1]], ListGauge[[ii,1]]], {ss1[0], 1, SNumber[]}])*24*\[CapitalLambda]S[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]
 				)//.subScalarInvariants,
 				{ii, 1, NumberOfSubgroups}
 			];
@@ -768,6 +768,8 @@ BeginPackage["ARGES`"];
 		(* Matrix multiplication and traces for Yukawas *)
 		subProd := {
 			prod[a___, b_ + c_, d___]:>(prod[a, b, d] + prod[a, c, d]),
+			prod[][i1_,i2_]:>KroneckerDelta[i1,i2],
+			prod[]:>1,
 			prod[a_]:>a, 
 			prod[a___, prod[b___], c___]:>prod[a, b, c], 
 			prod[a___, n_, b___]:>(n prod[a,b])/; NumberQ[n],
@@ -1220,7 +1222,7 @@ BeginPackage["ARGES`"];
 			BY[gauge_, gauge2_][a_, b_, c_, d_] :> Block[
 				{ff, gg, ff1, ff2, ff3, ff4},
 				(
-					ReleaseHold[(ReleaseHold[SolveTrace[Yuk[c[[1]]], adj[Yuk[d[[1]]]]]//.subProd /.subYuk //.subProd]/.{tr[adj[Yukawa[aa_]], A___]:>tr[adj[Yukawa[aa]], A][ListYukawa[[aa,4]]], tr[Yukawa[aa_], A___]:>tr[Yukawa[aa], A][ListYukawa[[aa,3]]]}//.subYuk //.{tr[A_, B_][ff_]:> Sum[Sum[Sum@@Join[
+					ReleaseHold[(ReleaseHold[SolveTrace[Yuk[c[[1]]], adj[Yuk[d[[1]]]]]//. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]/.{tr[adj[Yukawa[aa_]], A___]:>tr[adj[Yukawa[aa]], A][ListYukawa[[aa,4]]], tr[Yukawa[aa_], A___]:>tr[Yukawa[aa], A][ListYukawa[[aa,3]]]}//.subYuk //.{tr[A_, B_][ff_]:> Sum[Sum[Sum@@Join[
 						{
 							GetGenTrace[{A,B}, {c[[2]], d[[2]]}] ((
 								\[CapitalLambda][gauge, gauge2][gg/@Range[0,NumberOfSubgroups+1], Join[{ff, 1}, ff1/@Range[NumberOfSubgroups]], a, Join[{ff, 1}, ff2/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge2, gauge][b, Join[{ff, 1}, ff2/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+1], Join[{ff, 1}, ff3/@Range[NumberOfSubgroups]]] + 
@@ -1234,7 +1236,7 @@ BeginPackage["ARGES`"];
 						Function[{x}, {gg[x+1], 1, SMultiplicity[gg[0], x]}]/@Range[NumberOfSubgroups]
 						
 					], {gg[1], 1, RealScalarList[[gg[0], 2]]}], {gg[0], 1, SNumber[]}]})] + 
-					ReleaseHold[(ReleaseHold[SolveTrace[adj[Yuk[d[[1]]]], Yuk[c[[1]]]]//.subProd /.subYuk //.subProd]/.{tr[adj[Yukawa[aa_]], A___]:>tr[adj[Yukawa[aa]], A][ListYukawa[[aa,4]]], tr[Yukawa[aa_], A___]:>tr[Yukawa[aa], A][ListYukawa[[aa,3]]]}//.subYuk //.{tr[A_, B_][ff_]:> Sum[Sum[Sum@@Join[
+					ReleaseHold[(ReleaseHold[SolveTrace[adj[Yuk[d[[1]]]], Yuk[c[[1]]]]//. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]}/.subYuk //.subProd]/.{tr[adj[Yukawa[aa_]], A___]:>tr[adj[Yukawa[aa]], A][ListYukawa[[aa,4]]], tr[Yukawa[aa_], A___]:>tr[Yukawa[aa], A][ListYukawa[[aa,3]]]}//.subYuk //.{tr[A_, B_][ff_]:> Sum[Sum[Sum@@Join[
 						{
 							GetGenTrace[{A,B}, {d[[2]], c[[2]]}] ((
 								\[CapitalLambda][gauge,gauge2][a, Join[{ff, 1}, ff1/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+1], Join[{ff, 1}, ff2/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge2,gauge][gg/@Range[0,NumberOfSubgroups+1], Join[{ff, 1}, ff2/@Range[NumberOfSubgroups]], b, Join[{ff, 1}, ff3/@Range[NumberOfSubgroups]]] + 
@@ -1485,9 +1487,9 @@ BeginPackage["ARGES`"];
 					!(MatchQ[symList[[split, 1, 2]], Mat[___]] || MatchQ[symList[[split, 1, 2]], Conjugate[Mat[___]]] || MatchQ[symList[[split, 1, 2]], a_ Mat[___]] || MatchQ[symList[[split, 1, 2]], a_ Conjugate[Mat[___]]]  || MatchQ[symList[[split, 1, 2]], Mat[___]&] || MatchQ[symList[[split, 1, 2]], Conjugate[Mat[___]]&]  || MatchQ[symList[[split, 1, 2]], a_ Mat[___]&] || MatchQ[symList[[split, 1, 2]], a_ Conjugate[Mat[___]]&]),
 					Return[
 						If[(split == Dimensions[symList][[1]]),
-							If[split == 1, 1, (prod@@symList[[split-1;;, 1, 1]])[i,j] Refine[Times@@(Function[{x},x[1]]/@symList[[split-1;;, 1, 2]]//.Mat:>Identity)]] symList[[split, 1, 1]] symList[[split, 1, 2]][sVarList[[split]], i, j],
+							If[split == 1, 1, ((prod@@symList[[;;split-1, 1, 1]])[i,j]/. prod[C2[A___]][___] :> C2[A]) Refine[Times@@(Function[{x},x[1]]/@symList[[;;split-1, 1, 2]]//.Mat:>Identity)]] symList[[split, 1, 1]] symList[[split, 1, 2]][sVarList[[split]], i, j],
 							Sum[
-								If[split == 1, 1, (prod@@symList[[split-1;;, 1, 1]])[i,sumInd] Refine[Times@@(Function[{x},x[1]]/@symList[[split-1;;, 1, 2]]//.Mat:>Identity)]] symList[[split, 1, 1]] symList[[split, 1, 2]][sVarList[[split]], i, sumInd] GetGenProd[symList[[split+1;;]], sVarList[[split+1;;]], sumInd, j],
+								If[split == 1, 1, ((prod@@symList[[;;split-1, 1, 1]])[i,sumInd]/. prod[C2[A___]][___] :> C2[A]) Refine[Times@@(Function[{x},x[1]]/@symList[[;;split-1, 1, 2]]//.Mat:>Identity)]] symList[[split, 1, 1]] symList[[split, 1, 2]][sVarList[[split]], i, sumInd] GetGenProd[symList[[split+1;;]], sVarList[[split+1;;]], sumInd, j],
 								{sumInd, 1, symList[[split, 1, 5]]}
 							]
 						]
@@ -1511,12 +1513,12 @@ BeginPackage["ARGES`"];
 						If[split != Dimensions[symList][[1]],
 							If[split == 1,
 								Sum[
-									symList[[split, 1, 1]] symList[[split, 1, 2]][sVarList[[split]], sumInd2, sumInd3] GetGenProd[symList[[split+1;;]], sVarList[[split+1;;]], sVarList[[split+1;;]], sumInd3, sumInd2],
+									symList[[split, 1, 1]] symList[[split, 1, 2]][sVarList[[split]], sumInd2, sumInd3] GetGenProd[symList[[split+1;;]], sVarList[[split+1;;]], sumInd3, sumInd2],
 									{sumInd2, 1, symList[[split,1,4]]},
 									{sumInd3, 1, symList[[split,1,5]]}
 								],
 								Sum[
-									(prod@@symList[[split-1;;, 1, 1]])[sumInd1,sumInd2] Refine[Times@@(Function[{x},x[1]]/@symList[[split-1;;, 1, 2]]//.Mat:>Identity)] symList[[split, 1, 1]] symList[[split, 1, 2]][sVarList[[split]], sumInd2, sumInd3] GetGenProd[symList[[split+1;;]], sVarList[[split+1;;]], sVarList[[split+1;;]], sumInd3, sumInd1],
+									((prod@@symList[[;;split-1, 1, 1]])[sumInd1,sumInd2]/. prod[C2[A___]][___] :> C2[A]) Refine[Times@@(Function[{x},x[1]]/@symList[[;;split-1, 1, 2]]//.Mat:>Identity)] symList[[split, 1, 1]] symList[[split, 1, 2]][sVarList[[split]], sumInd2, sumInd3] GetGenProd[symList[[split+1;;]], sVarList[[split+1;;]], sumInd3, sumInd1],
 									{sumInd1, 1, symList[[1,1,4]]},
 									{sumInd2, 1, symList[[split,1,4]]},
 									{sumInd3, 1, symList[[split,1,5]]}
@@ -1528,7 +1530,7 @@ BeginPackage["ARGES`"];
 									{sumInd1, 1, symList[[split,1,4]]}
 								],
 								Sum[
-									(prod@@symList[[split-1;;, 1, 1]])[sumInd1,sumInd2] Refine[Times@@(Function[{x},x[1]]/@symList[[split-1;;, 1, 2]]//.Mat:>Identity)] symList[[split, 1, 1]] symList[[split, 1, 2]][sVarList[[split]], sumInd2, sumInd1],
+									((prod@@symList[[;;split-1, 1, 1]])[sumInd1,sumInd2]/. prod[C2[A___]][___] :> C2[A]) Refine[Times@@(Function[{x},x[1]]/@symList[[;;split-1, 1, 2]]//.Mat:>Identity)] symList[[split, 1, 1]] symList[[split, 1, 2]][sVarList[[split]], sumInd2, sumInd1],
 									{sumInd1, 1, symList[[1,1,4]]},
 									{sumInd2, 1, symList[[split,1,4]]}
 								]
