@@ -1115,7 +1115,7 @@ BeginPackage["ARGES`"];
 										SymQuartic[pc[[1]], pd[[1]], ss1[0], ss2[0]]
 									]//.subProd/.subQuart//.subProd
 								]//.subQuart/.{prod[A_List, B_List]:>(
-									A[[1,1]] B[[1,1]] A[[1,2]][pa[[2]], pb[[2]], ss1[1], ss2[1]] A[[1,2]][pc[[2]], pd[[2]], ss1[1], ss2[1]] Times@@(Function[{x}, A[[x+1,1]][pa[[2+x]], pb[[2+x]], ss1[1+x], ss2[1+x]] B[[x+1,1]][pc[[2+x]], pd[[2+x]], ss1[1+x], ss2[1+x]]]/@Range[NumberOfSubgroups])
+									A[[1,1]] B[[1,1]] A[[1,2]][pa[[2]], pb[[2]], ss1[1], ss2[1]] B[[1,2]][pc[[2]], pd[[2]], ss1[1], ss2[1]] Times@@(Function[{x}, A[[x+1,1]][pa[[2+x]], pb[[2+x]], ss1[1+x], ss2[1+x]] B[[x+1,1]][pc[[2+x]], pd[[2+x]], ss1[1+x], ss2[1+x]]]/@Range[NumberOfSubgroups])
 								)}
 							)
 							C2[RealScalarList[[ss2[0],1]], ListGauge[[gaug,1]]],
