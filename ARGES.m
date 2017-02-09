@@ -1141,7 +1141,7 @@ BeginPackage["ARGES`"];
 										SymQuartic[pc[[1]], pd[[1]], ss3[0], ss4[0]]
 									]//.subProd/.subQuart//.subProd
 								]//.subQuart/.{prod[A_List, B_List]:>(
-									A[[1,1]] B[[1,1]] A[[1,2]][pa[[2]], pb[[2]], ss1[1], ss2[1]] A[[1,2]][pc[[2]], pd[[2]], ss3[1], ss4[1]] Times@@(Function[{x}, A[[x+1,1]][pa[[2+x]], pb[[2+x]], ss1[1+x], ss2[1+x]] B[[x+1,1]][pc[[2+x]], pd[[2+x]], ss3[1+x], ss4[1+x]]]/@Range[NumberOfSubgroups])
+									A[[1,1]] B[[1,1]] A[[1,2]][pa[[2]], pb[[2]], ss1[1], ss2[1]] B[[1,2]][pc[[2]], pd[[2]], ss3[1], ss4[1]] Times@@(Function[{x}, A[[x+1,1]][pa[[2+x]], pb[[2+x]], ss1[1+x], ss2[1+x]] B[[x+1,1]][pc[[2+x]], pd[[2+x]], ss3[1+x], ss4[1+x]]]/@Range[NumberOfSubgroups])
 								)}
 							)
 							\[CapitalLambda][gaug][ss1/@Range[0,NumberOfSubgroups+1], ss2/@Range[0,NumberOfSubgroups+1], ss3/@Range[0,NumberOfSubgroups+1], ss4/@Range[0,NumberOfSubgroups+1]]//.sub\[CapitalLambda]S,
