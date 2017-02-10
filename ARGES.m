@@ -234,7 +234,7 @@ BeginPackage["ARGES`"];
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Im[Sc], Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Return[];
 			];
-			posD = ListPosition[adj/@ComplexScalarList, Sc];
+			posD = ListPosition[adj/@ComplexScalarList, Sd];
 			If[posD != 0,
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Sc, Re[Sd[[1]]], gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Sc, Im[Sd[[1]]], gauge, (-1/Sqrt[2] fak[#1,#2,#3,#4])&];
