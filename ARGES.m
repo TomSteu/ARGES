@@ -34,7 +34,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 	
-(* 	Begin["Private`"];*)
+ 	Begin["Private`"];
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -800,7 +800,7 @@ BeginPackage["ARGES`"];
 		};
 		
 		(* replaces Yukawas and other Invariants in Fermion traces and products *)
-		subYuk = {
+		subYuk := {
 			Yuk[a_][i1_, i2_]:>
 				Block[
 					{posY, posYadj},
@@ -859,12 +859,10 @@ BeginPackage["ARGES`"];
 			C2F[ferm_, igauge_] :> Join[
 				{{C2[WeylFermionList[[ferm, 1]], ListGauge[[igauge, 1]]], Mat[1]&, 1, 1, WeylFermionList[[ferm,2]], WeylFermionList[[ferm,2]]}},
 				Function[{x}, If[ListGauge[[x, 3]] === 1, {1&, 1, 1, 1}, {KroneckerDelta[#2, #3]&, 1, WeylFermionList[[ferm, 3, x]], WeylFermionList[[ferm, 3, x]]}]]/@Range[NumberOfSubgroups]
-			](*,
-			prod[C2F[ferm_, igauge_]][i1_,i2_] :> KroneckerDelta[i1,i2] C2[WeylFermionList[[ferm, 1]], ListGauge[[igauge, 1]]],
-			prod[A___, C2F[ferm_, igauge_], B___][i1_,i2_] :> prod[A,B][i1,i2] C2[WeylFermionList[[ferm, 1]], ListGauge[[igauge, 1]]],
-			tr[C2F[ferm_, igauge_]] :> FMultiplicity[ferm] C2[WeylFermionList[[ferm, 1]], ListGauge[[igauge, 1]]],
-			tr[A___, C2F[ferm_, igauge_], B___] :> tr[A,B] C2[WeylFermionList[[ferm, 1]], ListGauge[[igauge, 1]]]
-			*)
+			],
+			prod[B___, C2[A___], C___] :> (C2[A] prod[B,C]),
+			prod[B___, C2[A___], C___][ii___] :> (C2[A] prod[B,C][ii]),
+			tr[B___, C2[A___], C___] :> C2[A] tr[B,C]
 		};
 		
 		(* substitution rule for scalar sector *)
@@ -1921,5 +1919,5 @@ BeginPackage["ARGES`"];
 		Quartic::UnknownParticle = "Undefined particle in scalar sector";
 		
 		Reset[];
-(*	End[];*)
+	End[];
 EndPackage[];
