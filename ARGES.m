@@ -383,20 +383,55 @@ BeginPackage["ARGES`"];
 		};
 		
 		BetaYukawa[pa_, pi_, pj_, la_, li_, lj_, 1] := Module[
-			{beta, ss, ii, x, x2, x3, sumIdx},
+			{beta, ss, ss1, ii, x, x2, x3, sumIdx},
 			beta = 0;
-			beta = beta + 1/2 Sum[YukawaProd[Yuk[ss], adj[Yuk[ss]], Yuk[pa], pi, pj, li, lj, Join[{KroneckerDelta[#1,#3] KroneckerDelta[#2,#4] KroneckerDelta[#5, la[[1]]] KroneckerDelta[#6, la[[2]]] &}, Function[{x},(KroneckerDelta[#1, #2]KroneckerDelta[#3, la[[2+x]]])&]/@Range[NumberOfSubgroups]]], {ss, 1, SNumber[]}];
-			beta = beta + 1/2 Sum[YukawaProd[Yuk[pa], adj[Yuk[ss]], Yuk[ss], pi, pj, li, lj, Join[{KroneckerDelta[#3,#5] KroneckerDelta[#4,#6] KroneckerDelta[#1, la[[1]]] KroneckerDelta[#2, la[[2]]] &}, Function[{x},(KroneckerDelta[#2, #3]KroneckerDelta[#1, la[[2+x]]])&]/@Range[NumberOfSubgroups]]], {ss, 1, SNumber[]}];
-			beta = beta + 2 Sum[YukawaProd[Yuk[ss], adj[Yuk[pa]], Yuk[ss], pi, pj, li, lj, Join[{KroneckerDelta[#1,#5] KroneckerDelta[#2,#6] KroneckerDelta[#3, la[[1]]] KroneckerDelta[#4, la[[2]]] &}, Function[{x},(KroneckerDelta[#1, #3]KroneckerDelta[#2, la[[2+x]]])&]/@Range[NumberOfSubgroups]]], {ss, 1, SNumber[]}];
-			beta = beta + 1/2 Sum[Sum@@Join[
-				{
-					(YukawaTrace[adj[Yuk[pa]], Yuk[ss], Join[{KroneckerDelta[#1,la[[1]]] KroneckerDelta[#2,la[[2]]] KroneckerDelta[#3,sumIdx[0]] KroneckerDelta[#4,sumIdx[1]] &}, Function[{x}, (KroneckerDelta[#1, la[[x+2]]] KroneckerDelta[#2, sumIdx[x+1]])&]/@Range[NumberOfSubgroups]]] + YukawaTrace[adj[Yuk[ss]], Yuk[pa], Join[{KroneckerDelta[#1, sumIdx[0]] KroneckerDelta[#2,sumIdx[1]] KroneckerDelta[#3,la[[1]]] KroneckerDelta[#4,la[[2]]] &}, Function[{x}, (KroneckerDelta[#2, la[[x+2]]] KroneckerDelta[#1, sumIdx[x+1]])&]/@Range[NumberOfSubgroups]]]) BetaYukawa[pa, pi, pj, sumIdx/@Range[0,NumberOfSubgroups+1], li, lj, 0],
-					{sumIdx[0], 1, RealScalarList[[ss,2,1]]},
-					{sumIdx[1], 1, RealScalarList[[ss,2,2]]}
-				}, 
-				Function[{x3},{sumIdx[x3+1], 1, SMultiplicity[ss, x3]}]/@Range[NumberOfSubgroups]
-			], {ss, 1, SNumber[]}]/.tr[adj[a_],b_]:>tr[b,adj[a]];
-			beta = beta - 3 Sum[Sqr[ListGauge[[ii,1]]] (YukawaProd[C2[F, ii], Yuk[pa], pi, pj, li, lj, Join[{KroneckerDelta[#3,la[[1]]] KroneckerDelta[#4,la[[2]]] &}, Function[{x},(KroneckerDelta[#1,1] KroneckerDelta[#2,la[[x+2]]])&]/@Range[NumberOfSubgroups]]] + YukawaProd[Yuk[pa], C2[F, ii], pi, pj, li, lj, Join[{ KroneckerDelta[#1,la[[1]]] KroneckerDelta[#2,la[[2]]] &}, Function[{x2},(KroneckerDelta[#2,1] KroneckerDelta[#1,la[[x2+2]]])&]/@Range[NumberOfSubgroups]]]), {ii, 1, NumberOfSubgroups}]/.{prod[a___, C2[b___], c___][d___]:>C2[b] prod[a,c][d]}//.subProd;
+			beta += 1/2 Sum[
+				Sum@@Join[
+					{
+						SolveProd3Fast[Yuk[ss1[0]], adj[Yuk[ss1[0]]], Yuk[pa], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss1[2+x2], ss1[2+x2], la[[2+x2]]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], ss1[1], ss1[2], la[[1]], la[[2]]}]],
+						{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
+						{ss1[2], 1, RealScalarList[[ss1[0],2,1]]}
+					},
+					Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups]
+				],
+				{ss1[0], 1, SNumber[]}
+			];
+			beta += 1/2 Sum[
+				Sum@@Join[
+					{
+						SolveProd3Fast[Yuk[pa], adj[Yuk[ss1[0]]], Yuk[ss1[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {la[[2+x2]], ss1[2+x2], ss1[2+x2]}]/@Range[NumberOfSubgroups], {la[[1]], la[[2]], ss1[1], ss1[2], ss1[1], ss1[2]}]],
+						{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
+						{ss1[2], 1, RealScalarList[[ss1[0],2,1]]}
+					},
+					Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups]
+				],
+				{ss1[0], 1, SNumber[]}
+			];
+			beta += 2 Sum[
+				Sum@@Join[
+					{
+						SolveProd3Fast[Yuk[ss1[0]], adj[Yuk[pa]], Yuk[ss1[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss1[2+x2], la[[2+x2]], ss1[2+x2]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], la[[1]], la[[2]], ss1[1], ss1[2]}]],
+						{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
+						{ss1[2], 1, RealScalarList[[ss1[0],2,1]]}
+					},
+					Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups]
+				],
+				{ss1[0], 1, SNumber[]}
+			];
+			beta = beta + 1/2 Sum[
+				Sum@@Join[
+					{
+						(
+							SolveTrace2Fast[Yuk[pa], adj[Yuk[sumIdx[0]]], Prepend[Function[{x}, {la[[2+x]], sumIdx[2+x]}]/@Range[NumberOfSubgroups], {la[[1]], la[[2]], sumIdx[1], sumIdx[2]}]] +
+							SolveTrace2Fast[adj[Yuk[pa]], Yuk[sumIdx[0]], Prepend[Function[{x}, {la[[2+x]], sumIdx[2+x]}]/@Range[NumberOfSubgroups], {la[[1]], la[[2]], sumIdx[1], sumIdx[2]}]]
+						) BetaYukawa[sumIdx[0], pi, pj, sumIdx/@Range[NumberOfSubgroups+2], li, lj, 0],
+						{sumIdx[1], 1, RealScalarList[[sumIdx[0], 2, 1]]}, 
+						{sumIdx[2], 1, RealScalarList[[sumIdx[0], 2, 2]]}
+					}, Function[{x}, {sumIdx[x+2], 1, SMultiplicity[sumIdx[0], x]}]/@Range[NumberOfSubgroups]
+				],
+				{sumIdx[0], 1, SNumber[]}
+			]/.{tr[adj[a_],b_]:>tr[b,adj[a]]};
+			beta -= 3 Sum[Sqr[ListGauge[[ii,1]]](C2[WeylFermionList[[pi,1]], ListGauge[[ii,1]]] + C2[WeylFermionList[[pj,1]], ListGauge[[ii,1]]]) BetaYukawa[pa, pi, pj, la, li, lj, 0], {ii, 1, NumberOfSubgroups}];
 			Return[beta/Sqr[4\[Pi]]];
 		];
 		
@@ -452,14 +487,14 @@ BeginPackage["ARGES`"];
 			], {ss[0], 1, SNumber[]}, {ss2[0], 1, SNumber[]}, {ss3[0], 1, SNumber[]}];
 			beta += Sum[
 				Sqr[ListGauge[[ii,1]]](
-					3 YukawaProd[C2[F, ii], Yuk[ssb], adj[Yuk[pa]], Yuk[ssb], pi, pj, li, lj, Join[{KroneckerDelta[#1,1] KroneckerDelta[#2,1] KroneckerDelta[#3,#7] KroneckerDelta[#4,#8] KroneckerDelta[#5,la[[1]]] KroneckerDelta[#6,la[[2]]] &}, Function[{x}, KroneckerDelta[#1, 1] KroneckerDelta[#2, #4] KroneckerDelta[#3, la[[x+2]]] &]/@Range[NumberOfSubgroups]]]  +
-					3 YukawaProd[Yuk[ssb], adj[Yuk[pa]], Yuk[ssb], C2[F, ii], pi, pj, li, lj, Join[{KroneckerDelta[#1,#5] KroneckerDelta[#2,#6] KroneckerDelta[#3,la[[1]]] KroneckerDelta[#4,la[[2]]] KroneckerDelta[#7,1] KroneckerDelta[#8,1] &}, Function[{x}, KroneckerDelta[#4, 1] KroneckerDelta[#1, #3] KroneckerDelta[#2, la[[x+2]]] &]/@Range[NumberOfSubgroups]]]  +
-					5 YukawaProd[Yuk[ssb], C2[F, ii], adj[Yuk[pa]], Yuk[ssb], pi, pj, li, lj, Join[{KroneckerDelta[#1,#7] KroneckerDelta[#2,#8] KroneckerDelta[#3,1] KroneckerDelta[#4,1] KroneckerDelta[#5,la[[1]]] KroneckerDelta[#6,la[[2]]] &}, Function[{x}, KroneckerDelta[#2, 1] KroneckerDelta[#1, #4] KroneckerDelta[#3, la[[x+2]]] &]/@Range[NumberOfSubgroups]]] +
-					5 YukawaProd[Yuk[ssb], adj[Yuk[pa]], C2[F, ii],  Yuk[ssb], pi, pj, li, lj, Join[{KroneckerDelta[#1,#7] KroneckerDelta[#2,#8] KroneckerDelta[#5,1] KroneckerDelta[#6,1] KroneckerDelta[#3,la[[1]]] KroneckerDelta[#4,la[[2]]] &}, Function[{x}, KroneckerDelta[#3, 1] KroneckerDelta[#1, #4] KroneckerDelta[#2, la[[x+2]]] &]/@Range[NumberOfSubgroups]]] - 
-					7/4 YukawaProd[C2[F, ii], Yuk[ssb], adj[Yuk[ssb]], Yuk[pa], pi, pj, li, lj, Join[{KroneckerDelta[#1,1] KroneckerDelta[#2,1] KroneckerDelta[#3,#5] KroneckerDelta[#4,#6] KroneckerDelta[#7,la[[1]]] KroneckerDelta[#8,la[[2]]] &}, Function[{x}, KroneckerDelta[#1, 1] KroneckerDelta[#2, #3] KroneckerDelta[#4, la[[x+2]]] &]/@Range[NumberOfSubgroups]]] -
-					7/4 YukawaProd[Yuk[pa], adj[Yuk[ssb]], Yuk[ssb], C2[F, ii], pi, pj, li, lj, Join[{KroneckerDelta[#7,1] KroneckerDelta[#8,1] KroneckerDelta[#3,#5] KroneckerDelta[#4,#6] KroneckerDelta[#1,la[[1]]] KroneckerDelta[#2,la[[2]]] &}, Function[{x}, KroneckerDelta[#4, 1] KroneckerDelta[#2, #3] KroneckerDelta[#1, la[[x+2]]] &]/@Range[NumberOfSubgroups]]] -
-					1/4 YukawaProd[Yuk[ssb], C2[F, ii], adj[Yuk[ssb]], Yuk[pa], pi, pj, li, lj, Join[{KroneckerDelta[#1,#5] KroneckerDelta[#2,#6] KroneckerDelta[#3,1] KroneckerDelta[#4,1] KroneckerDelta[#7,la[[1]]] KroneckerDelta[#8,la[[2]]] &}, Function[{x}, KroneckerDelta[#2, 1] KroneckerDelta[#1, #3] KroneckerDelta[#4, la[[x+2]]] &]/@Range[NumberOfSubgroups]]] -
-					1/4 YukawaProd[Yuk[pa], adj[Yuk[ssb]], C2[F, ii], Yuk[ssb], pi, pj, li, lj, Join[{KroneckerDelta[#1,la[[1]]] KroneckerDelta[#2,la[[2]]] KroneckerDelta[#3,#7] KroneckerDelta[#4,#8] KroneckerDelta[#5,1] KroneckerDelta[#6,1] &}, Function[{x}, KroneckerDelta[#3, 1] KroneckerDelta[#2, #4] KroneckerDelta[#1, la[[x+2]]] &]/@Range[NumberOfSubgroups]]]
+					3 YukawaProd[C2[F, ii], Yuk[ssb], adj[Yuk[pa]], Yuk[ssb], pi, pj, li, lj, Join[{KroneckerDelta[#3,#7] KroneckerDelta[#4,#8] KroneckerDelta[#5,la[[1]]] KroneckerDelta[#6,la[[2]]] &}, Function[{x}, KroneckerDelta[#1, 1] KroneckerDelta[#2, #4] KroneckerDelta[#3, la[[x+2]]] &]/@Range[NumberOfSubgroups]]]  +
+					3 YukawaProd[Yuk[ssb], adj[Yuk[pa]], Yuk[ssb], C2[F, ii], pi, pj, li, lj, Join[{KroneckerDelta[#1,#5] KroneckerDelta[#2,#6] KroneckerDelta[#3,la[[1]]] KroneckerDelta[#4,la[[2]]] &}, Function[{x}, KroneckerDelta[#4, 1] KroneckerDelta[#1, #3] KroneckerDelta[#2, la[[x+2]]] &]/@Range[NumberOfSubgroups]]]  +
+					5 YukawaProd[Yuk[ssb], C2[F, ii], adj[Yuk[pa]], Yuk[ssb], pi, pj, li, lj, Join[{KroneckerDelta[#1,#7] KroneckerDelta[#2,#8] KroneckerDelta[#5,la[[1]]] KroneckerDelta[#6,la[[2]]] &}, Function[{x}, KroneckerDelta[#2, 1] KroneckerDelta[#1, #4] KroneckerDelta[#3, la[[x+2]]] &]/@Range[NumberOfSubgroups]]] +
+					5 YukawaProd[Yuk[ssb], adj[Yuk[pa]], C2[F, ii],  Yuk[ssb], pi, pj, li, lj, Join[{KroneckerDelta[#1,#7] KroneckerDelta[#2,#8] KroneckerDelta[#3,la[[1]]] KroneckerDelta[#4,la[[2]]] &}, Function[{x}, KroneckerDelta[#3, 1] KroneckerDelta[#1, #4] KroneckerDelta[#2, la[[x+2]]] &]/@Range[NumberOfSubgroups]]] - 
+					7/4 YukawaProd[C2[F, ii], Yuk[ssb], adj[Yuk[ssb]], Yuk[pa], pi, pj, li, lj, Join[{KroneckerDelta[#3,#5] KroneckerDelta[#4,#6] KroneckerDelta[#7,la[[1]]] KroneckerDelta[#8,la[[2]]] &}, Function[{x}, KroneckerDelta[#1, 1] KroneckerDelta[#2, #3] KroneckerDelta[#4, la[[x+2]]] &]/@Range[NumberOfSubgroups]]] -
+					7/4 YukawaProd[Yuk[pa], adj[Yuk[ssb]], Yuk[ssb], C2[F, ii], pi, pj, li, lj, Join[{KroneckerDelta[#3,#5] KroneckerDelta[#4,#6] KroneckerDelta[#1,la[[1]]] KroneckerDelta[#2,la[[2]]] &}, Function[{x}, KroneckerDelta[#4, 1] KroneckerDelta[#2, #3] KroneckerDelta[#1, la[[x+2]]] &]/@Range[NumberOfSubgroups]]] -
+					1/4 YukawaProd[Yuk[ssb], C2[F, ii], adj[Yuk[ssb]], Yuk[pa], pi, pj, li, lj, Join[{KroneckerDelta[#1,#5] KroneckerDelta[#2,#6] KroneckerDelta[#7,la[[1]]] KroneckerDelta[#8,la[[2]]] &}, Function[{x}, KroneckerDelta[#2, 1] KroneckerDelta[#1, #3] KroneckerDelta[#4, la[[x+2]]] &]/@Range[NumberOfSubgroups]]] -
+					1/4 YukawaProd[Yuk[pa], adj[Yuk[ssb]], C2[F, ii], Yuk[ssb], pi, pj, li, lj, Join[{KroneckerDelta[#1,la[[1]]] KroneckerDelta[#2,la[[2]]] KroneckerDelta[#3,#7] KroneckerDelta[#4,#8] &}, Function[{x}, KroneckerDelta[#3, 1] KroneckerDelta[#2, #4] KroneckerDelta[#1, la[[x+2]]] &]/@Range[NumberOfSubgroups]]]
 				),
 				{ssb, 1, SNumber[]},
 				{ii, 1, NumberOfSubgroups}
@@ -523,8 +558,8 @@ BeginPackage["ARGES`"];
 		BetaQuartic[a_, b_, c_, d_, la_, lb_, lc_, ld_, 0] := Module[
 			{pa, pb, pc, pd, q},
 			Return[
-				ReleaseHold[(SymQuartic[a,b,c,d]/.subQuart)]//.{
-				SymQuart[q_]:>((ListQuarticSym[[q,1]] ListQuarticSym[[q,7]][la[[1]], la[[2]], lb[[1]], lb[[2]], lc[[1]], lc[[2]], ld[[1]], ld[[2]]])(Times@@(Function[{x},ListQuarticSym[[q,6,x]][la[[2+x]], lb[[2+x]], lc[[2+x]], ld[[2+x]]]]/@Range[NumberOfSubgroups])))}
+				ReleaseHold[(Quartic[a,b,c,d]/.subQuart)]//.{
+				Quart[q_]:>((ListQuarticSym[[q,1]] ListQuarticSym[[q,7]][la[[1]], la[[2]], lb[[1]], lb[[2]], lc[[1]], lc[[2]], ld[[1]], ld[[2]]])(Times@@(Function[{x},ListQuarticSym[[q,6,x]][la[[2+x]], lb[[2+x]], lc[[2+x]], ld[[2+x]]]]/@Range[NumberOfSubgroups])))}
 			];
 		];
 		
@@ -541,7 +576,7 @@ BeginPackage["ARGES`"];
 		]
 		
 		BetaQuartic[pa_, pb_, pc_, pd_, la_, lb_, lc_, ld_, 2] := Module[
-			{beta, ss1, ss2, ff, ii, ii2, ii3, x},
+			{beta, ss1, ss2, sIdx ff, ii, ii2, ii3, x},
 			beta = 0;
 			beta += 12 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] (\[CapitalLambda]2S[Prepend[la,pa], Prepend[la,pa]] + \[CapitalLambda]2S[Prepend[lb,pb], Prepend[lb,pb]] + \[CapitalLambda]2S[Prepend[lc,pc], Prepend[lc,pc]]+ \[CapitalLambda]2S[Prepend[ld,pd], Prepend[ld,pd]])//.subScalarInvariants;
 			beta -= 6 Sqr[24] Perm[\[CapitalLambda]bar3[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] //.subScalarInvariants;
@@ -600,7 +635,7 @@ BeginPackage["ARGES`"];
 		
 		(* Definition of Invariants *)
 		ComputeInvariants[] := Module[
-			{i, f, s},
+			{i, f, s, sIdx},
 			subInvariants = {};
 			For[i=1, i<=NumberOfSubgroups, i++,
 				(* Gauge Boson Invariants *)
@@ -759,7 +794,21 @@ BeginPackage["ARGES`"];
 				];
 				(* Gauge-Yukawa Invariants *)
 				If[WeylFermionList != {} && ListYukawa != {} && RealScalarList != {},
-					subInvariants = Append[subInvariants, Y4[F, ListGauge[[i,1]]]-> (1/d[ListGauge[[i,1]]] Sum[ (YukawaTrace[C2[F, i], Yuk[ss], adj[Yuk[ss]], Join[{KroneckerDelta[#3, #5] KroneckerDelta[#4, #6] &}, Table[KroneckerDelta[#2, #3]&, {ii, NumberOfSubgroups}]]]) , {ss, 1, SNumber[]}])//.{tr[a___, C2[b___], c___]:>(C2[b] tr[a,c]), tr[adj[a_],b_]:>tr[b,adj[a]], tr[adj[a_],b_,adj[c_],d_]:>tr[b,adj[c],d,adj[a]], C2[A___][i1_, i2_]:>C2[A] KroneckerDelta[i1,i2]}];,
+					(*subInvariants = Append[subInvariants, Y4[F, ListGauge[[i,1]]]-> (1/d[ListGauge[[i,1]]] Sum[ (YukawaTrace[C2[F, i], Yuk[ss], adj[Yuk[ss]], Join[{KroneckerDelta[#3, #5] KroneckerDelta[#4, #6] &}, Table[KroneckerDelta[#2, #3]&, {ii, NumberOfSubgroups}]]]) , {ss, 1, SNumber[]}])//.{tr[a___, C2[b___], c___]:>(C2[b] tr[a,c]), tr[adj[a_],b_]:>tr[b,adj[a]], tr[adj[a_],b_,adj[c_],d_]:>tr[b,adj[c],d,adj[a]], C2[A___][i1_, i2_]:>C2[A] KroneckerDelta[i1,i2]}];*)
+					subInvariants = Append[subInvariants, Y4[F, ListGauge[[i,1]]]-> (1/d[ListGauge[[i,1]]])Sum[
+						Sum@@Join[
+							{
+								SolveTrace3Fast[C2[F,i], Yuk[sIdx[0]], adj[Yuk[sIdx[0]]], Prepend[
+									Function[{x}, {1,sIdx[2+x],sIdx[2+x]}]/@Range[NumberOfSubgroups],
+									{1,1,sIdx[1],sIdx[2],sIdx[1],sIdx[2]}
+								]],
+								{sIdx[1], 1, RealScalarList[[sIdx[0],2,1]]},
+								{sIdx[2], 1, RealScalarList[[sIdx[0],2,2]]}
+							},
+							Function[{x}, {sIdx[2+x],1,SMultiplicity[sIdx[0],x]}]/@Range[NumberOfSubgroups]
+						],
+						{sIdx[0], 1, SNumber[]}
+					]//.{tr[a___, C2[b___], c___]:>(C2[b] tr[a,c]), tr[adj[a_],b_]:>tr[b,adj[a]], tr[adj[a_],b_,adj[c_],d_]:>tr[b,adj[c],d,adj[a]], C2[A___][i1_, i2_]:>C2[A] KroneckerDelta[i1,i2]}],
 					subInvariants = Append[subInvariants, Y4[F, ListGauge[[i,1]]]->0];
 				];
 			];
@@ -864,7 +913,7 @@ BeginPackage["ARGES`"];
 		
 		(* substitution rule for scalar sector *)
 		subQuart := {
-			SymQuartic[a_, b_, c_, d_] :> Block[
+			Quartic[a_, b_, c_, d_] :> Block[
 				{pos, qq},
 				pos = {};
 				If[ListQuartic != {},
@@ -876,10 +925,10 @@ BeginPackage["ARGES`"];
 				];
 				If[pos == {}, 
 					0,
-					Plus@@(Hold/@(SymQuart/@pos))
+					Plus@@(Hold/@(Quart/@pos))
 				]
 			],
-			SymQuart[q_] :> Join[
+			Quart[q_] :> Join[
 				{{ListQuarticSym[[q,1]], ListQuarticSym[[q,7]], RealScalarList[[ListQuarticSym[[q,2]], 2, 1]], RealScalarList[[ListQuarticSym[[q,2]], 2, 2]], RealScalarList[[ListQuarticSym[[q,3]], 2, 1]], RealScalarList[[ListQuarticSym[[q,3]], 2, 2]], RealScalarList[[ListQuarticSym[[q,4]], 2, 1]], RealScalarList[[ListQuarticSym[[q,4]], 2, 2]], RealScalarList[[ListQuarticSym[[q,5]], 2, 1]], RealScalarList[[ListQuarticSym[[q,5]], 2, 2]]}}, 
 				Function[{x}, If[ListGauge[[x,3]] === 1, {ListQuarticSym[[q,6,x]], 1, 1, 1, 1}, {ListQuarticSym[[q,6,x]], RealScalarList[[ListQuarticSym[[q,2]], 3, x]], RealScalarList[[ListQuarticSym[[q,3]], 3, x]], RealScalarList[[ListQuarticSym[[q,4]], 3, x]], RealScalarList[[ListQuarticSym[[q,5]], 3, x]]}]]/@Range[NumberOfSubgroups]
 			]
@@ -893,8 +942,8 @@ BeginPackage["ARGES`"];
 					For[s2=1, s2<=SNumber[], s2++,
 						sum += (ReleaseHold[
 								prod[
-									SymQuartic[pa[[1]], pb[[1]], s1, s2], 
-									SymQuartic[s1, s2, pc[[1]], pd[[1]]]
+									Quartic[pa[[1]], pb[[1]], s1, s2], 
+									Quartic[s1, s2, pc[[1]], pd[[1]]]
 								]/.subQuart//.subProd
 							]//.subQuart/.{prod[A_List, B_List]:>(SolveSProd2[A, B, Join[{KroneckerDelta[#1, pa[[2]]] KroneckerDelta[#2, pa[[3]]] KroneckerDelta[#3, pb[[2]]] KroneckerDelta[#4, pb[[3]]] KroneckerDelta[#5, #9] KroneckerDelta[#6, #10] KroneckerDelta[#7, #11] KroneckerDelta[#8, #12] &}, Function[{x}, (KroneckerDelta[pa[[x+3]], #1] KroneckerDelta[pb[[x+3]], #2] KroneckerDelta[#3, #5] KroneckerDelta[#4, #6] KroneckerDelta[pc[[x+3]], #7] KroneckerDelta[pd[[x+3]], #8])&]/@Range[NumberOfSubgroups]]])}
 						);
@@ -951,8 +1000,8 @@ BeginPackage["ARGES`"];
 						For[s3=1, s3<=SNumber[], s3++,
 							sum += (ReleaseHold[
 									prod[
-										SymQuartic[pa[[1]], s1, s2, s3], 
-										SymQuartic[pb[[1]], s1, s2, s3]
+										Quartic[pa[[1]], s1, s2, s3], 
+										Quartic[pb[[1]], s1, s2, s3]
 									]/.subQuart//.subProd
 								]//.subQuart/.{prod[A_List, B_List]:>(SolveSProd2[A, B, Join[{KroneckerDelta[#1, pa[[2]]] KroneckerDelta[#2, pa[[3]]] KroneckerDelta[#3, #11] KroneckerDelta[#4, #12] KroneckerDelta[#5, #13] KroneckerDelta[#6, #14] KroneckerDelta[#7, #15] KroneckerDelta[#8, #16] KroneckerDelta[#9, pb[[2]]] KroneckerDelta[#10, pb[[3]]] &}, Function[{x}, (KroneckerDelta[pa[[x+3]], #1] KroneckerDelta[pb[[x+3]], #5] KroneckerDelta[#2, #6] KroneckerDelta[#3, #7] KroneckerDelta[#4, #8])&]/@Range[NumberOfSubgroups]]])}
 							);
@@ -969,7 +1018,7 @@ BeginPackage["ARGES`"];
 				{ss,x},
 				1/2 Sum[YukawaTrace[Yuk[pa[[1]]], adj[Yuk[ss]], Yuk[pb[[1]]], adj[Yuk[ss]], Join[{KroneckerDelta[#1, pa[[2]]] KroneckerDelta[#2, pa[[3]]] KroneckerDelta[#3,#7] KroneckerDelta[#4,#8] KroneckerDelta[#5, pb[[2]]] KroneckerDelta[#6, pb[[3]]] &}, Function[{x}, KroneckerDelta[#1, pa[[x+3]]] KroneckerDelta[#3, pb[[x+3]]] KroneckerDelta[#2,#4] &]/@Range[NumberOfSubgroups]]] + YukawaTrace[adj[Yuk[pa[[1]]]], Yuk[ss], adj[Yuk[pb[[1]]]], Yuk[ss], Join[{KroneckerDelta[#1, pa[[2]]] KroneckerDelta[#2, pa[[3]]] KroneckerDelta[#3,#7] KroneckerDelta[#4,#8] KroneckerDelta[#5, pb[[2]]] KroneckerDelta[#6, pb[[3]]] &}, Function[{x}, KroneckerDelta[#1, pa[[x+3]]] KroneckerDelta[#3, pb[[x+3]]] KroneckerDelta[#2,#4] &]/@Range[NumberOfSubgroups]]], {ss, 1, SNumber[]}]	
 			],
-			Y2FS[gauge_, pa_, pb_] :> 1/2(YukawaTrace[C2[F, gauge], Yuk[pa[[1]]], adj[Yuk[pb[[1]]]], Join[{ KroneckerDelta[#1,1] KroneckerDelta[#2,1] KroneckerDelta[#3, pa[[2]]] KroneckerDelta[#4, pa[[3]]] KroneckerDelta[#5, pb[[2]]] KroneckerDelta[#6, pb[[3]]] &}, Function[{x}, KroneckerDelta[#1,1] KroneckerDelta[#2, pa[[3+x]]] KroneckerDelta[#3, pb[[3+x]]] &]/@Range[NumberOfSubgroups]]] + YukawaTrace[C2[F, gauge], Yuk[pb[[1]]], adj[Yuk[pa[[1]]]], Join[{ KroneckerDelta[#1,1] KroneckerDelta[#2,1] KroneckerDelta[#3, pb[[2]]] KroneckerDelta[#4, pb[[3]]] KroneckerDelta[#5, pa[[2]]] KroneckerDelta[#6, pa[[3]]] &}, Function[{x}, KroneckerDelta[#1,1] KroneckerDelta[#2, pb[[3+x]]] KroneckerDelta[#3, pa[[3+x]]] &]/@Range[NumberOfSubgroups]]]),
+			Y2FS[gauge_, pa_, pb_] :> 1/2(YukawaTrace[C2[F, gauge], Yuk[pa[[1]]], adj[Yuk[pb[[1]]]], Join[{KroneckerDelta[#3, pa[[2]]] KroneckerDelta[#4, pa[[3]]] KroneckerDelta[#5, pb[[2]]] KroneckerDelta[#6, pb[[3]]] &}, Function[{x}, KroneckerDelta[#1,1] KroneckerDelta[#2, pa[[3+x]]] KroneckerDelta[#3, pb[[3+x]]] &]/@Range[NumberOfSubgroups]]] + YukawaTrace[C2[F, gauge], Yuk[pb[[1]]], adj[Yuk[pa[[1]]]], Join[{KroneckerDelta[#3, pb[[2]]] KroneckerDelta[#4, pb[[3]]] KroneckerDelta[#5, pa[[2]]] KroneckerDelta[#6, pa[[3]]] &}, Function[{x}, KroneckerDelta[#1,1] KroneckerDelta[#2, pb[[3+x]]] KroneckerDelta[#3, pa[[3+x]]] &]/@Range[NumberOfSubgroups]]]),
 			H2t[gauge_, pa_, pi_, pj_] :> Module[
 				{ss, ff1, ff2, ff3, ff4, scGenIdx, scGenIdx2, scGaugeIdx, a, A, B, C},
 				Sum[
@@ -1009,9 +1058,9 @@ BeginPackage["ARGES`"];
 							For[s4=1, s4<=SNumber[], s4++,
 								sum += (ReleaseHold[
 										prod[
-											SymQuartic[pa[[1]], pb[[1]], s1, s2], 
-											SymQuartic[pc[[1]], s1, s3, s4], 
-											SymQuartic[pd[[1]], s2, s3, s4]
+											Quartic[pa[[1]], pb[[1]], s1, s2], 
+											Quartic[pc[[1]], s1, s3, s4], 
+											Quartic[pd[[1]], s2, s3, s4]
 										]/.subQuart//.subProd
 									]//.subQuart/.{prod[A_List, B_List, C_List]:>(SolveSProd3[A, B, C, Join[{KroneckerDelta[#1, pa[[2]]] KroneckerDelta[#2, pa[[3]]] KroneckerDelta[#3, pb[[2]]] KroneckerDelta[#4, pb[[3]]] KroneckerDelta[#5, #11] KroneckerDelta[#6, #12] KroneckerDelta[#7, #19] KroneckerDelta[#8, #20] KroneckerDelta[#9, pc[[2]]] KroneckerDelta[#10, pc[[3]]] KroneckerDelta[#13, #21] KroneckerDelta[#14, #22] KroneckerDelta[#15, #23] KroneckerDelta[#16, #24] &}, Function[{x}, (KroneckerDelta[pa[[x+3]], #1] KroneckerDelta[pb[[x+3]], #2] KroneckerDelta[#3, #6] KroneckerDelta[#4, #10] KroneckerDelta[pc[[x+3]], #5] KroneckerDelta[pd[[x+3]], #9] KroneckerDelta[#7, #11] KroneckerDelta[#8,#12])&]/@Range[NumberOfSubgroups]]])}
 								);
@@ -1032,8 +1081,8 @@ BeginPackage["ARGES`"];
 									(Y2S[s2/@Range[0,NumberOfSubgroups+2], s3/@Range[0,NumberOfSubgroups+2]] /.subScalarInvariants) (
 										ReleaseHold[
 											prod[
-												SymQuartic[pa[[1]], pb[[1]], s1[0], s2[0]], 
-												SymQuartic[pc[[1]], pd[[1]], s1[0], s3[0]]
+												Quartic[pa[[1]], pb[[1]], s1[0], s2[0]], 
+												Quartic[pc[[1]], pd[[1]], s1[0], s3[0]]
 											]/.subQuart//.subProd
 										]//.subQuart/.{prod[A_List, B_List]:>(SolveSProd2[A, B, Join[{KroneckerDelta[#1, pa[[2]]] KroneckerDelta[#2, pa[[3]]] KroneckerDelta[#3, pb[[2]]] KroneckerDelta[#4, pb[[3]]] KroneckerDelta[#5, #13] KroneckerDelta[#6, #14] KroneckerDelta[#7, s2[1]] KroneckerDelta[#8, s2[2]] KroneckerDelta[#9, pc[[2]]] KroneckerDelta[#10, pc[[3]]] KroneckerDelta[#11, pd[[2]]] KroneckerDelta[#12, pd[[3]]] KroneckerDelta[#15, s3[1]] KroneckerDelta[#16, s3[2]] &}, Function[{x}, (KroneckerDelta[pa[[x+3]], #1] KroneckerDelta[pb[[x+3]], #2] KroneckerDelta[#3, #7] KroneckerDelta[#4, s2[x+2]] KroneckerDelta[pc[[x+3]], #5] KroneckerDelta[pd[[x+3]], #6] KroneckerDelta[#8, s3[x+2]])&]/@Range[NumberOfSubgroups]]])}
 									),
@@ -1103,8 +1152,8 @@ BeginPackage["ARGES`"];
 							(
 								ReleaseHold[
 									prod[
-										SymQuartic[pa[[1]], pb[[1]], ss1[0], ss2[0]], 
-										SymQuartic[pc[[1]], pd[[1]], ss1[0], ss2[0]]
+										Quartic[pa[[1]], pb[[1]], ss1[0], ss2[0]], 
+										Quartic[pc[[1]], pd[[1]], ss1[0], ss2[0]]
 									]//.subProd/.subQuart//.subProd
 								]//.subQuart/.{prod[A_List, B_List]:>(
 									A[[1,1]] B[[1,1]] A[[1,2]][pa[[2]], pa[[3]], pb[[2]], pb[[3]], ss1[1], ss1[2], ss2[1], ss2[2]]  B[[1,2]][pc[[2]], pc[[3]], pd[[2]], pd[[3]], ss1[1], ss1[2], ss2[1], ss2[2]] Times@@(Function[{x}, A[[x+1,1]][pa[[3+x]], pb[[3+x]], ss1[2+x], ss2[2+x]] B[[x+1,1]][pc[[3+x]], pd[[3+x]], ss1[2+x], ss2[2+x]]]/@Range[NumberOfSubgroups])
@@ -1131,8 +1180,8 @@ BeginPackage["ARGES`"];
 							(
 								ReleaseHold[
 									prod[
-										SymQuartic[pa[[1]], pb[[1]], ss1[0], ss2[0]], 
-										SymQuartic[pc[[1]], pd[[1]], ss3[0], ss4[0]]
+										Quartic[pa[[1]], pb[[1]], ss1[0], ss2[0]], 
+										Quartic[pc[[1]], pd[[1]], ss3[0], ss4[0]]
 									]//.subProd/.subQuart//.subProd
 								]//.subQuart/.{prod[A_List, B_List]:>(
 									A[[1,1]] B[[1,1]] A[[1,2]][pa[[2]], pa[[3]], pb[[2]], pb[[3]], ss1[1], ss1[2], ss2[1], ss2[2]]  B[[1,2]][pc[[2]], pc[[3]], pd[[2]], pd[[3]], ss3[1], ss3[2], ss4[1], ss4[2]] Times@@(Function[{x}, A[[x+1,1]][pa[[3+x]], pb[[3+x]], ss1[2+x], ss2[2+x]] B[[x+1,1]][pc[[3+x]], pd[[3+x]], ss3[2+x], ss4[2+x]]]/@Range[NumberOfSubgroups])
@@ -1160,8 +1209,8 @@ BeginPackage["ARGES`"];
 				]
 			],
 			HF[gaug_][pa_, pb_, pc_, pd_] :>(
-				YukawaTrace[C2[F, gaug], Yuk[pa[[1]]], adj[Yuk[pb[[1]]]], Yuk[pc[[1]]], adj[Yuk[pd[[1]]]], Join[{KroneckerDelta[#1, 1] KroneckerDelta[#2, 1] KroneckerDelta[#3, pa[[2]]] KroneckerDelta[#4, pa[[3]]] KroneckerDelta[#5, pb[[2]]] KroneckerDelta[#6, pb[[3]]] KroneckerDelta[#7, pc[[2]]] KroneckerDelta[#8, pc[[3]]] KroneckerDelta[#9, pd[[2]]] KroneckerDelta[#10, pd[[3]]] &}, Function[{x}, KroneckerDelta[#1,1] KroneckerDelta[#2, pa[[x+3]]] KroneckerDelta[#3, pb[[x+3]]] KroneckerDelta[#4, pc[[x+3]]] KroneckerDelta[#5, pd[[x+3]]] &]/@Range[NumberOfSubgroups]]] + 
-				YukawaTrace[ C2[F,gaug], adj[Yuk[pb[[1]]]], Yuk[pc[[1]]], adj[Yuk[pd[[1]]]], Yuk[pa[[1]]], Join[{KroneckerDelta[#1, 1] KroneckerDelta[#2, 1] KroneckerDelta[#3, pb[[2]]] KroneckerDelta[#4, pb[[3]]] KroneckerDelta[#5, pc[[2]]] KroneckerDelta[#6, pc[[3]]] KroneckerDelta[#7, pd[[2]]] KroneckerDelta[#8, pd[[3]]] KroneckerDelta[#9, pa[[2]]] KroneckerDelta[#10, pa[[3]]] &}, Function[{x}, KroneckerDelta[#1,1] KroneckerDelta[#5, pa[[x+3]]] KroneckerDelta[#2, pb[[x+3]]] KroneckerDelta[#3, pc[[x+3]]] KroneckerDelta[#4, pd[[x+3]]] &]/@Range[NumberOfSubgroups]]]
+				YukawaTrace[C2[F, gaug], Yuk[pa[[1]]], adj[Yuk[pb[[1]]]], Yuk[pc[[1]]], adj[Yuk[pd[[1]]]], Join[{KroneckerDelta[#3, pa[[2]]] KroneckerDelta[#4, pa[[3]]] KroneckerDelta[#5, pb[[2]]] KroneckerDelta[#6, pb[[3]]] KroneckerDelta[#7, pc[[2]]] KroneckerDelta[#8, pc[[3]]] KroneckerDelta[#9, pd[[2]]] KroneckerDelta[#10, pd[[3]]] &}, Function[{x}, KroneckerDelta[#1,1] KroneckerDelta[#2, pa[[x+3]]] KroneckerDelta[#3, pb[[x+3]]] KroneckerDelta[#4, pc[[x+3]]] KroneckerDelta[#5, pd[[x+3]]] &]/@Range[NumberOfSubgroups]]] + 
+				YukawaTrace[ C2[F,gaug], adj[Yuk[pb[[1]]]], Yuk[pc[[1]]], adj[Yuk[pd[[1]]]], Yuk[pa[[1]]], Join[{KroneckerDelta[#3, pb[[2]]] KroneckerDelta[#4, pb[[3]]] KroneckerDelta[#5, pc[[2]]] KroneckerDelta[#6, pc[[3]]] KroneckerDelta[#7, pd[[2]]] KroneckerDelta[#8, pd[[3]]] KroneckerDelta[#9, pa[[2]]] KroneckerDelta[#10, pa[[3]]] &}, Function[{x}, KroneckerDelta[#1,1] KroneckerDelta[#5, pa[[x+3]]] KroneckerDelta[#2, pb[[x+3]]] KroneckerDelta[#3, pc[[x+3]]] KroneckerDelta[#4, pd[[x+3]]] &]/@Range[NumberOfSubgroups]]]
 			)/.{tr[A___,C2[B___], C___]:>C2[B] tr[A,C]},
 			A\[Lambda][gauge_, gauge2_][a_, b_, c_, d_] :> Block[
 				{ss1, ss2, ss3, ss4},
@@ -1555,6 +1604,220 @@ BeginPackage["ARGES`"];
 		
 		(* helper function to separate matrices and contractions in fermion generations from Yukawa products *)
 		Mat[A_][___] := Mat[A];
+		
+		
+		(* optimized functions for Yukawa traces *)
+		SolveTrace2Fast[Y1_, Y2_, SIdx_] := Block[
+			{sumInd1,sumInd2},
+			ReleaseHold[SolveTrace[Y1,Y2] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+				tr[y1_, y2_]:>Times@@Join[
+					{
+						Refine[
+							GetGenTrace[{y1, y2}, {{SIdx[[1,1]],SIdx[[1,2]]}, {SIdx[[1,3]],SIdx[[1,4]]}}]//.subProd
+						]
+					},
+					((Function[{x}, Refine[Sum[
+						y1[[x+1,1]][SIdx[[x+1,1]], sumInd1[x], sumInd2[x]] y2[[x+1,1]][SIdx[[x+1,2]], sumInd2[x], sumInd1[x]], 
+						{sumInd1[x], 1, y1[[x+1, 3]]},
+						{sumInd2[x], 1, y1[[x+1, 4]]}
+					]]]) /@ Range[NumberOfSubgroups])
+				]
+			}
+		];
+		
+		SolveTrace3Fast[Y1_, Y2_, Y3_, SIdx_] := Block[
+			{sumInd1,sumInd2,sumInd3},
+			ReleaseHold[SolveTrace[Y1,Y2,Y3] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+				tr[y1_, y2_, y3_]:>Times@@Join[
+					{
+						Refine[
+							GetGenTrace[{y1, y2, y3}, {{SIdx[[1,1]],SIdx[[1,2]]}, {SIdx[[1,3]],SIdx[[1,4]]}, {SIdx[[1,5]],SIdx[[1,6]]}}]//.subProd
+						]
+					},
+					((Function[{x}, Refine[Sum[
+						 y1[[x+1,1]][SIdx[[x+1,1]], sumInd1[x], sumInd2[x]] y2[[x+1,1]][SIdx[[x+1,2]], sumInd2[x], sumInd3[x]]  y3[[x+1, 1]][SIdx[[x+1,3]], sumInd3[x], sumInd1[x]], 
+						{sumInd1[x], 1, y1[[x+1, 3]]},
+						{sumInd2[x], 1, y1[[x+1, 4]]},
+						{sumInd3[x], 1, y3[[x+1, 3]]}
+					]]]) /@ Range[NumberOfSubgroups])
+				]
+			}
+		];
+		
+		SolveTrace4Fast[Y1_, Y2_, Y3_, Y4_, SIdx_] := Block[
+			{sumInd1,sumInd2,sumInd3, sumInd4},
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+				tr[y1_, y2_, y3_, y4_]:>Times@@Join[
+					{
+						Refine[
+							GetGenTrace[{y1, y2, y3, y4}, {{SIdx[[1,1]],SIdx[[1,2]]}, {SIdx[[1,3]],SIdx[[1,4]]}, {SIdx[[1,5]],SIdx[[1,6]]}, {SIdx[[1,7]], SIdx[[1,8]]}}]//.subProd
+						]
+					},
+					((Function[{x}, Refine[Sum[
+						 y1[[x+1,1]][SIdx[[x+1,1]], sumInd1[x], sumInd2[x]] y2[[x+1,1]][SIdx[[x+1,2]], sumInd2[x], sumInd3[x]]  y3[[x+1,1]][SIdx[[x+1,3]], sumInd3[x], sumInd4[x]] y4[[x+1,1]][SIdx[[x+1,4]], sumInd4[x], sumInd1[x]], 
+						{sumInd1[x], 1, y1[[x+1, 3]]},
+						{sumInd2[x], 1, y1[[x+1, 4]]},
+						{sumInd3[x], 1, y3[[x+1, 3]]},
+						{sumInd4[x], 1, y3[[x+1, 4]]}
+					]]]) /@ Range[NumberOfSubgroups])
+				]
+			}
+		];
+		
+		SolveTrace5Fast[Y1_, Y2_, Y3_, Y4_, Y5_, SIdx_] := Block[
+			{sumInd1,sumInd2,sumInd3, sumInd4, sumInd5},
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+				tr[y1_, y2_, y3_, y4_, y5_]:>Times@@Join[
+					{
+						Refine[
+							GetGenTrace[{y1, y2, y3, y4, y5}, {{SIdx[[1,1]],SIdx[[1,2]]}, {SIdx[[1,3]],SIdx[[1,4]]}, {SIdx[[1,5]],SIdx[[1,6]]}, {SIdx[[1,7]], SIdx[[1,8]]}, {SIdx[[1,9]], SIdx[[1,10]]}}]//.subProd
+						]
+					},
+					((Function[{x}, Refine[Sum[
+						 y1[[x+1,1]][SIdx[[x+1,1]], sumInd1[x], sumInd2[x]] y2[[x+1,1]][SIdx[[x+1,2]], sumInd2[x], sumInd3[x]]  y3[[x+1,1]][SIdx[[x+1,3]], sumInd3[x], sumInd4[x]] y4[[x+1,1]][SIdx[[x+1,4]], sumInd4[x], sumInd5[x]] y5[[x+1,1]][SIdx[[x+1,5]], sumInd5[x], sumInd1[x]], 
+						{sumInd1[x], 1, y1[[x+1, 3]]},
+						{sumInd2[x], 1, y1[[x+1, 4]]},
+						{sumInd3[x], 1, y3[[x+1, 3]]},
+						{sumInd4[x], 1, y3[[x+1, 4]]},
+						{sumInd5[x], 1, y5[[x+1, 3]]}
+					]]]) /@ Range[NumberOfSubgroups])
+				]
+			}
+		];
+		
+		SolveTrace6Fast[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, SIdx_] := Block[
+			{sumInd1,sumInd2,sumInd3, sumInd4, sumInd5, sumInd6},
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5,Y6] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+				tr[y1_, y2_, y3_, y4_, y5_, y6_]:>Times@@Join[
+					{
+						Refine[
+							GetGenTrace[{y1, y2, y3, y4, y5, y6}, {{SIdx[[1,1]],SIdx[[1,2]]}, {SIdx[[1,3]],SIdx[[1,4]]}, {SIdx[[1,5]],SIdx[[1,6]]}, {SIdx[[1,7]], SIdx[[1,8]]}, {SIdx[[1,9]], SIdx[[1,10]]}, {SIdx[[1,11]], SIdx[[1,12]]}}]//.subProd
+						]
+					},
+					((Function[{x}, Refine[Sum[
+						 y1[[x+1,1]][SIdx[[x+1,1]], sumInd1[x], sumInd2[x]] y2[[x+1,1]][SIdx[[x+1,2]], sumInd2[x], sumInd3[x]]  y3[[x+1,1]][SIdx[[x+1,3]], sumInd3[x], sumInd4[x]] y4[[x+1,1]][SIdx[[x+1,4]], sumInd4[x], sumInd5[x]] y5[[x+1,1]][SIdx[[x+1,5]], sumInd5[x], sumInd6[x]] y6[[x+1,1]][SIdx[[x+1,6]], sumInd6[x], sumInd1[x]], 
+						{sumInd1[x], 1, y1[[x+1, 3]]},
+						{sumInd2[x], 1, y1[[x+1, 4]]},
+						{sumInd3[x], 1, y3[[x+1, 3]]},
+						{sumInd4[x], 1, y3[[x+1, 4]]},
+						{sumInd5[x], 1, y5[[x+1, 3]]},
+						{sumInd5[x], 1, y5[[x+1, 4]]}
+					]]]) /@ Range[NumberOfSubgroups])
+				]
+			}
+		];
+		
+		SolveProd2Fast[Y1_, Y2_, li_, lj_, SIdx_] := Block[
+			{sumInd1},
+			ReleaseHold[SolveProd[Y1, Y2, li[[1]], lj[[1]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+				prod[y1_, y2_]:>Times@@Join[
+					{
+						Refine[
+							GetGenProd[{y1, y2}, {{SIdx[[1,1]],SIdx[[1,2]]}, {SIdx[[1,3]],SIdx[[1,4]]}}, li[[2]], lj[[2]]]//.subProd
+						]
+					},
+					(
+						Function[{x}, Refine[Sum[
+							y1[[x+1,1]][SIdx[[x+1,1]], li[[2+x]], sumInd1[x]] y2[[x+1,1]][SIdx[[x+1,2]], sumInd1[x], lj[[2+x]]],
+							{sumInd1[x], 1, y2[[x+1,3]]}
+						]]]/@Range[NumberOfSubgroups]
+					)
+				]
+			}
+		];
+		
+		SolveProd3Fast[Y1_, Y2_, Y3_, li_, lj_, SIdx_] := Block[
+			{sumInd1, sumInd2},
+			ReleaseHold[SolveProd[Y1, Y2, Y3, li[[1]], lj[[1]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+				prod[y1_, y2_, y3_]:>Times@@Join[
+					{
+						Refine[
+							GetGenProd[{y1, y2, y3}, {{SIdx[[1,1]],SIdx[[1,2]]}, {SIdx[[1,3]],SIdx[[1,4]]}, {SIdx[[1,5]],SIdx[[1,6]]}}, li[[2]], lj[[2]]]//.subProd
+						]
+					},
+					(
+						Function[{x}, Refine[Sum[
+							y1[[x+1,1]][SIdx[[x+1,1]], li[[2+x]], sumInd1[x]] y2[[x+1,1]][SIdx[[x+1,2]], sumInd1[x], sumInd2[x]] y3[[x+1,1]][SIdx[[x+1,3]], sumInd2[x], lj[[2+x]]],
+							{sumInd1[x], 1, y2[[x+1,3]]},
+							{sumInd2[x], 1, y2[[x+1,4]]}
+						]]]/@Range[NumberOfSubgroups]
+					)
+				]
+			}
+		];
+		
+		SolveProd4Fast[Y1_, Y2_, Y3_, Y4_, li_, lj_, SIdx_] := Block[
+			{sumInd1, sumInd2, sumInd3},
+			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, li[[1]], lj[[1]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+				prod[y1_, y2_, y3_, y4_]:>Times@@Join[
+					{
+						Refine[
+							GetGenProd[{y1, y2, y3, y4}, {{SIdx[[1,1]],SIdx[[1,2]]}, {SIdx[[1,3]],SIdx[[1,4]]}, {SIdx[[1,5]],SIdx[[1,6]]}, {SIdx[[1,7]],SIdx[[1,8]]}}, li[[2]], lj[[2]]]//.subProd
+						]
+					},
+					(
+						Function[{x}, Refine[Sum[
+							y1[[x+1,1]][SIdx[[x+1,1]], li[[2+x]], sumInd1[x]] y2[[x+1,1]][SIdx[[x+1,2]], sumInd1[x], sumInd2[x]] y3[[x+1,1]][SIdx[[x+1,3]], sumInd2[x], sumInd3[x]] y4[[x+1,4]][SIdx[[x+1,4]], sumInd3[x], lj[[2+x]]],
+							{sumInd1[x], 1, y2[[x+1,3]]},
+							{sumInd2[x], 1, y2[[x+1,4]]},
+							{sumInd3[x], 1, y4[[x+1,3]]}
+						]]]/@Range[NumberOfSubgroups]
+					)
+				]
+			}
+		];
+		
+		SolveProd5Fast[Y1_, Y2_, Y3_, Y4_, Y5_, li_, lj_, SIdx_] := Block[
+			{sumInd1, sumInd2, sumInd3, sumInd4},
+			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, Y5, li[[1]], lj[[1]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+				prod[y1_, y2_, y3_, y4_]:>Times@@Join[
+					{
+						Refine[
+							GetGenProd[{y1, y2, y3, y4, y5}, {{SIdx[[1,1]],SIdx[[1,2]]}, {SIdx[[1,3]],SIdx[[1,4]]}, {SIdx[[1,5]],SIdx[[1,6]]}, {SIdx[[1,7]],SIdx[[1,8]]}, {SIdx[[1,9]], SIdx[[1,10]]}}, li[[2]], lj[[2]]]//.subProd
+						]
+					},
+					(
+						Function[{x}, Refine[Sum[
+							y1[[x+1,1]][SIdx[[x+1,1]], li[[2+x]], sumInd1[x]] y2[[x+1,1]][SIdx[[x+1,2]], sumInd1[x], sumInd2[x]] y3[[x+1,1]][SIdx[[x+1,3]], sumInd2[x], sumInd3[x]] y4[[x+1,4]][SIdx[[x+1,4]], sumInd3[x], sumInd4[x]] y5[[x+1,1]][SIdx[[x+1,5]] sumInd4[x], lj[[2+x]]],
+							{sumInd1[x], 1, y2[[x+1,3]]},
+							{sumInd2[x], 1, y2[[x+1,4]]},
+							{sumInd3[x], 1, y4[[x+1,3]]},
+							{sumInd4[x], 1, y4[[x+1,4]]}
+						]]]/@Range[NumberOfSubgroups]
+					)
+				]
+			}
+		];
+		
+		SolveSProd2Fast[L1_, L2_, SIdx_] := Block[
+			{},
+			ReleaseHold[prod[L1, L2]/.subQuart//.subProd]//.subQuart/.{
+				prod[l1_, l2_] :> Times@@Join[
+					{
+						l1[[1,1]] l2[[1,1]] l1[[1,2]][SIdx[[1,1]], SIdx[[1,2]], SIdx[[1,3]], SIdx[[1,4]], SIdx[[1,5]], SIdx[[1,6]], SIdx[[1,7]], SIdx[[1,8]]] l2[[1,2]][SIdx[[1,9]], SIdx[[1,10]], SIdx[[1,11]], SIdx[[1,12]], SIdx[[1,13]], SIdx[[1,14]], SIdx[[1,15]], SIdx[[1,16]]]
+					},
+					Function[{x},
+						l1[[x+1,1]][SIdx[[1+x,1]], SIdx[[1+x,2]], SIdx[[1+x,3]], SIdx[[1+x,4]]] l2[[x+1,1]][SIdx[[1+x,5]], SIdx[[1+x,6]], SIdx[[1+x,7]], SIdx[[1+x,8]]]
+					]/@Range[NumberOfSubgroups]
+				]
+			}
+		];
+		
+		SolveSProd3Fast[L1_, L2_, L3_, SIdx_] := Block[
+			{},
+			ReleaseHold[prod[L1, L2, L3]/.subQuart//.subProd]//.subQuart/.{
+				prod[l1_, l2_, l3_] :> Times@@Join[
+					{
+						l1[[1,1]] l2[[1,1]] l3[[1,1]] l1[[1,2]][SIdx[[1,1]], SIdx[[1,2]], SIdx[[1,3]], SIdx[[1,4]], SIdx[[1,5]], SIdx[[1,6]], SIdx[[1,7]], SIdx[[1,8]]] l2[[1,2]][SIdx[[1,9]], SIdx[[1,10]], SIdx[[1,11]], SIdx[[1,12]], SIdx[[1,13]], SIdx[[1,14]], SIdx[[1,15]], SIdx[[1,16]]] l3[[1,2]][SIdx[[1,17]], SIdx[[1,18]], SIdx[[1,19]], SIdx[[1,20]], SIdx[[1,21]], SIdx[[1,22]], SIdx[[1,23]], SIdx[[1,24]]]
+					},
+					Function[{x},
+						l1[[x+1,1]][SIdx[[1+x,1]], SIdx[[1+x,2]], SIdx[[1+x,3]], SIdx[[1+x,4]]] l2[[x+1,1]][SIdx[[1+x,5]], SIdx[[1+x,6]], SIdx[[1+x,7]], SIdx[[1+x,8]]] l3[[x+1,1]][SIdx[[1+x,9]], SIdx[[1+x,10]], SIdx[[1+x,11]], SIdx[[1+x,12]]]
+					]/@Range[NumberOfSubgroups]
+				]
+			}
+		];
+		
+		
 		
 		(* Yukawa trace and products of gauge and generation indices *)
 		SolveTrace2[y1_, y2_, ScGauge_] := Join[
