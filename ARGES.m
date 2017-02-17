@@ -34,7 +34,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 	
- 	(*Begin["Private`"];*)
+ 	Begin["Private`"];
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -1247,7 +1247,7 @@ BeginPackage["ARGES`"];
 						Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups]
 					],
 					{ss[0], 1, SNumber[]}
-				];
+				]/.subKron;
 				$Assumptions=assHold;
 				sum
 			],
@@ -1274,7 +1274,7 @@ BeginPackage["ARGES`"];
 						Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups]
 					],
 					{ss[0], 1, SNumber[]}
-				];
+				]/.subKron;
 				$Assumptions=assHold;
 				sum
 			],
@@ -1628,6 +1628,8 @@ BeginPackage["ARGES`"];
 			]
 		};
 		
+		(* trivial thing the kernel should be aware of but isn't *)
+		subKron := {Sum[AA_ KroneckerDelta[aa_, 1], BB___, {aa_, 1, bb_}, CC__] :> Sum[AA /. aa -> 1, BB, CC]};
 		
 		(* Contraction of two scalar generators, see for instance arXiv:hep-ph/0211440 eq. (117) for Scalars and Fermions*)
 		sub\[CapitalLambda]S := {
@@ -2461,5 +2463,5 @@ BeginPackage["ARGES`"];
 		Quartic::UnknownParticle = "Undefined particle in scalar sector";
 		
 		Reset[];
-	(*End[];*)
+	End[];
 EndPackage[];
