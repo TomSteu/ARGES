@@ -1095,22 +1095,6 @@ BeginPackage["ARGES`"];
 		};
 		
 		subScalarInvariants := {
-			(*\[CapitalLambda]2[pa_, pb_, pc_, pd_] :> Block[
-				{s1, s2},
-				sum=0;
-				For[s1=1, s1<=SNumber[], s1++,
-					For[s2=1, s2<=SNumber[], s2++,
-						sum += (ReleaseHold[
-								prod[
-									Quartic[pa[[1]], pb[[1]], s1, s2], 
-									Quartic[s1, s2, pc[[1]], pd[[1]]]
-								]/.subQuart//.subProd
-							]//.subQuart/.{prod[A_List, B_List]:>(SolveSProd2[A, B, Join[{KroneckerDelta[#1, pa[[2]]] KroneckerDelta[#2, pa[[3]]] KroneckerDelta[#3, pb[[2]]] KroneckerDelta[#4, pb[[3]]] KroneckerDelta[#5, #9] KroneckerDelta[#6, #10] KroneckerDelta[#7, #11] KroneckerDelta[#8, #12] &}, Function[{x}, (KroneckerDelta[pa[[x+3]], #1] KroneckerDelta[pb[[x+3]], #2] KroneckerDelta[#3, #5] KroneckerDelta[#4, #6] KroneckerDelta[pc[[x+3]], #7] KroneckerDelta[pd[[x+3]], #8])&]/@Range[NumberOfSubgroups]]])}
-						);
-					];
-				];
-				sum
-			],*)
 			\[CapitalLambda]2[pa_, pb_, pc_, pd_] :> Block[
 				{ss1, ss2, assHold, sum, x, x2},
 				assHold=$Assumptions;
@@ -1140,10 +1124,6 @@ BeginPackage["ARGES`"];
 				$Assumptions = assHold;
 				sum
 			],
-			(*H[pa_, pb_, pc_, pd_] :> YukawaTrace[Yuk[pa[[1]]], adj[Yuk[pb[[1]]]], Yuk[pc[[1]]], adj[Yuk[pd[[1]]]], Join[{KroneckerDelta[#1, pa[[2]]] KroneckerDelta[#2, pa[[3]]] KroneckerDelta[#3, pb[[2]]] KroneckerDelta[#4, pb[[3]]] KroneckerDelta[#5, pc[[2]]] KroneckerDelta[#6, pc[[3]]] KroneckerDelta[#7, pd[[2]]] KroneckerDelta[#8, pd[[3]]] &}, Function[
-				{x},
-				(KroneckerDelta[#1,pa[[3+x]]] KroneckerDelta[#2,pb[[3+x]]] KroneckerDelta[#3,pc[[3+x]]] KroneckerDelta[#4,pd[[3+x]]])&
-			]/@Range[NumberOfSubgroups]]],*)
 			H[pa_, pb_, pc_, pd_] :> SolveTrace4Fast[
 				Yuk[pa[[1]]], adj[Yuk[pb[[1]]]], Yuk[pc[[1]]], adj[Yuk[pd[[1]]]],
 				Prepend[
