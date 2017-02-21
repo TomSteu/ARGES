@@ -1099,7 +1099,7 @@ BeginPackage["ARGES`"];
 				sum = Sum[
 					Sum@@Join[
 						{
-							SolveSProd2Fast[
+							SolveSProd2[
 								Quartic[pa[[1]], pb[[1]], ss1[0], ss2[0]],
 								Quartic[ss1[0], ss2[0], pc[[1]], pd[[1]]],
 								Prepend[
@@ -1175,7 +1175,7 @@ BeginPackage["ARGES`"];
 				sum = Sum[
 					Sum@@Join[
 						{
-							SolveSProd2Fast[
+							SolveSProd2[
 								Quartic[pa[[1]], ss1[0], ss2[0], ss3[0]],
 								Quartic[pb[[1]], ss1[0], ss2[0], ss3[0]],
 								Prepend[
@@ -1306,7 +1306,7 @@ BeginPackage["ARGES`"];
 				sum = Sum[
 					Sum@@Join[
 						{
-							SolveSProd3Fast[
+							SolveSProd3[
 								Quartic[pa[[1]], pb[[1]], ss1[0], ss2[0]],
 								Quartic[pc[[1]], ss1[0], ss3[0], ss4[0]],
 								Quartic[pd[[1]], ss2[0], ss3[0], ss4[0]],
@@ -1344,7 +1344,7 @@ BeginPackage["ARGES`"];
 				sum = Sum[
 					Sum@@Join[
 						{
-							1/2 SolveSProd2Fast[
+							1/2 SolveSProd2[
 								Quartic[pa[[1]], pb[[1]], ss1[0], ss2[0]],
 								Quartic[pc[[1]], pd[[1]], ss1[0], ss3[0]],
 								Prepend[
@@ -1484,7 +1484,7 @@ BeginPackage["ARGES`"];
 				sum = Sum[
 					Sum@@Join[
 						{
-							SolveSProd2Fast[
+							SolveSProd2[
 								Quartic[pa[[1]], pb[[1]], ss1[0], ss2[0]], 
 								Quartic[pc[[1]], pd[[1]], ss1[0], ss2[0]],
 								Prepend[
@@ -1514,7 +1514,7 @@ BeginPackage["ARGES`"];
 					Sum@@Join[
 						{
 							(
-								SolveSProd2Fast[
+								SolveSProd2[
 									Quartic[pa[[1]], pb[[1]], ss1[0], ss2[0]], 
 									Quartic[pc[[1]], pd[[1]], ss3[0], ss4[0]],
 									Prepend[
@@ -2159,7 +2159,7 @@ BeginPackage["ARGES`"];
 			}
 		];
 		
-		SolveSProd2Fast[L1_, L2_, SIdx_] := Block[
+		SolveSProd2[L1_, L2_, SIdx_] := Block[
 			{},
 			ReleaseHold[prod[L1, L2]/.subQuart//.subProd]//.subQuart/.{
 				prod[l1_, l2_] :> Times@@Join[
@@ -2173,7 +2173,7 @@ BeginPackage["ARGES`"];
 			}
 		];
 		
-		SolveSProd3Fast[L1_, L2_, L3_, SIdx_] := Block[
+		SolveSProd3[L1_, L2_, L3_, SIdx_] := Block[
 			{},
 			ReleaseHold[prod[L1, L2, L3]/.subQuart//.subProd]//.subQuart/.{
 				prod[l1_, l2_, l3_] :> Times@@Join[
