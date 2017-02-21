@@ -1948,7 +1948,7 @@ BeginPackage["ARGES`"];
 								]],
 								Refine[Sum[
 									((prod@@symList[[;;split-1, 1, 1]])[sumInd1,sumInd2] /.{prod[del[aa_]][i1_,i2_] :> KroneckerDelta[i1,i2], prod[A___, del[aa_], B___][C___] :> prod[A,B][C]}) Refine[Times@@(Function[{x},x[1]]/@symList[[;;split-1, 1, 2]]//.Mat:>Identity)] symList[[split, 1, 1]] symList[[split, 1, 2]][sVarList[[split,1]], sVarList[[split,2]], sumInd2, sumInd3] GetGenProd[symList[[split+1;;]], sVarList[[split+1;;]], sumInd3, sumInd1],
-									{sumInd1, 1, symList[[-1,1,4]]},
+									{sumInd1, 1, symList[[-1,1,5]]},
 									{sumInd2, 1, symList[[split,1,5]]},
 									{sumInd3, 1, symList[[split,1,6]]}
 								]]
@@ -2201,93 +2201,6 @@ BeginPackage["ARGES`"];
 		Perm[f_[a_,b_,c_,d_]]:= f[a,b,c,d] + f[a,b,d,c] + f[a,c,b,d] + f[a,c,d,b] + f[a,d,b,c] + f[a,d,c,b] + f[b,a,c,d] + f[b,a,d,c] + f[b,c,a,d] + f[b,c,d,a] + f[b,d,a,c] + f[b,d,c,a] + f[c,a,b,d] + f[c,a,d,b] + f[c,b,a,d] + f[c,b,d,a] + f[c,d,a,b] + f[c,d,b,a] + f[d,a,b,c] + f[d,a,c,b] + f[d,b,a,c] + f[d,b,c,a] + f[d,c,a,b] + f[d,c,b,a];
 		PermList[f_[a_,b_,c_,d_]]:={f[a,b,c,d], f[a,b,d,c], f[a,c,b,d], f[a,c,d,b], f[a,d,b,c], f[a,d,c,b], f[b,a,c,d], f[b,a,d,c], f[b,c,a,d], f[b,c,d,a], f[b,d,a,c], f[b,d,c,a], f[c,a,b,d], f[c,a,d,b], f[c,b,a,d], f[c,b,d,a], f[c,d,a,b], f[c,d,b,a], f[d,a,b,c], f[d,a,c,b], f[d,b,a,c], f[d,b,c,a], f[d,c,a,b], f[d,c,b,a]};
 		PermList[s_ f_[a_,b_,c_,d_]]:={s f[a,b,c,d], s f[a,b,d,c], s f[a,c,b,d], s f[a,c,d,b], s f[a,d,b,c], s f[a,d,c,b], s f[b,a,c,d], s f[b,a,d,c], s f[b,c,a,d], s f[b,c,d,a], s f[b,d,a,c], s f[b,d,c,a], s f[c,a,b,d], s f[c,a,d,b], s f[c,b,a,d], s f[c,b,d,a], s f[c,d,a,b], s f[c,d,b,a], s f[d,a,b,c], s f[d,a,c,b], s f[d,b,a,c], s f[d,b,c,a], s f[d,c,a,b], s f[d,c,b,a]};
-		
-		(* scalar quartic products *)
-		SolveSProd2[Q1_, Q2_, SContr_] := Times@@Join[
-			{ (Q1[[1,1]] Q2[[1,1]])
-				Sum[
-					SContr[[1]][q1Idx1[0], q1Idx12[0], q1Idx2[0], q1Idx22[0], q1Idx3[0], q1Idx32[0], q1Idx4[0], q1Idx42[0], q2Idx1[0], q2Idx12[0], q2Idx2[0], q2Idx22[0], q2Idx3[0], q2Idx32[0], q2Idx4[0], q2Idx42[0]] Q1[[1,2]][q1Idx1[0], q1Idx12[0], q1Idx2[0], q1Idx22[0], q1Idx3[0], q1Idx32[0], q1Idx4[0], q1Idx42[0]] Q2[[1,2]][q2Idx1[0], q2Idx12[0], q2Idx2[0], q2Idx22[0], q2Idx3[0], q2Idx32[0], q2Idx4[0], q2Idx42[0]],
-					{q1Idx1[0], 1, Q1[[1,3]]},
-					{q1Idx2[0], 1, Q1[[1,4]]},
-					{q1Idx3[0], 1, Q1[[1,5]]},
-					{q1Idx4[0], 1, Q1[[1,6]]},
-					{q2Idx1[0], 1, Q2[[1,3]]},
-					{q2Idx2[0], 1, Q2[[1,4]]},
-					{q2Idx3[0], 1, Q2[[1,5]]},
-					{q2Idx4[0], 1, Q2[[1,6]]},
-					{q1Idx12[0], 1, Q1[[1,7]]},
-					{q1Idx22[0], 1, Q1[[1,8]]},
-					{q1Idx32[0], 1, Q1[[1,9]]},
-					{q1Idx42[0], 1, Q1[[1,10]]},
-					{q2Idx12[0], 1, Q2[[1,7]]},
-					{q2Idx22[0], 1, Q2[[1,8]]},
-					{q2Idx32[0], 1, Q2[[1,9]]},
-					{q2Idx42[0], 1, Q2[[1,10]]}
-				]
-			},
-			(Function[{x},
-				Sum[
-					SContr[[1+x]][q1Idx1[x], q1Idx2[x], q1Idx3[x], q1Idx4[x], q2Idx1[x], q2Idx2[x], q2Idx3[x], q2Idx4[x]] Q1[[1+x,1]][q1Idx1[x], q1Idx2[x], q1Idx3[x], q1Idx4[x]] Q2[[1+x,1]][q2Idx1[x], q2Idx2[x], q2Idx3[x], q2Idx4[x]],
-					{q1Idx1[x], 1, Q1[[1+x,2]]},
-					{q1Idx2[x], 1, Q1[[1+x,3]]},
-					{q1Idx3[x], 1, Q1[[1+x,4]]},
-					{q1Idx4[x], 1, Q1[[1+x,5]]},
-					{q2Idx1[x], 1, Q2[[1+x,2]]},
-					{q2Idx2[x], 1, Q2[[1+x,3]]},
-					{q2Idx3[x], 1, Q2[[1+x,4]]},
-					{q2Idx4[x], 1, Q2[[1+x,5]]}
-				]
-			]/@Range[NumberOfSubgroups])
-		];
-		
-		SolveSProd3[Q1_, Q2_, Q3_, SContr_] := Times@@Join[
-			{ (Q1[[1,1]] Q2[[1,1]] Q3[[1,1]])
-				Sum[
-					SContr[[1]][q1Idx1[0], q1Idx12[0], q1Idx2[0], q1Idx22[0], q1Idx3[0], q1Idx32[0], q1Idx4[0], q1Idx42[0], q2Idx1[0], q2Idx12[0], q2Idx2[0], q2Idx22[0], q2Idx3[0], q2Idx32[0], q2Idx4[0], q2Idx42[0], q3Idx1[0], q3Idx12[0], q3Idx2[0], q3Idx22[0], q3Idx3[0],  q3Idx32[0], q3Idx4[0], q3Idx42[0]] Q1[[1,2]][q1Idx1[0], q1Idx12[0], q1Idx2[0], q1Idx22[0], q1Idx3[0], q1Idx32[0], q1Idx4[0], q1Idx42[0]] Q2[[1,2]][q2Idx1[0], q2Idx12[0], q2Idx2[0], q2Idx22[0], q2Idx3[0], q2Idx32[0], q2Idx4[0], q2Idx42[0]] Q3[[1,2]][q3Idx1[0], q3Idx12[0], q3Idx2[0], q3Idx22[0], q3Idx3[0],  q3Idx32[0], q3Idx4[0], q3Idx42[0]],
-					{q1Idx1[0], 1, Q1[[1,3]]},
-					{q1Idx2[0], 1, Q1[[1,4]]},
-					{q1Idx3[0], 1, Q1[[1,5]]},
-					{q1Idx4[0], 1, Q1[[1,6]]},
-					{q2Idx1[0], 1, Q2[[1,3]]},
-					{q2Idx2[0], 1, Q2[[1,4]]},
-					{q2Idx3[0], 1, Q2[[1,5]]},
-					{q2Idx4[0], 1, Q2[[1,6]]},
-					{q3Idx1[0], 1, Q3[[1,3]]},
-					{q3Idx2[0], 1, Q3[[1,4]]},
-					{q3Idx3[0], 1, Q3[[1,5]]},
-					{q3Idx4[0], 1, Q3[[1,6]]},
-					{q1Idx12[0], 1, Q1[[1,7]]},
-					{q1Idx22[0], 1, Q1[[1,8]]},
-					{q1Idx32[0], 1, Q1[[1,9]]},
-					{q1Idx42[0], 1, Q1[[1,10]]},
-					{q2Idx12[0], 1, Q2[[1,7]]},
-					{q2Idx22[0], 1, Q2[[1,8]]},
-					{q2Idx32[0], 1, Q2[[1,9]]},
-					{q2Idx42[0], 1, Q2[[1,10]]},
-					{q3Idx12[0], 1, Q3[[1,7]]},
-					{q3Idx22[0], 1, Q3[[1,8]]},
-					{q3Idx32[0], 1, Q3[[1,9]]},
-					{q3Idx42[0], 1, Q3[[1,10]]}
-				]
-			},
-			(Function[{x},
-				Sum[
-					SContr[[1+x]][q1Idx1[x], q1Idx2[x], q1Idx3[x], q1Idx4[x], q2Idx1[x], q2Idx2[x], q2Idx3[x], q2Idx4[x], q3Idx1[x], q3Idx2[x], q3Idx3[x], q3Idx4[x]] Q1[[1+x,1]][q1Idx1[x], q1Idx2[x], q1Idx3[x], q1Idx4[x]] Q2[[1+x,1]][q2Idx1[x], q2Idx2[x], q2Idx3[x], q2Idx4[x]] Q3[[1+x,1]][q3Idx1[x], q3Idx2[x], q3Idx3[x], q3Idx4[x]],
-					{q1Idx1[x], 1, Q1[[1+x,2]]},
-					{q1Idx2[x], 1, Q1[[1+x,3]]},
-					{q1Idx3[x], 1, Q1[[1+x,4]]},
-					{q1Idx4[x], 1, Q1[[1+x,5]]},
-					{q2Idx1[x], 1, Q2[[1+x,2]]},
-					{q2Idx2[x], 1, Q2[[1+x,3]]},
-					{q2Idx3[x], 1, Q2[[1+x,4]]},
-					{q2Idx4[x], 1, Q2[[1+x,5]]},
-					{q3Idx1[x], 1, Q3[[1+x,2]]},
-					{q3Idx2[x], 1, Q3[[1+x,3]]},
-					{q3Idx3[x], 1, Q3[[1+x,4]]},
-					{q3Idx4[x], 1, Q3[[1+x,5]]}
-				]
-			]/@Range[NumberOfSubgroups])
-		];
 		
 		
 		(* number of real scalars and weyl fermions *)
