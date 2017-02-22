@@ -52,12 +52,19 @@ BeginPackage["ARGES`"];
 		(* Interfaces to define the theory *)
 		Gauge[sym_, group_, n_, reps_List] := Module[
 			{},
+			If[!NumberQ[NumberOfSubgroups] || !MatchQ[NumberOfSubgroups, _Integer] || NumberOfSubgroups<0, 
+				Message[Gauge::NAN];
+				Return[];
+			];
+			If[Dimensions[ListGauge][[1]] >= NumberOfSubgroups, 
+				Message[Gauge::Full];
+				Return[];
+			];
 			If[Dimensions[reps][[1]] != NumberOfSubgroups,
 				Message[Gauge::RepMismatch];,
 				AddAssumption[n];
 				AddAssumption/@reps;
 				ListGauge = Append[ListGauge, {sym, group, n, reps}];
-
 			];
 		];
 		
@@ -671,17 +678,7 @@ BeginPackage["ARGES`"];
 				{ii, 1, NumberOfSubgroups}
 			];
 			beta += Sum[ 6 Sqr[ListGauge[[ii,1]]] H2t[ii, Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //.subScalarInvariants, {ii, 1, NumberOfSubgroups}];
-			beta += Sum[
-				5 Sum@@Join[
-					{
-						BetaYukawa[ss[0], pi, pj, ss/@Range[NumberOfSubgroups+2], li, lj, 0] Y2FS[Prepend[la, pa], ss/@Range[0,NumberOfSubgroups+2]] //.subScalarInvariants,
-						{ss[1], 1, RealScalarList[[ss[0], 2,1]]},
-						{ss[2], 1, RealScalarList[[ss[0], 2,2]]}
-					},
-					Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups]
-				],
-				{ss[0], 1, SNumber[]}
-			];
+			beta += Y2FSY[pa, pi, pj, la, li, lj];
 			beta -= 3/2 Sum[
 				Sqr[ListGauge[[ii,1]] ListGauge[[ii2,1]]] BetaYukawa[pa, pi, pj, la, li, lj, 0] (C2[WeylFermionList[[pi,1]], ListGauge[[ii,1]]] C2[WeylFermionList[[pi,1]], ListGauge[[ii2,1]]] + C2[WeylFermionList[[pj,1]], ListGauge[[ii,1]]] C2[WeylFermionList[[pj,1]], ListGauge[[ii2,1]]]),
 				{ii, 1, NumberOfSubgroups},
@@ -1277,11 +1274,34 @@ BeginPackage["ARGES`"];
 				];
 				Sum[Sqr[ListGauge[[ii,1]]] C2[WeylFermionList[[ff,1]], ListGauge[[ii,1]]] fHold[ff] , {ff, 1, FNumber[]}, {ii, 1, NumberOfSubgroups}]
 			],
+			Y2FSY[pa_, pi_, pj_, la_, li, lj_] :> Block[
+				{ff,fHold,x,ii,ss,assHold},
+				assHold=$Assumptions;
+				$Assumptions=$Assumptions&&Element[ss[1],Integers]&&Element[ss[2],Integers]&&(ss[1]>0)&&(ss[2]>0);
+				For[ff=1, ff<=FNumber[], ff++,
+					fHold[ff] = Refine[Sum[
+						5/2 Sum@@Join[
+							{
+								BetaYukawa[ss[0], pi, pj, ss/@Range[NumberOfSubgroups+2], li, lj, 0] (
+									SolveTrace3[Delt[ff], Yuk[pa], adj[Yuk[ss[0]]], Prepend[Function[{x}, {1, la[[x+2]], ss[2+x]}]/@Range[NumberOfSubgroups], {1, 1, la[[1]], la[[2]], ss[1], ss[2]}]] + 
+									SolveTrace3[Delt[ff], Yuk[ss[0]], adj[Yuk[pa]], Prepend[Function[{x}, {1, ss[2+x], la[[x+2]]}]/@Range[NumberOfSubgroups], {1, 1, ss[1], ss[2], la[[1]], la[[2]]}]]
+								),
+								{ss[1], 1, RealScalarList[[ss[0], 2,1]]},
+								{ss[2], 1, RealScalarList[[ss[0], 2,2]]}
+							},
+							Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups]
+						],
+						{ss[0], 1, SNumber[]}
+					]];
+				];
+				$Assumptions=assHold;
+				Sum[Sqr[ListGauge[[ii,1]]] C2[WeylFermionList[[ff,1]], ListGauge[[ii,1]]] fHold[ff] , {ff, 1, FNumber[]}, {ii, 1, NumberOfSubgroups}]
+			],
 			H2t[gauge_, pa_, pi_, pj_] :> Module[
 				{sum, ss, ff1, ff2, ff3, ff4, scGenIdx, scGenIdx2, scGaugeIdx, a, A, B, C},
 				assHold = $Assumptions;
 				$Assumptions=$Assumptions&&Element[scGenIdx,Integers]&&(scGenIdx>0)&&Element[scGenIdx2,Integers]&&(scGenIdx2>0);
-				sum = Sum[
+				sum = Refine[Sum[
 					ReleaseHold[(ReleaseHold[SolveProd[Yuk[pa[[1]]], adj[Yuk[ss]], Yuk[ss], pi[[1]], pj[[1]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]/.{prod[A___, adj[Yukawa[a_]]]:>prod[A, adj[Yukawa[a]]][ListYukawa[[a,4]]], prod[A___, Yukawa[a_]]:>prod[A, Yukawa[a]][ListYukawa[[a,3]]]}//.subYuk //.{
 						prod[A_, B_, C_][a_] :> Sum@@Join[
 							{
@@ -1307,7 +1327,7 @@ BeginPackage["ARGES`"];
 						]
 					})],
 					{ss, 1, SNumber[]}
-				];
+				]];
 				$Assumptions=assHold;
 				sum
 			],
@@ -2224,6 +2244,8 @@ BeginPackage["ARGES`"];
 		
 		(* Error Messages *)
 		Gauge::RepMismatch = "Representation list does not match number of subgroups";
+		Gauge::NAN = "Number of subgroups is corrupted";
+		Gauge::Full = "Number of gauge subgroups exceeds initial definition";
 		WeylFermion::RepMismatch = "Representation list does not match number of subgroups";
 		RealScalar::RepMismatch = "Representation list does not match number of subgroups";
 		Yukawa::ContractionError = "Number of gauge contractions does not match number of subgroups";

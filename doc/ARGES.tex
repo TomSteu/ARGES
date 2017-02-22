@@ -1,0 +1,39 @@
+\documentclass{scrartcl}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+}
+\definecolor{light-gray}{gray}{0.95}
+\begin{document}
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+\section{Motivation}
+\newpage
+\section{Defining a model}
+\subsection{Gauge sector and initial Setup}
+The initial step when writing a model file is to invoke the function $\mathtt{Reset[\;];}$ to initialize background variables. This command also clears the package and allows a fresh and redefinition of a model. This is particulary useful when accidentally adding fields or couplings twice. \\
+A second step is the to define the variable $\mathtt{NumberOfSubgroups}$, specifying the number of gauge subgroups. The default for this variable is set to 1, but it can be set to any non-negative integer, including zero. The value assigned to $\mathtt{NumberOfSubgroups}$ cannot be a symbol.
+\vspace{1em}
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+Reset[];
+NumberOfSubgroups=1;
+\end{lstlisting}
+\vspace{1em}
+In order to define gauge groups and their respective fields the function $\mathtt{Gauge[\dots]}$ must be invoded $\mathtt{NumberOfSubgroups}$ times. The syntax is:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+Gauge[Coupling Symbol, Algebra, Rank, {Charge/Representation1, ...}];
+\end{lstlisting}
+The last argument is a list of the charges (in case of $\mathrm{U}(1)$ subgroups) or representations of gauge bosons. The first charge/representation will be associated with the group first declared with $\mathtt{Gauge[\dots]}$, and so on. The dimension of this list must match $\mathtt{NumberOfSubgroups}$. ARGES is agnostic regarding anti-representations, only positiv numbers are valid. However, charges, representations and rank of the subgroup may be declared as a variable. \newline Currently available algebras and ranks are $\mathrm{U}(1)$ , $\mathrm{SU}(N_U)$, and $\mathrm{SO}(N_O)$ with $N_U > 1$ and $N_O > 2$. Gauge fields are assumed to be in the adjoint representation of their own subgroup and singulets in the others. Kinetic mixing is not implemented. \newline Unknown Gauge groups will 
+\subsection{Fermionic fields}
+Fermions may be defined via $\mathtt{WeylFermion}$:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+WeylFermion[Symbol, Generations, {Charge/Representation1, ...}];
+\end{lstlisting}
+
+%\newpage
+%\section{Output}
+\end{document}
