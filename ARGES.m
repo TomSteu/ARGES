@@ -678,7 +678,7 @@ BeginPackage["ARGES`"];
 				{ii, 1, NumberOfSubgroups}
 			];
 			beta += Sum[ 6 Sqr[ListGauge[[ii,1]]] H2t[ii, Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //.subScalarInvariants, {ii, 1, NumberOfSubgroups}];
-			beta += Y2FSY[pa, pi, pj, la, li, lj];
+			beta += Y2FSY[pa, pi, pj, la, li, lj]//.subScalarInvariants;
 			beta -= 3/2 Sum[
 				Sqr[ListGauge[[ii,1]] ListGauge[[ii2,1]]] BetaYukawa[pa, pi, pj, la, li, lj, 0] (C2[WeylFermionList[[pi,1]], ListGauge[[ii,1]]] C2[WeylFermionList[[pi,1]], ListGauge[[ii2,1]]] + C2[WeylFermionList[[pj,1]], ListGauge[[ii,1]]] C2[WeylFermionList[[pj,1]], ListGauge[[ii2,1]]]),
 				{ii, 1, NumberOfSubgroups},
@@ -1274,7 +1274,7 @@ BeginPackage["ARGES`"];
 				];
 				Sum[Sqr[ListGauge[[ii,1]]] C2[WeylFermionList[[ff,1]], ListGauge[[ii,1]]] fHold[ff] , {ff, 1, FNumber[]}, {ii, 1, NumberOfSubgroups}]
 			],
-			Y2FSY[pa_, pi_, pj_, la_, li, lj_] :> Block[
+			Y2FSY[pa_, pi_, pj_, la_, li_, lj_] :> Block[
 				{ff,fHold,x,ii,ss,assHold},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&Element[ss[1],Integers]&&Element[ss[2],Integers]&&(ss[1]>0)&&(ss[2]>0);
