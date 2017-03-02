@@ -124,14 +124,12 @@ BeginPackage["ARGES`"];
 				Message[Yukawa::ContractionError];
 				Return[];
 			];
-			posS  = ListPosition[ComplexScalarList, Sa];
-			If[posS != {},
+			If[MemberQ[ComplexScalarList, Sa],
 				YukawaYaij[sym, Re[Sa], Fi, Fj, gauge, fak/Sqrt[2]];
 				YukawaYaij[sym, Im[Sa], Fi, Fj, gauge, I fak/Sqrt[2]];
 				Return[];
 			];
-			posS  = ListPosition[adj/@ComplexScalarList, Sa];
-			If[posS != {},
+			If[MemberQ[adj/@ComplexScalarList, Sa],
 				YukawaYaij[sym, Re[Sa[[1]]], Fi, Fj, gauge, fak/Sqrt[2]];
 				YukawaYaij[sym, Im[Sa[[1]]], Fi, Fj, gauge, -I fak/Sqrt[2]];
 				Return[];
@@ -151,14 +149,12 @@ BeginPackage["ARGES`"];
 				Message[Yukawa::ContractionError];
 				Return[];
 			];
-			posS  = ListPosition[ComplexScalarList, Sa];
-			If[posS != {},
+			If[MemberQ[ComplexScalarList, Sa],
 				YukawaY[sym, Re[Sa], Fi, Fj, gauge, Evaluate[fak[#1,#2,#3,#4]/Sqrt[2]]&];
 				YukawaY[sym, Im[Sa], Fi, Fj, gauge, Evaluate[I fak[#1,#2,#3,#4]/Sqrt[2]]&];
 				Return[];
 			];
-			posS  = ListPosition[adj/@ComplexScalarList, Sa];
-			If[posS != {},
+			If[MemberQ[adj/@ComplexScalarList, Sa],
 				YukawaY[sym, Re[Sa[[1]]], Fi, Fj, gauge, Evaluate[fak[#2,#1,#3,#4]/Sqrt[2]]&];
 				YukawaY[sym, Im[Sa[[1]]], Fi, Fj, gauge, Evaluate[-I fak[#2,#1,#3,#4]/Sqrt[2]]&];
 				Return[];
@@ -174,86 +170,42 @@ BeginPackage["ARGES`"];
 		
 		Quartic\[Lambda]abcd[sym_, Sa_, Sb_, Sc_, Sd_, gauge_List, fak_:(1&)] := Module[
 			{posA, posB, posC, posD, permList, permListPos, iter, x, x2, perm1, perm2, perm3, perm4},
-			posA = ListPosition[adj/@ComplexScalarList, Sa];
-			If[posA != {},
-				posB = ListPosition[ComplexScalarList, Sb];
-				If[posB != {} && posB == posA,
-					Quartic\[Lambda]abcd[sym, Re[Sa[[1]]], Re[Sb], Sc, Sd, gauge, (1/2 fak[#2,#1,#3,#4,#5,#6,#7,#8])&];
-					Quartic\[Lambda]abcd[sym, Im[Sa[[1]]], Im[Sb], Sc, Sd, gauge, (1/2 fak[#2,#1,#3,#4,#5,#6,#7,#8])&];
-					Return[];
-				];
-				Quartic\[Lambda]abcd[sym, Re[Sa[[1]]], Sb, Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4,#5,#6,#7,#8])&];
-				Quartic\[Lambda]abcd[sym, Im[Sa[[1]]], Sb, Sc, Sd, gauge, (-1/Sqrt[2]fak[#1,#2,#3,#4,#5,#6,#7,#8])&];
+			If[MemberQ[adj/@ComplexScalarList, Sa],
+				Quartic\[Lambda]abcd[sym, Re[Sa[[1]]], Sb, Sc, Sd, gauge, (1/Sqrt[2] fak[#2,#1,#3,#4,#5,#6,#7,#8])&];
+				Quartic\[Lambda]abcd[sym, Im[Sa[[1]]], Sb, Sc, Sd, gauge, (-1/Sqrt[2]fak[#2,#1,#3,#4,#5,#6,#7,#8])&];
 				Return[];
 			];
-			posA = ListPosition[ComplexScalarList, Sa];
-			If[posA != {},
-				posB = ListPosition[adj/@ComplexScalarList, Sb];
-				If[posB != {} && posA == posB,
-					Quartic\[Lambda]abcd[sym, Re[Sa], Re[Sb[[1]]], Sc, Sd, gauge, (1/2 fak[#1,#2,#4,#3,#5,#6,#7,#8])&];
-					Quartic\[Lambda]abcd[sym, Im[Sa], Im[Sb[[1]]], Sc, Sd, gauge, (1/2 fak[#1,#2,#4,#3,#5,#6,#7,#8])&];
-					Return[];
-				];
+			If[MemberQ[ComplexScalarList, Sa],
 				Quartic\[Lambda]abcd[sym, Re[Sa], Sb, Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4,#5,#6,#7,#8])&];
 				Quartic\[Lambda]abcd[sym, Im[Sa], Sb, Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4,#5,#6,#7,#8])&];
 				Return[];
 			];
-			posB = ListPosition[adj/@ComplexScalarList, Sb];
-			If[posB != {},
-				posC = ListPosition[ComplexScalarList, Sc];
-				If[posC != {} && posB == posC,
-					Quartic\[Lambda]abcd[sym, Sa, Re[Sb[[1]]], Re[Sc], Sd, gauge, (1/2 fak[#1,#2,#4,#3,#5,#6,#7,#8])&];
-					Quartic\[Lambda]abcd[sym, Sa, Im[Sb[[1]]], Im[Sc], Sd, gauge, (1/2 fak[#1,#2,#4,#3,#5,#6,#7,#8])&];
-					Return[];
-				];
+			If[MemberQ[adj/@ComplexScalarList, Sb],
 				Quartic\[Lambda]abcd[sym, Sa, Re[Sb[[1]]], Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#4,#3,#5,#6,#7,#8])&];
 				Quartic\[Lambda]abcd[sym, Sa, Im[Sb[[1]]], Sc, Sd, gauge, (-1/Sqrt[2] fak[#1,#2,#4,#3,#5,#6,#7,#8])&];
 				Return[];
 			];
-			posB = ListPosition[ComplexScalarList, Sb];
-			If[posB != {},
-				posC = ListPosition[adj/@ComplexScalarList, Sc];
-				If[posC != {} && posB == posC,
-					Quartic\[Lambda]abcd[sym, Sa, Re[Sb], Re[Sc[[1]]], Sd, gauge, (1/2 fak[#1,#2,#3,#4,#6,#5,#7,#8])&];
-					Quartic\[Lambda]abcd[sym, Sa, Im[Sb], Im[Sc[[1]]], Sd, gauge, (1/2 fak[#1,#2,#3,#4,#6,#5,#7,#8])&];
-					Return[];
-				];
+			If[MemberQ[ComplexScalarList, Sb],
 				Quartic\[Lambda]abcd[sym, Sa, Re[Sb], Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4,#5,#6,#7,#8])&];
 				Quartic\[Lambda]abcd[sym, Sa, Im[Sb], Sc, Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4,#5,#6,#7,#8])&];
 				Return[];
 			];
-			posC = ListPosition[adj/@ComplexScalarList, Sc];
-			If[posC != {},
-				posD = ListPosition[ComplexScalarList, Sd];
-				If[posD != {} && posC == posD,
-					Quartic\[Lambda]abcd[sym, Sa, Sb, Re[Sc[[1]]], Re[Sd], gauge, (1/2 fak[#1,#2,#3,#4,#6,#5,#7,#8])&];
-					Quartic\[Lambda]abcd[sym, Sa, Sb, Im[Sc[[1]]], Im[Sd], gauge, (1/2 fak[#1,#2,#3,#4,#6,#5,#7,#8])&];
-					Return[];
-				];
+			If[MemberQ[adj/@ComplexScalarList, Sc],
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Re[Sc[[1]]], Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4,#6,#5,#7,#8])&];
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Im[Sc[[1]]], Sd, gauge, (-1/Sqrt[2] fak[#1,#2,#3,#4,#6,#5,#7,#8])&];
 				Return[];
 			];
-			posC = ListPosition[ComplexScalarList, Sc];
-			If[posC != {},
-				posD = ListPosition[adj/@ComplexScalarList, Sd];
-				If[posD != {} && posC == posD,
-					Quartic\[Lambda]abcd[sym, Sa, Sb, Re[Sc], Re[Sd[[1]]], gauge, (1/2 fak[#1,#2,#3,#4,#5,#6,#8,#7])&];
-					Quartic\[Lambda]abcd[sym, Sa, Sb, Im[Sc], Im[Sd[[1]]], gauge, (1/2 fak[#1,#2,#3,#4,#5,#6,#8,#7])&];
-					Return[];
-				];
+			If[MemberQ[ComplexScalarList, Sc],
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Re[Sc], Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4,#5,#6,#7,#8])&];
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Im[Sc], Sd, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4,#5,#6,#7,#8])&];
 				Return[];
 			];
-			posD = ListPosition[adj/@ComplexScalarList, Sd];
-			If[posD != 0,
+			If[MemberQ[adj/@ComplexScalarList, Sd],
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Sc, Re[Sd[[1]]], gauge, (1/Sqrt[2] fak[#1,#2,#3,#4,#5,#6,#8,#7])&];
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Sc, Im[Sd[[1]]], gauge, (-1/Sqrt[2] fak[#1,#2,#3,#4,#5,#6,#8,#7])&];
 				Return[];
 			];
-			posD = ListPosition[ComplexScalarList, Sd];
-			If[posD != 0,
+			If[MemberQ[ComplexScalarList, Sd],
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Sc, Re[Sd], gauge, (1/Sqrt[2] fak[#1,#2,#3,#4,#5,#6,#7,#8])&];
 				Quartic\[Lambda]abcd[sym, Sa, Sb, Sc, Im[Sd], gauge, (1/Sqrt[2] fak[#1,#2,#3,#4,#5,#6,#7,#8])&];
 				Return[];
@@ -356,11 +308,23 @@ BeginPackage["ARGES`"];
 			If[MemberQ[ComplexScalarList, _?((# === SType2)&)],
 				Return[Sqrt[2] \[Beta][SType1, Re[SType2], SType3, SType4, SList1, SList2, SList3, SList4, loop]];
 			];
-			If[MemberQ[ComplexScalarList, _?((# === SType3)&)],
+			If[MemberQ[ComplexScalarList, _?((# === SType3)&)] ,
 				Return[Sqrt[2] \[Beta][SType1, SType2, Re[SType3], SType4, SList1, SList2, SList3, SList4, loop]];
 			];
 			If[MemberQ[ComplexScalarList, _?((# === SType4)&)],
 				Return[Sqrt[2] \[Beta][SType1, SType2, SType3, Re[SType4], SList1, SList2, SList3, SList4, loop]];
+			];
+			If[MemberQ[adj/@ComplexScalarList, _?((# === SType1)&)],
+				Return[Sqrt[2] \[Beta][Re[SType1], SType2, SType3, SType4, Prepend[SList1[3;;],{SList1[[2]], SList1[[1]]}], SList2, SList3, SList4, loop]];
+			];
+			If[MemberQ[adj/@ComplexScalarList, _?((# === SType2)&)],
+				Return[Sqrt[2] \[Beta][SType1, Re[SType2], SType3, SType4, SList1, Prepend[SList2[3;;],{SList2[[2]], SList2[[1]]}], SList3, SList4, loop]];
+			];
+			If[MemberQ[adj/@ComplexScalarList, _?((# === SType3)&)],
+				Return[Sqrt[2] \[Beta][SType1, SType2, Re[SType3], SType4, SList1, SList2, Prepend[SList3[3;;],{SList3[[2]], SList3[[1]]}], SList4, loop]];
+			];
+			If[MemberQ[adj/@ComplexScalarList, _?((# === SType2)&)],
+				Return[Sqrt[2] \[Beta][SType1, SType2, SType3, Re[SType4], SList1, SList2, SList3, Prepend[SList4[3;;],{SList4[[2]], SList4[[1]]}], loop]];
 			];
 			pos1  = ListPosition[RealScalarList,_List?(#[[1]] == SType1 &)];
 			pos2  = ListPosition[RealScalarList,_List?(#[[1]] == SType2 &)];
@@ -717,7 +681,7 @@ BeginPackage["ARGES`"];
 		
 		
 		BetaQuartic[a_, b_, c_, d_, la_, lb_, lc_, ld_, 0] := Module[
-			{pa, pb, pc, pd, q},
+			{q},
 			Return[
 				ReleaseHold[(Quartic[a,b,c,d]/.subQuart)]//.{
 				Quart[q_]:>((ListQuarticSym[[q,1]] ListQuarticSym[[q,7]][la[[1]], la[[2]], lb[[1]], lb[[2]], lc[[1]], lc[[2]], ld[[1]], ld[[2]]])(Times@@(Function[{x},ListQuarticSym[[q,6,x]][la[[2+x]], lb[[2+x]], lc[[2+x]], ld[[2+x]]]]/@Range[NumberOfSubgroups])))}
@@ -1938,29 +1902,6 @@ BeginPackage["ARGES`"];
 		SMultiplicity[s_, g_] := If[ListGauge[[g,3]]===1, 1, RealScalarList[[s,3,g]]];
 		
 		(* Generation contraction for Yukawa products and traces *)
-(*		GetGenProd[symList_, sVarList_, i_, j_] := Module[
-			{split, sumInd},
-			If[
-				symList == {} || sVarList == {} || Dimensions[symList][[1]] <= 0, 
-				Return[0];
-			];
-			For[split=1, split<=Dimensions[symList][[1]], split++,
-				If[
-					!(MatchQ[symList[[split, 1, 2]], Mat[___]] || MatchQ[symList[[split, 1, 2]], Conjugate[Mat[___]]] || MatchQ[symList[[split, 1, 2]], a_ Mat[___]] || MatchQ[symList[[split, 1, 2]], a_ Conjugate[Mat[___]]]  || MatchQ[symList[[split, 1, 2]], Mat[___]&] || MatchQ[symList[[split, 1, 2]], Conjugate[Mat[___]]&]  || MatchQ[symList[[split, 1, 2]], a_ Mat[___]&] || MatchQ[symList[[split, 1, 2]], a_ Conjugate[Mat[___]]&]),
-					Return[Assuming[Element[sumInd,Integers]&&(sumInd>0),
-						If[(split == Dimensions[symList][[1]]),
-							If[split == 1, 1, ((prod@@symList[[;;split-1, 1, 1]])[i,j]/.{prod[del[aa_]][i1_,i2_] :> KroneckerDelta[i1,i2], prod[A___, del[aa_], B___][C___] :> prod[A,B][C]}) Refine[Times@@(Function[{x},x[1]]/@symList[[;;split-1, 1, 2]]//.Mat:>Identity)]] symList[[split, 1, 1]] symList[[split, 1, 2]][sVarList[[split,1]], sVarList[[split,2]], i, j],
-							Refine[Sum[
-								If[split == 1, 1, ((prod@@symList[[;;split-1, 1, 1]])[i,sumInd]/.{prod[del[aa_]][i1_,i2_] :> KroneckerDelta[i1,i2], prod[A___, del[aa_], B___][C___] :> prod[A,B][C]}) Refine[Times@@(Function[{x},x[1]]/@symList[[;;split-1, 1, 2]]//.Mat:>Identity)]] symList[[split, 1, 1]] symList[[split, 1, 2]][sVarList[[split,1]], sVarList[[split,2]], i, sumInd] GetGenProd[symList[[split+1;;]], sVarList[[split+1;;]], sumInd, j],
-								{sumInd, 1, symList[[split, 1, 6]]}
-							]]
-						]
-					]];
-				];
-				If[split==Dimensions[symList][[1]], Break[];];
-			];
-			Return[((prod@@(symList[[All, 1, 1]]))[i,j] /.{prod[del[aa_]][i1_,i2_] :> KroneckerDelta[i1,i2], prod[A___, del[aa_], B___][C___] :> prod[A,B][C]}) Refine[Times@@(Function[{x},x[1]]/@symList[[All, 1, 2]]//.Mat:>Identity)]];
-		];*)
 		GetGenProd[symList_, sVarList_, i_, j_] := Module[
 			{split, sumInd1, sumInd2},
 			If[
