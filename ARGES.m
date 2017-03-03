@@ -368,7 +368,7 @@ BeginPackage["ARGES`"];
 		BetaYukawa[pa_, pi_, pj_, la_, li_, lj_, 1] := Module[
 			{beta, ss1, ii, x, x2, x3, sumIdx, assHold},
 			assHold=$Assumptions;
-			$Assumptions=$Assumptions&&Element[ss1[1],Integers]&&(ss1[1]>0)&&Element[ss1[2],Integers]&&(ss1[2]>0)&&Element[ss2[1],Integers]&&(ss2[1]>0)&&Element[ss2[2],Integers]&&(ss2[2]>0);
+			$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)]/@Range[NumberOfSubgroups+2];
 			beta = 0;
 			beta += 1/2 Sum[
 				Sum@@Join[
@@ -424,7 +424,7 @@ BeginPackage["ARGES`"];
 		BetaYukawa[pa_, pi_, pj_, la_, li_, lj_, 2] := Module[
 			{beta, fHold, ssb, ssc, ss, ss1, ss2, ss3, ff, ii, ii2, x, x2, assHold},
 			assHold = $Assumptions;
-			$Assumptions=$Assumptions&&Element[ss[1],Integers]&&Element[ss[2],Integers]&&(ss[1]>0)&&(ss[2]>0)&&Element[ss1[1],Integers]&&Element[ss1[2],Integers]&&(ss1[1]>0)&&(ss1[2]>0)&&Element[ss2[1],Integers]&&Element[ss2[2],Integers]&&(ss2[1]>0)&&(ss2[2]>0)&&Element[ss3[1],Integers]&&Element[ss3[2],Integers]&&(ss3[1]>0)&&(ss3[2]>0);
+			$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss[x],Integers]&&(ss[x]>0)]/@Range[NumberOfSubgroups+2];
 			beta = 0;
 			beta += 2 Sum[
 				Sum@@Join[
@@ -919,7 +919,7 @@ BeginPackage["ARGES`"];
 			];
 			(* Gauge-Yukawa Invariants *)
 			assHold=$Assumptions;
-			$Assumptions = $Assumptions && Element[sIdx[1],Integers] && Element[sIdx[2],Integers] && (sIdx[1] > 0) && (sIdx[2] > 0);
+			$Assumptions=$Assumptions&&And@@Function[{x}, Element[sIdx[x],Integers]&&(sIdx[x]>0)]/@Range[NumberOfSubgroups+2];
 			For[f=1, f<=FNumber[], f++,
 				If[
 					WeylFermionList != {} && ListYukawa != {} && RealScalarList != {},
@@ -1069,7 +1069,7 @@ BeginPackage["ARGES`"];
 			\[CapitalLambda]2[pa_, pb_, pc_, pd_] :> Block[
 				{ss1, ss2, assHold, sum, x, x2},
 				assHold=$Assumptions;
-				$Assumptions = $Assumptions&&Element[ss1[1],Integers]&&(ss1[1]>0)&&Element[ss1[2],Integers]&&(ss1[2]>0)&&Element[ss2[1],Integers]&&(ss2[1]>0)&&Element[ss2[2],Integers]&&(ss2[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = Sum[
 					Sum@@Join[
 						{
@@ -1145,7 +1145,7 @@ BeginPackage["ARGES`"];
 			\[CapitalLambda]2S[pa_, pb_] :> Block[
 				{ss1, ss2, ss3, assHold, sum, x, x2},
 				assHold=$Assumptions;
-				$Assumptions = $Assumptions&&Element[ss1[1],Integers]&&(ss1[1]>0)&&Element[ss1[2],Integers]&&(ss1[2]>0)&&Element[ss2[1],Integers]&&(ss2[1]>0)&&Element[ss2[2],Integers]&&(ss2[2]>0)&&Element[ss3[1],Integers]&&(ss3[1]>0)&&Element[ss3[2],Integers]&&(ss3[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = Sum[
 					Sum@@Join[
 						{
@@ -1178,7 +1178,7 @@ BeginPackage["ARGES`"];
 			H2S[pa_, pb_] :> Block[
 				{ss,x,x2,sum,assHold},
 				assHold = $Assumptions;
-				$Assumptions=$Assumptions&&Element[ss[1],Integers]&&(ss[1]>0)&&Element[ss[2],Integers]&&(ss[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = 1/2 Sum[
 					Sum@@Join[
 						{
@@ -1205,7 +1205,7 @@ BeginPackage["ARGES`"];
 			Hbar2S[pa_, pb_] :> Block[
 				{ss,x,x2,sum,assHold},
 				assHold = $Assumptions;
-				$Assumptions=$Assumptions&&Element[ss[1],Integers]&&(ss[1]>0)&&Element[ss[2],Integers]&&(ss[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = 1/2 Sum[
 					Sum@@Join[
 						{
@@ -1242,7 +1242,7 @@ BeginPackage["ARGES`"];
 			Y2FSY[pa_, pi_, pj_, la_, li_, lj_] :> Block[
 				{ff,fHold,x,ii,ss,assHold},
 				assHold=$Assumptions;
-				$Assumptions=$Assumptions&&Element[ss[1],Integers]&&Element[ss[2],Integers]&&(ss[1]>0)&&(ss[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)]/@Range[NumberOfSubgroups+2];
 				For[ff=1, ff<=FNumber[], ff++,
 					fHold[ff] = Refine[Sum[
 						5/2 Sum@@Join[
@@ -1299,7 +1299,7 @@ BeginPackage["ARGES`"];
 			\[CapitalLambda]bar3[pa_, pb_, pc_, pd_] :> Block[
 				{ss1, ss2, ss3, ss4, assHold, sum, x, x2},
 				assHold=$Assumptions;
-				$Assumptions = $Assumptions&&Element[ss1[1],Integers]&&(ss1[1]>0)&&Element[ss1[2],Integers]&&(ss1[2]>0)&&Element[ss2[1],Integers]&&(ss2[1]>0)&&Element[ss2[2],Integers]&&(ss2[2]>0)&&Element[ss3[1],Integers]&&(ss3[1]>0)&&Element[ss3[2],Integers]&&(ss3[2]>0)&&Element[ss4[1],Integers]&&(ss4[1]>0)&&Element[ss4[2],Integers]&&(ss4[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss4[x],Integers]&&(ss4[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = Sum[
 					Sum@@Join[
 						{
@@ -1337,7 +1337,7 @@ BeginPackage["ARGES`"];
 			\[CapitalLambda]bar2Y[pa_, pb_, pc_, pd_] :> Block[
 				{ss1, ss2, ss3, assHold, sum, x, x2, x3, x4},
 				assHold=$Assumptions;
-				$Assumptions = $Assumptions&&Element[ss1[1],Integers]&&(ss1[1]>0)&&Element[ss1[2],Integers]&&(ss1[2]>0)&&Element[ss2[1],Integers]&&(ss2[1]>0)&&Element[ss2[2],Integers]&&(ss2[2]>0)&&Element[ss3[1],Integers]&&(ss3[1]>0)&&Element[ss3[2],Integers]&&(ss3[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = Sum[
 					Sum@@Join[
 						{
@@ -1373,7 +1373,7 @@ BeginPackage["ARGES`"];
 			Hbar\[Lambda][pa_, pb_, pc_, pd_] :> Block[
 				{ss1, ss2, sum, assHold, x},
 				assHold=$Assumptions;
-				$Assumptions = $Assumptions&&Element[ss1[1],Integers]&&(ss1[1]>0)&&Element[ss1[2],Integers]&&(ss1[2]>0)&&Element[ss2[1],Integers]&&(ss2[1]>0)&&Element[ss2[2],Integers]&&(ss2[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = Sum[
 					Sum@@Join[
 						{
@@ -1398,7 +1398,7 @@ BeginPackage["ARGES`"];
 			HY[pa_, pb_, pc_, pd_] :> Block[
 				{ss1, sum, assHold, x},
 				assHold=$Assumptions;
-				$Assumptions = $Assumptions&&Element[ss1[1],Integers]&&(ss1[1]>0)&&Element[ss1[2],Integers]&&(ss1[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = Sum[
 					Sum@@Join[
 						{
@@ -1422,7 +1422,7 @@ BeginPackage["ARGES`"];
 			HbarY[pa_, pb_, pc_, pd_] :> Block[
 				{ss1, sum, assHold, x},
 				assHold=$Assumptions;
-				$Assumptions = $Assumptions&&Element[ss1[1],Integers]&&(ss1[1]>0)&&Element[ss1[2],Integers]&&(ss1[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = Sum[
 					Sum@@Join[
 						{
@@ -1453,7 +1453,7 @@ BeginPackage["ARGES`"];
 			H3[pa_, pb_, pc_, pd_] :> Block[
 				{ss1, sum, assHold, x},
 				assHold=$Assumptions;
-				$Assumptions = $Assumptions&&Element[ss1[1],Integers]&&(ss1[1]>0)&&Element[ss1[2],Integers]&&(ss1[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = Sum[
 					Sum@@Join[
 						{
@@ -1477,7 +1477,7 @@ BeginPackage["ARGES`"];
 			\[CapitalLambda]bar2S[pa_, pb_, pc_, pd_] :> Block[
 				{ss1, ss2, sum, assHold, x},
 				assHold=$Assumptions;
-				$Assumptions = $Assumptions&&Element[ss1[1],Integers]&&(ss1[1]>0)&&Element[ss1[2],Integers]&&(ss1[2]>0)&&Element[ss2[1],Integers]&&(ss2[1]>0)&&Element[ss2[2],Integers]&&(ss2[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = Sum[
 					Sum@@Join[
 						{
@@ -1506,7 +1506,7 @@ BeginPackage["ARGES`"];
 			\[CapitalLambda]2g[gaug_][pa_, pb_, pc_, pd_] :> Block[
 				{ss1, ss2, ss3, ss4, sum, assHold, x},
 				assHold=$Assumptions;
-				$Assumptions = $Assumptions&&Element[ss1[1],Integers]&&(ss1[1]>0)&&Element[ss1[2],Integers]&&(ss1[2]>0)&&Element[ss2[1],Integers]&&(ss2[1]>0)&&Element[ss2[2],Integers]&&(ss2[2]>0)&&Element[ss3[1],Integers]&&(ss3[1]>0)&&Element[ss3[2],Integers]&&(ss3[2]>0)&&Element[ss4[1],Integers]&&(ss4[1]>0)&&Element[ss4[2],Integers]&&(ss4[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss4[x],Integers]&&(ss4[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = Sum[
 					Sum@@Join[
 						{
@@ -1568,7 +1568,7 @@ BeginPackage["ARGES`"];
 			A\[Lambda][gauge_, gauge2_][a_, b_, c_, d_] :> Block[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
-				$Assumptions = $Assumptions&&Element[ss1[1],Integers]&&(ss1[1]>0)&&Element[ss1[2],Integers]&&(ss1[2]>0)&&Element[ss2[1],Integers]&&(ss2[1]>0)&&Element[ss2[2],Integers]&&(ss2[2]>0)&&Element[ss3[1],Integers]&&(ss3[1]>0)&&Element[ss3[2],Integers]&&(ss3[2]>0)&&Element[ss4[1],Integers]&&(ss4[1]>0)&&Element[ss4[2],Integers]&&(ss4[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss4[x],Integers]&&(ss4[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = Sum[
 					Sum@@Join[
 						{
@@ -1603,7 +1603,7 @@ BeginPackage["ARGES`"];
 			Abar\[Lambda][gauge_, gauge2_][a_, b_, c_, d_] :> Block[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
-				$Assumptions = $Assumptions&&Element[ss1[1],Integers]&&(ss1[1]>0)&&Element[ss1[2],Integers]&&(ss1[2]>0)&&Element[ss2[1],Integers]&&(ss2[1]>0)&&Element[ss2[2],Integers]&&(ss2[2]>0)&&Element[ss3[1],Integers]&&(ss3[1]>0)&&Element[ss3[2],Integers]&&(ss3[2]>0)&&Element[ss4[1],Integers]&&(ss4[1]>0)&&Element[ss4[2],Integers]&&(ss4[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss4[x],Integers]&&(ss4[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = Sum[
 					Sum@@Join[
 						{
@@ -1689,7 +1689,7 @@ BeginPackage["ARGES`"];
 			Ag[gauge_][a_, b_, c_, d_] :> Block[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
-				$Assumptions = $Assumptions&&Element[ss1[1],Integers]&&(ss1[1]>0)&&Element[ss1[2],Integers]&&(ss1[2]>0)&&Element[ss2[1],Integers]&&(ss2[1]>0)&&Element[ss2[2],Integers]&&(ss2[2]>0)&&Element[ss3[1],Integers]&&(ss3[1]>0)&&Element[ss3[2],Integers]&&(ss3[2]>0)&&Element[ss4[1],Integers]&&(ss4[1]>0)&&Element[ss4[2],Integers]&&(ss4[2]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss4[x],Integers]&&(ss4[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum=Sum[
 					Sum@@Join[
 						{
