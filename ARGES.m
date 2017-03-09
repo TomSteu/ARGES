@@ -741,7 +741,7 @@ BeginPackage["ARGES`"];
 			(*beta += 12 Perm[Hbar\[Lambda][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]]//.subScalarInvariants;*)
 			beta += 12*8 (
 				Hbar\[Lambda][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 
-				Hbar\[Lambda][Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]]
+				Hbar\[Lambda][Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
 				Hbar\[Lambda][Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]]
 			)//.subScalarInvariants;
 			beta -= 12 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] 
@@ -775,7 +775,7 @@ BeginPackage["ARGES`"];
 				\[CapitalLambda]bar2S[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] 
 			)//.subScalarInvariants;
 			beta -= (2 Perm[HF[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]])//.subScalarInvariants;
-			beta += (1/2 Sum[Sqr[ListGauge[[ii,1]]](C2[RealScalarList[[pa, 1]] , ListGauge[[ii,1]]] + C2[RealScalarList[[pb, 1]] , ListGauge[[ii,1]]] + C2[RealScalarList[[pc, 1]] , ListGauge[[ii,1]]] + C2[RealScalarList[[pd, 1]] , ListGauge[[ii,1]]]), {ii, 1, NumberOfSubgroups}] (
+			beta += (2 Sum[Sqr[ListGauge[[ii,1]]](C2[RealScalarList[[pa, 1]] , ListGauge[[ii,1]]] + C2[RealScalarList[[pb, 1]] , ListGauge[[ii,1]]] + C2[RealScalarList[[pc, 1]] , ListGauge[[ii,1]]] + C2[RealScalarList[[pd, 1]] , ListGauge[[ii,1]]]), {ii, 1, NumberOfSubgroups}] (
 				H[Join[{pa}, la], Join[{pb}, lb], Join[{pc}, lc], Join[{pd}, ld]] +
 				H[Join[{pa}, la], Join[{pb}, lb], Join[{pd}, ld], Join[{pc}, lc]] + 
 				H[Join[{pa}, la], Join[{pc}, lc], Join[{pb}, lb], Join[{pd}, ld]] + 
@@ -783,7 +783,7 @@ BeginPackage["ARGES`"];
 				H[Join[{pa}, la], Join[{pd}, ld], Join[{pb}, lb], Join[{pc}, lc]] + 
 				H[Join[{pa}, la], Join[{pd}, ld], Join[{pc}, lc], Join[{pb}, lb]]
 			))//.subScalarInvariants;
-			beta =+ (5*24 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] ( Y2FS[Prepend[la, pa], Prepend[la,pa]] + Y2FS[Prepend[lb, pb], Prepend[lb,pb]] + Y2FS[Prepend[lc, pc], Prepend[lc,pc]] + Y2FS[Prepend[ld, pd], Prepend[ld,pd]]))//.subScalarInvariants;
+			beta += (5*24 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] ( Y2FS[Prepend[la, pa], Prepend[la,pa]] + Y2FS[Prepend[lb, pb], Prepend[lb,pb]] + Y2FS[Prepend[lc, pc], Prepend[lc,pc]] + Y2FS[Prepend[ld, pd], Prepend[ld,pd]]))//.subScalarInvariants;
 			(*beta -= Sum[
 				Sqr[ListGauge[[ii,1]]](
 					 24*18 Perm[\[CapitalLambda]2g[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]]
@@ -806,7 +806,7 @@ BeginPackage["ARGES`"];
 				)//.subScalarInvariants,
 				{ii, 1, NumberOfSubgroups}
 			];
-(*			beta += Sum[
+			beta += Sum[
 				Sqr[ListGauge[[ii,1]] ListGauge[[ii2,1]]] (
 					15 Perm[A\[Lambda][ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] +
 					3 Perm[Abar\[Lambda][ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]]  + 36 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] (
@@ -818,8 +818,8 @@ BeginPackage["ARGES`"];
 				)//.subScalarInvariants,
 				{ii, 1, NumberOfSubgroups},
 				{ii2, 1, NumberOfSubgroups}
-			];*)
-			beta += Sum[
+			];
+			(*beta += Sum[
 				Sqr[ListGauge[[ii,1]] ListGauge[[ii2,1]]] Refine[
 					60(
 							A\[Lambda][ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
@@ -842,7 +842,7 @@ BeginPackage["ARGES`"];
 						C2[RealScalarList[[pb,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pb,1]], ListGauge[[ii2,1]]] +
 						C2[RealScalarList[[pc,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pc,1]], ListGauge[[ii2,1]]] +
 						C2[RealScalarList[[pd,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pd,1]], ListGauge[[ii2,1]]] 
-					) - 6 (
+					) - (
 						BY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 
 						BY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] + 
 						BY[ii,ii2][Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] + 
@@ -855,7 +855,7 @@ BeginPackage["ARGES`"];
 						BY[ii,ii2][Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] + 
 						BY[ii,ii2][Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb]] + 
 						BY[ii,ii2][Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa], Prepend[lb, pb]]
-					) + 60 (
+					) + 10 (
 						BbarY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 
 						BbarY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] + 
 						BbarY[ii,ii2][Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] + 
@@ -872,7 +872,7 @@ BeginPackage["ARGES`"];
 				]//.subScalarInvariants,
 				{ii, 1, NumberOfSubgroups},
 				{ii2, 1, NumberOfSubgroups}
-			];
+			];*)
 			(*beta += Sum[
 				1/4 Perm[As[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]](
 					Sqr[ListGauge[[ii2,1]]] Power[ListGauge[[ii,1]],4] (
@@ -903,7 +903,7 @@ BeginPackage["ARGES`"];
 				{ii2, 1, NumberOfSubgroups}
 			];
 			(*beta += 27/2 Sum[ Power[ListGauge[[ii,1]], 6] Perm[Ag[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]], {ii, 1, NumberOfSubgroups}]//.subScalarInvariants;*)
-			beta += 27/2 Sum[ Power[ListGauge[[ii,1]], 6] (
+			beta += 54 Sum[ Power[ListGauge[[ii,1]], 6] (
 			Ag[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 
 			Ag[ii][Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] + 
 			Ag[ii][Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] + 
