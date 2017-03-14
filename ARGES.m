@@ -34,7 +34,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 	
- 	Begin["Private`"];
+ 	(*Begin["Private`"];*)
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -1754,14 +1754,14 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			BY[gauge_, gauge2_][a_, b_, c_, d_] :> Block[
+(*			BY[gauge_, gauge2_][a_, b_, c_, d_] :> Block[
 				{ff, gg, ff1, ff2, ff3, ff4},
 				(
 					ReleaseHold[(ReleaseHold[SolveTrace[Yuk[c[[1]]], adj[Yuk[d[[1]]]]]//. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]/.{tr[adj[Yukawa[aa_]], A___]:>tr[adj[Yukawa[aa]], A][ListYukawa[[aa,4]]], tr[Yukawa[aa_], A___]:>tr[Yukawa[aa], A][ListYukawa[[aa,3]]]}//.subYuk //.{tr[A_, B_][ff_]:> Sum[Sum[Sum@@Join[
 						{
 							Refine[GetGenTrace[{A,B}, {{c[[2]], c[[3]]}, {d[[2]], d[[3]]}}]] ((
-								\[CapitalLambda][gauge, gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{ff, 1,1}, ff1/@Range[NumberOfSubgroups]], a, Join[{ff, 1,1}, ff2/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge2, gauge][b, Join[{ff, 1,1}, ff2/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff, 1,1}, ff3/@Range[NumberOfSubgroups]]] + 
-								\[CapitalLambda][gauge2, gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{ff, 1,1}, ff2/@Range[NumberOfSubgroups]], a, Join[{ff, 1,1}, ff3/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge,gauge2][b, Join[{ff, 1,1}, ff1/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff, 1,1}, ff2/@Range[NumberOfSubgroups]]]
+								aa \[CapitalLambda][gauge, gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{ff, 1}, ff1/@Range[NumberOfSubgroups]], a, Join[{ff, 1}, ff2/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge2, gauge][b, Join[{ff, 1}, ff2/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff, 1}, ff3/@Range[NumberOfSubgroups]]] + 
+								bb \[CapitalLambda][gauge2, gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{ff, 1}, ff2/@Range[NumberOfSubgroups]], a, Join[{ff, 1}, ff3/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge,gauge2][b, Join[{ff, 1}, ff1/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff, 1}, ff2/@Range[NumberOfSubgroups]]]
 							)//.sub\[CapitalLambda]SF) Times@@(Function[{x}, A[[x+1,1]][c[[x+1]], ff3[x], ff4[x]] B[[x+1,1]][d[[x+1]], ff4[x], ff1[x]]]/@Range[NumberOfSubgroups])
 						},
 						Function[{x}, {ff1[x], 1, A[[x+1,3]]}]/@Range[NumberOfSubgroups],
@@ -1774,8 +1774,8 @@ BeginPackage["ARGES`"];
 					ReleaseHold[(ReleaseHold[SolveTrace[adj[Yuk[d[[1]]]], Yuk[c[[1]]]]//. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]}/.subYuk //.subProd]/.{tr[adj[Yukawa[aa_]], A___]:>tr[adj[Yukawa[aa]], A][ListYukawa[[aa,4]]], tr[Yukawa[aa_], A___]:>tr[Yukawa[aa], A][ListYukawa[[aa,3]]]}//.subYuk //.{tr[A_, B_][ff_]:> Sum[Sum[Sum@@Join[
 						{
 							Refine[GetGenTrace[{A,B}, {{c[[2]], c[[3]]}, {d[[2]], d[[3]]}}]] ((
-								\[CapitalLambda][gauge,gauge2][a, Join[{ff, 1,1}, ff1/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff, 1,1}, ff2/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge2,gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{ff, 1,1}, ff2/@Range[NumberOfSubgroups]], b, Join[{ff, 1,1}, ff3/@Range[NumberOfSubgroups]]] + 
-								\[CapitalLambda][gauge2,gauge][a, Join[{ff, 1,1}, ff2/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff, 1,1}, ff3/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge,gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{ff, 1,1}, ff1/@Range[NumberOfSubgroups]], b, Join[{ff, 1,1}, ff2/@Range[NumberOfSubgroups]]]
+								cc \[CapitalLambda][gauge,gauge2][a, Join[{ff, 1}, ff1/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff, 1}, ff2/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge2,gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{ff, 1}, ff2/@Range[NumberOfSubgroups]], b, Join[{ff, 1}, ff3/@Range[NumberOfSubgroups]]] + 
+								dd \[CapitalLambda][gauge2,gauge][a, Join[{ff, 1}, ff2/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff, 1}, ff3/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge,gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{ff,1}, ff1/@Range[NumberOfSubgroups]], b, Join[{ff, 1}, ff2/@Range[NumberOfSubgroups]]]
 							)//.sub\[CapitalLambda]SF) Times@@(Function[{x}, A[[x+1,1]][d[[x+1]], ff3[x], ff4[x]] B[[x+1,1]][c[[x+1]], ff4[x], ff1[x]]]/@Range[NumberOfSubgroups])
 						},
 						Function[{x}, {ff1[x], 1, A[[x+1,3]]}]/@Range[NumberOfSubgroups],
@@ -1793,8 +1793,8 @@ BeginPackage["ARGES`"];
 					ReleaseHold[(ReleaseHold[SolveTrace[Yuk[c[[1]]], adj[Yuk[d[[1]]]]]//.subProd /.subYuk //.subProd]/.{tr[adj[Yukawa[aa_]], A___]:>tr[adj[Yukawa[aa]], A][ListYukawa[[aa,4]], ListYukawa[[aa,3]]], tr[Yukawa[aa_], A___]:>tr[Yukawa[aa], A][ListYukawa[[aa,3]], ListYukawa[[aa,4]]]}//.subYuk //.{tr[A_, B_][ffA_, ffB_]:> Sum[Sum[Sum@@Join[
 						{
 							Refine[GetGenTrace[{A,B}, {{c[[2]], c[[3]]}, {d[[2]], d[[3]]}}]] ((
-								\[CapitalLambda][gauge,gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{ffA,1,1}, ff1/@Range[NumberOfSubgroups]], a, Join[{ffA,1,1}, ff2/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge2, gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{ffB,1,1}, ff3/@Range[NumberOfSubgroups]], b, Join[{ffB,1,1}, ff4/@Range[NumberOfSubgroups]]] +
-								\[CapitalLambda][gauge2,gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{ffB,1,1}, ff3/@Range[NumberOfSubgroups]], a, Join[{ffB,1,1}, ff4/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge, gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{ffA,1,1}, ff1/@Range[NumberOfSubgroups]], b, Join[{ffA,1,1}, ff2/@Range[NumberOfSubgroups]]]
+								ee \[CapitalLambda][gauge,gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{ffA,1}, ff1/@Range[NumberOfSubgroups]], a, Join[{ffA,1}, ff2/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge2, gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{ffB,1}, ff3/@Range[NumberOfSubgroups]], b, Join[{ffB,1}, ff4/@Range[NumberOfSubgroups]]] +
+								ff \[CapitalLambda][gauge2,gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{ffB,1}, ff3/@Range[NumberOfSubgroups]], a, Join[{ffB,1}, ff4/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge, gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{ffA,1}, ff1/@Range[NumberOfSubgroups]], b, Join[{ffA,1}, ff2/@Range[NumberOfSubgroups]]]
 							)//.sub\[CapitalLambda]SF) Times@@(Function[{x}, A[[x+1,1]][c[[x+1]], ff2[x], ff3[x]] B[[x+1,1]][d[[x+1]], ff4[x], ff1[x]]]/@Range[NumberOfSubgroups])
 						},
 						Function[{x}, {ff1[x], 1, A[[x+1,3]]}]/@Range[NumberOfSubgroups],
@@ -1804,6 +1804,85 @@ BeginPackage["ARGES`"];
 						Function[{x}, {gg[x+2], 1, SMultiplicity[gg[0], x]}]/@Range[NumberOfSubgroups]
 					],{gg[1], 1, RealScalarList[[gg[0], 2,1]]}, {gg[2], 1, RealScalarList[[gg[0],2,2]]}], {gg[0], 1, SNumber[]}]})] 
 				)
+			],*)
+			BY[gauge_, gauge2_][a_, b_, c_, d_] :> Block[
+				{gg, ff, ff1, ff2, ff3, ff4, y1, y2, y3},
+				Sum[
+					(ReleaseHold[SolveTrace[Delt[ff],Yuk[c[[1]]],adj[Yuk[d[[1]]]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+						tr[y1_, y2_, y3_]:>(
+							Sum[
+								Sum@@Join[
+									{
+										GetGenTrace[{y2, y3}, {{c[[2]], c[[3]]}, {d[[2]], d[[3]]}}] Times@@(Function[{x2}, y2[[1+x2,1]][c[[3+x2]], ff3[x2], ff4[x2]] y3[[1+x2,1]][d[[3+x2]], ff4[x2], ff1[x2]]]/@Range[NumberOfSubgroups]) Refine[(
+											aa \[CapitalLambda][gauge, gauge2][a, Join[{ff, 1}, ff2/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff,1}, ff1/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge2, gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{ff,1}, ff3/@Range[NumberOfSubgroups]], b, Join[{ff,1}, ff2/@Range[NumberOfSubgroups]]] + 
+											bb \[CapitalLambda][gauge2, gauge][a, Join[{ff, 1}, ff3/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff,1}, ff2/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge, gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{ff,1}, ff2/@Range[NumberOfSubgroups]], b, Join[{ff,1}, ff1/@Range[NumberOfSubgroups]]]
+										)/.sub\[CapitalLambda]SF],
+										{gg[1], RealScalarList[[gg[0], 2, 1]]},
+										{gg[2], RealScalarList[[gg[0], 2, 2]]}
+									},
+									Function[{x}, {gg[x+2], 1, SMultiplicity[gg[0], x]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff1[x], 1, y2[[x+1,3]]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff2[x], 1, y2[[x+1,3]]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff3[x], 1, y2[[x+1,3]]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff4[x], 1, y3[[x+1,3]]}]/@Range[NumberOfSubgroups]
+								],
+								{gg[0], 1, SNumber[]}
+							]
+						)
+					}) + 
+					(ReleaseHold[SolveTrace[Delt[ff], adj[Yuk[d[[1]]]], Yuk[c[[1]]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+						tr[y1_, y2_, y3_]:>(
+							Sum[
+								Sum@@Join[
+									{
+										GetGenTrace[{y2, y3}, {{d[[2]], d[[3]]}, {c[[2]], c[[3]]}}] Times@@(Function[{x2}, y2[[1+x2,1]][d[[3+x2]], ff3[x2], ff4[x2]] y3[[1+x2,1]][c[[3+x2]], ff4[x2], ff1[x2]]]/@Range[NumberOfSubgroups]) Refine[(
+											cc \[CapitalLambda][gauge, gauge2][a, Join[{ff, 1}, ff1/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff,1}, ff2/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge2, gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{ff,1}, ff2/@Range[NumberOfSubgroups]], b, Join[{ff,1}, ff3/@Range[NumberOfSubgroups]]] + 
+											dd \[CapitalLambda][gauge2, gauge][a, Join[{ff, 1}, ff2/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff,1}, ff3/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge, gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{ff,1}, ff1/@Range[NumberOfSubgroups]], b, Join[{ff,1}, ff2/@Range[NumberOfSubgroups]]]
+										)/.sub\[CapitalLambda]SF],
+										{gg[1], RealScalarList[[gg[0], 2, 1]]},
+										{gg[2], RealScalarList[[gg[0], 2, 2]]}
+									},
+									Function[{x}, {gg[x+2], 1, SMultiplicity[gg[0], x]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff1[x], 1, y2[[x+1,3]]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff2[x], 1, y2[[x+1,3]]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff3[x], 1, y2[[x+1,3]]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff4[x], 1, y3[[x+1,3]]}]/@Range[NumberOfSubgroups]
+								],
+								{gg[0], 1, SNumber[]}
+							]
+						)
+					}),
+					{ff, 1, FNumber[]}
+				]
+			],
+			BbarY[gauge_, gauge2_][a_, b_, c_, d_] :> Module[
+				{ffA, ffB, gg, ff1, ff2, ff3, ff4, y1, y2, y3, y4},
+				Sum[
+					ReleaseHold[SolveTrace[Delt[ffA], Yuk[c[[1]]], Delt[ffB], adj[Yuk[d[[1]]]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+						tr[y1_, y2_, y3_, y4_] :> (
+							Sum[
+								Sum@@Join[
+									{
+										GetGenTrace[{ y2, y4}, {{c[[2]], c[[3]]}, {d[[2]], d[[3]]}}] Times@@(Function[{x2}, y2[[1+x2,1]][c[[3+x2]], ff2[x2], ff3[x2]] y4[[1+x2,1]][d[[3+x2]], ff4[x2], ff1[x2]]]/@Range[NumberOfSubgroups]) Refine[(
+											ee \[CapitalLambda][gauge, gauge2][a, Join[{ffA, 1}, ff2/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ffA,1}, ff1/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge2, gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{ffB,1}, ff3/@Range[NumberOfSubgroups]], b, Join[{ffB,1}, ff4/@Range[NumberOfSubgroups]]] + 
+											ff \[CapitalLambda][gauge2, gauge][a, Join[{ffB, 1}, ff3/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ffB,1}, ff4/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge, gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{ffA,1}, ff2/@Range[NumberOfSubgroups]], b, Join[{ffA,1}, ff1/@Range[NumberOfSubgroups]]]
+										)/.sub\[CapitalLambda]SF],
+										{gg[1], RealScalarList[[gg[0], 2, 1]]},
+										{gg[2], RealScalarList[[gg[0], 2, 2]]}
+									},
+									Function[{x}, {gg[x+2], 1, SMultiplicity[gg[0], x]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff1[x], 1, y2[[x+1,3]]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff2[x], 1, y2[[x+1,3]]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff3[x], 1, y2[[x+1,4]]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff4[x], 1, y4[[x+1,3]]}]/@Range[NumberOfSubgroups]
+								],
+								{gg[0], 1, SNumber[]}
+							]
+						)
+					},
+					{ffA, 1, FNumber[]},
+					{ffB, 1, FNumber[]}
+				]
 			],
 			Ag[gauge_][a_, b_, c_, d_] :> Block[
 				{ss1, ss2, ss3, ss4, sum, assHold},
@@ -1848,7 +1927,7 @@ BeginPackage["ARGES`"];
 			\[CapitalLambda][gaug1_, gaug2_][a_, b_, c_, d_] :> If[
 				gaug1 == gaug2, 
 				\[CapitalLambda][gaug1][a, b, c, d]/.sub\[CapitalLambda]S,
-				KroneckerDelta[a[[gaug2+3]], c[[gaug2+3]]] KroneckerDelta[b[[gaug2+3]], d[[gaug2+3]]] \[CapitalLambda][gaug1][ReplacePart[a, (gaug2+3)->1], ReplacePart[b, (gaug2+3)->1], ReplacePart[c, (gaug2+3)->1], ReplacePart[d, (gaug2+3)->1]]/.sub\[CapitalLambda]S
+				(*KroneckerDelta[a[[gaug2+3]], c[[gaug2+3]]] KroneckerDelta[b[[gaug2+3]], d[[gaug2+3]]]*) \[CapitalLambda][gaug1][ReplacePart[a, (gaug2+3)->1], ReplacePart[b, (gaug2+3)->1], ReplacePart[c, (gaug2+3)->1], ReplacePart[d, (gaug2+3)->1]]/.sub\[CapitalLambda]S
 			],
 			(** At least one is gauge singlet *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(ListGauge[[gaug,3]] =!= 1 && (RealScalarList[[a[[1]],3,gaug]] == 1 || RealScalarList[[b[[1]],3,gaug]] == 1 || RealScalarList[[c[[1]],3,gaug]] == 1 || RealScalarList[[d[[1]],3,gaug]] == 1)),
@@ -1912,7 +1991,7 @@ BeginPackage["ARGES`"];
 			\[CapitalLambda][gaug1_, gaug2_][a_, b_, c_, d_] :> If[
 				gaug1 == gaug2, 
 				\[CapitalLambda][gaug1][a, b, c, d]/.sub\[CapitalLambda]F,
-				KroneckerDelta[a[[gaug2+2]], c[[gaug2+2]]] KroneckerDelta[b[[gaug2+2]], d[[gaug2+2]]] \[CapitalLambda][gaug1][ReplacePart[a, (gaug2+2)->1], ReplacePart[b, (gaug2+2)->1], ReplacePart[c, (gaug2+2)->1], ReplacePart[d, (gaug2+2)->1]]/.sub\[CapitalLambda]F
+				(*KroneckerDelta[a[[gaug2+2]], c[[gaug2+2]]] KroneckerDelta[b[[gaug2+2]], d[[gaug2+2]]]*) \[CapitalLambda][gaug1][ReplacePart[a, (gaug2+2)->1], ReplacePart[b, (gaug2+2)->1], ReplacePart[c, (gaug2+2)->1], ReplacePart[d, (gaug2+2)->1]]/.sub\[CapitalLambda]F
 			],
 			(** At least one is gauge singlet *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(ListGauge[[gaug,3]] =!= 1 && (WeylFermionList[[a[[1]],3,gaug]] == 1 || WeylFermionList[[b[[1]],3,gaug]] == 1 || WeylFermionList[[c[[1]],3,gaug]] == 1 || WeylFermionList[[d[[1]],3,gaug]] == 1)),
@@ -1949,7 +2028,7 @@ BeginPackage["ARGES`"];
 			\[CapitalLambda][gaug1_, gaug2_][a_, b_, c_, d_] :> If[
 				gaug1 == gaug2, 
 				\[CapitalLambda][gaug1][a, b, c, d]/.sub\[CapitalLambda]SF,
-				KroneckerDelta[a[[gaug2+3]], c[[gaug2+3]]] KroneckerDelta[b[[gaug2+2]], d[[gaug2+2]]] \[CapitalLambda][gaug1][ReplacePart[a, (gaug2+3)->1], ReplacePart[b, (gaug2+2)->1], ReplacePart[c, (gaug2+3)->1], ReplacePart[d, (gaug2+2)->1]]/.sub\[CapitalLambda]SF
+				(*KroneckerDelta[a[[gaug2+3]], c[[gaug2+3]]] KroneckerDelta[b[[gaug2+2]], d[[gaug2+2]]]*) \[CapitalLambda][gaug1][ReplacePart[a, (gaug2+3)->1], ReplacePart[b, (gaug2+2)->1], ReplacePart[c, (gaug2+3)->1], ReplacePart[d, (gaug2+2)->1]]/.sub\[CapitalLambda]SF
 			],
 			(** At least one is gauge singlet *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(ListGauge[[gaug,3]] =!= 1 && (RealScalarList[[a[[1]],3,gaug]] == 1 || WeylFermionList[[b[[1]],3,gaug]] == 1 || RealScalarList[[c[[1]],3,gaug]] == 1 || WeylFermionList[[d[[1]],3,gaug]] == 1)),
@@ -1957,22 +2036,22 @@ BeginPackage["ARGES`"];
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (
 				If[
 					(a[[1]] == c[[1]])
-					,
-					1/4 (KroneckerDelta[a[[gaug+3]],d[[gaug+2]]] KroneckerDelta[b[[gaug+2]],c[[gaug+3]]]  - KroneckerDelta[a[[gaug+3]],b[[gaug+2]]] KroneckerDelta[c[[gaug+3]],d[[gaug+2]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+2][[2;;]], Delete[d,gaug+2][[2;;]]] KroneckerDelta[b[[1]], d[[1]]]
+					,	
+					I/4 (KroneckerDelta[a[[gaug+3]],d[[gaug+2]]] KroneckerDelta[b[[gaug+2]],c[[gaug+3]]]  - KroneckerDelta[a[[gaug+3]],b[[gaug+2]]] KroneckerDelta[c[[gaug+3]],d[[gaug+2]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+2][[2;;]], Delete[d,gaug+2][[2;;]]] KroneckerDelta[b[[1]], d[[1]]]
 					,
 					0
 				] + If[
 						(RealScalarList[[a[[1]], 1]][[1]] === RealScalarList[[c[[1]], 1]][[1]] &&
 						RealScalarList[[a[[1]], 1]][[0]] =!= RealScalarList[[c[[1]], 1]][[0]] &&
 						RealScalarList[[a[[1]], 1]][[0]] === Re && RealScalarList[[c[[1]], 1]][[0]] === Im),
-						+I/4(KroneckerDelta[a[[gaug+3]],d[[gaug+2]]] KroneckerDelta[b[[gaug+2]],c[[gaug+3]]] + KroneckerDelta[a[[gaug+3]],b[[gaug+2]]] KroneckerDelta[c[[gaug+3]],d[[gaug+2]]] - 2/ListGauge[[gaug,3]] KroneckerDelta[a[[gaug+3]],c[[gaug+3]]] KroneckerDelta[b[[gaug+2]],d[[gaug+2]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+2], Delete[d,gaug+2]]
+						+I/4  (KroneckerDelta[a[[gaug+3]],d[[gaug+2]]] KroneckerDelta[b[[gaug+2]],c[[gaug+3]]] + KroneckerDelta[a[[gaug+3]],b[[gaug+2]]] KroneckerDelta[c[[gaug+3]],d[[gaug+2]]] - 2/ListGauge[[gaug,3]] KroneckerDelta[a[[gaug+3]],c[[gaug+3]]] KroneckerDelta[b[[gaug+2]],d[[gaug+2]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+2], Delete[d,gaug+2]]
 						 ,
 						0
 					] + If[
 							(RealScalarList[[a[[1]], 1]][[1]] === RealScalarList[[c[[1]], 1]][[1]] &&
 							RealScalarList[[a[[1]], 1]][[0]] =!= RealScalarList[[c[[1]], 1]][[0]] &&
 							RealScalarList[[a[[1]], 1]][[0]] === Im && RealScalarList[[c[[1]], 1]][[0]] === Re),
-							-I/4(KroneckerDelta[a[[gaug+3]],d[[gaug+2]]] KroneckerDelta[b[[gaug+2]],c[[gaug+3]]] + KroneckerDelta[a[[gaug+3]],b[[gaug+2]]] KroneckerDelta[c[[gaug+3]],d[[gaug+2]]] - 2/ListGauge[[gaug,3]] KroneckerDelta[a[[gaug+3]],c[[gaug+3]]] KroneckerDelta[b[[gaug+2]],d[[gaug+2]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+2], Delete[d,gaug+2]]
+							-I/4  (KroneckerDelta[a[[gaug+3]],d[[gaug+2]]] KroneckerDelta[b[[gaug+2]],c[[gaug+3]]] + KroneckerDelta[a[[gaug+3]],b[[gaug+2]]] KroneckerDelta[c[[gaug+3]],d[[gaug+2]]] - 2/ListGauge[[gaug,3]] KroneckerDelta[a[[gaug+3]],c[[gaug+3]]] KroneckerDelta[b[[gaug+2]],d[[gaug+2]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+2], Delete[d,gaug+2]]
 							,
 							0
 						]
@@ -2350,5 +2429,5 @@ BeginPackage["ARGES`"];
 		Quartic::UnknownParticle = "Undefined particle in scalar sector";
 		
 		Reset[];
-	End[];
+	(*End[];*)
 EndPackage[];
