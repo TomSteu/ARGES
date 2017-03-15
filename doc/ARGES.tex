@@ -1,30 +1,33 @@
 \documentclass{scrartcl}
+\usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{xcolor}
 \usepackage{listings}
+\usepackage[backend=biber,style=numeric-comp, sorting=none]{biblatex}
 \lstset{
   basicstyle=\ttfamily,
   columns=fullflexible,
 }
 \definecolor{light-gray}{gray}{0.95}
+\addbibresource{ref.bib}
 \begin{document}
 \tableofcontents
 \thispagestyle{empty}
 \newpage
 \section{Motivation - Why ARGES?}
 Arges is the name of a cyclops in the greek mythology, which was exiled by the Titans but freed by Zeus to forge lightning bolts for his battle against them. \newline
-In this tradition as a useful tool, ARGES - Advanced Renormalization Group Equation Simplifier is a framework to calculate perturbative renormalization group equations for renormalizable quantum field theories. Of course, other tools exist which offer an intersection of the same core features, most famously SARAH \cite{sarah} and PyR@TE \cite{pyrate}. However, this piece of software tries to adress some of their limitations and adopted their resolution as its guiding features:
+In this tradition as a useful tool, ARGES - Advanced Renormalization Group Equation Simplifier is a framework to calculate perturbative renormalization group equations for renormalizable quantum field theories, using \cite{LuoWangXiao,MV1,MV2,MV3,OsbornJack,OsbornJack2,OsbornJack3,Decoding}. Of course, other tools exist which offer an intersection of the same core features, most famously SARAH \cite{SARAH,SARAH4} and PyR@TE \cite{pyrate,pyrate2}. However, this piece of software tries to adress some of their limitations and adopted their resolution as its guiding features:
 \begin{itemize}
 \item it is possible to define particle numbers, representations and gauge group ranks as variables, even at all at once
 \item gauge groups may be defined as totaly unknown altogether
 \item gauge invariants are not automatically resolved
-\item for interaction terms, contractions of generation and gauge indices are completely controllable
-\item disentaglement of parameter RGEs is up to the user, so the programm does not hang while trying to resolve these
+\item for interaction terms, contractions of generation and gauge indices are completely configurable
+\item disentanglement of parameter RGEs is up to the user, hence the program cannot fail while trying to resolve these
 \end{itemize}
 \newpage
 \section{Defining a model}
 \subsection{Gauge sector and initial Setup}
-The initial step when writing a model file is to invoke the function $\mathtt{Reset[\;];}$ to initialize background variables. This command also clears the package and allows a fresh and redefinition of a model. This is particulary useful when accidentally adding fields or couplings twice. \\
+The initial step when writing a model file is to invoke the function $\mathtt{Reset[\;];}$ to initialize background variables. This command also clears the package and allows a fresh and redefinition of a model. This is particularly useful when accidentally adding fields or couplings twice. \\
 A second step is the to define the variable $\mathtt{NumberOfSubgroups}$, specifying the number of gauge subgroups. The default for this variable is set to 1, but it can be set to any non-negative integer, including zero. The value assigned to $\mathtt{NumberOfSubgroups}$ cannot be a symbol.
 \vspace{1em}
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
@@ -34,9 +37,9 @@ NumberOfSubgroups=1;
 \vspace{1em}
 In order to define gauge groups and their respective fields the function $\mathtt{Gauge[\dots]}$ must be invoded $\mathtt{NumberOfSubgroups}$ times. The syntax is:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
-Gauge[Coupling Symbol, Algebra, Rank, {Charge/Representation1, ...}];
+Gauge[Symbol, Algebra, Rank, {Charge/Representation1, ...}];
 \end{lstlisting}
-The last argument is a list of the charges (in case of $\mathrm{U}(1)$ subgroups) or representations of gauge bosons. The first charge/representation will be associated with the group first declared with $\mathtt{Gauge[\dots]}$, and so on. The dimension of this list must match $\mathtt{NumberOfSubgroups}$. ARGES is agnostic regarding anti-representations, only positiv numbers are valid. However, charges, representations and rank of the subgroup may be declared as a variable. \newline Currently available algebras and ranks are $\mathrm{U}(1)$ , $\mathrm{SU}(N_U)$, and $\mathrm{SO}(N_O)$ with $N_U > 1$ and $N_O > 2$. Gauge fields are assumed to be in the adjoint representation of their own subgroup and singulets in the others. Kinetic mixing is not implemented. \newline Unknown Gauge groups are allowed, but their invariants can of course not be further resolved.
+The last argument is a list of the charges (in case of $\mathrm{U}(1)$ subgroups) or representations of gauge bosons. The first charge/representation will be associated with the group first declared with $\mathtt{Gauge[\dots]}$, and so on. The dimension of this list must match $\mathtt{NumberOfSubgroups}$. ARGES is agnostic regarding anti-representations, only positive numbers are valid. However, charges, representations and rank of the subgroup may be declared as a variable. \newline Currently available algebras and ranks are $\mathrm{U}(1)$ , $\mathrm{SU}(N_U)$, and $\mathrm{SO}(N_O)$ with $N_U > 1$ and $N_O > 2$. Gauge fields are assumed to be in the adjoint representation of their own subgroup and singulets in the others. Kinetic mixing is not implemented. \newline Unknown Gauge groups are allowed, but their invariants can of course not be further resolved.
 \subsection{Fermionic fields}
 Fermions may be defined via $\mathtt{WeylFermion}$:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
@@ -50,7 +53,7 @@ RealScalar[Symbol, {Gen1, Gen2}, {Charge/Representation1, ...}];
 ComplexScalar[Symbol, {Gen1, Gen2}, {Charge/Representation1, ...}];
 \end{lstlisting}
 While most of the syntax matches the fermionic case, scalars are natively matrix fields and posses two generation indices. For a vector-like generation structure, one of them may be set to 1.\newline
-Internally, all complex scalars are expanded into real components, using the decomposition $\Phi = \frac{1}{\sqrt{2}} \left(\mathrm{Re} \, \Phi + i \, \mathrm{Im} \,\Phi\right)$. These compontent fields may be referenced as $\mathtt{Re[\Phi]}$ and $\mathtt{Im[\Phi]}$ when defining interactions.
+Internally, all complex scalars are expanded into real components, using the decomposition $\Phi = \frac{1}{\sqrt{2}} \left(\mathrm{Re} \, \Phi + i \, \mathrm{Im} \,\Phi\right)$. These component fields may be referenced as $\mathtt{Re[\Phi]}$ and $\mathtt{Im[\Phi]}$ when defining interactions.
 \subsection{Yukawa interactions}
 Two possibilities exist to define Yukawa interactions. One is the classical approach as a matrix in the fermionic generation indices, the syntax looks like this:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
@@ -61,33 +64,35 @@ Furthermore, Yukawa couplings may be defined as scalars:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 YukawaY[Sym, Scalar, Ferm1, Ferm2, {Contr1, ...}, GenerationContr];
 \end{lstlisting}
-Which is the same thing with exception of the now mandatory last argument, which is a now a function with four arguments, and defines the contraction between the first and second generation index of the scalar, and the generation indices of the first and second fermion, strictly in that order. Again, the first arguments is autoadjoint with the need to mark it that way, and the hermitian conjugate is added without further symmetry factors.
+Which is the same thing with exception of the now mandatory last argument, which is a now a function with four arguments, and defines the contraction between the first and second generation index of the scalar, and the generation indices of the first and second fermion, strictly in that order. Again, the first arguments is auto-adjoint with the need to mark it that way, and the hermitian conjugate is added without further symmetry factors.
 \subsection{Scalar quartic interactions}
 Scalar quartics may be defined via:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 Quartic$\lambda$abcd[Sym, Sc1, Sc2, Sc3, Sc4, {Contr1, ...}, GenerationContr];
 \end{lstlisting}
-Where arguments two to five are symbols of the scalars invloved. Again, real and complex scalars may be entered. It may be denoted that for complex fields, prefactors of the real composite fields are added automatically. The sixt element is a list of gauge index contractions, taking four arguments reflecting the four scalar fields. The generation contraction on the last position is a function of eight arguments, where the first two are for the two generation indices of the first scalar field and so on. \newline No implicit factor 4! is added, so each symmetry factor needs to be included in the last argument. However, for calculational purposes, the quartics are completely symmetrized under permutation of the scalar fields, and additional factors are added to preserve the norm. The final prefactor may be checked using the routine to output beta function, as it is explained in the next chapter.
+Where arguments two to five are symbols of the scalars involved. Again, real and complex scalars may be entered. It may be denoted that for complex fields, prefactors of the real composite fields are added automatically. The sixth element is a list of gauge index contractions, taking four arguments reflecting the four scalar fields. The generation contraction on the last position is a function of eight arguments, where the first two are for the two generation indices of the first scalar field and so on. \newline No implicit factor 4! is added, so each symmetry factor needs to be included in the last argument. However, for calculational purposes, the quartics are completely symmetrized under permutation of the scalar fields, and additional factors are added to preserve the norm. The final prefactor may be checked using the routine to output beta function, as it is explained in the next chapter.
 \newpage
 \section{Output}
 \subsection{General remarks}
-Beta functions are in general calculated on demand, the user has full control over which function to calculate and to which loop order. The general syntax follows $\mathtt{\beta[..., Loop Order]}$. Other inputs may be the involved fields and their quantum numbers. If the loop order is set to 0, the linear combination of couplings is returned as written in the Lagrangian modulo the fields and indices specified. This is particulary useful to find out prefactors after symmetrization and from taking real and imaginary parts of complex scalars. This is also the main mechanism to disentangle the running of couplings.\newline The gauge and generation indices of the involved fields are entered as lists. For abelian gauge groups, it is necessary to insert 1 instead of the charge. If the representation, generations or rank are variables (for both the definition or the input indices), the situation is slightly more complicated, since the Mathematica kernel tries to cover all special cases when handling sums with variables, and drags them through the entire computation. This may slow the calculation severely or even break it. ARGES utilizes the global variable \$\texttt{Assumptions} (be careful if you use it as well, \texttt{Reset[]} wipes it completely) to refine these cases. If variables appear in the definition, the index 1 is always safe as input, for higher numbers, a global assumption must be appended to respecify the range of the variables. If there is an input of variables, their range as well as the fact that these are integers must be appended as well. \newline 
-Gauge invariants are by default not resolved. To do so, the function $\mathtt{ComputeInvariants[\;]}$ must first be evoked, which fills the replacement rule list \texttt{subInvariants} with apropriate substitutions. It shall be denoted that for scalars, at two loop in the Yukawa betas and one loop in the quartic betas, as well as for fermions at two loop in the quartic betas, gauge terms appear which may not be expressed by Casimirs and Dynkin Indices, but rather: $ \Lambda_{ijkl} = T ^a_{ik}\;T^a_{jl}$, where $T^a_{ij}$ are generators of a gauge subgroup for one particle. However, closed formulas for any rank may not exist for all representations, as it is the case for instance for the fundamental representation of SU(N).
+Beta functions are in general calculated on demand, the user has full control over which function to calculate and to which loop order. The general syntax follows $\mathtt{\beta[..., Loop Order]}$. Other inputs may be the involved fields and their quantum numbers. If the loop order is set to 0, the linear combination of couplings is returned as written in the Lagrangian modulo the fields and indices specified. This is particularly useful to find out prefactors after symmetrization and from taking real and imaginary parts of complex scalars. This is also the main mechanism to disentangle the running of couplings.\newline The gauge and generation indices of the involved fields are entered as lists. For abelian gauge groups, it is necessary to insert 1 instead of the charge. If the representation, generations or rank are variables (for both the definition or the input indices), the situation is slightly more complicated, since the Mathematica kernel tries to cover all special cases when handling sums with variables, and drags them through the entire computation. This may slow the calculation severely or even break it. ARGES utilizes the global variable \$\texttt{Assumptions} (be careful if you use it as well, \texttt{Reset[]} wipes it completely) to refine these cases. If variables appear in the definition, the index 1 is always safe as input, for higher numbers, a global assumption must be appended to respecify the range of the variables. If there is an input of variables, their range as well as the fact that these are integers must be appended as well. \newline 
+Gauge invariants are by default not resolved. To do so, the function $\mathtt{ComputeInvariants[\;]}$ must first be evoked, which fills the replacement rule list \texttt{subInvariants} with appropriate substitutions. It shall be denoted that for scalars, at two loop in the Yukawa betas and one loop in the quartic betas, as well as for fermions at two loop in the quartic betas, gauge terms appear which may not be expressed by Casimirs and Dynkin Indices, but rather: $ \Lambda_{ijkl} = T ^a_{ik}\;T^a_{jl}$, where $T^a_{ij}$ are generators of a gauge subgroup for one particle. However, closed formulas for any rank may not exist for all representations, as it is the case for instance for the fundamental representation of SU(N).
 \subsection{Gauge coupling beta function}
 For gauge couplings, the beta functions may be calculated via:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
-$\beta$[Gauge, Loop Order]
-$\beta$[$\alpha$[Gauge], Loop Order]
+$\beta$[Gauge, LoopOrder]
+$\beta$[$\alpha$[Gauge], LoopOrder]
 \end{lstlisting}
 Where the second version returns the beta function of and with $ \alpha(g) = \frac{g^2}{(4 \pi)^2}$. In any case, the functions still contain Casimirs and Dynkin Indices. To resolve these (when the Algebra and the representation is specified), the substitution \texttt{subInvariants} may be utilized.
 \subsection{Yukawa beta function}
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
-$\beta$[Scalar, Ferm1, Ferm2, SIdxList, F1IdxList, F2IdxList, Loop Order]
+$\beta$[Scalar, Ferm1, Ferm2, SIdxList, F1IdxList, F2IdxList, LoopOrder]
 \end{lstlisting}
 The first three arguments are symbols of the scalar and the fermions involved, the fourth argument is a list of $\mathtt{NumberOfSubgroups} + 2$ elements, where the first two mark the generations of the scalar fields, and the rest its gauge indices. In the same manner, the fifth and sixth arguments are lists of $\mathtt{NumberOfSubgroups} + 1$ elements, where the first argument is the generation, and the rest gauge indices for each fermion respectively.\newline
 \subsection{Scalar quartic beta function}
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
-$\beta$[Sc1, Sc2, Sc3, Sc4, S1List, S2List, S3List, S4List, Loop Order]
+$\beta$[Sc1, Sc2, Sc3, Sc4, S1List, S2List, S3List, S4List, LoopOrder]
 \end{lstlisting}
 Following the notation before, the first four symbols mark the scalar fields, while the arguments five to eight are their respective indices, packed in lists of $\mathtt{NumberOfSubgroups} + 2$ elements, with the first two being the generation and the rest the gauge indices.
+\newpage
+\printbibliography
 \end{document}

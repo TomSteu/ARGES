@@ -298,6 +298,9 @@ BeginPackage["ARGES`"];
 				Message[Yukawa::UnknownParticle];
 				Return[];
 			];
+			If[BosonIndexOut[posS[[1,1]], SList] || FermionIndexOut[posF1[[1,1]], FList1] || FermionIndexOut[posF2[[1,1]], FList2],
+				Return[0];
+			];
 			Return[BetaYukawa[posS[[1,1]], posF1[[1,1]], posF2[[1,1]], SList, FList1, FList2, loop]];
 		];
 		
@@ -335,8 +338,22 @@ BeginPackage["ARGES`"];
 				Message[Quartic::UnknownParticle];
 				Return[];
 			];
+			If[BosonIndexOut[pos1[[1,1]], SList1] || BosonIndexOut[pos2[[1,1]], SList2] || BosonIndexOut[pos3[[1,1]], SList3] || BosonIndexOut[pos4[[1,1]], SList4],
+				Return[0];
+			];
 			Return[BetaQuartic[pos1[[1,1]], pos2[[1,1]], pos3[[1,1]], pos4[[1,1]], SList1, SList2, SList3, SList4, loop]];
 		];
+		
+		BosonIndexOut[bos_, BList_] := (
+			(NumberQ[RealScalarList[[bos,2,1]]] && NumberQ[BList[[1]]] && RealScalarList[[bos,2,1]] < BList[[1]]) ||
+			(NumberQ[RealScalarList[[bos,2,2]]] && NumberQ[BList[[2]]] && RealScalarList[[bos,2,2]] < BList[[2]]) ||
+			Or@@(Function[{x},(NumberQ[SMultiplicity[bos, x]] && NumberQ[BList[[2+x]]] && BList[[2+x]] > SMultiplicity[bos, x])]/@Range[NumberOfSubgroups])
+		);
+		
+		FermionIndexOut[ferm_, FList_] := (
+			(NumberQ[WeylFermionList[[ferm,2,1]]] && NumberQ[FList[[1]]] && WeylFermionList[[ferm,2,1]] < FList[[1]]) ||
+			Or@@(Function[{x},(NumberQ[FMultiplicity[ferm, x]] && NumberQ[FList[[1+x]]] && FList[[1+x]] > FMultiplicity[ferm, x])]/@Range[NumberOfSubgroups])
+		);
 		
 		(* Backend for Beta functions *)
 		
