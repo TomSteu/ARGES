@@ -35,7 +35,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 	
- 	Begin["Private`"];
+ 	(*Begin["Private`"];*)
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -62,7 +62,7 @@ BeginPackage["ARGES`"];
 				Return[];
 			];
 			If[Dimensions[reps][[1]] != NumberOfSubgroups,
-				Message[Gauge::RepMismatch];,
+				Message[Gauge::RepMismatch];
 				Return[];
 			];
 			If[GaugeIdxCheck[reps],
@@ -293,17 +293,18 @@ BeginPackage["ARGES`"];
 		
 		(* Check that indices are Integers *)
 		
-		IdxCheck[IdxList_] := Or@@((Function[{x}, (NumberQ[x] && IntegerQ[x] && (x>0))])/@Flatten[IdxList]);
+		IdxCheck[IdxList_] := Or@@((Function[{x}, (NumberQ[x] && !(IntegerQ[x] && (x>0)))])/@Flatten[IdxList]);
 		
 		GaugeIdxCheck[GaugeList_] := Module[
-			{glist}
+			{glist},
+			If[ListGauge == {}, Return[False];];
 			glist = GaugeList;
-			If[ii=NumberOfSubgroups, ii>=1, ii++
+			For[ii = Dimensions[ListGauge][[1]], ii>=1, ii--,
 				If[ListGauge[[ii,3]] === 1,
 					glist=Delete[glist,ii];
 				];
 			];
-			Return[Or@@((Function[{x}, (NumberQ[x] && IntegerQ[x] && (x>0))])/@glist)];
+			Return[Or@@((Function[{x}, (NumberQ[x] && !(IntegerQ[x] && (x>0)))])/@glist)];
 		];
 		
 		
@@ -940,6 +941,7 @@ BeginPackage["ARGES`"];
 		ComputeInvariants[] := Module[
 			{i, f, s, sIdx, Y4Hold, assHold},
 			subInvariants = {};
+			If[NumberOfSubgroups==0, Return[];];
 			For[i=1, i<=NumberOfSubgroups, i++,
 				(* Gauge Boson Invariants *)
 				If[ListGauge[[i,2]] === U && ListGauge[[i,3]] === 1 && ListGauge[[i,4,i]] === 0,
@@ -2434,5 +2436,5 @@ BeginPackage["ARGES`"];
 		Quartic::UnknownParticle = "Undefined particle in scalar sector";
 		
 		Reset[];
-	End[];
+	(*End[];*)
 EndPackage[];
