@@ -63,10 +63,15 @@ BeginPackage["ARGES`"];
 			];
 			If[Dimensions[reps][[1]] != NumberOfSubgroups,
 				Message[Gauge::RepMismatch];,
-				AddAssumption[n];
-				AddAssumption/@reps;
-				ListGauge = Append[ListGauge, {sym, group, n, reps}];
+				Return[];
 			];
+			If[GaugeIdxCheck[reps],
+				Message[Gauge::RepInvalid];
+				Return[];
+			];
+			AddAssumption[n];
+			AddAssumption/@reps;
+			ListGauge = Append[ListGauge, {sym, group, n, reps}];
 		];
 		
 		GetGauge[part_, gauge_] := Module[
@@ -94,22 +99,40 @@ BeginPackage["ARGES`"];
 		WeylFermion[sym_, Nflavor_, Gauge_List] := Module[
 			{},
 			If[Dimensions[Gauge][[1]] != NumberOfSubgroups, 
-				Message[WeylFermion::RepMismatch];,
-				AddAssumption[Nflavor];
-				AddAssumption/@Gauge;
-				WeylFermionList = Append[WeylFermionList, {sym, Nflavor, Gauge}];
+				Message[WeylFermion::RepMismatch];
+				Return[];
 			];
+			If[IdxCheck[{Nflavor}],
+				Message[Gen::RepInvalid];
+				Return[];
+			];
+			If[GaugeIdxCheck[Gauge],
+				Message[Gauge::RepInvalid];
+				Return[];
+			];
+			AddAssumption[Nflavor];
+			AddAssumption/@Gauge;
+			WeylFermionList = Append[WeylFermionList, {sym, Nflavor, Gauge}];
 		];
 		
 		RealScalar[sym_, Nflavor_List, Gauge_List] := Module[
 			{},
 			If[Dimensions[Gauge][[1]] != NumberOfSubgroups || Dimensions[Nflavor][[1]] != 2, 
-				Message[RealScalar::RepMismatch];,
-				AddAssumption[Nflavor[[1]]];
-				AddAssumption[Nflavor[[2]]];
-				AddAssumption/@Gauge;
-				RealScalarList = Append[RealScalarList, {sym, Nflavor, Gauge}];
+				Message[RealScalar::RepMismatch];
+				Return[];
 			];
+			If[IdxCheck[Nflavor],
+				Message[Gen::RepInvalid];
+				Return[];
+			];
+			If[GaugeIdxCheck[Gauge],
+				Message[Gauge::RepInvalid];
+				Return[];
+			];
+			AddAssumption[Nflavor[[1]]];
+			AddAssumption[Nflavor[[2]]];
+			AddAssumption/@Gauge;
+			RealScalarList = Append[RealScalarList, {sym, Nflavor, Gauge}];
 		];
 		
 		ComplexScalar[sym_, Nflavor_, Gauge_List] := Module[
@@ -259,6 +282,7 @@ BeginPackage["ARGES`"];
 			];
 		];
 		
+		(* add assumptions for non-numeric input *)
 		AddAssumption[sym_] := Module[
 			{},
 			If[NumberQ[sym], Return[];];
@@ -266,6 +290,22 @@ BeginPackage["ARGES`"];
 			$Assumptions=$Assumptions&&Element[sym, Integers]&&(sym>1);
 			nonNumerics = Append[nonNumerics,sym];
 		];
+		
+		(* Check that indices are Integers *)
+		
+		IdxCheck[IdxList_] := Or@@((Function[{x}, (NumberQ[x] && IntegerQ[x] && (x>0))])/@Flatten[IdxList]);
+		
+		GaugeIdxCheck[GaugeList_] := Module[
+			{glist}
+			glist = GaugeList;
+			If[ii=NumberOfSubgroups, ii>=1, ii++
+				If[ListGauge[[ii,3]] === 1,
+					glist=Delete[glist,ii];
+				];
+			];
+			Return[Or@@((Function[{x}, (NumberQ[x] && IntegerQ[x] && (x>0))])/@glist)];
+		];
+		
 		
 		(* Interfaces for Beta functions *)
 		
@@ -344,15 +384,17 @@ BeginPackage["ARGES`"];
 			Return[BetaQuartic[pos1[[1,1]], pos2[[1,1]], pos3[[1,1]], pos4[[1,1]], SList1, SList2, SList3, SList4, loop]];
 		];
 		
+		(* Routines to zero RGEs for vertices with invalid particle indices*)
+		
 		BosonIndexOut[bos_, BList_] := (
-			(NumberQ[RealScalarList[[bos,2,1]]] && NumberQ[BList[[1]]] && RealScalarList[[bos,2,1]] < BList[[1]]) ||
-			(NumberQ[RealScalarList[[bos,2,2]]] && NumberQ[BList[[2]]] && RealScalarList[[bos,2,2]] < BList[[2]]) ||
-			Or@@(Function[{x},(NumberQ[SMultiplicity[bos, x]] && NumberQ[BList[[2+x]]] && BList[[2+x]] > SMultiplicity[bos, x])]/@Range[NumberOfSubgroups])
+			(NumberQ[RealScalarList[[bos,2,1]]] && NumberQ[BList[[1]]] && RealScalarList[[bos,2,1]] < BList[[1]] && IntegerQ[BList[[1]]] && BList[[1]] > 0) ||
+			(NumberQ[RealScalarList[[bos,2,2]]] && NumberQ[BList[[2]]] && RealScalarList[[bos,2,2]] < BList[[2]] && IntegerQ[BList[[2]]] && BList[[2]] > 0) ||
+			Or@@(Function[{x},(NumberQ[SMultiplicity[bos, x]] && NumberQ[BList[[2+x]]] && BList[[2+x]] > SMultiplicity[bos, x] && IntegerQ[BList[[2+x]]] && BList[[2+x]] > 0)]/@Range[NumberOfSubgroups])
 		);
 		
 		FermionIndexOut[ferm_, FList_] := (
-			(NumberQ[WeylFermionList[[ferm,2,1]]] && NumberQ[FList[[1]]] && WeylFermionList[[ferm,2,1]] < FList[[1]]) ||
-			Or@@(Function[{x},(NumberQ[FMultiplicity[ferm, x]] && NumberQ[FList[[1+x]]] && FList[[1+x]] > FMultiplicity[ferm, x])]/@Range[NumberOfSubgroups])
+			(NumberQ[WeylFermionList[[ferm,2,1]]] && NumberQ[FList[[1]]] && WeylFermionList[[ferm,2,1]] < FList[[1]] && IntegerQ[FList[[1]]] && FList[[1]] > 0) ||
+			Or@@(Function[{x},(NumberQ[FMultiplicity[ferm, x]] && NumberQ[FList[[1+x]]] && FList[[1+x]] > FMultiplicity[ferm, x] && IntegerQ[FList[[1+x]]] && FList[[1+x]] > 0)]/@Range[NumberOfSubgroups])
 		);
 		
 		(* Backend for Beta functions *)
@@ -2382,6 +2424,8 @@ BeginPackage["ARGES`"];
 		Gauge::RepMismatch = "Representation list does not match number of subgroups";
 		Gauge::NAN = "Number of subgroups is corrupted";
 		Gauge::Full = "Number of gauge subgroups exceeds initial definition";
+		Gauge::RepInvalid = "Invalid input for gauge indices";
+		Gen::RepInvalid = "Invalid input for generation indices";
 		WeylFermion::RepMismatch = "Representation list does not match number of subgroups";
 		RealScalar::RepMismatch = "Representation list does not match number of subgroups";
 		Yukawa::ContractionError = "Number of gauge contractions does not match number of subgroups";
