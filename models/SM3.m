@@ -1,7 +1,6 @@
 Needs["ARGES`"]
 Reset[];
 NumberOfSubgroups = 3;
-Eps[a_Integer, b_Integer] := If[a + b == 3 && a > 0 && b > 0, If[b == a + 1, 1, -1], 0];
 Gauge[g1, U, 1, {0, 1, 1}];
 Gauge[g2, SU, 2, {0, 3, 1}];
 Gauge[g3, SU, 3, {0, 1, 8}];

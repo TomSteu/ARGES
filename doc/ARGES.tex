@@ -15,8 +15,8 @@
 \thispagestyle{empty}
 \newpage
 \section{Motivation - Why ARGES?}
-Arges is the name of a cyclops in the greek mythology, which was exiled by the Titans but freed by Zeus to forge lightning bolts for his battle against them. \newline
-In this tradition as a useful tool, ARGES - Advanced Renormalization Group Equation Simplifier is a framework to calculate perturbative renormalization group equations for renormalizable quantum field theories, using \cite{LuoWangXiao,MV1,MV2,MV3,OsbornJack,OsbornJack2,OsbornJack3,Decoding}. Of course, other tools exist which offer an intersection of the same core features, most famously SARAH \cite{SARAH,SARAH4} and PyR@TE \cite{pyrate,pyrate2}. However, this piece of software tries to adress some of their limitations and adopted their resolution as its guiding features:
+Arges is the name of a cyclops in the greek mythology, which was exiled by the Titans but freed by Zeus to forge lightning bolts for his battle against his former masters. \newline
+In this tradition as a useful tool, ARGES - Advanced Renormalization Group Equation Simplifier is a framework to calculate perturbative renormalization group equations for renormalizable quantum field theories, using \cite{LuoWangXiao,MV1,MV2,MV3,vev1,vev2,OsbornJack,OsbornJack2,OsbornJack3,Decoding}. Of course, other tools exist which offer an intersection of the same core features, most famously SARAH \cite{SARAH,SARAH4} and PyR@TE \cite{pyrate,pyrate2}. However, this piece of software tries to adress some of their limitations and adopts their resolution as its guiding features:
 \begin{itemize}
 \item it is possible to define particle numbers, representations and gauge group ranks as variables, even at all at once
 \item gauge groups may be defined as totally unknown altogether
@@ -24,6 +24,10 @@ In this tradition as a useful tool, ARGES - Advanced Renormalization Group Equat
 \item for interaction terms, contractions of generation and gauge indices are completely configurable
 \item disentanglement of parameter RGEs is up to the user, hence the program cannot fail while trying to resolve these
 \end{itemize}
+ARGES is limited to irreducible representation and RGEs in the $\overline{\mathrm{MS}}$ scheme, however, for all mass independent schemes, beta functions are universal at one loop (two loop for gauge couplings).
+\newpage
+\section{Prerequisites}
+
 \newpage
 \section{Defining a model}
 \subsection{Gauge sector and initial Setup}
@@ -71,6 +75,12 @@ Scalar quartics may be defined via:
 Quartic$\lambda$abcd[Sym, Sc1, Sc2, Sc3, Sc4, {Contr1, ...}, GenerationContr];
 \end{lstlisting}
 Where arguments two to five are symbols of the scalars involved. Again, real and complex scalars may be entered. It may be denoted that for complex fields, prefactors of the real composite fields are added automatically. The sixth element is a list of gauge index contractions, taking four arguments reflecting the four scalar fields. The generation contraction on the last position is a function of eight arguments, where the first two are for the two generation indices of the first scalar field and so on. \newline No implicit factor 4! is added, so each symmetry factor needs to be included in the last argument. However, for calculational purposes, the quartics are completely symmetrized under permutation of the scalar fields, and additional factors are added to preserve the norm. The final prefactor may be checked using the routine to output beta function, as it is explained in the next chapter.
+\subsection{Vacuum expectation values}
+For theories developing VEVs of scalars, these have to be declared before using:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+VEV[Symbol, Scalar, {Gen1, Gen2}, {GaugeIndex1, ...}, Factor];
+\end{lstlisting}
+Where the first two arguments specify the symbols of the VEV and the scalar field. Since VEVs are considered to be real, real component fields need to be utilized for the scalars. However, its is of course possible to define imaginary components to develop a VEV. The third and fourth arguments are Lists containing the generation and gauge indices of the field in the usual fashion. The last argument is an additional factor for the VEV, however, factors already defined for the component fields are implicitly assumed for the VEV as well. This argument is optional and defaults to one. In general, to facilitate more complex vacuum structures, multiple VEVs with the same symbol, but other arguments or different VEVs with the same arguments may be specified, these are always assumed in an additive manner.
 \newpage
 \section{Output}
 \subsection{General remarks}
@@ -92,7 +102,120 @@ The first three arguments are symbols of the scalar and the fermions involved, t
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 $\beta$[Sc1, Sc2, Sc3, Sc4, S1List, S2List, S3List, S4List, LoopOrder]
 \end{lstlisting}
-Following the notation before, the first four symbols mark the scalar fields, while the arguments five to eight are their respective indices, packed in lists of $\mathtt{NumberOfSubgroups} + 2$ elements, with the first two being the generation and the rest the gauge indices.
+Following the notation before, the first four symbols mark the scalar fields, while the arguments five to eight are their respective indices, packed in lists of $\mathtt{NumberOfSubgroups} + 2$ elements, with the first two being the generation and the rest the gauge indices. \newline
+\subsection{Vacuum expectation values}
+The running of vacuum expectation values is obtained via:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+$\beta$[vev, LoopOrder]
+\end{lstlisting}
+It may be denoted that these are in general gauge depended. Here, all gauge groups are assumed have the same constant $\xi$ for $R_{\xi}$ gauge fixing.
+\newpage
+\section{Example: SM with $N_c$ colors and third generation fermions}
+In this section, we will present an example of usage featuring the Standard Model with $N_c$ colors and only considering third generation fermions. The model file looks like this (depicted in plain text without notebook specific replacements):
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+(* SM with Nc colors and 3rd generation fermions only *)
+Needs["ARGES`"]
+
+(* Reset ARGES every time reading in this file *)
+Reset[];
+
+(* Declare number of gauge groups first *)
+NumberOfSubgroups = 3;
+
+(* Specify gauge groups, no GUT normalization *)
+Gauge[gy, U, 1, {0, 1, 1}];
+Gauge[g, SU, 2, {0, 3, 1}];
+Gauge[gs, SU, Nc, {0, 1, Sqr[Nc] - 1}];
+
+(* Specify full fermion sector *)
+(* we will define no Yukawas for the first 2 generations later *)
+WeylFermion[Q, 3, {+1/6, 2, Nc}];
+WeylFermion[L, 3, {-1/2, 2, 1}];
+WeylFermion[D, 3, {-1/3, 1, Nc}];
+WeylFermion[U, 3, {+2/3, 1, Nc}];
+WeylFermion[E, 3, {-1, 1, 1}];
+
+(* Scalar Field with VEV *)
+ComplexScalar[H, {1, 1}, {+1/2, 2, 1}];
+VEV[v, Re[H], {1, 1}, {1, 2, 1}, 1];
+
+(* Yukawa sector - third generations only *)
+YukawaY[ yb, H, Q, D, 
+ {1 &, KroneckerDelta[#1, #2] &, KroneckerDelta[#2, #3] &}, 
+ (KroneckerDelta[#3, 3] KroneckerDelta[#4, 3])& ];
+ 
+YukawaY[ ytau, H, L, E, 
+ {1 &, KroneckerDelta[#1, #2] &, 1 &}, 
+ (KroneckerDelta[#3, 3] KroneckerDelta[#4, 3])& ];
+ 
+YukawaY[ yt, adj[H], Q, U, 
+ {1 &, Eps[#1, #2] &, KroneckerDelta[#2, #3] &},
+ (KroneckerDelta[#3, 3] KroneckerDelta[#4, 3])& ];
+
+(* Quartic coupling ~ -1/2 lamda |phi|^4 *)
+Quartic\[Lambda]abcd[\[Lambda], adj[H], H, adj[H], H, 
+ {1&, (KroneckerDelta[#1, #2] KroneckerDelta[#3, #4])&, 1&}, 
+ (KroneckerDelta[#2, #3] KroneckerDelta[#1, #4] 
+  KroneckerDelta[#5, #8] KroneckerDelta[#6, #7])/2 & ];
+
+(* Compute gauge invariants already *)
+ComputeInvariants[];
+\end{lstlisting}
+This file is included in the bundle as $\mathtt{ARGES/models/SM\_Nc\_3rd.m}$. It shall be denoted that $\mathtt{Eps}$ and $\mathtt{Sqr}$ are keywords defined by ARGES for convenience, while $\mathtt{KroneckerDelta}$ is part of the Wolfram Language. It is less cumbersome to utilize the support for anonymous ('pure') functions as done in the example.
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+(* non-anonymous definition *)
+f[x1_, x2_, ...] := g[x1, x2, ...];
+
+(* anonymous definition using pure functions *)
+f := g[#1, #2, ...] & ;
+f := Function[{x1, x2, ...}, g[x1, x2, ...]]; 
+\end{lstlisting}
+Now the model can be called from a batch file or interactively from a notebook:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+In[1]:= Get["SM_Nc_3rd.m", Path -> {"~/ARGES/models/"}]
+        
+        (* real matrix elements, substitute gauge invariants *)        
+In[2]:= subs = Join[subInvariants, 
+        {adj[yt] -> yt, adj[yb] -> yb, adj[ytau] -> ytau}];
+
+        (* gauge couplings beta functions - here just gs for brevity *)        
+In[3]:= Power[4 \[Pi], 2] \[Beta][gs, 1] //. subs // Expand
+Out[3]= 4 gs^3 - (11 gs^3 Nc)/3
+
+In[4]:= Power[4 \[Pi], 4] \[Beta][gs, 2] //. subs // Expand
+Out[4]= (9 g^2 gs^3)/2 + (11 gs^3 gy^2)/6 - (6 gs^5)/Nc + 26 gs^5 Nc - 
+        (34 gs^5 Nc^2)/3 + (2 gs^3 yb^2)/(-1 + Nc^2) - 
+        (2 gs^3 Nc^2 yb^2)/(-1 + Nc^2) + (2 gs^3 yt^2)/(-1 + Nc^2) - 
+        (2 gs^3 Nc^2 yt^2)/(-1 + Nc^2)
+        
+        (* Yukawa yt coupling: get symmetry factors first *)
+In[5]:=  \[Beta][H, Q, U, {1, 1, 1, 1, 1}, {3, 1, 2, 1}, 
+         {3, 1, 1, 1}, 0] //. subs // Expand
+Out[5]= yt
+
+In[6]:= Power[4 \[Pi], 2] \[Beta][H, Q, U, {1, 1, 1, 1, 1}, 
+        {3, 1, 2, 1}, {3, 1, 1, 1}, 1] //. subs // Expand
+Out[6]= -((9 g^2 yt)/4) - (17 gy^2 yt)/12 + (3 gs^2 yt)/Nc - 
+        3 gs^2 Nc yt - (3 yb^2 yt)/2 + Nc yb^2 yt + (3 yt^3)/2 + 
+        Nc yt^3 + yt ytau^2
+        
+In[7]:= Power[4 \[Pi], 4] \[Beta][H, Q, U, {1, 1, 1, 1, 1}, 
+        {3, 1, 2, 1}, {3, 1, 1, 1}, 2] //. subs // Expand
+Out[7]= -8 g^4 yt + (53 gs^4 yt)/3 - 3/4 g^2 gy^2 yt + (61 gy^4 yt)/24 - 
+        (3 gs^4 yt)/(4 Nc^2) - (27 g^2 gs^2 yt)/(8 Nc) - (10 gs^4 yt)/Nc
+        - (19 gs^2 gy^2 yt)/(24 Nc) + 3/4 g^4 Nc yt + 27/8 g^2 gs^2 Nc yt
+        + 10 gs^4 Nc yt + 19/24 gs^2 gy^2 Nc yt + 319/324 gy^4 Nc yt - 
+        203/12 gs^4 Nc^2 yt + 9/16 g^2 yb^2 yt - 5/2 gs^2 yb^2 yt - 
+        43/48 gy^2 yb^2 yt + (6 gs^2 yb^2 yt)/Nc + 15/8 g^2 Nc yb^2 yt -
+        6 gs^2 Nc yb^2 yt + 25/72 gy^2 Nc yb^2 yt + 5/2 gs^2 Nc^2 yb^2 yt
+        + (11 yb^4 yt)/4 - Nc yb^4 yt + (135 g^2 yt^3)/16 - 
+        (5 gs^2 yt^3)/2 + (223 gy^2 yt^3)/48 - (6 gs^2 yt^3)/Nc + 
+        15/8 g^2 Nc yt^3 + 6 gs^2 Nc yt^3 + 85/72 gy^2 Nc yt^3 + 
+        5/2 gs^2 Nc^2 yt^3 - (5 yb^2 yt^3)/4 - 1/2 Nc yb^2 yt^3 + 
+        (3 yt^5)/2 - (9 Nc yt^5)/2 + 15/8 g^2 yt ytau^2 + 
+        25/8 gy^2 yt ytau^2 + 5/4 yb^2 yt ytau^2 - (9 yt^3 ytau^2)/4 - 
+        (9 yt ytau^4)/4 - 6 yt^3 \[Lambda] + (3 yt \[Lambda]^2)/2
+\end{lstlisting}
 \newpage
 \printbibliography
 \end{document}

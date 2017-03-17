@@ -350,7 +350,7 @@ BeginPackage["ARGES`"];
 			If[pos != {}, 
 				If[loop =!= 0, 
 					Return[Expand[(\[Beta][\[Alpha][sym], loop] Sqr[4 Pi]/(2 sym))//.subAlpha]];,
-					sym
+					Return[sym];
 				];
 			];
 			(* VEV *)
