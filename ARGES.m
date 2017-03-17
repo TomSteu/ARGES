@@ -54,7 +54,7 @@ BeginPackage["ARGES`"];
 		(* Interfaces to define the theory *)
 		Gauge[sym_, group_, n_, reps_List] := Module[
 			{},
-			If[!NumberQ[NumberOfSubgroups] || !MatchQ[NumberOfSubgroups, _Integer] || NumberOfSubgroups<0, 
+			If[!NumberQb[NumberOfSubgroups] || !MatchQ[NumberOfSubgroups, _Integer] || NumberOfSubgroups<0, 
 				Message[Gauge::NAN];
 				Return[];
 			];
@@ -348,7 +348,10 @@ BeginPackage["ARGES`"];
 			(* gauge coupling *)
 			pos = ListPosition[ListGauge,_List?(#[[1]] == sym &)];
 			If[pos != {}, 
-				Return[Expand[(\[Beta][\[Alpha][sym], loop] Sqr[4 Pi]/(2 sym))//.subAlpha]];
+				If[loop =!= 0, 
+					Return[Expand[(\[Beta][\[Alpha][sym], loop] Sqr[4 Pi]/(2 sym))//.subAlpha]];,
+					sym
+				];
 			];
 			(* VEV *)
 			pos = ListPosition[ListVEV,_List?(#[[1]] == sym &)];
@@ -965,6 +968,8 @@ BeginPackage["ARGES`"];
 			), {ii, 1, NumberOfSubgroups}]//.subScalarInvariants;
 			Return[beta/(24 Power[4 \[Pi], 4])];
 		];
+		
+		BetaVEV[va_, 0] := va;
 		
 		BetaVEV[va_, 1] := Module[
 			{beta, vb, ii},
