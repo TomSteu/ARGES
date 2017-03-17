@@ -424,7 +424,7 @@ BeginPackage["ARGES`"];
 		);
 		
 		FermionIndexOut[ferm_, FList_] := (
-			(NumberQ[WeylFermionList[[ferm,2,1]]] && NumberQ[FList[[1]]] && WeylFermionList[[ferm,2,1]] < FList[[1]] && IntegerQ[FList[[1]]] && FList[[1]] > 0) ||
+			(NumberQ[WeylFermionList[[ferm,2]]] && NumberQ[FList[[1]]] && WeylFermionList[[ferm,2]] < FList[[1]] && IntegerQ[FList[[1]]] && FList[[1]] > 0) ||
 			Or@@(Function[{x},(NumberQ[FMultiplicity[ferm, x]] && NumberQ[FList[[1+x]]] && FList[[1+x]] > FMultiplicity[ferm, x] && IntegerQ[FList[[1+x]]] && FList[[1+x]] > 0)]/@Range[NumberOfSubgroups])
 		);
 		
