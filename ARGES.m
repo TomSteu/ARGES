@@ -35,7 +35,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 	
- 	(*Begin["Private`"];*)
+ 	Begin["Private`"];
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -2514,5 +2514,5 @@ BeginPackage["ARGES`"];
 		VEV::UnknownParticle = "Undefined particle with vacuum expectation value";
 		
 		Reset[];
-	(*End[];*)
+	End[];
 EndPackage[];
