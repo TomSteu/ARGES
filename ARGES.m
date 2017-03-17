@@ -26,7 +26,7 @@ BeginPackage["ARGES`"];
 	U::usage = "Unitary Group";
 	SU::usage = "Special Unitary Group";
 	SO::usage = "Special Orthogonal Group";
-	
+	\[Xi]::usage = "Gauge fixing constant";
 
 	
 	Sqr[x_] := x*x;
@@ -42,6 +42,7 @@ BeginPackage["ARGES`"];
 			ListYukawa = {};
 			ListQuartic = {};
 			ListQuarticSym = {};
+			ListVEV = {};
 			WeylFermionList = {};
 			RealScalarList = {};
 			ComplexScalarList = {};
@@ -94,7 +95,7 @@ BeginPackage["ARGES`"];
 			Return[0];
 		];
 		
-		SimplifyProduct[term_] := (term //. subProd //.{tr[adj[a_], b_] :> tr[b, adj[a]], tr[adj[a_], b_, adj[c_], d_]:>tr[b, adj[c], d, adj[a]], tr[adj[a_], b_, adj[c_], d_, adj[e_], f_]:>tr[b, adj[c], d, adj[e], f, adj[a]], (A_ tr[C___, a_, adj[b_], G___, c_, adj[d_], F___] + B_ tr[G___, c_, adj[d_], F___, C___, a_, adj[b_]]) :> (A+B)tr[C, a, adj[b], G, c, adj[d], F], (A_ tr[C___, a_, adj[b_], G___, c_, adj[d_], F___] + B_ tr[c_, adj[d_], F___, C___, a_, adj[b_], G___]) :> (A+B)tr[C, a, adj[b], G, c, adj[d], F]});
+		SimplifyProduct[term_] := (term //. subProd //.{tr[adj[a_], b__] :> tr[b, adj[a]], (A_ tr[C___, a_, adj[b_], G___, c_, adj[d_], F___] + B_ tr[G___, c_, adj[d_], F___, C___, a_, adj[b_]]) :> (A+B)tr[C, a, adj[b], G, c, adj[d], F], (A_ tr[C___, a_, adj[b_], G___, c_, adj[d_], F___] + B_ tr[c_, adj[d_], F___, C___, a_, adj[b_], G___]) :> (A+B)tr[C, a, adj[b], G, c, adj[d], F]});
 		
 		WeylFermion[sym_, Nflavor_, Gauge_List] := Module[
 			{},
@@ -140,6 +141,29 @@ BeginPackage["ARGES`"];
 			ComplexScalarList = Append[ComplexScalarList, sym];
 			RealScalar[Re[sym], Nflavor, Gauge];
 			RealScalar[Im[sym], Nflavor, Gauge];
+		];
+		
+		VEV[sym_, Sa_, SGenIdx_List, SGaugeIdx_List, fak_:1] := Module[
+			{posS},
+			posS  = ListPosition[RealScalarList,_List?(#[[1]] == Sa &)];
+			If[posS == {},
+				Message[VEV::UnknownParticle];
+				Return[];
+			];
+			If[Dimensions[SGenIdx][[1]] != 2 || IdxCheck[SGenIdx],
+				Message[Gen::RepMismatch];
+				Return[];
+			];
+			If[Dimensions[SGaugeIdx][[1]] != NumberOfSubgroups || GaugeIdxCheck[SGaugeIdx], 
+				Message[Gauge::RepMismatch];
+				Return[];
+			];
+			If[BosonIndexOut[posS[[1,1]], Join[SGenIdx, SGaugeIdx]],
+				Message[Gen::RepMismatch];
+				Message[Gauge::RepMismatch];
+				Return[];
+			];
+			ListVEV = Append[ListVEV, {sym, fak, Join[{posS[[1,1]]}, SGenIdx, SGaugeIdx]}];
 		];
 		
 		YukawaYaij[sym_, Sa_, Fi_, Fj_, gauge_List, fak_:1] := Module[
@@ -321,9 +345,15 @@ BeginPackage["ARGES`"];
 		
 		\[Beta][sym_, loop_] := Module[
 			{pos},
+			(* gauge coupling *)
 			pos = ListPosition[ListGauge,_List?(#[[1]] == sym &)];
 			If[pos != {}, 
 				Return[Expand[(\[Beta][\[Alpha][sym], loop] Sqr[4 Pi]/(2 sym))//.subAlpha]];
+			];
+			(* VEV *)
+			pos = ListPosition[ListVEV,_List?(#[[1]] == sym &)];
+			If[pos != {}, 
+				Return[BetaVEV[pos[[1,1]], loop]];
 			];
 		];
 		
@@ -934,6 +964,53 @@ BeginPackage["ARGES`"];
 			Ag[ii][Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa], Prepend[lb, pb]]
 			), {ii, 1, NumberOfSubgroups}]//.subScalarInvariants;
 			Return[beta/(24 Power[4 \[Pi], 4])];
+		];
+		
+		BetaVEV[va_, 1] := Module[
+			{beta, vb, ii},
+			beta = 0;
+			beta += Sum[
+				Sqr[ListGauge[[ii,1]]] ( 3 + \[Xi]) C2[RealScalarList[[ListVEV[[vb,3,1]],1]],ListGauge[[ii,1]]] TensorDelta[ListVEV[[va,3]],ListVEV[[vb,3]]] ListVEV[[vb,2]] ListVEV[[vb,1]], 
+				{vb, 1, Dimensions[ListVEV][[1]]},
+				{ii, 1, NumberOfSubgroups}
+			];
+			beta -= Sum[
+				SimplifyProduct[(Y2S[ListVEV[[va,3]], ListVEV[[vb,3]]] ListVEV[[vb,2]] ListVEV[[vb,1]])/.subScalarInvariants],
+				{vb, 1, Dimensions[ListVEV][[1]]}
+			];
+			Return[beta/( ListVEV[[va,2]] Power[4 \[Pi], 2])];
+		];
+		
+		BetaVEV[va_, 2] := Module[
+			{beta, vb, ii1, ii2, ff, ss},
+			beta = 0;
+			beta += Sum[
+				Power[ListGauge[[ii1,1]], 4] C2[RealScalarList[[ListVEV[[va,3,1]],1]], ListGauge[[ii1,1]]] TensorDelta[ListVEV[[va,3]],ListVEV[[vb,3]]](
+					(35/3 + 3/2 \[Xi] - 3/4 Sqr[\[Xi]]) C2[ListGauge[[ii1,1]]]
+					- 5/3 Sum[S2[WeylFermionList[[ff,1]], ListGauge[[ii1,1]]], {ff, 1, FNumber[]}]
+					- 11/12 Sum[S2[RealScalarList[[ss,1]], ListGauge[[ii1,1]]], {ss, 1, SNumber[]}]
+				) ListVEV[[vb,2]] ListVEV[[vb,1]],
+				{vb, 1, Dimensions[ListVEV][[1]]},
+				{ii1, 1, NumberOfSubgroups}
+			];
+			beta += Sum[
+				Sqr[ListGauge[[ii1,1]] ListGauge[[ii2,1]]] C2[RealScalarList[[ListVEV[[va,3,1]],1]], ListGauge[[ii1,1]]] TensorDelta[ListVEV[[va,3]],ListVEV[[vb,3]]](
+					(2\[Xi](1 + \[Xi]) - 3/2) C2[RealScalarList[[ListVEV[[vb,3,1]],1]], ListGauge[[ii2,1]]]
+				) ListVEV[[vb,2]] ListVEV[[vb,1]],
+				{vb, 1, Dimensions[ListVEV][[1]]},
+				{ii1, 1, NumberOfSubgroups},
+				{ii2, 1, NumberOfSubgroups}
+			];
+			beta += Sum[
+				(-1/2 \[CapitalLambda]2S[ListVEV[[va,3]], ListVEV[[vb,3]]] + 3/2 H2S[ListVEV[[va,3]], ListVEV[[vb,3]]] + Hbar2S[ListVEV[[va,3]], ListVEV[[vb,3]]]) ListVEV[[vb,2]] ListVEV[[vb,1]] /. subScalarInvariants, 
+				{vb, 1, Dimensions[ListVEV][[1]]}
+			];
+			beta -= Sum[
+				2\[Xi] Sum[ Sqr[ListGauge[[ii1,1]]] C2[RealScalarList[[ListVEV[[va,3,1]],1]], ListGauge[[ii1,1]]], {ii1, 1, NumberOfSubgroups}] Y2S[ListVEV[[va,3]], ListVEV[[vb,3]]] ListVEV[[vb,2]] ListVEV[[vb,1]] /. subScalarInvariants,
+				{vb, 1, Dimensions[ListVEV][[1]]}
+			];
+			beta -= 5 Sum[Y2FS[ListVEV[[va,3]], ListVEV[[vb,3]]] ListVEV[[vb,2]] ListVEV[[vb,1]]/. subScalarInvariants, {vb, 1, Dimensions[ListVEV][[1]]}];
+			Return[beta/( ListVEV[[va,2]] Power[4 \[Pi], 4])];
 		];
 		
 		
@@ -2434,6 +2511,7 @@ BeginPackage["ARGES`"];
 		Yukawa::UnknownParticle = "Undefined particle in Yukawa sector";
 		Quartic::ContractionError = "Number of gauge contractions does not match number of subgroups";
 		Quartic::UnknownParticle = "Undefined particle in scalar sector";
+		VEV::UnknownParticle = "Undefined particle with vacuum expectation value";
 		
 		Reset[];
 	(*End[];*)
