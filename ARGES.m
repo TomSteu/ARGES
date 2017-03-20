@@ -2506,9 +2506,12 @@ BeginPackage["ARGES`"];
 		
 		(* Define Sum that resolves all KroneckerDelta[__] before it does the summation *)
 		subSum := {
+			SimplifySum[A_ + B_, C___] :> SimplifySum[A, C] + SimplifySum[B, C],
 			SimplifySum[SimplifySum[A_, B___], C___] :> SimplifySum[A, B, C],
 			SimplifySum[A_ KroneckerDelta[aa_, bb_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
-			SimplifySum[KroneckerDelta[aa_, bb_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[1 , SS1, SS2]
+			SimplifySum[KroneckerDelta[aa_, bb_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[1 , SS1, SS2],
+			SimplifySum[A_ KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
+			SimplifySum[KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[1 , SS1, SS2]
 		};
 		
 		ContractSum[A___] := Block[
@@ -2520,7 +2523,7 @@ BeginPackage["ARGES`"];
 			If[Dimensions[res][[1]]===1,
 				Return[res[[1]]];
 			];
-			Return[res/.SimplifySum -> Sum];
+			Return[Refine[res/.SimplifySum -> Sum]];
 		];
 		
 		(* Error Messages *)
