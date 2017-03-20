@@ -11,6 +11,13 @@
 \definecolor{light-gray}{gray}{0.95}
 \addbibresource{ref.bib}
 \begin{document}
+\begin{titlepage}
+\centering
+{\LARGE \bfseries ARGES - Advanced Renormalization Group Equation Simplifier}\\
+\vspace{20em}
+\LARGE User Manual
+\end{titlepage}
+\newpage
 \tableofcontents
 \thispagestyle{empty}
 \newpage
@@ -27,7 +34,27 @@ In this tradition as a useful tool, ARGES - Advanced Renormalization Group Equat
 ARGES is limited to irreducible representation and RGEs in the $\overline{\mathrm{MS}}$ scheme, however, for all mass independent schemes, beta functions are universal at one loop (two loop for gauge couplings).
 \newpage
 \section{Prerequisites}
-
+ARGES calculates $\overline{\mathrm{MS}}$ scheme Beta functions of the form:
+\begin{align}
+\beta_x = \frac{\partial x}{\partial \mathrm{ln}(\mu)}
+\end{align}
+The software assumes the following perturbative renormalizable Lagrangian to as a basis of its calculations:
+\begin{align}
+\mathcal{L} = &-\frac{1}{4} F^A_{\mu\nu}\; F_A^{\mu \nu} + \frac{1}{2} D^{ab}_\mu \phi_b \; D_{ab}^\mu \phi^b + i \psi_i^\dagger \sigma^\mu D^{ij}_\mu \psi_j - \frac{1}{2}( Y^a_{ij} \phi_a \psi_i \,(i \sigma_2)\, \psi_j + \mathrm{h.c.} ) \nonumber \\
+&- \lambda_{abcd}\; \phi^a \phi^b \phi^c \phi^d + \mathcal{L}_{SR} + \mathcal{L}_{gf} + \mathcal{L}_{gh}
+\end{align}
+Which consists of Weyl fermions and real scalars. Nevertheless, ARGES can handle complex scalars and converts them to real compontent fields internally.
+Where $\mathcal{L}_{SR}$ includes superrenormalizable terms such as masses and cubic scalar couplings, which decouple from the RGE system due to their dimension in mass independent schemes. $\mathcal{L}_{gf}$ and $\mathcal{L}_{gh}$ represent the gauge fixing and ghost part respectively, however, most RGEs are gauge independent anyway with exception of anomalous dimensions, and hence vacuum expectation values. For those, $R_\xi$ gauge is implicitly assumed, yielding:
+\begin{align}
+\mathcal{L}_{gf} = -\frac{1}{2 \xi} A^I_\mu \,A^{I \mu} 
+\end{align}
+Contributions from the gauge sector are expressed in form of the quadratic Casimir, the Dynkin indices and $\Lambda$ invariants:
+\begin{align}
+C_2(R)^{ab} &= T^A_{ac} \;T^A_{cb} \\
+S_2(R) \;\delta^{AB} &= T^A_{ab} \; T^B_{ba} \\
+\Lambda_{abcd} &= T^A_{ac} \; T^A_{bd}
+\end{align}
+Where $T^A_{ab}$ denominate generator of the representation of the gauge subgroup for scalar, fermionic and vector fields. Since scalars are decomposed to be real, their generators are imaginary and antisymmetric in the indices $a \leftrightarrow b$. Since vectors are considered to be real and in the adjoint representation, their generator are imaginary, totally antisymmetric and exhibit a Jacobi identity.
 \newpage
 \section{Defining a model}
 \subsection{Gauge sector and initial Setup}
@@ -215,6 +242,39 @@ Out[7]= -8 g^4 yt + (53 gs^4 yt)/3 - 3/4 g^2 gy^2 yt + (61 gy^4 yt)/24 -
         (3 yt^5)/2 - (9 Nc yt^5)/2 + 15/8 g^2 yt ytau^2 + 
         25/8 gy^2 yt ytau^2 + 5/4 yb^2 yt ytau^2 - (9 yt^3 ytau^2)/4 - 
         (9 yt ytau^4)/4 - 6 yt^3 \[Lambda] + (3 yt \[Lambda]^2)/2
+        
+        (* VEV *)
+In[8]:= Power[4 \[Pi], 2] \[Beta][v, 1] //. subs // Expand
+Out[8]= (9 g^2 v)/4 + (3 gy^2 v)/4 - Nc v yb^2 - Nc v yt^2 - v ytau^2 + 
+        3/4 g^2 v \[Xi] + 1/4 gy^2 v \[Xi]
+        
+In[9]:= Power[4 \[Pi], 4] \[Beta][v, 2] //. subs // Expand
+Out[9]= (451 g^4 v)/32 - 9/16 g^2 gy^2 v - (211 gy^4 v)/96 - 
+        15/8 g^4 Nc v - 55/72 gy^4 Nc v + 5/2 gs^2 v yb^2 - 
+        15/8 g^2 Nc v yb^2 - 25/72 gy^2 Nc v yb^2 - 
+        5/2 gs^2 Nc^2 v yb^2 + 9/4 Nc v yb^4 + 5/2 gs^2 v yt^2 - 
+        15/8 g^2 Nc v yt^2 - 85/72 gy^2 Nc v yt^2 - 5/2 gs^2 Nc^2 v yt^2 
+        - 1/2 Nc v yb^2 yt^2 + 9/4 Nc v yt^4 - 15/8 g^2 v ytau^2 - 
+        25/8 gy^2 v ytau^2 + (9 v ytau^4)/4 - (3 v \[Lambda]^2)/2 + 
+        27/8 g^4 v \[Xi] + 3/4 g^2 gy^2 v \[Xi] + 1/8 gy^4 v \[Xi] - 
+        3/2 g^2 Nc v yb^2 \[Xi] - 1/2 gy^2 Nc v yb^2 \[Xi] - 
+        3/2 g^2 Nc v yt^2 \[Xi] - 1/2 gy^2 Nc v yt^2 \[Xi] - 
+        3/2 g^2 v ytau^2 \[Xi] - 1/2 gy^2 v ytau^2 \[Xi] + 
+        3/4 g^2 gy^2 v \[Xi]^2 + 1/8 gy^4 v \[Xi]^2
+
+         (* Quartic - omit two loop due to its length *)
+In[10]:= \[Beta][H, H, H, H, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, 
+         {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, 0]
+Out[10]= \[Lambda]/2
+
+In[11]:= 2 Power[4 \[Pi], 2] \[Beta][H, H, H, H, 
+         {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, 
+         {1, 1, 1, 1, 1}, 1] //. subs // Expand
+Out[11]= (9 g^4)/4 + (3 g^2 gy^2)/2 + (3 gy^4)/4 - 4 Nc yb^4 - 4 Nc yt^4 
+         - 4 ytau^4 - 9 g^2 \[Lambda] - 3 gy^2 \[Lambda] + 
+         4 Nc yb^2 \[Lambda] + 4 Nc yt^2 \[Lambda] + 4 ytau^2 \[Lambda] 
+         + 12 \[Lambda]^2
+         
 \end{lstlisting}
 \newpage
 \printbibliography

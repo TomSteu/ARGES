@@ -810,7 +810,7 @@ BeginPackage["ARGES`"];
 				As[ii, ii2][Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]]
 			), {ii, 1, NumberOfSubgroups}, {ii2, 1, NumberOfSubgroups}]//.subScalarInvariants;
 			Return[beta/(24 Sqr[4\[Pi]])];
-		]
+		];
 		
 		BetaQuartic[pa_, pb_, pc_, pd_, la_, lb_, lc_, ld_, 2] := Module[
 			{beta, ss1, ss2, sIdx, ff, ii, ii2, ii3, x},
