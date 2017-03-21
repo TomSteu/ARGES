@@ -2512,18 +2512,14 @@ BeginPackage["ARGES`"];
 			SimplifySum[KroneckerDelta[aa_, bb_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[1 , SS1, SS2],
 			SimplifySum[A_ KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
 			SimplifySum[KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[1 , SS1, SS2],
-			Power[KroneckerDelta[A___], a_] :> KroneckerDelta[A]
+			Power[KroneckerDelta[A___], a_] :> KroneckerDelta[A],
+			SimplifySum[A_] :> A,
+			SimplifySum[] :> 0
 		};
 		
 		ContractSum[A_, B___] := Block[
 			{res},
 			res = SimplifySum[Expand[A],B]//.subSum;
-			If[res === SimplifySum[],
-				Return[0];
-			];
-			If[Dimensions[res][[1]]===1,
-				Return[res[[1]]];
-			];
 			Return[Refine[res/.SimplifySum -> Sum]];
 		];
 		
