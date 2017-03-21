@@ -4,6 +4,8 @@
 \usepackage{xcolor}
 \usepackage{listings}
 \usepackage[backend=biber,style=numeric-comp, sorting=none]{biblatex}
+\usepackage{hyperref}
+\usepackage{placeins}
 \lstset{
   basicstyle=\ttfamily,
   columns=fullflexible,
@@ -58,7 +60,7 @@ Where $T^A_{ab}$ denominate generator of the representation of the gauge subgrou
 \newpage
 \section{Defining a model}
 \subsection{General Remarks}
-As it is a guiding principle of ARGES to handle unspecified ranks and generations, contraction over indices are not performed by matrix multiplication techniques, but unspecified sums over contraction functions.This gives the user full control over the index contractions, but also burdens the kernel to resolve difficult systems of unspecified sums. As it is the case throughout the code, pattern matching is employed to enhance the performance of each computation. Particularly, delta symbols may be resolved mostly by pattern matching. To properly utilize this enhancement, it is recommended to the user to use the build-in function $\mathtt{KroneckerDelta}$ when specifying contraction functions. 
+As it is a guiding principle of ARGES to handle unspecified ranks and generations, contraction over indices are not performed by matrix multiplication techniques, but unspecified sums over contraction functions. This gives the user full control over the index contractions, but also burdens the kernel to resolve difficult systems of unspecified sums. As it is the case throughout the code, pattern matching is employed to enhance the performance of each computation. Particularly, delta symbols may be resolved mostly by pattern matching. To properly utilize this enhancement, it is recommended to the user to use the build-in function $\mathtt{KroneckerDelta}$ when specifying contraction functions. 
 \subsection{Gauge sector and initial Setup}
 The initial step when writing a model file is to invoke the function $\mathtt{Reset[\;];}$ to initialize background variables. This command also clears the package and allows a fresh and redefinition of a model. This is particularly useful when accidentally adding fields or couplings twice. \\
 A second step is the to define the variable $\mathtt{NumberOfSubgroups}$, specifying the number of gauge subgroups. The default for this variable is set to 1, but it can be set to any non-negative integer, including zero. The value assigned to $\mathtt{NumberOfSubgroups}$ cannot be a symbol.
@@ -73,12 +75,14 @@ In order to define gauge groups and their respective fields the function $\matht
 Gauge[Symbol, Algebra, Rank, {Charge/Representation1, ...}];
 \end{lstlisting}
 The last argument is a list of the charges (in case of $\mathrm{U}(1)$ subgroups) or representations of gauge bosons. The first charge/representation will be associated with the group first declared with $\mathtt{Gauge[\dots]}$, and so on. The dimension of this list must match $\mathtt{NumberOfSubgroups}$. ARGES is agnostic regarding anti-representations, only positive numbers are valid. However, charges, representations and rank of the subgroup may be declared as a variable. \newline Currently available algebras and ranks are $\mathrm{U}(1)$ , $\mathrm{SU}(N_U)$, and $\mathrm{SO}(N_O)$ with $N_U > 1$ and $N_O > 2$. Gauge fields are assumed to be in the adjoint representation of their own subgroup and singulets in the others. Kinetic mixing is not implemented. \newline Unknown Gauge groups are allowed, but their invariants can of course not be further resolved.
+\FloatBarrier
 \subsection{Fermionic fields}
 Fermions may be defined via $\mathtt{WeylFermion}$:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 WeylFermion[Symbol, Generations, {Charge/Representation1, ...}];
 \end{lstlisting}
 The same comments as for $\mathtt{Gauge[\dots]}$ apply here for the last argument, including the fact that the representations and charges may be defined as variables. The same is true for the number of generations.
+\FloatBarrier
 \subsection{Scalar fields}
 Scalars may be defined as real or complex, using the following declarations:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
@@ -87,6 +91,7 @@ ComplexScalar[Symbol, {Gen1, Gen2}, {Charge/Representation1, ...}];
 \end{lstlisting}
 While most of the syntax matches the fermionic case, scalars are natively matrix fields and posses two generation indices. For a vector-like generation structure, one of them may be set to 1.\newline
 Internally, all complex scalars are expanded into real components, using the decomposition $\Phi = \frac{1}{\sqrt{2}} \left(\mathrm{Re} \, \Phi + i \, \mathrm{Im} \,\Phi\right)$. These component fields may be referenced as $\mathtt{Re[\Phi]}$ and $\mathtt{Im[\Phi]}$ when defining interactions.
+\FloatBarrier
 \subsection{Yukawa interactions}
 Two possibilities exist to define Yukawa interactions. One is the classical approach as a matrix in the fermionic generation indices, the syntax looks like this:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
@@ -98,18 +103,21 @@ Furthermore, Yukawa couplings may be defined as scalars:
 YukawaY[Sym, Scalar, Ferm1, Ferm2, {Contr1, ...}, GenerationContr];
 \end{lstlisting}
 Which is the same thing with exception of the now mandatory last argument, which is a now a function with four arguments, and defines the contraction between the first and second generation index of the scalar, and the generation indices of the first and second fermion, strictly in that order. Again, the first arguments is auto-adjoint with the need to mark it that way, and the hermitian conjugate is added without further symmetry factors.
+\FloatBarrier
 \subsection{Scalar quartic interactions}
 Scalar quartics may be defined via:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 Quartic$\lambda$abcd[Sym, Sc1, Sc2, Sc3, Sc4, {Contr1, ...}, GenerationContr];
 \end{lstlisting}
 Where arguments two to five are symbols of the scalars involved. Again, real and complex scalars may be entered. It may be denoted that for complex fields, prefactors of the real composite fields are added automatically. The sixth element is a list of gauge index contractions, taking four arguments reflecting the four scalar fields. The generation contraction on the last position is a function of eight arguments, where the first two are for the two generation indices of the first scalar field and so on. \newline No implicit factor 4! is added, so each symmetry factor needs to be included in the last argument. However, for calculational purposes, the quartics are completely symmetrized under permutation of the scalar fields, and additional factors are added to preserve the norm. The final prefactor may be checked using the routine to output beta function, as it is explained in the next chapter.
+\FloatBarrier
 \subsection{Vacuum expectation values}
 For theories developing VEVs of scalars, these have to be declared before using:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 VEV[Symbol, Scalar, {Gen1, Gen2}, {GaugeIndex1, ...}, Factor];
 \end{lstlisting}
 Where the first two arguments specify the symbols of the VEV and the scalar field. Since VEVs are considered to be real, real component fields need to be utilized for the scalars. However, its is of course possible to define imaginary components to develop a VEV. The third and fourth arguments are Lists containing the generation and gauge indices of the field in the usual fashion. The last argument is an additional factor for the VEV, however, factors already defined for the component fields are implicitly assumed for the VEV as well. This argument is optional and defaults to one. In general, to facilitate more complex vacuum structures, multiple VEVs with the same symbol, but other arguments or different VEVs with the same arguments may be specified, these are always assumed in an additive manner.
+\FloatBarrier
 \newpage
 \section{Output}
 \subsection{General remarks}
@@ -122,22 +130,23 @@ $\beta$[Gauge, LoopOrder]
 $\beta$[$\alpha$[Gauge], LoopOrder]
 \end{lstlisting}
 Where the second version returns the beta function of and with $ \alpha(g) = \frac{g^2}{(4 \pi)^2}$. In any case, the functions still contain Casimirs and Dynkin Indices. To resolve these (when the Algebra and the representation is specified), the substitution \texttt{subInvariants} may be utilized.
+\FloatBarrier\newpage
 \subsection{Yukawa beta function}
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 $\beta$[Scalar, Ferm1, Ferm2, SIdxList, F1IdxList, F2IdxList, LoopOrder]
 \end{lstlisting}
-The first three arguments are symbols of the scalar and the fermions involved, the fourth argument is a list of $\mathtt{NumberOfSubgroups} + 2$ elements, where the first two mark the generations of the scalar fields, and the rest its gauge indices. In the same manner, the fifth and sixth arguments are lists of $\mathtt{NumberOfSubgroups} + 1$ elements, where the first argument is the generation, and the rest gauge indices for each fermion respectively.\newline
+The first three arguments are symbols of the scalar and the fermions involved, the fourth argument is a list of $\mathtt{NumberOfSubgroups} + 2$ elements, where the first two mark the generations of the scalar fields, and the rest its gauge indices. In the same manner, the fifth and sixth arguments are lists of $\mathtt{NumberOfSubgroups} + 1$ elements, where the first argument is the generation, and the rest gauge indices for each fermion respectively.\newline\FloatBarrier 
 \subsection{Scalar quartic beta function}
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 $\beta$[Sc1, Sc2, Sc3, Sc4, S1List, S2List, S3List, S4List, LoopOrder]
 \end{lstlisting}
-Following the notation before, the first four symbols mark the scalar fields, while the arguments five to eight are their respective indices, packed in lists of $\mathtt{NumberOfSubgroups} + 2$ elements, with the first two being the generation and the rest the gauge indices. \newline
+Following the notation before, the first four symbols mark the scalar fields, while the arguments five to eight are their respective indices, packed in lists of $\mathtt{NumberOfSubgroups} + 2$ elements, with the first two being the generation and the rest the gauge indices. \newline \FloatBarrier
 \subsection{Vacuum expectation values}
 The running of vacuum expectation values is obtained via:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 $\beta$[vev, LoopOrder]
 \end{lstlisting}
-It may be denoted that these are in general gauge depended. Here, all gauge groups are assumed have the same constant $\xi$ for $R_{\xi}$ gauge fixing.
+It may be denoted that these are in general gauge depended. Here, all gauge groups are assumed have the same constant $\xi$ for $R_{\xi}$ gauge fixing.\FloatBarrier
 \newpage
 \section{Example: SM with $N_c$ colors and third generation fermions}
 In this section, we will present an example of usage featuring the Standard Model with $N_c$ colors and only considering third generation fermions. The model file looks like this (depicted in plain text without notebook specific replacements):
