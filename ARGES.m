@@ -401,7 +401,7 @@ BeginPackage["ARGES`"];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType3)&)],
 				Return[Sqrt[2] \[Beta][SType1, SType2, Re[SType3], SType4, SList1, SList2, Prepend[SList3[3;;],{SList3[[2]], SList3[[1]]}], SList4, loop]];
 			];
-			If[MemberQ[adj/@ComplexScalarList, _?((# === SType2)&)],
+			If[MemberQ[adj/@ComplexScalarList, _?((# === SType4)&)],
 				Return[Sqrt[2] \[Beta][SType1, SType2, SType3, Re[SType4], SList1, SList2, SList3, Prepend[SList4[3;;],{SList4[[2]], SList4[[1]]}], loop]];
 			];
 			pos1  = ListPosition[RealScalarList,_List?(#[[1]] == SType1 &)];
