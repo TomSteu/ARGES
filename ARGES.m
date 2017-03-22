@@ -133,6 +133,7 @@ BeginPackage["ARGES`"];
 			AddAssumption[Nflavor[[1]]];
 			AddAssumption[Nflavor[[2]]];
 			AddAssumption/@Gauge;
+			UpdateDummy[];
 			RealScalarList = Append[RealScalarList, {sym, Nflavor, Gauge}];
 		];
 		
@@ -290,6 +291,173 @@ BeginPackage["ARGES`"];
 			];
 		];
 		
+		CubicHabc[sym_, Sa_, Sb_, Sc_, gauge_List, fak_:(1&)] := Module[
+			{posA, posB, posC, posD, permList, permListPos, iter, x, x2, perm1, perm2, perm3, perm4},
+			If[MemberQ[adj/@ComplexScalarList, Sa],
+				CubicHabc[sym, Re[Sa[[1]]], Sb, Sc, gauge, (1/Sqrt[2] fak[#2,#1,#3,#4,#5,#6])&];
+				CubicHabc[sym, Im[Sa[[1]]], Sb, Sc, gauge, (-I/Sqrt[2]fak[#2,#1,#3,#4,#5,#6])&];
+				Return[];
+			];
+			If[MemberQ[ComplexScalarList, Sa],
+				CubicHabc[sym, Re[Sa], Sb, Sc, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4,#5,#6])&];
+				CubicHabc[sym, Im[Sa], Sb, Sc, gauge, (I/Sqrt[2] fak[#1,#2,#3,#4,#5,#6])&];
+				Return[];
+			];
+			If[MemberQ[adj/@ComplexScalarList, Sb],
+				CubicHabc[sym, Sa, Re[Sb[[1]]], Sc, gauge, (1/Sqrt[2] fak[#1,#2,#4,#3,#5,#6])&];
+				CubicHabc[sym, Sa, Im[Sb[[1]]], Sc, gauge, (-I/Sqrt[2] fak[#1,#2,#4,#3,#5,#6])&];
+				Return[];
+			];
+			If[MemberQ[ComplexScalarList, Sb],
+				CubicHabc[sym, Sa, Re[Sb], Sc, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4,#5,#6])&];
+				CubicHabc[sym, Sa, Im[Sb], Sc, gauge, (I/Sqrt[2] fak[#1,#2,#3,#4,#5,#6])&];
+				Return[];
+			];
+			If[MemberQ[adj/@ComplexScalarList, Sc],
+				CubicHabc[sym, Sa, Sb, Re[Sc[[1]]], gauge, (1/Sqrt[2] fak[#1,#2,#3,#4,#6,#5])&];
+				CubicHabc[sym, Sa, Sb, Im[Sc[[1]]], gauge, (-I/Sqrt[2] fak[#1,#2,#3,#4,#6,#5])&];
+				Return[];
+			];
+			If[MemberQ[ComplexScalarList, Sc],
+				CubicHabc[sym, Sa, Sb, Re[Sc], gauge, (1/Sqrt[2] fak[#1,#2,#3,#4,#5,#6])&];
+				CubicHabc[sym, Sa, Sb, Im[Sc], gauge, (I/Sqrt[2] fak[#1,#2,#3,#4,#5,#6])&];
+				Return[];
+			];
+			posA = ListPosition[RealScalarList,_List?(#[[1]] == Sa &)];
+			posB = ListPosition[RealScalarList,_List?(#[[1]] == Sb &)];
+			posC = ListPosition[RealScalarList,_List?(#[[1]] == Sc &)];
+			If[posA == {} || posB == {} || posC == {},
+				Message[Quartic::UnknownParticle];,
+				If[Dimensions[gauge][[1]] != NumberOfSubgroups,
+					Message[Quartic::ContractionError];,
+					ListQuartic = Append[ListQuartic, {sym, posA[[1,1]], posB[[1,1]], posC[[1,1]], SNumber[]+ 1, gauge, fak}];
+					permList = PermList[List[#1,#2,#3,#4]];
+					permListPos[perm_, pos_] := {posA[[1,1]], posB[[1,1]], posC[[1,1]], SNumber[]+1}[[Position[permList[[perm]], permList[[1,pos]]][[1,1]]]];
+					For[ii=1, ii<= 24, ii++, 
+						AppendSymQuartic[
+							sym, permListPos[ii,1], permListPos[ii,2], permListPos[ii,3], permListPos[ii,4], 
+							Function[{x2}, x2&]/@(Function[{x}, x@@permList[[ii]]]/@gauge),
+							Evaluate[1/24 fak@@Flatten[permList[[ii]] /. {#1 -> perm1, #2 -> perm2, #3 -> perm3, #4 -> perm4} //. {perm1 -> {#1, #2}, perm2 -> {#3, #4}, perm3 -> {#5, #6}, perm4 -> {#7,#8}}]]&
+						];
+					];
+					(* remove entries with coefficient zero *)
+					iter=1;
+					While[True,
+						If[iter > Dimensions[ListQuarticSym][[1]], Break[];];
+						If[ListQuarticSym[[iter, 7]] === (0&), 
+							ListQuarticSym = Delete[ListQuarticSym, iter];
+							Continue[];
+						];
+						iter++;
+					];
+				];
+			];
+		];
+		
+		ScalarMassMab[sym_, Sa_, Sb_, gauge_List, fak_:(1&)] := Module[
+			{posA, posB, posC, posD, permList, permListPos, iter, x, x2, perm1, perm2, perm3, perm4},
+			If[MemberQ[adj/@ComplexScalarList, Sa],
+				ScalarMassMab[sym, Re[Sa[[1]]], Sb, gauge, (1/Sqrt[2] fak[#2,#1,#3,#4])&];
+				ScalarMassMab[sym, Im[Sa[[1]]], Sb, gauge, (-I/Sqrt[2]fak[#2,#1,#3,#4])&];
+				Return[];
+			];
+			If[MemberQ[ComplexScalarList, Sa],
+				ScalarMassMab[sym, Re[Sa], Sb, gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				ScalarMassMab[sym, Im[Sa], Sb, gauge, (I/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Return[];
+			];
+			If[MemberQ[adj/@ComplexScalarList, Sb],
+				ScalarMassMab[sym, Sa, Re[Sb[[1]]], gauge, (1/Sqrt[2] fak[#1,#2,#4,#3])&];
+				ScalarMassMab[sym, Sa, Im[Sb[[1]]], gauge, (-I/Sqrt[2] fak[#1,#2,#4,#3])&];
+				Return[];
+			];
+			If[MemberQ[ComplexScalarList, Sb],
+				ScalarMassMab[sym, Sa, Re[Sb], gauge, (1/Sqrt[2] fak[#1,#2,#3,#4])&];
+				ScalarMassMab[sym, Sa, Im[Sb], gauge, (I/Sqrt[2] fak[#1,#2,#3,#4])&];
+				Return[];
+			];
+			posA = ListPosition[RealScalarList,_List?(#[[1]] == Sa &)];
+			posB = ListPosition[RealScalarList,_List?(#[[1]] == Sb &)];
+			If[posA == {} || posB == {},
+				Message[Quartic::UnknownParticle];,
+				If[Dimensions[gauge][[1]] != NumberOfSubgroups,
+					Message[Quartic::ContractionError];,
+					ListQuartic = Append[ListQuartic, {sym, posA[[1,1]], posB[[1,1]], SNumber[]+1, SNumber[]+1, gauge, fak}];
+					permList = PermList[List[#1,#2,#3,#4]];
+					permListPos[perm_, pos_] := {posA[[1,1]], posB[[1,1]], SNumber[]+1, SNumber[]+1}[[Position[permList[[perm]], permList[[1,pos]]][[1,1]]]];
+					For[ii=1, ii<= 24, ii++, 
+						AppendSymQuartic[
+							sym, permListPos[ii,1], permListPos[ii,2], permListPos[ii,3], permListPos[ii,4], 
+							Function[{x2}, x2&]/@(Function[{x}, x@@permList[[ii]]]/@gauge),
+							Evaluate[1/24 fak@@Flatten[permList[[ii]] /. {#1 -> perm1, #2 -> perm2, #3 -> perm3, #4 -> perm4} //. {perm1 -> {#1, #2}, perm2 -> {#3, #4}, perm3 -> {#5, #6}, perm4 -> {#7,#8}}]]&
+						];
+					];
+					(* remove entries with coefficient zero *)
+					iter=1;
+					While[True,
+						If[iter > Dimensions[ListQuarticSym][[1]], Break[];];
+						If[ListQuarticSym[[iter, 7]] === (0&), 
+							ListQuarticSym = Delete[ListQuarticSym, iter];
+							Continue[];
+						];
+						iter++;
+					];
+				];
+			];
+		];
+		
+		FermionMassMij[sym_, Fi_, Fj_, gauge_List, fak_:1] := Module[
+			{posFi, posFj, x},
+			If[Dimensions[gauge][[1]] != NumberOfSubgroups,
+				Message[Yukawa::ContractionError];
+				Return[];
+			];
+			posFi = ListPosition[WeylFermionList,_List?(#[[1]] == Fi &)];
+			posFj = ListPosition[WeylFermionList,_List?(#[[1]] == Fj &)];
+			If[posFi == {} || posFj == {},
+				Message[Yukawa::UnknownParticle];,
+				ListYukawa = Append[ListYukawa, {sym, SNumber[]+1, posFi[[1,1]], posFj[[1,1]], Function[{x}, Evaluate[x[#2,#3]]&]/@gauge, Mat[fak]&}];
+			];
+		];
+		
+		FermionMassM[sym_, Fi_, Fj_, gauge_List, fak_] := Module[
+			{posS, posFi, posFj},
+			If[Dimensions[gauge][[1]] != NumberOfSubgroups,
+				Message[Yukawa::ContractionError];
+				Return[];
+			];
+			posFi = ListPosition[WeylFermionList,_List?(#[[1]] == Fi &)];
+			posFj = ListPosition[WeylFermionList,_List?(#[[1]] == Fj &)];
+			If[posFi == {} || posFj == {},
+				Message[Yukawa::UnknownParticle];,
+				ListYukawa = Append[ListYukawa, {sym, SNumber[]+1, posFi[[1,1]], posFj[[1,1]], Function[{x}, Evaluate[x[#2,#3]]&]/@gauge, Evaluate[fak[#2,#3]]&}];
+			];
+		];
+		
+		(* Increment dummy field number before adding new scalar *)
+		UpdateDummy[] := Module[
+			{},
+			If[ListYukawa != {},
+				Function[{x}, If[ListYukawa[[x,2]] >= SNumber[] + 1, ListYukawa[[x,2]] += 1;];]/@Range[Dimensions[ListYukawa][[1]]];
+			];
+			If[ListQuartic != {},
+				Function[{x}, 
+					If[ListQuartic[[x,2]] >= SNumber[] + 1, ListQuartic[[x,2]] += 1;];
+					If[ListQuartic[[x,3]] >= SNumber[] + 1, ListQuartic[[x,3]] += 1;];
+					If[ListQuartic[[x,4]] >= SNumber[] + 1, ListQuartic[[x,4]] += 1;];
+					If[ListQuartic[[x,5]] >= SNumber[] + 1, ListQuartic[[x,5]] += 1;];
+				]/@Range[Dimensions[ListQuartic][[1]]];
+			];
+			If[ListQuarticSym != {},
+				Function[{x}, 
+					If[ListQuarticSym[[x,2]] >= SNumber[] + 1, ListQuarticSym[[x,2]] += 1;];
+					If[ListQuarticSym[[x,3]] >= SNumber[] + 1, ListQuarticSym[[x,3]] += 1;];
+					If[ListQuarticSym[[x,4]] >= SNumber[] + 1, ListQuarticSym[[x,4]] += 1;];
+					If[ListQuarticSym[[x,5]] >= SNumber[] + 1, ListQuarticSym[[x,5]] += 1;];
+				]/@Range[Dimensions[ListQuartic][[1]]];
+			];
+		];
+		
 		(* Symmetrize and resum Quartic into seperate list *)
 		AppendSymQuartic[sym_, pa_, pb_, pc_, pd_, gauge_, fak_] := Module[
 			{pos, ii, dum1, dum2, dum3, dum4},
@@ -436,21 +604,21 @@ BeginPackage["ARGES`"];
 		BetaGauge[pos_, 0] := \[Alpha][ListGauge[[pos,1]]];
 		
 		BetaGauge[pos_, 1] := Module[
-			{beta,x},
+			{beta,x, ii},
 			beta = 0;
 			beta = beta - 22/3 Sqr[\[Alpha][ListGauge[[pos,1]]]] C2[ListGauge[[pos,1]]]; 
-			beta = beta + 4/3 Sqr[\[Alpha][ListGauge[[pos,1]]]] FSum[Hold[S2[WeylFermionList[[#,1]],ListGauge[[pos,1]]]]];
-			beta = beta + 1/3 Sqr[\[Alpha][ListGauge[[pos,1]]]] SSum[Hold[S2[RealScalarList[[#,1]], ListGauge[[pos,1]]]]];
+			beta = beta + 4/3 Sqr[\[Alpha][ListGauge[[pos,1]]]] Sum[S2[WeylFermionList[[ii,1]],ListGauge[[pos,1]]], {ii, 1, FNumber[]}];
+			beta = beta + 1/3 Sqr[\[Alpha][ListGauge[[pos,1]]]] Sum[S2[RealScalarList[[ii,1]], ListGauge[[pos,1]]], {ii, 1, SNumber[]}];
 			Return[beta];
 		];
 		
 		BetaGauge[pos_, 2] := Module[
-			{beta,f,s},
+			{beta,f,s,i},
 			beta = 0;
 			beta = beta - 2 Sqr[\[Alpha][ListGauge[[pos,1]]]] Y4[F,ListGauge[[pos, 1]]]/Sqr[4 Pi];
 			beta = beta - 68/3 Power[\[Alpha][ListGauge[[pos,1]]], 3] Sqr[C2[ListGauge[[pos,1]]]];
-			beta = beta + Sqr[\[Alpha][ListGauge[[pos,1]]]] FSum[Hold[(Sum[4 \[Alpha][ListGauge[[i,1]]] C2[WeylFermionList[[#,1]], ListGauge[[i,1]]],{i,1,NumberOfSubgroups}] + 20/3 \[Alpha][ListGauge[[pos,1]]] C2[ListGauge[[pos,1]]])S2[WeylFermionList[[#,1]], ListGauge[[pos,1]]]]];
-			beta = beta + Sqr[\[Alpha][ListGauge[[pos,1]]]] SSum[Hold[(Sum[4 \[Alpha][ListGauge[[i,1]]] C2[RealScalarList[[#,1]], ListGauge[[i,1]]],{i,1,NumberOfSubgroups}] + 2/3 \[Alpha][ListGauge[[pos,1]]] C2[ListGauge[[pos,1]]])S2[RealScalarList[[#,1]], ListGauge[[pos,1]]]]];
+			beta = beta + Sqr[\[Alpha][ListGauge[[pos,1]]]] Sum[(Sum[4 \[Alpha][ListGauge[[i,1]]] C2[WeylFermionList[[f,1]], ListGauge[[i,1]]], {i,1,NumberOfSubgroups}] + 20/3 \[Alpha][ListGauge[[pos,1]]] C2[ListGauge[[pos,1]]])S2[WeylFermionList[[f,1]], ListGauge[[pos,1]]], {f, 1, FNumber[]}];
+			beta = beta + Sqr[\[Alpha][ListGauge[[pos,1]]]] Sum[(Sum[4 \[Alpha][ListGauge[[i,1]]] C2[RealScalarList[[s,1]], ListGauge[[i,1]]],{i,1,NumberOfSubgroups}] + 2/3 \[Alpha][ListGauge[[pos,1]]] C2[ListGauge[[pos,1]]])S2[RealScalarList[[s,1]], ListGauge[[pos,1]]], {s, 1, SNumber[]}];
 			Return[beta];
 		];
 		
@@ -1204,7 +1372,7 @@ BeginPackage["ARGES`"];
 				];
 			];
 			For[i=1, i<=NumberOfSubgroups, i++,
-				subInvariants = Append[subInvariants, Y4[F, ListGauge[[i,1]]]->(1/d[ListGauge[[i,1]]] Sum[C2[WeylFermionList[[f,1]], ListGauge[[i,1]]] Y4Hold[f],{f,1,FNumber[]}])];
+				subInvariants = Append[subInvariants, Y4[F, ListGauge[[i,1]]]->(1/d[ListGauge[[i,1]]] Sum[C2[WeylFermionList[[f,1]], ListGauge[[i,1]]] SimplifyProduct[Y4Hold[f]],{f,1,FNumber[]}])];
 			];
 			$Assumptions=assHold;
 		];
@@ -2028,6 +2196,8 @@ BeginPackage["ARGES`"];
 		
 		(* Contraction of two scalar generators, see for instance arXiv:hep-ph/0211440 eq. (117) for Scalars and Fermions*)
 		sub\[CapitalLambda]S := {
+			(** At least one is a dummy field *)
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(a[[1]] > SNumber[] || b[[1]] > SNumber[] || c[[1]] > SNumber[] || d[[1]] > SNumber[]),
 			(** At least one is gauge singlet *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(ListGauge[[gaug,3]] =!= 1 && (RealScalarList[[a[[1]],3,gaug]] == 1 || RealScalarList[[b[[1]],3,gaug]] == 1 || RealScalarList[[c[[1]],3,gaug]] == 1 || RealScalarList[[d[[1]],3,gaug]] == 1)),
 			(** SU(N) -- all in fundamental representation *)
@@ -2117,6 +2287,8 @@ BeginPackage["ARGES`"];
 		};
 		
 		sub\[CapitalLambda]SF := {
+			(** At least one is a dummy field *)
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(a[[1]] > SNumber[] || c[[1]] > SNumber[]),
 			(** At least one is gauge singlet *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(ListGauge[[gaug,3]] =!= 1 && (RealScalarList[[a[[1]],3,gaug]] == 1 || WeylFermionList[[b[[1]],3,gaug]] == 1 || RealScalarList[[c[[1]],3,gaug]] == 1 || WeylFermionList[[d[[1]],3,gaug]] == 1)),
 			(** SU(N) -- all in fundamental representation *)
@@ -2174,17 +2346,13 @@ BeginPackage["ARGES`"];
 			\[CapitalLambda][gaug_][a_,b_, c_, d_] :>(\[CapitalLambda][ListGauge[[gaug,1]], RealScalarList[[a[[1]],1]], WeylFermionList[[b[[1]],1]], RealScalarList[[c[[1]],1]], WeylFermionList[[d[[1]],1]]][a[[2;;]], b[[2;;]], c[[2;;]], d[[2;;]]])
 		};
 		
-		
-		(* sum over all fermions / scalars *)
-		FSum[a___] := ReleaseHold[If[WeylFermionList == {}, 0, Sum[(a)&[sumindex], {sumindex,1,FNumber[]}]]];
-		SSum[a___] := ReleaseHold[If[RealScalarList == {}, 0, Sum[(a)&[sumindex], {sumindex,1,SNumber[]}]]];
 
 		
 		(* overall multiplicity of particles / gauges *)
 		FMultiplicity[f_] := WeylFermionList[[f,2]] Times@@(Function[{x},If[ListGauge[[x,3]]===1, 1, WeylFermionList[[f,3,x]]]]/@Range[NumberOfSubgroups]);
-		SMultiplicity[s_] := RealScalarList[[s,2,1]] RealScalarList[[s,2,2]] Times@@(Function[{x},If[ListGauge[[x,3]]===1, 1, RealScalarList[[s,3,x]]]]/@Range[NumberOfSubgroups]);
+		SMultiplicity[s_] := If[s<=SNumber[], RealScalarList[[s,2,1]] RealScalarList[[s,2,2]] Times@@(Function[{x},If[ListGauge[[x,3]]===1, 1, RealScalarList[[s,3,x]]]]/@Range[NumberOfSubgroups]), 1];
 		FMultiplicity[f_, g_] := If[ListGauge[[g,3]]===1, 1, WeylFermionList[[f,3,g]]];
-		SMultiplicity[s_, g_] := If[ListGauge[[g,3]]===1, 1, RealScalarList[[s,3,g]]];
+		SMultiplicity[s_, g_] := If[s<=SNumber[], If[ListGauge[[g,3]]===1, 1, RealScalarList[[s,3,g]]], 1];
 		
 		(* Generation contraction for Yukawa products and traces *)
 		GetGenProd[symList_, sVarList_, i_, j_] := Module[
