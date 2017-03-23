@@ -46,8 +46,9 @@ The software assumes the following perturbative renormalizable Lagrangian to as 
 &- \frac{1}{2}( Y^a_{ij} \phi_a \psi_i \,(i \sigma_2)\, \psi_j + \mathrm{h.c.} ) - m_{ab}\; \phi^a \phi^b - h_{abc}\; \phi^a \phi^b \phi^c - \lambda_{abcd}\; \phi^a \phi^b \phi^c \phi^d  \nonumber\\
 &+ \mathcal{L}_{gf} + \mathcal{L}_{gh}
 \end{align}
-Which consists of Weyl fermions and real scalars. Nevertheless, ARGES can handle complex scalars and converts them to real compontent fields internally.
-$\mathcal{L}_{gf}$ and $\mathcal{L}_{gh}$ represent the gauge fixing and ghost part respectively, however, most RGEs are gauge independent anyway with exception of anomalous dimensions, and hence vacuum expectation values. For those, $R_\xi$ gauge is implicitly assumed, yielding:
+Renormalization group equations may be generated up to two loop level for gauge couplings, Yukawas, quartic and cubic scalar interactions as well as masses and anomalous dimensions for fermions and scalars.
+The theory consists of Weyl fermions and real scalars. Nevertheless, ARGES can handle complex scalars and converts them to real compontent fields internally.
+$\mathcal{L}_{gf}$ and $\mathcal{L}_{gh}$ represent the gauge fixing and ghost part respectively, however, most RGEs are gauge independent anyway with exception of anomalous dimensions and vacuum expectation values. For those, $R_\xi$ gauge is implicitly assumed, yielding:
 \begin{align}
 \mathcal{L}_{gf} = -\frac{1}{2 \xi} A^I_\mu \,A^{I \mu} 
 \end{align}
@@ -181,7 +182,19 @@ The input is similar to the one for the sclar quartic or cubic beta functions. F
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 $\beta$[Ferm1, Ferm2, F1IndexList, F2IndexList, LoopOrder]
 \end{lstlisting}
-The notation follows the one for Yukawa beta functions quite closely. Scalar quartics contribute to these RGEs form two-loop level on, but it is independent from scalar masses.
+The notation follows the one for Yukawa beta functions quite closely. Scalar quartics contribute to these RGEs form two-loop level on, but it is independent from scalar masses. \\
+\subsection{Fermion anomalous dimension}
+Anomalous dimensions for fermionic fields may be computed via:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+$\gamma$[Ferm1, Ferm2, F1IndexList, F2IndexList, LoopOrder]
+\end{lstlisting}
+Here, the arguments are the same as for the fermionic mass. If $\mathtt{LoopLevel}$ is set to zero, a product of delta symbols over the particle type, generation and gauge indices is returned. The result is in general gauge depended and assumed in a the $R_\xi$ gauge for all couplings. \\ \FloatBarrier
+\subsection{Scalar anomalous dimension}
+Anomalous dimensions for scalar fields are very similar to the fermionic case:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+$\gamma$[Scalar1, Scalar2, S1IndexList, S2IndexList, LoopOrder]
+\end{lstlisting}
+Only that scalars (which are again automatically decomposed) are added for the first two arguments, and the second two contain $\mathtt{NumberOfGaugegroups+2}$ elements due to the additional generation indices. If $\mathtt{LoopLevel}$ is set to zero, a product of delta symbols over the particle type, generation and gauge indices is returned. The result is in general gauge depended and assumed in a the $R_\xi$ gauge for all couplings. \\ \FloatBarrier
 \newpage
 \section{Example: SM with $N_c$ colors and third generation fermions}
 In this section, we will present an example of usage featuring the Standard Model with $N_c$ colors and only considering third generation fermions. The model file looks like this (depicted in plain text without notebook specific replacements):

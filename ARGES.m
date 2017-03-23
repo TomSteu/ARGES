@@ -688,16 +688,16 @@ BeginPackage["ARGES`"];
 		\[Gamma][SType1_, SType2_,SList1_List, SList2_List, loop_] := Module[
 			{pos1, pos2},
 			If[MemberQ[ComplexScalarList, _?((# === SType1)&)],
-				Return[Sqrt[2] \[Gamma][Re[SType1], SType2, SList1, SList2, loop]];
+				Return[\[Gamma][Re[SType1], SType2, SList1, SList2, loop]];
 			];
 			If[MemberQ[ComplexScalarList, _?((# === SType2)&)],
-				Return[Sqrt[2] \[Gamma][SType1, Re[SType2], SList1, SList2, loop]];
+				Return[\[Gamma][SType1, Re[SType2], SList1, SList2, loop]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType1)&)],
-				Return[Sqrt[2] \[Gamma][Re[SType1], SType2, Prepend[SList1[3;;],{SList1[[2]], SList1[[1]]}], SList2, loop]];
+				Return[\[Gamma][Re[SType1], SType2, Prepend[SList1[3;;],{SList1[[2]], SList1[[1]]}], SList2, loop]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType2)&)],
-				Return[Sqrt[2] \[Gamma][SType1, Re[SType2], SList1, Prepend[SList2[3;;],{SList2[[2]], SList2[[1]]}], loop]];
+				Return[\[Gamma][SType1, Re[SType2], SList1, Prepend[SList2[3;;],{SList2[[2]], SList2[[1]]}], loop]];
 			];
 			pos1  = ListPosition[RealScalarList,_List?(#[[1]] == SType1 &)];
 			pos2  = ListPosition[RealScalarList,_List?(#[[1]] == SType2 &)];
