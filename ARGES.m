@@ -1762,10 +1762,23 @@ BeginPackage["ARGES`"];
 				]
 			],
 			Quart[q_] :> Join[
-				{{ListQuarticSym[[q,1]], ListQuarticSym[[q,7]], RealScalarList[[ListQuarticSym[[q,2]], 2, 1]], RealScalarList[[ListQuarticSym[[q,2]], 2, 2]], RealScalarList[[ListQuarticSym[[q,3]], 2, 1]], RealScalarList[[ListQuarticSym[[q,3]], 2, 2]], RealScalarList[[ListQuarticSym[[q,4]], 2, 1]], RealScalarList[[ListQuarticSym[[q,4]], 2, 2]], RealScalarList[[ListQuarticSym[[q,5]], 2, 1]], RealScalarList[[ListQuarticSym[[q,5]], 2, 2]]}}, 
-				Function[{x}, If[ListGauge[[x,3]] === 1, {ListQuarticSym[[q,6,x]], 1, 1, 1, 1}, {ListQuarticSym[[q,6,x]], RealScalarList[[ListQuarticSym[[q,2]], 3, x]], RealScalarList[[ListQuarticSym[[q,3]], 3, x]], RealScalarList[[ListQuarticSym[[q,4]], 3, x]], RealScalarList[[ListQuarticSym[[q,5]], 3, x]]}]]/@Range[NumberOfSubgroups]
+				{
+					{
+						ListQuarticSym[[q,1]], ListQuarticSym[[q,7]], 
+						If[ListQuarticSym[[q,2]] > SNumber[], 1, RealScalarList[[ListQuarticSym[[q,2]], 2, 1]]], 
+						If[ListQuarticSym[[q,2]] > SNumber[], 1, RealScalarList[[ListQuarticSym[[q,2]], 2, 2]]], 
+						If[ListQuarticSym[[q,3]] > SNumber[], 1, RealScalarList[[ListQuarticSym[[q,3]], 2, 1]]], 
+						If[ListQuarticSym[[q,3]] > SNumber[], 1, RealScalarList[[ListQuarticSym[[q,3]], 2, 2]]], 
+						If[ListQuarticSym[[q,4]] > SNumber[], 1, RealScalarList[[ListQuarticSym[[q,4]], 2, 1]]], 
+						If[ListQuarticSym[[q,4]] > SNumber[], 1, RealScalarList[[ListQuarticSym[[q,4]], 2, 2]]], 
+						If[ListQuarticSym[[q,5]] > SNumber[], 1, RealScalarList[[ListQuarticSym[[q,5]], 2, 1]]], 
+						If[ListQuarticSym[[q,5]] > SNumber[], 1, RealScalarList[[ListQuarticSym[[q,5]], 2, 2]]]}
+				}, 
+				Function[{x}, {ListQuarticSym[[q,6,x]], SMulitplicity[ListQuarticSym[[q,2]], x], SMulitplicity[ListQuarticSym[[q,3]], x], SMulitplicity[ListQuarticSym[[q,4]], x], SMulitplicity[ListQuarticSym[[q,5]], x]}]/@Range[NumberOfSubgroups]
 			]
 		};
+		
+
 		
 		subScalarInvariants := {
 			\[CapitalLambda]2[pa_, pb_, pc_, pd_] :> Block[
