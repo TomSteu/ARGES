@@ -502,6 +502,7 @@ BeginPackage["ARGES`"];
 		
 		(* Interfaces for Beta functions *)
 		
+		(* gauge coupling *)
 		\[Beta][\[Alpha][sym_], loop_] := Module[
 			{pos},
 			pos = ListPosition[ListGauge,_List?(#[[1]] == sym &)];
@@ -528,7 +529,8 @@ BeginPackage["ARGES`"];
 			];
 		];
 		
-		\[Beta][SType_, FType1_, FType2_, SList_, FList1_, FList2_, loop_ ] := Module[
+		(* Yukawa coupling *)
+		\[Beta][SType_, FType1_, FType2_, SList_List, FList1_List, FList2_List, loop_ ] := Module[
 			{posS, posF1, posF2},
 			If[MemberQ[ComplexScalarList, _?((# === SType)&)], 
 				Return[Sqrt[2]\[Beta][Re[SType], FType1, FType2, SList, FList1, FList2, loop]];
@@ -544,8 +546,9 @@ BeginPackage["ARGES`"];
 				Return[0];
 			];
 			Return[BetaYukawa[posS[[1,1]], posF1[[1,1]], posF2[[1,1]], SList, FList1, FList2, loop]];
-		];
+		]/;(Dimensions[FList1][[1]] == NumberOfSubgroups+1 && Dimensions[FList2][[1]] == NumberOfSubgroups+1);
 		
+		(* Scalar Quartic *)
 		\[Beta][SType1_, SType2_, SType3_, SType4_, SList1_, SList2_, SList3_, SList4_, loop_] := Module[
 			{pos1, pos2, pos3, pos4},
 			If[MemberQ[ComplexScalarList, _?((# === SType1)&)],
@@ -585,6 +588,83 @@ BeginPackage["ARGES`"];
 			];
 			Return[BetaQuartic[pos1[[1,1]], pos2[[1,1]], pos3[[1,1]], pos4[[1,1]], SList1, SList2, SList3, SList4, loop]];
 		];
+		
+		(* Scalar Cubic *)
+		\[Beta][SType1_, SType2_, SType3_, SList1_List, SList2_List, SList3_List, loop_] := Module[
+			{pos1, pos2, pos3, pos4},
+			If[MemberQ[ComplexScalarList, _?((# === SType1)&)],
+				Return[Sqrt[2] \[Beta][Re[SType1], SType2, SType3, SList1, SList2, SList3, loop]];
+			];
+			If[MemberQ[ComplexScalarList, _?((# === SType2)&)],
+				Return[Sqrt[2] \[Beta][SType1, Re[SType2], SType3, SList1, SList2, SList3, loop]];
+			];
+			If[MemberQ[ComplexScalarList, _?((# === SType3)&)] ,
+				Return[Sqrt[2] \[Beta][SType1, SType2, Re[SType3], SList1, SList2, SList3, loop]];
+			];
+			If[MemberQ[adj/@ComplexScalarList, _?((# === SType1)&)],
+				Return[Sqrt[2] \[Beta][Re[SType1], SType2, SType3, Prepend[SList1[3;;],{SList1[[2]], SList1[[1]]}], SList2, SList3, loop]];
+			];
+			If[MemberQ[adj/@ComplexScalarList, _?((# === SType2)&)],
+				Return[Sqrt[2] \[Beta][SType1, Re[SType2], SType3, SList1, Prepend[SList2[3;;],{SList2[[2]], SList2[[1]]}], SList3, loop]];
+			];
+			If[MemberQ[adj/@ComplexScalarList, _?((# === SType3)&)],
+				Return[Sqrt[2] \[Beta][SType1, SType2, Re[SType3], SList1, SList2, Prepend[SList3[3;;],{SList3[[2]], SList3[[1]]}], loop]];
+			];
+			pos1  = ListPosition[RealScalarList,_List?(#[[1]] == SType1 &)];
+			pos2  = ListPosition[RealScalarList,_List?(#[[1]] == SType2 &)];
+			pos3  = ListPosition[RealScalarList,_List?(#[[1]] == SType3 &)];
+			If[pos1 == {} || pos2 == {} || pos3 == {},
+				Message[Quartic::UnknownParticle];
+				Return[];
+			];
+			If[BosonIndexOut[pos1[[1,1]], SList1] || BosonIndexOut[pos2[[1,1]], SList2] || BosonIndexOut[pos3[[1,1]], SList3],
+				Return[0];
+			];
+			Return[BetaQuartic[pos1[[1,1]], pos2[[1,1]], pos3[[1,1]], SNumber[]+1, SList1, SList2, SList3, Function[{x}, 1]/@Range[NumberOfSubgroups+2], loop]];
+		]/;(Dimensions[SList1][[1]] == NumberOfSubgroups+2 && Dimensions[SList2][[1]] == NumberOfSubgroups+2 && Dimensions[SList3][[1]] == NumberOfSubgroups+2);
+		
+		(* Scalar Mass *)
+		\[Beta][SType1_, SType2_,SList1_List, SList2_List, loop_] := Module[
+			{pos1, pos2, pos3, pos4},
+			If[MemberQ[ComplexScalarList, _?((# === SType1)&)],
+				Return[Sqrt[2] \[Beta][Re[SType1], SType2, SList1, SList2, loop]];
+			];
+			If[MemberQ[ComplexScalarList, _?((# === SType2)&)],
+				Return[Sqrt[2] \[Beta][SType1, Re[SType2], SList1, SList2, loop]];
+			];
+			If[MemberQ[adj/@ComplexScalarList, _?((# === SType1)&)],
+				Return[Sqrt[2] \[Beta][Re[SType1], SType2, Prepend[SList1[3;;],{SList1[[2]], SList1[[1]]}], SList2, loop]];
+			];
+			If[MemberQ[adj/@ComplexScalarList, _?((# === SType2)&)],
+				Return[Sqrt[2] \[Beta][SType1, Re[SType2], SList1, Prepend[SList2[3;;],{SList2[[2]], SList2[[1]]}], loop]];
+			];
+			pos1  = ListPosition[RealScalarList,_List?(#[[1]] == SType1 &)];
+			pos2  = ListPosition[RealScalarList,_List?(#[[1]] == SType2 &)];
+			If[pos1 == {} || pos2 == {},
+				Message[Quartic::UnknownParticle];
+				Return[];
+			];
+			If[BosonIndexOut[pos1[[1,1]], SList1] || BosonIndexOut[pos2[[1,1]], SList2],
+				Return[0];
+			];
+			Return[BetaQuartic[pos1[[1,1]], pos2[[1,1]], SNumber[]+1, SNumber[]+1, SList1, SList2, Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], loop]];
+		]/;(Dimensions[SList1][[1]] == NumberOfSubgroups+2 && Dimensions[SList2][[1]] == NumberOfSubgroups+2);
+		
+		(* Fermion Mass *)
+		\[Beta][FType1_, FType2_, FList1_List, FList2_List, loop_ ] := Module[
+			{posF1, posF2},
+			posF1 = ListPosition[WeylFermionList,_List?(#[[1]] == FType1 &)];
+			posF2 = ListPosition[WeylFermionList,_List?(#[[1]] == FType2 &)];
+			If[posF1 == {} || posF2 == {},
+				Message[Yukawa::UnknownParticle];
+				Return[];
+			];
+			If[FermionIndexOut[posF1[[1,1]], FList1] || FermionIndexOut[posF2[[1,1]], FList2],
+				Return[0];
+			];
+			Return[BetaYukawa[SNumber[]+1, posF1[[1,1]], posF2[[1,1]], Function[{x}, 1]/@Range[NumberOfSubgroups+2], FList1, FList2, loop]];
+		]/;(Dimensions[FList1][[1]] == NumberOfSubgroups+1 && Dimensions[FList2][[1]] == NumberOfSubgroups+1);
+		
 		
 		(* Routines to zero RGEs for vertices with invalid particle indices*)
 		
