@@ -1276,6 +1276,135 @@ BeginPackage["ARGES`"];
 			Return[beta/( ListVEV[[va,2]] Power[4 \[Pi], 4])];
 		];
 		
+		(* Backend for anomalous dimensions *)
+		
+		(* Fermion anomalous dimensions *)
+		FGamma[f1_, f2_, l1_, l2_, 0] := TensorDelta[l1,l2] KroneckerDelta[f1,f2];
+		
+		FGamma[f1_, f2_, l1_, l2_, 1] := Module[
+			{gamma, ii, ss, x},
+			gamma = 0;
+			gamma += 1/2 Sum[
+				ContractSum@@Join[
+					{
+						SolveProd2[Yuk[ss[0]], adj[Yuk[ss[0]]], Prepend[l1, f1], Prepend[l2, f2], Prepend[Function[{x}, {ss[2+x], ss[2+x]}]/@Range[NumberOfSubgroups], {ss[1], ss[2], ss[1], ss[2]}]],
+						{ss[1], 1, RealScalarList[[ss[0], 2, 1]]},
+						{ss[2], 1, RealScalarList[[ss[0], 2, 2]]}
+					},
+					Function[{x}, {ss[2+x], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups]
+				],
+				{ss[0], 1, SNumber[]}
+			]//SimplifyProduct;
+			gamma += \[Xi] Sum[
+				Sqr[ListGauge[[ii,1]]] TensorDelta[l1,l2] KroneckerDelta[f1,f2] C2[WeylFermionList[[f1, 1]], ListGauge[[ii,1]]],
+				{ii, 1, NumberOfSubgroups}
+			];
+			Return[gamma/Power[4 \[Pi], 2]];
+		];
+		
+		FGamma[f1_, f2_, l1_, l2_, 1] := Module[
+			{gamma, ii1, ii2, ff, ss1, ss2, x},
+			gamma = 0;
+			gamma -= 1/8 Sum[
+				ContractSum@@Join[
+					{
+						SolveProd4[Yuk[ss1[0]], adj[Yuk[ss2[0]]], Yuk[ss2[0]], adj[Yuk[ss1[0]]], Prepend[l1, f1], Prepend[l2, f2], Prepend[Function[{x}, {ss1[2+x], ss2[2+x], ss2[2+x], ss1[2+x]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], ss2[1], ss2[2], ss2[1], ss2[2], ss1[1], ss1[2]}]],
+						{ss1[1], 1, RealScalarList[[ss1[0], 2, 1]]},
+						{ss1[2], 1, RealScalarList[[ss1[0], 2, 2]]},
+						{ss2[1], 1, RealScalarList[[ss2[0], 2, 1]]},
+						{ss2[2], 1, RealScalarList[[ss2[0], 2, 2]]}
+					},
+					Function[{x}, {ss[2+x], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups]
+				],
+				{ss1[0], 1, SNumber[]},
+				{ss2[0], 1, SNumber[]}
+			]//SimplifyProduct;
+			gamma -= 3/4 Sum[
+				ContractSum@@Join[
+					{
+						SolveProd2[Yuk[ss1[0]], adj[Yuk[ss2[0]]], Prepend[l1, f1], Prepend[l2, f2], Prepend[Function[{x}, {ss1[2+x], ss2[2+x]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], ss2[1], ss2[2]}]] (Y2S[ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]//.subScalarInvariants),
+						{ss1[1], 1, RealScalarList[[ss1[0], 2, 1]]},
+						{ss1[2], 1, RealScalarList[[ss1[0], 2, 2]]},
+						{ss2[1], 1, RealScalarList[[ss2[0], 2, 1]]},
+						{ss2[2], 1, RealScalarList[[ss2[0], 2, 2]]}
+					},
+					Function[{x}, {ss[2+x], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups]
+				],
+				{ss1[0], 1, SNumber[]},
+				{ss2[0], 1, SNumber[]}
+			]//SimplifyProduct;
+			gamma += Sum[
+				ContractSum@@Join[
+					{
+						SolveProd2[Yuk[ss1[0]], adj[Yuk[ss1[0]]], Prepend[l1, f1], Prepend[l2, f2], Prepend[Function[{x}, {ss1[2+x], ss1[2+x]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], ss1[1], ss1[2]}]],
+						{ss1[1], 1, RealScalarList[[ss1[0], 2, 1]]},
+						{ss1[2], 1, RealScalarList[[ss1[0], 2, 2]]}
+					},
+					Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups]
+				] Sqr[ListGauge[[ii1,1]]] (
+					9/2 C2[RealScalarList[[ss1[0], 1]], ListGauge[[ii1, 1]]] -
+					7/4 C2[WeylFermionList[[f1, 1]], ListGauge[[ii1, 1]]]
+				),
+				{ss[0], 1, SNumber[]},
+				{ii1, 1, NumberOfSubgroups}
+			]//SimplifyProduct;
+			gamma -= 1/4 Sum[
+				ContractSum@@Join[
+					{
+						SolveProd3[Yuk[ss1[0]], Delt[ff], adj[Yuk[ss1[0]]], Prepend[l1, f1], Prepend[l2, f2], Prepend[Function[{x}, {ss1[2+x], ss1[2+x], ss1[2+x]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], ss1[1], ss1[2], ss1[1], ss1[2]}]],
+						{ss1[1], 1, RealScalarList[[ss1[0], 2, 1]]},
+						{ss1[2], 1, RealScalarList[[ss1[0], 2, 2]]}
+					},
+					Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups]
+				] Sqr[ListGauge[[ii1,1]]] C2[WeylFermionList[[ff,1]], ListGauge[[ii1,1]]],
+				{ss[0], 1, SNumber[]},
+				{ff, 1, FNumber[]},
+				{ii1, 1, NumberOfSubgroups}
+			]//SimplifyProduct;
+			gamma += Sum[
+				(
+					(25/4 + 2 \[Xi] + 1/4 Sqr[\[Xi]]) C2[ListGauge[[ii1,1]]] - 
+					Sum[S2[WeylFermionList[[ff,1]], ListGauge[[ii1,1]]], {ff, 1, FNumber[]}] - 
+					1/4 Sum[S2[RealScalarList[[ss[0],1]], ListGauge[[ii1,1]]], {ss1[0], 1, SNumber[]}]
+				) C2[WeylFermionList[[f1, 1]], ListGauge[[ii1,1]]] Power[ListGauge[[ii1,1]],4] - 
+				3/2 Sum[
+					Sqr[ListGauge[[ii1,1]] ListGauge[[ii2,1]]] C2[WeylFermionList[[f1,1]], ListGauge[[ii1,1]]] C2[WeylFermionList[[f1,1]], ListGauge[[ii2,1]]],
+					{ii2, 1, NumberOfSubgroups}
+				],
+				{ii1, 1, NumberOfSubgroups}
+			] TensorDelta[l1,l2] KroneckerDelta[f1,f2];
+			Return[gamma/Power[4 \[Pi], 4]];
+		];
+		
+		(* Scalar anomalous dimensions *)
+		SGamma[pa_, pb_, la_, lb_, 0] := KroneckerDelta[pa, pb] TensorDelta[la, lb];
+		
+		SGamma[pa_, pb_, la_, lb_, 1] := Module[
+			{gamma, ii},
+			gamma = 0;
+			gamma += (Y2S[Prepend[la,pa], Prepend[lb,pb]] //. subScalarInvariants)//SimplifyProduct;
+			gamma -= KroneckerDelta[pa, pb] TensorDelta[la, lb] (3 - \[Xi]) Sum[ C2[RealScalarList[[pa, 1]], ListGauge[[ii,1]]], {ii, 1, NumberOfSubgroups}]
+			Return[gamma/Power[4 \[Pi], 2]];
+		];
+		
+		SGamma[pa_, pb_, la_, lb_, 2] := Module[
+			{gamma, ii1, ii2, ff, ss},
+			gamma = 0;
+			gamma -= KroneckerDelta[pa, pb] TensorDelta[la, lb] Sum[
+				Power[ListGauge[[ii1, 1]], 4] C2[RealScalarList[[pa,1]], ListGauge[[ii1,1]]](
+					(35/3 - 2 \[Xi] - Sqr[\[Xi]]/4) C2[ListGauge[[ii1,1]]] - 
+					5/3 Sum[S2[WeylFermionList[[ff,1]], ListGauge[[ii1,1]]], {ff, 1, FNumber[]}] - 
+					11/12 Sum[S2[RealScalarList[[ss,1]], ListGauge[[ii1,1]]], {ss, 1, SNumber[]}]
+				),
+				{ii1, 1, NumberOfSubgroups}
+			];
+			gamma += 1/2 \[CapitalLambda]2S[Prepend[la,pa], Prepend[lb,pb]] //.subScalarInvariants;
+			gamma += 3/2 Sum[Sqr[ListGauge[[ii1,1]] ListGauge[[ii2,1]]] C2[RealScalarList[[pa,1]], ListGauge[[ii1,1]]] C2[RealScalarList[[pa,1]], ListGauge[[ii2,1]]], {ii1, 1, NumberOfSubgroups}, {ii2, 1, NumberOfSubgroups}] KroneckerDelta[pa, pb] TensorDelta[la, lb];
+			gamma -= 3/2 (H2S[Prepend[la,pa], Prepend[lb,pb]] //. subScalarInvariants)//SimplifyProduct;
+			gamma -= (Hbar2S[Prepend[la,pa], Prepend[lb,pb]] //. subScalarInvariants)//SimplifyProduct;
+			gamma += 5 (Y2FS[Prepend[la,pa], Prepend[lb,pb]] //. subScalarInvariants)//SimplifyProduct;
+			Return[gamma/Power[4 \[Pi], 4]];
+		];
 		
 		(* Definition of Invariants *)
 		ComputeInvariants[] := Module[
