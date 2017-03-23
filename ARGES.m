@@ -1031,7 +1031,12 @@ BeginPackage["ARGES`"];
 				\[CapitalLambda]bar2S[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] 
 			)//.subScalarInvariants;
 			beta -= (2 Perm[HF[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]])//.subScalarInvariants;
-			beta += (2 Sum[Sqr[ListGauge[[ii,1]]](C2[RealScalarList[[pa, 1]] , ListGauge[[ii,1]]] + C2[RealScalarList[[pb, 1]] , ListGauge[[ii,1]]] + C2[RealScalarList[[pc, 1]] , ListGauge[[ii,1]]] + C2[RealScalarList[[pd, 1]] , ListGauge[[ii,1]]]), {ii, 1, NumberOfSubgroups}] (
+			beta += (2 Sum[Sqr[ListGauge[[ii,1]]](
+				If[pa > SNumber[], 0, C2[RealScalarList[[pa, 1]] , ListGauge[[ii,1]]]] +
+				If[pb > SNumber[], 0, C2[RealScalarList[[pb, 1]] , ListGauge[[ii,1]]]] + 
+				If[pc > SNumber[], 0, C2[RealScalarList[[pc, 1]] , ListGauge[[ii,1]]]] + 
+				If[pd > SNumber[], 0, C2[RealScalarList[[pd, 1]] , ListGauge[[ii,1]]]]
+			), {ii, 1, NumberOfSubgroups}] (
 				H[Join[{pa}, la], Join[{pb}, lb], Join[{pc}, lc], Join[{pd}, ld]] +
 				H[Join[{pa}, la], Join[{pb}, lb], Join[{pd}, ld], Join[{pc}, lc]] + 
 				H[Join[{pa}, la], Join[{pc}, lc], Join[{pb}, lb], Join[{pd}, ld]] + 
@@ -1073,10 +1078,10 @@ BeginPackage["ARGES`"];
 							Abar\[Lambda][ii,ii2][Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
 							Abar\[Lambda][ii,ii2][Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
 					) + 36 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] (
-						C2[RealScalarList[[pa,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pa,1]], ListGauge[[ii2,1]]] + 
-						C2[RealScalarList[[pb,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pb,1]], ListGauge[[ii2,1]]] +
-						C2[RealScalarList[[pc,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pc,1]], ListGauge[[ii2,1]]] +
-						C2[RealScalarList[[pd,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pd,1]], ListGauge[[ii2,1]]] 
+						If[pa > SNumber[], 0, C2[RealScalarList[[pa,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pa,1]], ListGauge[[ii2,1]]]] + 
+						If[pa > SNumber[], 0, C2[RealScalarList[[pb,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pb,1]], ListGauge[[ii2,1]]]] +
+						If[pa > SNumber[], 0, C2[RealScalarList[[pc,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pc,1]], ListGauge[[ii2,1]]]] +
+						If[pa > SNumber[], 0, C2[RealScalarList[[pd,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pd,1]], ListGauge[[ii2,1]]]] 
 					) - (
 						BY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 
 						BY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] + 
@@ -1121,7 +1126,12 @@ BeginPackage["ARGES`"];
 						161/6 C2[ListGauge[[ii,1]]] -
 						16/3 Sum[S2[WeylFermionList[[ff,1]], ListGauge[[ii,1]]], {ff, 1, FNumber[]}] -
 						7/3 Sum[S2[RealScalarList[[ss1[0],1]], ListGauge[[ii,1]]], {ss1[0], 1, SNumber[]}]
-					) - 15/2 Sum[Sqr[ListGauge[[ii,1]] ListGauge[[ii2,1]] ListGauge[[ii3,1]]]( C2[RealScalarList[[pa,1]], ListGauge[[ii3,1]]] + C2[RealScalarList[[pb,1]], ListGauge[[ii3,1]]] + C2[RealScalarList[[pc,1]], ListGauge[[ii3,1]]] + C2[RealScalarList[[pd,1]], ListGauge[[ii3,1]]]), {ii3, 1, NumberOfSubgroups}]
+					) - 15/2 Sum[Sqr[ListGauge[[ii,1]] ListGauge[[ii2,1]] ListGauge[[ii3,1]]](
+						If[pa > SNumber[], 0, C2[RealScalarList[[pa,1]], ListGauge[[ii3,1]]]] + 
+						If[pb > SNumber[], 0, C2[RealScalarList[[pb,1]], ListGauge[[ii3,1]]]] + 
+						If[pc > SNumber[], 0, C2[RealScalarList[[pc,1]], ListGauge[[ii3,1]]]] + 
+						If[pd > SNumber[], 0, C2[RealScalarList[[pd,1]], ListGauge[[ii3,1]]]]
+					), {ii3, 1, NumberOfSubgroups}]
 				)//.subScalarInvariants,
 				{ii, 1, NumberOfSubgroups},
 				{ii2, 1, NumberOfSubgroups}
@@ -1535,18 +1545,18 @@ BeginPackage["ARGES`"];
 			],
 			\[CapitalLambda]Y[pa_, pb_, pc_, pd_] :> ReleaseHold[
 				BetaQuartic[pa[[1]], pb[[1]], pc[[1]], pd[[1]], pa[[2;;]], pb[[2;;]], pc[[2;;]], pd[[2;;]], 0] Hold[
-					SolveTrace2[Yuk[pa[[1]]], adj[Yuk[pa[[1]]]], Prepend[Function[{x}, {pa[[3+x]], pa[[3+x]]}]/@Range[NumberOfSubgroups], {pa[[2]], pa[[3]], pa[[2]], pa[[3]]}]] + 
-					SolveTrace2[Yuk[pb[[1]]], adj[Yuk[pb[[1]]]], Prepend[Function[{x}, {pb[[3+x]], pb[[3+x]]}]/@Range[NumberOfSubgroups], {pb[[2]], pb[[3]], pb[[2]], pb[[3]]}]] + 
-					SolveTrace2[Yuk[pc[[1]]], adj[Yuk[pc[[1]]]], Prepend[Function[{x}, {pc[[3+x]], pc[[3+x]]}]/@Range[NumberOfSubgroups], {pc[[2]], pc[[3]], pc[[2]], pc[[3]]}]] + 
-					SolveTrace2[Yuk[pd[[1]]], adj[Yuk[pd[[1]]]], Prepend[Function[{x}, {pd[[3+x]], pd[[3+x]]}]/@Range[NumberOfSubgroups], {pd[[2]], pd[[3]], pd[[2]], pd[[3]]}]]
+					If[pa[[1]] > SNumber[], 0, SolveTrace2[Yuk[pa[[1]]], adj[Yuk[pa[[1]]]], Prepend[Function[{x}, {pa[[3+x]], pa[[3+x]]}]/@Range[NumberOfSubgroups], {pa[[2]], pa[[3]], pa[[2]], pa[[3]]}]]] + 
+					If[pb[[1]] > SNumber[], 0, SolveTrace2[Yuk[pb[[1]]], adj[Yuk[pb[[1]]]], Prepend[Function[{x}, {pb[[3+x]], pb[[3+x]]}]/@Range[NumberOfSubgroups], {pb[[2]], pb[[3]], pb[[2]], pb[[3]]}]]] + 
+					If[pc[[1]] > SNumber[], 0, SolveTrace2[Yuk[pc[[1]]], adj[Yuk[pc[[1]]]], Prepend[Function[{x}, {pc[[3+x]], pc[[3+x]]}]/@Range[NumberOfSubgroups], {pc[[2]], pc[[3]], pc[[2]], pc[[3]]}]]] + 
+					If[pd[[1]] > SNumber[], 0, SolveTrace2[Yuk[pd[[1]]], adj[Yuk[pd[[1]]]], Prepend[Function[{x}, {pd[[3+x]], pd[[3+x]]}]/@Range[NumberOfSubgroups], {pd[[2]], pd[[3]], pd[[2]], pd[[3]]}]]]
 				]
 			],
 			\[CapitalLambda]S[gaug_][pa_, pb_, pc_, pd_] :> ReleaseHold[
 				BetaQuartic[pa[[1]], pb[[1]], pc[[1]], pd[[1]], pa[[2;;]], pb[[2;;]], pc[[2;;]], pd[[2;;]], 0] Hold[
-					C2[RealScalarList[[pa[[1]],1]], ListGauge[[gaug,1]]] +
-					C2[RealScalarList[[pb[[1]],1]], ListGauge[[gaug,1]]] +
-					C2[RealScalarList[[pc[[1]],1]], ListGauge[[gaug,1]]] +
-					C2[RealScalarList[[pd[[1]],1]], ListGauge[[gaug,1]]]
+					If[pa[[1]] > SNumber[], 0, C2[RealScalarList[[pa[[1]],1]], ListGauge[[gaug,1]]]] +
+					If[pb[[1]] > SNumber[], 0, C2[RealScalarList[[pb[[1]],1]], ListGauge[[gaug,1]]]] +
+					If[pc[[1]] > SNumber[], 0, C2[RealScalarList[[pc[[1]],1]], ListGauge[[gaug,1]]]] +
+					If[pd[[1]] > SNumber[], 0, C2[RealScalarList[[pd[[1]],1]], ListGauge[[gaug,1]]]]
 				]
 			],
 			As[gaug1_, gaug2_][a_, b_, c_, d_] :> Block[
