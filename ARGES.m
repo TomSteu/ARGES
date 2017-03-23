@@ -6,8 +6,9 @@ BeginPackage["ARGES`"];
 	YukawaYaij::usage = "Add Yukawa matrix term (with h.c.) YukawaYaij[Symbol, ScalarField, LeftFermion, RightFermion, {List of contractions for each gauge}, factor]; example: Yaijk[y, S, F1, F2, ...] == -  factor y adj[F1].S.F2 + h.c.";
 	YukawaY::usage = "Add Yukawa term (with h.c.) and specify generation contraction: YukawaYaij[Symbol, ScalarField, LeftFermion, RightFermion, {List of contractions for each gauge}, (contraction of flavors)[ScalarFieldGen1_, ScalarFieldGen2_, LeftFermionGen_, RightFermionGen_]];"
 	Quartic\[Lambda]abcd::usage = "Add scalar quartic coupling Quartic\[Lambda]abcd[Symbol, Scalar1, Scalar2, Scalar3, Scalar4, {List of contractions for each gauge}, prefactor and contraction of flavors], complex scalars will be rewritten as real and imaginary part and the quartic is symmetrized totally automatically. No additional 1/4! will be added to the prefactor, but there might be a factor to keep the norm after symmetrization";
-	\[Beta]::usage = "Display coupling (LoopLevel = 0) or Beta function for gauge coupling \[Beta][Gauge, LoopLevel];, Yukawa-like couplings \[Beta][ScalarField, FermionField1, FermionField2, {scalar generation, scalar gauge1, ... }, ..., LoopLevel]; and symmetrized quartic scalar couplings \[Beta][Scalar1, Scalar2, Scalar3, Scalar4, {Scalar1 generation1, Scalar1 generation2, Scalar1 gauge1, ...}, ..., LoopLevel];";
+	\[Beta]::usage = "Display coupling (LoopLevel = 0) or Beta function for gauge coupling \[Beta][Gauge, LoopLevel];, Yukawa-like couplings \[Beta][ScalarField, FermionField1, FermionField2, {scalar generation, scalar gauge1, ... }, ..., LoopLevel]; , symmetrized quartic scalar couplings \[Beta][Scalar1, Scalar2, Scalar3, Scalar4, {Scalar1 generation1, Scalar1 generation2, Scalar1 gauge1, ...}, ..., LoopLevel];, VEVs \[Beta][vev, LoopLevel];, Scalar cubic interactions, Scalar and Fermion masses";
 	Reset::usage = "reset/initiate package";
+	\[Gamma]::usage = "Anomalous dimensions for scalar or fermion fields: \[Gamma][Field1, Field2, {Field1 generation1, ..., Field1 gauge1, ...} , {Field2 ...}, LoopLevel];"
 	ComputeInvariants::usage = "Calculates known invariants for beta functions, saves them as rules in subInvariants";
 	subInvariants::usage = "containts replacement rules for beta function invariants, use ComputeInvariants[] to calculate";
 	GetGauge::usage = "Returns representation / charge for particle";
@@ -148,7 +149,7 @@ BeginPackage["ARGES`"];
 			{posS},
 			posS  = ListPosition[RealScalarList,_List?(#[[1]] == Sa &)];
 			If[posS == {},
-				Message[VEV::UnknownParticle];
+				Message[Scalar::UnknownParticle];
 				Return[];
 			];
 			If[Dimensions[SGenIdx][[1]] != 2 || IdxCheck[SGenIdx],
@@ -264,7 +265,7 @@ BeginPackage["ARGES`"];
 			posC = ListPosition[RealScalarList,_List?(#[[1]] == Sc &)];
 			posD = ListPosition[RealScalarList,_List?(#[[1]] == Sd &)];
 			If[posA == {} || posB == {} || posC == {} || posD == {},
-				Message[Quartic::UnknownParticle];,
+				Message[Scalar::UnknownParticle];,
 				If[Dimensions[gauge][[1]] != NumberOfSubgroups,
 					Message[Quartic::ContractionError];,
 					ListQuartic = Append[ListQuartic, {sym, posA[[1,1]], posB[[1,1]], posC[[1,1]], posD[[1,1]], gauge, fak}];
@@ -327,7 +328,7 @@ BeginPackage["ARGES`"];
 			posB = ListPosition[RealScalarList,_List?(#[[1]] == Sb &)];
 			posC = ListPosition[RealScalarList,_List?(#[[1]] == Sc &)];
 			If[posA == {} || posB == {} || posC == {},
-				Message[Quartic::UnknownParticle];,
+				Message[Scalar::UnknownParticle];,
 				If[Dimensions[gauge][[1]] != NumberOfSubgroups,
 					Message[Quartic::ContractionError];,
 					ListQuartic = Append[ListQuartic, {sym, posA[[1,1]], posB[[1,1]], posC[[1,1]], SNumber[]+ 1, gauge, fak}];
@@ -379,7 +380,7 @@ BeginPackage["ARGES`"];
 			posA = ListPosition[RealScalarList,_List?(#[[1]] == Sa &)];
 			posB = ListPosition[RealScalarList,_List?(#[[1]] == Sb &)];
 			If[posA == {} || posB == {},
-				Message[Quartic::UnknownParticle];,
+				Message[Scalar::UnknownParticle];,
 				If[Dimensions[gauge][[1]] != NumberOfSubgroups,
 					Message[Quartic::ContractionError];,
 					ListQuartic = Append[ListQuartic, {sym, posA[[1,1]], posB[[1,1]], SNumber[]+1, SNumber[]+1, gauge, fak}];
@@ -415,7 +416,7 @@ BeginPackage["ARGES`"];
 			posFi = ListPosition[WeylFermionList,_List?(#[[1]] == Fi &)];
 			posFj = ListPosition[WeylFermionList,_List?(#[[1]] == Fj &)];
 			If[posFi == {} || posFj == {},
-				Message[Yukawa::UnknownParticle];,
+				Message[Fermion::UnknownParticle];,
 				ListYukawa = Append[ListYukawa, {sym, SNumber[]+1, posFi[[1,1]], posFj[[1,1]], Function[{x}, Evaluate[x[#2,#3]]&]/@gauge, Mat[fak]&}];
 			];
 		];
@@ -429,7 +430,7 @@ BeginPackage["ARGES`"];
 			posFi = ListPosition[WeylFermionList,_List?(#[[1]] == Fi &)];
 			posFj = ListPosition[WeylFermionList,_List?(#[[1]] == Fj &)];
 			If[posFi == {} || posFj == {},
-				Message[Yukawa::UnknownParticle];,
+				Message[Fermion::UnknownParticle];,
 				ListYukawa = Append[ListYukawa, {sym, SNumber[]+1, posFi[[1,1]], posFj[[1,1]], Function[{x}, Evaluate[x[#2,#3]]&]/@gauge, Evaluate[fak[#2,#3]]&}];
 			];
 		];
@@ -580,7 +581,7 @@ BeginPackage["ARGES`"];
 			pos3  = ListPosition[RealScalarList,_List?(#[[1]] == SType3 &)];
 			pos4  = ListPosition[RealScalarList,_List?(#[[1]] == SType4 &)];
 			If[pos1 == {} || pos2 == {} || pos3 == {} || pos4 == {},
-				Message[Quartic::UnknownParticle];
+				Message[Scalar::UnknownParticle];
 				Return[];
 			];
 			If[BosonIndexOut[pos1[[1,1]], SList1] || BosonIndexOut[pos2[[1,1]], SList2] || BosonIndexOut[pos3[[1,1]], SList3] || BosonIndexOut[pos4[[1,1]], SList4],
@@ -614,7 +615,7 @@ BeginPackage["ARGES`"];
 			pos2  = ListPosition[RealScalarList,_List?(#[[1]] == SType2 &)];
 			pos3  = ListPosition[RealScalarList,_List?(#[[1]] == SType3 &)];
 			If[pos1 == {} || pos2 == {} || pos3 == {},
-				Message[Quartic::UnknownParticle];
+				Message[Scalar::UnknownParticle];
 				Return[];
 			];
 			If[BosonIndexOut[pos1[[1,1]], SList1] || BosonIndexOut[pos2[[1,1]], SList2] || BosonIndexOut[pos3[[1,1]], SList3],
@@ -641,7 +642,7 @@ BeginPackage["ARGES`"];
 			pos1  = ListPosition[RealScalarList,_List?(#[[1]] == SType1 &)];
 			pos2  = ListPosition[RealScalarList,_List?(#[[1]] == SType2 &)];
 			If[pos1 == {} || pos2 == {},
-				Message[Quartic::UnknownParticle];
+				Message[Scalar::UnknownParticle];
 				Return[];
 			];
 			If[BosonIndexOut[pos1[[1,1]], SList1] || BosonIndexOut[pos2[[1,1]], SList2],
@@ -656,7 +657,7 @@ BeginPackage["ARGES`"];
 			posF1 = ListPosition[WeylFermionList,_List?(#[[1]] == FType1 &)];
 			posF2 = ListPosition[WeylFermionList,_List?(#[[1]] == FType2 &)];
 			If[posF1 == {} || posF2 == {},
-				Message[Yukawa::UnknownParticle];
+				Message[Fermion::UnknownParticle];
 				Return[];
 			];
 			If[FermionIndexOut[posF1[[1,1]], FList1] || FermionIndexOut[posF2[[1,1]], FList2],
@@ -665,6 +666,50 @@ BeginPackage["ARGES`"];
 			Return[BetaYukawa[SNumber[]+1, posF1[[1,1]], posF2[[1,1]], Function[{x}, 1]/@Range[NumberOfSubgroups+2], FList1, FList2, loop]];
 		]/;(Dimensions[FList1][[1]] == NumberOfSubgroups+1 && Dimensions[FList2][[1]] == NumberOfSubgroups+1);
 		
+		
+		(* Interfaces for anomalous dimensions *)
+		
+		(* Fermion *)
+		\[Gamma][FType1_, FType2_, FList1_List, FList2_List, loop] := Module[
+			{posF1, posF2},
+			posF1 = ListPosition[WeylFermionList,_List?(#[[1]] == FType1 &)];
+			posF2 = ListPosition[WeylFermionList,_List?(#[[1]] == FType2 &)];
+			If[posF1 == {} || posF2 == {},
+				Message[Fermion::UnknownParticle];
+				Return[];
+			];
+			If[FermionIndexOut[posF1[[1,1]], FList1] || FermionIndexOut[posF2[[1,1]], FList2],
+				Return[0];
+			];
+			Return[FGamma[posF1[[1,1]], posF2[[1,1]], FList1, FList2, loop]];
+		]/;(Dimensions[FList1][[1]] == NumberOfSubgroups+1 && Dimensions[FList2][[1]] == NumberOfSubgroups+1);
+		
+		(* Scalar *)
+		\[Gamma][SType1_, SType2_,SList1_List, SList2_List, loop_] := Module[
+			{pos1, pos2},
+			If[MemberQ[ComplexScalarList, _?((# === SType1)&)],
+				Return[Sqrt[2] \[Gamma][Re[SType1], SType2, SList1, SList2, loop]];
+			];
+			If[MemberQ[ComplexScalarList, _?((# === SType2)&)],
+				Return[Sqrt[2] \[Gamma][SType1, Re[SType2], SList1, SList2, loop]];
+			];
+			If[MemberQ[adj/@ComplexScalarList, _?((# === SType1)&)],
+				Return[Sqrt[2] \[Gamma][Re[SType1], SType2, Prepend[SList1[3;;],{SList1[[2]], SList1[[1]]}], SList2, loop]];
+			];
+			If[MemberQ[adj/@ComplexScalarList, _?((# === SType2)&)],
+				Return[Sqrt[2] \[Gamma][SType1, Re[SType2], SList1, Prepend[SList2[3;;],{SList2[[2]], SList2[[1]]}], loop]];
+			];
+			pos1  = ListPosition[RealScalarList,_List?(#[[1]] == SType1 &)];
+			pos2  = ListPosition[RealScalarList,_List?(#[[1]] == SType2 &)];
+			If[pos1 == {} || pos2 == {},
+				Message[Scalar::UnknownParticle];
+				Return[];
+			];
+			If[BosonIndexOut[pos1[[1,1]], SList1] || BosonIndexOut[pos2[[1,1]], SList2],
+				Return[0];
+			];
+			Return[SGamma[pos1[[1,1]], pos2[[1,1]], SList1, SList2, loop]];
+		]/;(Dimensions[SList1][[1]] == NumberOfSubgroups+2 && Dimensions[SList2][[1]] == NumberOfSubgroups+2);
 		
 		(* Routines to zero RGEs for vertices with invalid particle indices*)
 		
@@ -2921,8 +2966,8 @@ BeginPackage["ARGES`"];
 		Yukawa::ContractionError = "Number of gauge contractions does not match number of subgroups";
 		Yukawa::UnknownParticle = "Undefined particle in Yukawa sector";
 		Quartic::ContractionError = "Number of gauge contractions does not match number of subgroups";
-		Quartic::UnknownParticle = "Undefined particle in scalar sector";
-		VEV::UnknownParticle = "Undefined particle with vacuum expectation value";
+		Scalar::UnknownParticle = "Undefined Scalar field";
+		Fermion::UnknownParticle = "Undefined Fermion field";
 		
 		Reset[];
 	End[];
