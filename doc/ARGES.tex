@@ -42,11 +42,12 @@ ARGES calculates $\overline{\mathrm{MS}}$ scheme Beta functions of the form:
 \end{align}
 The software assumes the following perturbative renormalizable Lagrangian to as a basis of its calculations:
 \begin{align}
-\mathcal{L} = &-\frac{1}{4} F^A_{\mu\nu}\; F_A^{\mu \nu} + \frac{1}{2} D^{ab}_\mu \phi_b \; D_{ab}^\mu \phi^b + i \psi_i^\dagger \sigma^\mu D^{ij}_\mu \psi_j - \frac{1}{2}( Y^a_{ij} \phi_a \psi_i \,(i \sigma_2)\, \psi_j + \mathrm{h.c.} ) \nonumber \\
-&- \lambda_{abcd}\; \phi^a \phi^b \phi^c \phi^d + \mathcal{L}_{SR} + \mathcal{L}_{gf} + \mathcal{L}_{gh}
+\mathcal{L} = &-\frac{1}{4} F^A_{\mu\nu}\; F_A^{\mu \nu} + \frac{1}{2} D^{ab}_\mu \phi_b \; D_{ab}^\mu \phi^b + i \psi_i^\dagger \sigma^\mu D^{ij}_\mu \psi_j  - \frac{1}{2}( m_{ij}\, \psi_i \,(i \sigma_2)\, \psi_j + \mathrm{h.c.} )\nonumber \\
+&- \frac{1}{2}( Y^a_{ij} \phi_a \psi_i \,(i \sigma_2)\, \psi_j + \mathrm{h.c.} ) - m_{ab}\; \phi^a \phi^b - h_{abc}\; \phi^a \phi^b \phi^c - \lambda_{abcd}\; \phi^a \phi^b \phi^c \phi^d  \nonumber\\
+&+ \mathcal{L}_{gf} + \mathcal{L}_{gh}
 \end{align}
 Which consists of Weyl fermions and real scalars. Nevertheless, ARGES can handle complex scalars and converts them to real compontent fields internally.
-Where $\mathcal{L}_{SR}$ includes superrenormalizable terms such as masses and cubic scalar couplings, which decouple from the RGE system due to their dimension in mass independent schemes. $\mathcal{L}_{gf}$ and $\mathcal{L}_{gh}$ represent the gauge fixing and ghost part respectively, however, most RGEs are gauge independent anyway with exception of anomalous dimensions, and hence vacuum expectation values. For those, $R_\xi$ gauge is implicitly assumed, yielding:
+$\mathcal{L}_{gf}$ and $\mathcal{L}_{gh}$ represent the gauge fixing and ghost part respectively, however, most RGEs are gauge independent anyway with exception of anomalous dimensions, and hence vacuum expectation values. For those, $R_\xi$ gauge is implicitly assumed, yielding:
 \begin{align}
 \mathcal{L}_{gf} = -\frac{1}{2 \xi} A^I_\mu \,A^{I \mu} 
 \end{align}
@@ -118,6 +119,25 @@ VEV[Symbol, Scalar, {Gen1, Gen2}, {GaugeIndex1, ...}, Factor];
 \end{lstlisting}
 Where the first two arguments specify the symbols of the VEV and the scalar field. Since VEVs are considered to be real, real component fields need to be utilized for the scalars. However, its is of course possible to define imaginary components to develop a VEV. The third and fourth arguments are Lists containing the generation and gauge indices of the field in the usual fashion. The last argument is an additional factor for the VEV, however, factors already defined for the component fields are implicitly assumed for the VEV as well. This argument is optional and defaults to one. In general, to facilitate more complex vacuum structures, multiple VEVs with the same symbol, but other arguments or different VEVs with the same arguments may be specified, these are always assumed in an additive manner.
 \FloatBarrier
+\subsection{Scalar cubic interactions}
+Cubic terms involving scalars may be added in a similar fashion using:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+CubicHabc[Symbol, Sc1, Sc2, Sc3, GaugeContractions, GenContraction];
+\end{lstlisting}
+Here again, complex or real scalars are accepted as input. Gauge contractions are functions of three arguments, which are the gauge indices of the involved fields, while the generation contraction accepts six arguments, two subsequently as the generation indices of one scalar. Internally, cubics and scalar masses are obtained by introducing one and two dummy fields into the quartic RGEs. Hence, those parameters inherit its property be symmetrized but not to have symmetry factors in the Lagrangian on its own. Fermion masses are obtained in a similar fashion from Yukawa interactions. Hence, the RGE subsystem of these superrenormalizable parameters decouples from the one of renormalizable parameters.
+\subsection{Scalar Mass}
+Scalar masses may be added using:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+ScalarMassMab[Symbol, Sc1, Sc2, GaugeContractions, GenContraction];
+\end{lstlisting}
+All remarks on scalar quartics and cubics apply in this context as well. Including the fact that there is no build-in symmetry factor when having a mass term diagonal in the scalar eigenstates. These need to be added manually.
+\subsection{Fermion Mass}
+Fermion masses are obtained from introducing a dummy scalar field into a Yukawa interaction, and hence share its symmetry factors. Furthermore, there are two versions as well, representing Fermion mass matrices and single masses:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+FermionMassMij[Symbol, Ferm1, Ferm2, {Contraction1, ...}, Factor];
+FermionMassM[Symbol, Ferm1, Ferm2, {Contr1, ...}, GenerationContr];
+\end{lstlisting}
+Most comments from the Yukawa section still apply, however, gauge and generation contractions only expect two arguments, which are the Fermion indices.
 \newpage
 \section{Output}
 \subsection{General remarks}
@@ -141,12 +161,27 @@ The first three arguments are symbols of the scalar and the fermions involved, t
 $\beta$[Sc1, Sc2, Sc3, Sc4, S1List, S2List, S3List, S4List, LoopOrder]
 \end{lstlisting}
 Following the notation before, the first four symbols mark the scalar fields, while the arguments five to eight are their respective indices, packed in lists of $\mathtt{NumberOfSubgroups} + 2$ elements, with the first two being the generation and the rest the gauge indices. \newline \FloatBarrier
-\subsection{Vacuum expectation values}
+\subsection{Vacuum expectation value beta function}
 The running of vacuum expectation values is obtained via:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 $\beta$[vev, LoopOrder]
 \end{lstlisting}
 It may be denoted that these are in general gauge depended. Here, all gauge groups are assumed have the same constant $\xi$ for $R_{\xi}$ gauge fixing.\FloatBarrier
+\subsection{Scalar cubic beta functions}
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+$\beta$[Sc1, Sc2, Sc3, S1List, S2List, S3List, LoopOrder]
+\end{lstlisting}
+The input is similar to the one for the quartic beta function. Fermion masses also contribute to this RGE from one-loop level on, however, scalar masses do not.\\ \FloatBarrier
+\subsection{Scalar mass beta functions}
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+$\beta$[Sc1, Sc2, Sc3, S1List, S2List, S3List, LoopOrder]
+\end{lstlisting}
+The input is similar to the one for the sclar quartic or cubic beta functions. Fermion masses and scalar cubics contribute to this RGE from one-loop level on.\\ \FloatBarrier
+\subsection{Fermion mass beta function}
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+$\beta$[Ferm1, Ferm2, F1IndexList, F2IndexList, LoopOrder]
+\end{lstlisting}
+The notation follows the one for Yukawa beta functions quite closely. Scalar quartics contribute to these RGEs form two-loop level on, but it is independent from scalar masses.
 \newpage
 \section{Example: SM with $N_c$ colors and third generation fermions}
 In this section, we will present an example of usage featuring the Standard Model with $N_c$ colors and only considering third generation fermions. The model file looks like this (depicted in plain text without notebook specific replacements):
