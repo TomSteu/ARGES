@@ -675,7 +675,7 @@ BeginPackage["ARGES`"];
 		(* Interfaces for anomalous dimensions *)
 		
 		(* Fermion *)
-		\[Gamma][FType1_, FType2_, FList1_List, FList2_List, loop] := Module[
+		\[Gamma][FType1_, FType2_, FList1_List, FList2_List, loop_] := Module[
 			{posF1, posF2},
 			posF1 = ListPosition[WeylFermionList,_List?(#[[1]] == FType1 &)];
 			posF2 = ListPosition[WeylFermionList,_List?(#[[1]] == FType2 &)];
@@ -1352,7 +1352,7 @@ BeginPackage["ARGES`"];
 			Return[gamma/Power[4 \[Pi], 2]];
 		];
 		
-		FGamma[f1_, f2_, l1_, l2_, 1] := Module[
+		FGamma[f1_, f2_, l1_, l2_, 2] := Module[
 			{gamma, ii1, ii2, ff, ss1, ss2, x},
 			gamma = 0;
 			gamma -= 1/8 Sum[
@@ -1364,7 +1364,8 @@ BeginPackage["ARGES`"];
 						{ss2[1], 1, RealScalarList[[ss2[0], 2, 1]]},
 						{ss2[2], 1, RealScalarList[[ss2[0], 2, 2]]}
 					},
-					Function[{x}, {ss[2+x], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups]
+					Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+					Function[{x}, {ss2[2+x], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
 				],
 				{ss1[0], 1, SNumber[]},
 				{ss2[0], 1, SNumber[]}
@@ -1378,7 +1379,8 @@ BeginPackage["ARGES`"];
 						{ss2[1], 1, RealScalarList[[ss2[0], 2, 1]]},
 						{ss2[2], 1, RealScalarList[[ss2[0], 2, 2]]}
 					},
-					Function[{x}, {ss[2+x], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups]
+					Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+					Function[{x}, {ss2[2+x], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
 				],
 				{ss1[0], 1, SNumber[]},
 				{ss2[0], 1, SNumber[]}
@@ -1395,7 +1397,7 @@ BeginPackage["ARGES`"];
 					9/2 C2[RealScalarList[[ss1[0], 1]], ListGauge[[ii1, 1]]] -
 					7/4 C2[WeylFermionList[[f1, 1]], ListGauge[[ii1, 1]]]
 				),
-				{ss[0], 1, SNumber[]},
+				{ss1[0], 1, SNumber[]},
 				{ii1, 1, NumberOfSubgroups}
 			]//SimplifyProduct;
 			gamma -= 1/4 Sum[
@@ -1407,7 +1409,7 @@ BeginPackage["ARGES`"];
 					},
 					Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups]
 				] Sqr[ListGauge[[ii1,1]]] C2[WeylFermionList[[ff,1]], ListGauge[[ii1,1]]],
-				{ss[0], 1, SNumber[]},
+				{ss1[0], 1, SNumber[]},
 				{ff, 1, FNumber[]},
 				{ii1, 1, NumberOfSubgroups}
 			]//SimplifyProduct;
@@ -1415,7 +1417,7 @@ BeginPackage["ARGES`"];
 				(
 					(25/4 + 2 \[Xi] + 1/4 Sqr[\[Xi]]) C2[ListGauge[[ii1,1]]] - 
 					Sum[S2[WeylFermionList[[ff,1]], ListGauge[[ii1,1]]], {ff, 1, FNumber[]}] - 
-					1/4 Sum[S2[RealScalarList[[ss[0],1]], ListGauge[[ii1,1]]], {ss1[0], 1, SNumber[]}]
+					1/4 Sum[S2[RealScalarList[[ss1[0],1]], ListGauge[[ii1,1]]], {ss1[0], 1, SNumber[]}]
 				) C2[WeylFermionList[[f1, 1]], ListGauge[[ii1,1]]] Power[ListGauge[[ii1,1]],4] - 
 				3/2 Sum[
 					Sqr[ListGauge[[ii1,1]] ListGauge[[ii2,1]]] C2[WeylFermionList[[f1,1]], ListGauge[[ii1,1]]] C2[WeylFermionList[[f1,1]], ListGauge[[ii2,1]]],
