@@ -1433,7 +1433,7 @@ BeginPackage["ARGES`"];
 			{gamma, ii},
 			gamma = 0;
 			gamma += (Y2S[Prepend[la,pa], Prepend[lb,pb]] //. subScalarInvariants)//SimplifyProduct;
-			gamma -= KroneckerDelta[pa, pb] TensorDelta[la, lb] (3 - \[Xi]) Sum[ C2[RealScalarList[[pa, 1]], ListGauge[[ii,1]]], {ii, 1, NumberOfSubgroups}]
+			gamma -= KroneckerDelta[pa, pb] TensorDelta[la, lb] (3 - \[Xi]) Sum[ Sqr[ListGauge[[ii,1]]] C2[RealScalarList[[pa, 1]], ListGauge[[ii,1]]], {ii, 1, NumberOfSubgroups}];
 			Return[gamma/Power[4 \[Pi], 2]];
 		];
 		
