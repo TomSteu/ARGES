@@ -961,7 +961,7 @@ BeginPackage["ARGES`"];
 						3 C2[WeylFermionList[[pi,1]], ListGauge[[ii,1]]] +
 						3 C2[WeylFermionList[[pj,1]], ListGauge[[ii,1]]] + 
 						6 C2[RealScalarList[[ss[0], 1]], ListGauge[[ii,1]]] - 
-						12 C2[RealScalarList[[pa,1]], ListGauge[[ii,1]]]
+						12 If[pa > SNumber[], 0, C2[RealScalarList[[pa,1]], ListGauge[[ii,1]]]] 
 					), {ii, 1, NumberOfSubgroups}
 				] ContractSum@@Join[
 					{
@@ -1042,7 +1042,7 @@ BeginPackage["ARGES`"];
 				{ii2, 1, NumberOfSubgroups}
 			];
 			beta += 6 Sum[
-				Sqr[ListGauge[[ii, 1]] ListGauge[[ii2, 1]]] C2[RealScalarList[[pa,1]], ListGauge[[ii,1]]] BetaYukawa[pa, pi, pj, la, li, lj, 0] (C2[WeylFermionList[[pi,1]], ListGauge[[ii2,1]]] + C2[WeylFermionList[[pj,1]], ListGauge[[ii2,1]]]),
+				Sqr[ListGauge[[ii, 1]] ListGauge[[ii2, 1]]] If[pa > SNumber[], 0, C2[RealScalarList[[pa,1]], ListGauge[[ii,1]]]]  BetaYukawa[pa, pi, pj, la, li, lj, 0] (C2[WeylFermionList[[pi,1]], ListGauge[[ii2,1]]] + C2[WeylFermionList[[pj,1]], ListGauge[[ii2,1]]]),
 				{ii, 1, NumberOfSubgroups},
 				{ii2, 1, NumberOfSubgroups}
 			];
@@ -1055,7 +1055,7 @@ BeginPackage["ARGES`"];
 				{ii, 1, NumberOfSubgroups}
 			];
 			beta -= 21/2 Sum[
-				Sqr[ListGauge[[ii,1]] ListGauge[[ii2,1]]] C2[RealScalarList[[pa,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pa,1]], ListGauge[[ii2,1]]] BetaYukawa[pa, pi, pj, la, li, lj, 0], 
+				Sqr[ListGauge[[ii,1]] ListGauge[[ii2,1]]] If[pa > SNumber[], 0, C2[RealScalarList[[pa,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pa,1]], ListGauge[[ii2,1]]]] BetaYukawa[pa, pi, pj, la, li, lj, 0], 
 				{ii, 1, NumberOfSubgroups}, 
 				{ii2, 1, NumberOfSubgroups}
 			];
@@ -1064,7 +1064,7 @@ BeginPackage["ARGES`"];
 					49/4 C2[ListGauge[[ii,1]]] -
 					1/4 Sum[S2[RealScalarList[[ssb,1]], ListGauge[[ii,1]]], {ssb, 1, SNumber[]}] -
 					Sum[S2[WeylFermionList[[ff, 1]], ListGauge[[ii,1]]] ,{ff, 1, FNumber[]}]
-				) C2[RealScalarList[[pa,1]], ListGauge[[ii,1]]] BetaYukawa[pa, pi, pj, la, li, lj, 0],
+				) If[pa > SNumber[], 0, C2[RealScalarList[[pa,1]], ListGauge[[ii,1]]]]  BetaYukawa[pa, pi, pj, la, li, lj, 0],
 				{ii, 1, NumberOfSubgroups}
 			];
 			$Assumptions=assHold;
