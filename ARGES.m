@@ -1709,31 +1709,43 @@ BeginPackage["ARGES`"];
 				],
 				
 			adj[Yukawa[pos_]]:>Join[
-				{{adj[ListYukawa[[pos,1]]]//.subProd, Evaluate[Refine[Conjugate[ListYukawa[[pos,6]][#1,#2,#4,#3]]]]&, RealScalarList[[ListYukawa[[pos, 2]], 2, 1]], RealScalarList[[ListYukawa[[pos, 2]], 2, 2]], WeylFermionList[[ListYukawa[[pos, 4]], 2]], WeylFermionList[[ListYukawa[[pos, 3]], 2]]}},
+				{
+					{
+						adj[ListYukawa[[pos,1]]]//.subProd, 
+						Evaluate[Refine[Conjugate[ListYukawa[[pos,6]][#1,#2,#4,#3]]]]&, 
+						If[ListYukawa[[pos, 2]] > SNumber[], 1, RealScalarList[[ListYukawa[[pos, 2]], 2, 1]]], 
+						If[ListYukawa[[pos, 2]] > SNumber[], 1, RealScalarList[[ListYukawa[[pos, 2]], 2, 2]]], 
+						WeylFermionList[[ListYukawa[[pos, 4]], 2]], 
+						WeylFermionList[[ListYukawa[[pos, 3]], 2]]
+						
+					}
+				},
 				Function[
 					{x},
 					Join[
 						{Evaluate[Refine[Conjugate[ListYukawa[[pos, 5, x]][#1,#3,#2]]]]&}, 
-						If[
-							ListGauge[[x, 3]] === 1, 
-							{1, 1, 1}, 
-							{RealScalarList[[ListYukawa[[pos, 2]], 3, x]], WeylFermionList[[ListYukawa[[pos, 4]], 3, x]], WeylFermionList[[ListYukawa[[pos, 3]], 3, x]]}
-						]
+						{SMultiplicity[ListYukawa[[pos, 2]], x], FMultiplicity[ListYukawa[[pos, 4]], x], FMultiplicity[ListYukawa[[pos, 3]], x]}
 					]
 				]/@Range[NumberOfSubgroups]
 			],
 			
 			Yukawa[pos_]:>Join[
-				{{ListYukawa[[pos,1]]//.subProd, ListYukawa[[pos,6]], RealScalarList[[ListYukawa[[pos, 2]], 2, 1]], RealScalarList[[ListYukawa[[pos, 2]], 2, 2]], WeylFermionList[[ListYukawa[[pos, 3]], 2]], WeylFermionList[[ListYukawa[[pos, 4]], 2]]}},
+				{
+					{
+						ListYukawa[[pos,1]]//.subProd, 
+						ListYukawa[[pos,6]], 
+						If[ListYukawa[[pos, 2]] > SNumber[], 1, RealScalarList[[ListYukawa[[pos, 2]], 2, 1]]], 
+						If[ListYukawa[[pos, 2]] > SNumber[], 1, RealScalarList[[ListYukawa[[pos, 2]], 2, 2]]], 
+						WeylFermionList[[ListYukawa[[pos, 3]], 2]], 
+						WeylFermionList[[ListYukawa[[pos, 4]], 2]]
+					}
+					
+				},
 				Function[
 					{x},
 					Join[
 						{ListYukawa[[pos, 5, x]]}, 
-						If[
-							ListGauge[[x, 3]] === 1, 
-							{1, 1, 1}, 
-							{RealScalarList[[ListYukawa[[pos, 2]], 3, x]], WeylFermionList[[ListYukawa[[pos, 3]], 3, x]], WeylFermionList[[ListYukawa[[pos, 4]], 3, x]]}
-						]
+						{SMultiplicity[ListYukawa[[pos, 2]], x], FMultiplicity[ListYukawa[[pos, 3]], x], FMultiplicity[ListYukawa[[pos, 4]], x]}
 					]
 				]/@Range[NumberOfSubgroups]
 			],
