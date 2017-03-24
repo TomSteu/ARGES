@@ -1127,10 +1127,13 @@ BeginPackage["ARGES`"];
 				\[CapitalLambda]bar2Y[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] + 
 				\[CapitalLambda]bar2Y[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]]
 			)//.subScalarInvariants;
-			beta += 12*8 (
+			beta += 12*4 (
 				Hbar\[Lambda][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 
 				Hbar\[Lambda][Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
-				Hbar\[Lambda][Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]]
+				Hbar\[Lambda][Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Hbar\[Lambda][Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] + 
+				Hbar\[Lambda][Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Hbar\[Lambda][Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] 
 			)//.subScalarInvariants;
 			beta -= 12 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] 
 				(
