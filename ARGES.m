@@ -1209,9 +1209,9 @@ BeginPackage["ARGES`"];
 							Abar\[Lambda][ii,ii2][Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
 					) + 36 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] (
 						If[pa > SNumber[], 0, C2[RealScalarList[[pa,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pa,1]], ListGauge[[ii2,1]]]] + 
-						If[pa > SNumber[], 0, C2[RealScalarList[[pb,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pb,1]], ListGauge[[ii2,1]]]] +
-						If[pa > SNumber[], 0, C2[RealScalarList[[pc,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pc,1]], ListGauge[[ii2,1]]]] +
-						If[pa > SNumber[], 0, C2[RealScalarList[[pd,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pd,1]], ListGauge[[ii2,1]]]] 
+						If[pb > SNumber[], 0, C2[RealScalarList[[pb,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pb,1]], ListGauge[[ii2,1]]]] +
+						If[pc > SNumber[], 0, C2[RealScalarList[[pc,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pc,1]], ListGauge[[ii2,1]]]] +
+						If[pd > SNumber[], 0, C2[RealScalarList[[pd,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pd,1]], ListGauge[[ii2,1]]]] 
 					) - (
 						BY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 
 						BY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] + 
