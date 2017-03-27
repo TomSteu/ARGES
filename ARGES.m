@@ -8,6 +8,7 @@ BeginPackage["ARGES`"];
 	Quartic\[Lambda]abcd::usage = "Add scalar quartic coupling";
 	VEV::usage = "Add Vacuum expectation value";
 	CubicHabc::usage = "Add scalar cubic interaction";
+	ScalarLinearJa::usage = "Add scalar linear interaction";
 	ScalarMassMab::usage = "Add scalar mass (bilinear term)";
 	FermionMassMij::usage = "Add Fermionic mass matrix (with h.c.)"
 	FermionMassMij::usage = "Add Fermionic mass (with h.c.) and generation contraction"
