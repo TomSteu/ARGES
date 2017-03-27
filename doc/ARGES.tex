@@ -43,8 +43,7 @@ ARGES calculates $\overline{\mathrm{MS}}$ scheme Beta functions of the form:
 The software assumes the following perturbative renormalizable Lagrangian to as a basis of its calculations:
 \begin{align}
 \mathcal{L} = &-\frac{1}{4} F^A_{\mu\nu}\; F_A^{\mu \nu} + \frac{1}{2} D^{ab}_\mu \phi_b \; D_{ab}^\mu \phi^b + i \psi_i^\dagger \sigma^\mu D^{ij}_\mu \psi_j  - \frac{1}{2}( m_{ij}\, \psi_i \,(i \sigma_2)\, \psi_j + \mathrm{h.c.} )\nonumber \\
-&- \frac{1}{2}( Y^a_{ij} \phi_a \psi_i \,(i \sigma_2)\, \psi_j + \mathrm{h.c.} ) - m_{ab}\; \phi^a \phi^b - h_{abc}\; \phi^a \phi^b \phi^c - \lambda_{abcd}\; \phi^a \phi^b \phi^c \phi^d  \nonumber\\
-&+ \mathcal{L}_{gf} + \mathcal{L}_{gh}
+&- \frac{1}{2}( Y^a_{ij} \phi_a \psi_i \,(i \sigma_2)\, \psi_j + \mathrm{h.c.} ) - J_a \;\phi^a - m_{ab}\; \phi^a \phi^b - h_{abc}\; \phi^a \phi^b \phi^c \nonumber\\ &- \lambda_{abcd}\; \phi^a \phi^b \phi^c \phi^d  + \mathcal{L}_{gf} + \mathcal{L}_{gh}
 \end{align}
 Renormalization group equations may be generated up to two loop level for gauge couplings, Yukawas, quartic and cubic scalar interactions as well as masses and anomalous dimensions for fermions and scalars.
 The theory consists of Weyl fermions and real scalars. Nevertheless, ARGES can handle complex scalars and converts them to real compontent fields internally.
@@ -139,6 +138,12 @@ FermionMassMij[Symbol, Ferm1, Ferm2, {Contraction1, ...}, Factor];
 FermionMassM[Symbol, Ferm1, Ferm2, {Contr1, ...}, GenerationContr];
 \end{lstlisting}
 Most comments from the Yukawa section still apply, however, gauge and generation contractions only expect two arguments, which are the Fermion indices.
+\subsection{Scalar linear interactions}
+For scalars with linear interactions at tree level, these may be added using a notation similar to scalar quartic, cubic and mass interactions:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+ScalarLinearJa[Symbol, Scalar, GaugeContractions, GenContraction];
+\end{lstlisting}
+Here, gauge contractions only take one argument, and Generation contraction two - which corresponds to the indices of the involved scalar.
 \newpage
 \section{Output}
 \subsection{General remarks}
@@ -175,9 +180,14 @@ $\beta$[Sc1, Sc2, Sc3, S1List, S2List, S3List, LoopOrder]
 The input is similar to the one for the quartic beta function. Fermion masses also contribute to this RGE from one-loop level on, however, scalar masses do not.\\ \FloatBarrier
 \subsection{Scalar mass beta functions}
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
-$\beta$[Sc1, Sc2, Sc3, S1List, S2List, S3List, LoopOrder]
+$\beta$[Sc1, Sc2, S1List, S2List, LoopOrder]
 \end{lstlisting}
 The input is similar to the one for the sclar quartic or cubic beta functions. Fermion masses and scalar cubics contribute to this RGE from one-loop level on.\\ \FloatBarrier
+\subsection{Scalar linear interaction beta functions}
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+$\beta$[Scalar, ScalarIndexList, LoopOrder]
+\end{lstlisting}
+Here again, the input follows the previous beta functions. From one loop level on, cubic interactions, fermion and scalar masses may appear. Even here, the RGE should be checked for possible prefactors due to symmetrization, using $\mathtt{LoopOrder}$ zero.  \\ \FloatBarrier
 \subsection{Fermion mass beta function}
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 $\beta$[Ferm1, Ferm2, F1IndexList, F2IndexList, LoopOrder]

@@ -298,7 +298,7 @@ BeginPackage["ARGES`"];
 		];
 		
 		CubicHabc[sym_, Sa_, Sb_, Sc_, gauge_List, fak_:(1&)] := Module[
-			{posA, posB, posC, posD, permList, permListPos, iter, x, x2, perm1, perm2, perm3, perm4},
+			{posA, posB, posC, permList, permListPos, iter, x, x2, perm1, perm2, perm3, perm4},
 			If[MemberQ[adj/@ComplexScalarList, Sa],
 				CubicHabc[sym, Re[Sa[[1]]], Sb, Sc, gauge, (1/Sqrt[2] fak[#2,#1,#3,#4,#5,#6])&];
 				CubicHabc[sym, Im[Sa[[1]]], Sb, Sc, gauge, (-I/Sqrt[2]fak[#2,#1,#3,#4,#5,#6])&];
@@ -361,7 +361,7 @@ BeginPackage["ARGES`"];
 		];
 		
 		ScalarMassMab[sym_, Sa_, Sb_, gauge_List, fak_:(1&)] := Module[
-			{posA, posB, posC, posD, permList, permListPos, iter, x, x2, perm1, perm2, perm3, perm4},
+			{posA, posB, permList, permListPos, iter, x, x2, perm1, perm2, perm3, perm4},
 			If[MemberQ[adj/@ComplexScalarList, Sa],
 				ScalarMassMab[sym, Re[Sa[[1]]], Sb, gauge, (1/Sqrt[2] fak[#2,#1,#3,#4])&];
 				ScalarMassMab[sym, Im[Sa[[1]]], Sb, gauge, (-I/Sqrt[2]fak[#2,#1,#3,#4])&];
@@ -391,6 +391,47 @@ BeginPackage["ARGES`"];
 					ListQuartic = Append[ListQuartic, {sym, posA[[1,1]], posB[[1,1]], SNumber[]+1, SNumber[]+1, gauge, fak}];
 					permList = PermList[List[#1,#2,#3,#4]];
 					permListPos[perm_, pos_] := {posA[[1,1]], posB[[1,1]], SNumber[]+1, SNumber[]+1}[[Position[permList[[perm]], permList[[1,pos]]][[1,1]]]];
+					For[ii=1, ii<= 24, ii++, 
+						AppendSymQuartic[
+							sym, permListPos[ii,1], permListPos[ii,2], permListPos[ii,3], permListPos[ii,4], 
+							Function[{x2}, x2&]/@(Function[{x}, x@@permList[[ii]]]/@gauge),
+							Evaluate[1/24 fak@@Flatten[permList[[ii]] /. {#1 -> perm1, #2 -> perm2, #3 -> perm3, #4 -> perm4} //. {perm1 -> {#1, #2}, perm2 -> {#3, #4}, perm3 -> {#5, #6}, perm4 -> {#7,#8}}]]&
+						];
+					];
+					(* remove entries with coefficient zero *)
+					iter=1;
+					While[True,
+						If[iter > Dimensions[ListQuarticSym][[1]], Break[];];
+						If[ListQuarticSym[[iter, 7]] === (0&), 
+							ListQuarticSym = Delete[ListQuarticSym, iter];
+							Continue[];
+						];
+						iter++;
+					];
+				];
+			];
+		];
+		
+		ScalarLinearJa[sym_, Sa_, gauge_List, fak_:(1&)] := Module[
+			{posA, permList, permListPos, iter, x, x2, perm1, perm2, perm3, perm4},
+			If[MemberQ[adj/@ComplexScalarList, Sa],
+				ScalarLinearJa[sym, Re[Sa[[1]]], gauge, (1/Sqrt[2] fak[#2,#1])&];
+				ScalarLinearJa[sym, Im[Sa[[1]]], gauge, (-I/Sqrt[2]fak[#2,#1])&];
+				Return[];
+			];
+			If[MemberQ[ComplexScalarList, Sa],
+				ScalarLinearJa[sym, Re[Sa], gauge, (1/Sqrt[2] fak[#1,#2])&];
+				ScalarLinearJa[sym, Im[Sa], gauge, (I/Sqrt[2] fak[#1,#2])&];
+				Return[];
+			];
+			posA = ListPosition[RealScalarList,_List?(#[[1]] == Sa &)];
+			If[posA == {},
+				Message[Scalar::UnknownParticle];,
+				If[Dimensions[gauge][[1]] != NumberOfSubgroups,
+					Message[Quartic::ContractionError];,
+					ListQuartic = Append[ListQuartic, {sym, posA[[1,1]], SNumber[]+1, SNumber[]+1, SNumber[]+1, gauge, fak}];
+					permList = PermList[List[#1,#2,#3,#4]];
+					permListPos[perm_, pos_] := {posA[[1,1]], SNumber[]+1, SNumber[]+1, SNumber[]+1}[[Position[permList[[perm]], permList[[1,pos]]][[1,1]]]];
 					For[ii=1, ii<= 24, ii++, 
 						AppendSymQuartic[
 							sym, permListPos[ii,1], permListPos[ii,2], permListPos[ii,3], permListPos[ii,4], 
@@ -597,7 +638,7 @@ BeginPackage["ARGES`"];
 		
 		(* Scalar Cubic *)
 		\[Beta][SType1_, SType2_, SType3_, SList1_List, SList2_List, SList3_List, loop_] := Module[
-			{pos1, pos2, pos3, pos4},
+			{pos1, pos2, pos3},
 			If[MemberQ[ComplexScalarList, _?((# === SType1)&)],
 				Return[Sqrt[2] \[Beta][Re[SType1], SType2, SType3, SList1, SList2, SList3, loop]];
 			];
@@ -630,8 +671,8 @@ BeginPackage["ARGES`"];
 		]/;(Dimensions[SList1][[1]] == NumberOfSubgroups+2 && Dimensions[SList2][[1]] == NumberOfSubgroups+2 && Dimensions[SList3][[1]] == NumberOfSubgroups+2);
 		
 		(* Scalar Mass *)
-		\[Beta][SType1_, SType2_,SList1_List, SList2_List, loop_] := Module[
-			{pos1, pos2, pos3, pos4},
+		\[Beta][SType1_, SType2_, SList1_List, SList2_List, loop_] := Module[
+			{pos1, pos2},
 			If[MemberQ[ComplexScalarList, _?((# === SType1)&)],
 				Return[Sqrt[2] \[Beta][Re[SType1], SType2, SList1, SList2, loop]];
 			];
@@ -655,6 +696,26 @@ BeginPackage["ARGES`"];
 			];
 			Return[BetaQuartic[pos1[[1,1]], pos2[[1,1]], SNumber[]+1, SNumber[]+1, SList1, SList2, Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], loop]];
 		]/;(Dimensions[SList1][[1]] == NumberOfSubgroups+2 && Dimensions[SList2][[1]] == NumberOfSubgroups+2);
+		
+		(* Scalar Linear interaction *)
+		\[Beta][SType1_, SList1_List, loop_] := Module[
+			{pos1},
+			If[MemberQ[ComplexScalarList, _?((# === SType1)&)],
+				Return[Sqrt[2] \[Beta][Re[SType1], SList1, loop]];
+			];
+			If[MemberQ[adj/@ComplexScalarList, _?((# === SType1)&)],
+				Return[Sqrt[2] \[Beta][Re[SType1], Prepend[SList1[3;;],{SList1[[2]], SList1[[1]]}], loop]];
+			];
+			pos1  = ListPosition[RealScalarList,_List?(#[[1]] == SType1 &)];
+			If[pos1 == {},
+				Message[Scalar::UnknownParticle];
+				Return[];
+			];
+			If[BosonIndexOut[pos1[[1,1]], SList1],
+				Return[0];
+			];
+			Return[BetaQuartic[pos1[[1,1]], SNumber[]+1, SNumber[]+1, SNumber[]+1, SList1, Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], loop]];
+		]/;(Dimensions[SList1][[1]] == NumberOfSubgroups+2);
 		
 		(* Fermion Mass *)
 		\[Beta][FType1_, FType2_, FList1_List, FList2_List, loop_ ] := Module[
