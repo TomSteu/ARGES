@@ -10,8 +10,9 @@ BeginPackage["ARGES`"];
 	CubicHabc::usage = "Add scalar cubic interaction";
 	ScalarLinearJa::usage = "Add scalar linear interaction";
 	ScalarMassMab::usage = "Add scalar mass (bilinear term)";
-	FermionMassMij::usage = "Add Fermionic mass matrix (with h.c.)"
-	FermionMassMij::usage = "Add Fermionic mass (with h.c.) and generation contraction"
+	FermionMassMij::usage = "Add Fermionic mass matrix (with h.c.)";
+	FermionMassMij::usage = "Add Fermionic mass (with h.c.) and generation contraction";
+	SMassMatrix::usage = "Display bilinear scalar interaction";
 	\[Beta]::usage = "Display coupling (LoopLevel = 0) or Beta function";
 	Reset::usage = "reset/initiate package";
 	\[Gamma]::usage = "Anomalous dimensions for scalar or fermion fields";
@@ -480,6 +481,38 @@ BeginPackage["ARGES`"];
 				Message[Fermion::UnknownParticle];,
 				ListYukawa = Append[ListYukawa, {sym, SNumber[]+1, posFi[[1,1]], posFj[[1,1]], Function[{x}, Evaluate[x[#2,#3]]&]/@gauge, Evaluate[fak[#2,#3]]&}];
 			];
+		];
+		
+		
+		(* Output scalar mass matrix *)
+		SMassMatrix[Sa_, Sb_, la_List, lb_List] := Module[
+			{posA, posB, mass, v1, v2},
+			If[MemberQ[adj/@ComplexScalarList, Sa],
+				Return[1/Sqrt[2] SMassMatrix[Re[Sa[[1]]], Sb, Join[{la[[2]], la[[1]]}, la[[3;;]]], lb]];
+			];
+			If[MemberQ[ComplexScalarList, Sa],
+				Return[1/Sqrt[2] SMassMatrix[Re[Sa], Sb, la, lb]];
+			];
+			If[MemberQ[adj/@ComplexScalarList, Sb],
+				Return[1/Sqrt[2] SMassMatrix[Sa, Re[Sb[[1]]], la, Join[{lb[[2]], lb[[1]]}, lb[[3;;]]]]];
+			];
+			If[MemberQ[ComplexScalarList, Sb],
+				Return[1/Sqrt[2] SMassMatrix[Sa, Re[Sb], la, lb]];
+			];
+			posA = ListPosition[RealScalarList,_List?(#[[1]] == Sa &)];
+			posB = ListPosition[RealScalarList,_List?(#[[1]] == Sb &)];
+			If[posA == {} || posB == {},
+				Message[Scalar::UnknownParticle];,
+				mass = 0;
+				mass += BetaQuartic[posA[[1,1]], posB[[1,1]], SNumber[]+1, SNumber[]+1, la, lb, Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], 0];
+				For[v1=1, v1<=Dimensions[ListVEV][[1]], v1++, 
+					mass += ListVEV[[v1, 1]] ListVEV[[v1, 2]] BetaQuartic[posA[[1,1]], posB[[1,1]], ListVEV[[v1, 3, 1]], SNumber[]+1, la, lb, ListVEV[[v1, 3, 2;;]], Function[{x}, 1]/@Range[NumberOfSubgroups+2], 0];
+					For[v2=1, v2<=Dimensions[ListVEV][[1]], v2++,
+						mass += ListVEV[[v1, 1]] ListVEV[[v1, 2]] ListVEV[[v2, 1]] ListVEV[[v2, 2]] BetaQuartic[posA[[1,1]], posB[[1,1]], ListVEV[[v1, 3, 1]], ListVEV[[v2, 3, 1]] , la, lb, ListVEV[[v1, 3, 2;;]], ListVEV[[v2, 3, 2;;]], 0];
+					];
+				];
+			];
+			Return[Expand[24 mass]];
 		];
 		
 		(* Increment dummy field number before adding new scalar *)
@@ -1522,6 +1555,7 @@ BeginPackage["ARGES`"];
 			gamma += 5 (Y2FS[Prepend[la,pa], Prepend[lb,pb]] //. subScalarInvariants)//SimplifyProduct;
 			Return[gamma/Power[4 \[Pi], 4]];
 		];
+		
 		
 		(* Definition of Invariants *)
 		ComputeInvariants[] := Module[
