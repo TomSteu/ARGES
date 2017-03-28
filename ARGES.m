@@ -13,6 +13,7 @@ BeginPackage["ARGES`"];
 	FermionMassMij::usage = "Add Fermionic mass matrix (with h.c.)";
 	FermionMassMij::usage = "Add Fermionic mass (with h.c.) and generation contraction";
 	SMassMatrix::usage = "Display bilinear scalar interaction";
+	FMassMatrix::usage = "Display bilinear fermion interaction";
 	\[Beta]::usage = "Display coupling (LoopLevel = 0) or Beta function";
 	Reset::usage = "reset/initiate package";
 	\[Gamma]::usage = "Anomalous dimensions for scalar or fermion fields";
@@ -513,6 +514,21 @@ BeginPackage["ARGES`"];
 				];
 			];
 			Return[Expand[24 mass]];
+		];
+		
+		FMassMatrix[Fa_, Fb_, la_List, lb_List] := Module[
+			{posA, posB, mass, vev},
+			posA = ListPosition[WeylFermionList,_List?(#[[1]] == Fa &)];
+			posB = ListPosition[WeylFermionList,_List?(#[[1]] == Fb &)];
+			If[posA == {} || posB == {},
+				Message[Fermion::UnknownParticle];,
+				mass = 0;
+				mass += BetaYukawa[SNumber[]+1, posA[[1,1]], posB[[1,1]], Function[{x},1]/@Range[NumberOfSubgroups+2], la, lb, 0];
+				For[vev=1, vev<=Dimensions[ListVEV][[1]], vev++, 
+					mass += ListVEV[[vev, 2]] ListVEV[[vev, 1]] BetaYukawa[ListVEV[[vev, 3, 1]], posA[[1,1]], posB[[1,1]], ListVEV[[vev, 3, 2;;]], la, lb, 0];
+				];
+			];
+			Return[Expand[mass]];
 		];
 		
 		(* Increment dummy field number before adding new scalar *)
