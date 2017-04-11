@@ -1094,19 +1094,21 @@ BeginPackage["ARGES`"];
 				],
 				{ss1[0], 1, SNumber[]}
 			];
-			beta = beta + 1/2 Sum[
-				ContractSum@@Join[
-					{
-						(
-							SolveTrace2[Yuk[pa], adj[Yuk[ss1[0]]], Prepend[Function[{x}, {la[[2+x]], ss1[2+x]}]/@Range[NumberOfSubgroups], {la[[1]], la[[2]], ss1[1], ss1[2]}]] +
-							SolveTrace2[adj[Yuk[pa]], Yuk[ss1[0]], Prepend[Function[{x}, {la[[2+x]], ss1[2+x]}]/@Range[NumberOfSubgroups], {la[[1]], la[[2]], ss1[1], ss1[2]}]]
-						) BetaYukawa[ss1[0], pi, pj, ss1/@Range[NumberOfSubgroups+2], li, lj, 0],
-						{ss1[1], 1, RealScalarList[[ss1[0], 2, 1]]}, 
-						{ss1[2], 1, RealScalarList[[ss1[0], 2, 2]]}
-					}, Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups]
-				],
-				{ss1[0], 1, SNumber[]}
-			]/.{tr[adj[a_],b_]:>tr[b,adj[a]]};
+			If[pa <= SNumber[],
+				beta = beta + 1/2 Sum[
+					ContractSum@@Join[
+						{
+							(
+								SolveTrace2[Yuk[pa], adj[Yuk[ss1[0]]], Prepend[Function[{x}, {la[[2+x]], ss1[2+x]}]/@Range[NumberOfSubgroups], {la[[1]], la[[2]], ss1[1], ss1[2]}]] +
+								SolveTrace2[adj[Yuk[pa]], Yuk[ss1[0]], Prepend[Function[{x}, {la[[2+x]], ss1[2+x]}]/@Range[NumberOfSubgroups], {la[[1]], la[[2]], ss1[1], ss1[2]}]]
+							) BetaYukawa[ss1[0], pi, pj, ss1/@Range[NumberOfSubgroups+2], li, lj, 0],
+							{ss1[1], 1, RealScalarList[[ss1[0], 2, 1]]}, 
+							{ss1[2], 1, RealScalarList[[ss1[0], 2, 2]]}
+						}, Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups]
+					],
+					{ss1[0], 1, SNumber[]}
+				]/.{tr[adj[a_],b_]:>tr[b,adj[a]]};
+			];
 			beta -= 3 Sum[Sqr[ListGauge[[ii,1]]](C2[WeylFermionList[[pi,1]], ListGauge[[ii,1]]] + C2[WeylFermionList[[pj,1]], ListGauge[[ii,1]]]) BetaYukawa[pa, pi, pj, la, li, lj, 0], {ii, 1, NumberOfSubgroups}];
 			$Assumptions=assHold;
 			Return[beta/Sqr[4\[Pi]]];
@@ -1218,14 +1220,16 @@ BeginPackage["ARGES`"];
 				Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
 				Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
 			], {ss1[0], 1, SNumber[]}, {ss2[0], 1, SNumber[]}];
-			beta -= Sum[ContractSum@@Join[
-				{
-					(( Hbar2S[Prepend[la, pa], ss/@Range[0, NumberOfSubgroups+2]] + 3/2 H2S[Prepend[la, pa], ss/@Range[0, NumberOfSubgroups+2]] - 1/2 \[CapitalLambda]2S[Prepend[la, pa], ss/@Range[0, NumberOfSubgroups+2]])//.subScalarInvariants) BetaYukawa[ss[0], pi, pj, ss/@Range[NumberOfSubgroups+2], li, lj, 0],
-					{ss[1], 1, RealScalarList[[ss[0], 2,1]]},
-					{ss[2], 1, RealScalarList[[ss[0], 2,2]]}
-				},
-				Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups]
-			], {ss[0], 1, SNumber[]}];
+			If[pa <= SNumber[],
+				beta -= Sum[ContractSum@@Join[
+					{
+						(( Hbar2S[Prepend[la, pa], ss/@Range[0, NumberOfSubgroups+2]] + 3/2 H2S[Prepend[la, pa], ss/@Range[0, NumberOfSubgroups+2]] - 1/2 \[CapitalLambda]2S[Prepend[la, pa], ss/@Range[0, NumberOfSubgroups+2]])//.subScalarInvariants) BetaYukawa[ss[0], pi, pj, ss/@Range[NumberOfSubgroups+2], li, lj, 0],
+						{ss[1], 1, RealScalarList[[ss[0], 2,1]]},
+						{ss[2], 1, RealScalarList[[ss[0], 2,2]]}
+					},
+					Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups]
+				], {ss[0], 1, SNumber[]}];
+			];
 			beta -= 3/4 Sum[ContractSum@@Join[
 				{
 					(Y2S[ss/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]//.subScalarInvariants) (
@@ -1334,7 +1338,7 @@ BeginPackage["ARGES`"];
 				{ii, 1, NumberOfSubgroups}
 			];
 			beta += Sum[ 6 Sqr[ListGauge[[ii,1]]] H2t[ii, Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //.subScalarInvariants, {ii, 1, NumberOfSubgroups}];
-			beta += Y2FSY[pa, pi, pj, la, li, lj]//.subScalarInvariants;
+			beta += If[pa > SNumber[], 0, Y2FSY[pa, pi, pj, la, li, lj]//.subScalarInvariants];
 			beta -= 3/2 Sum[
 				Sqr[ListGauge[[ii,1]] ListGauge[[ii2,1]]] BetaYukawa[pa, pi, pj, la, li, lj, 0] (C2[WeylFermionList[[pi,1]], ListGauge[[ii,1]]] C2[WeylFermionList[[pi,1]], ListGauge[[ii2,1]]] + C2[WeylFermionList[[pj,1]], ListGauge[[ii,1]]] C2[WeylFermionList[[pj,1]], ListGauge[[ii2,1]]]),
 				{ii, 1, NumberOfSubgroups},
@@ -1476,7 +1480,12 @@ BeginPackage["ARGES`"];
 				H[Join[{pa}, la], Join[{pd}, ld], Join[{pb}, lb], Join[{pc}, lc]] + 
 				H[Join[{pa}, la], Join[{pd}, ld], Join[{pc}, lc], Join[{pb}, lb]]
 			))//.subScalarInvariants;
-			beta += (5*24 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] ( Y2FS[Prepend[la, pa], Prepend[la,pa]] + Y2FS[Prepend[lb, pb], Prepend[lb,pb]] + Y2FS[Prepend[lc, pc], Prepend[lc,pc]] + Y2FS[Prepend[ld, pd], Prepend[ld,pd]]))//.subScalarInvariants;
+			beta += (5*24 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] ( 
+				If[pa > SNumber[], 0, Y2FS[Prepend[la, pa], Prepend[la,pa]]] + 
+				If[pb > SNumber[], 0, Y2FS[Prepend[lb, pb], Prepend[lb,pb]]] + 
+				If[pc > SNumber[], 0, Y2FS[Prepend[lc, pc], Prepend[lc,pc]]] + 
+				If[pd > SNumber[], 0, Y2FS[Prepend[ld, pd], Prepend[ld,pd]]]
+			))//.subScalarInvariants;
 			beta -= Sum[
 				Sqr[ListGauge[[ii,1]]](
 					 24*18*8 (
