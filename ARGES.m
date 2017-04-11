@@ -633,6 +633,9 @@ BeginPackage["ARGES`"];
 			If[MemberQ[ComplexScalarList, _?((# === SType)&)], 
 				Return[Sqrt[2]\[Beta][Re[SType], FType1, FType2, SList, FList1, FList2, loop]];
 			];
+			If[MemberQ[adj/@ComplexScalarList, _?((# === SType)&)],
+				Return[Sqrt[2]\[Beta][Re[SType[[1]]], FType1, FType2, Prepend[{SList[[2]], SList[[1]]},SList[[3;;]]], FList1, FList2, loop]];
+			];
 			posS  = ListPosition[RealScalarList,_List?(#[[1]] == SType &)];
 			posF1 = ListPosition[WeylFermionList,_List?(#[[1]] == FType1 &)];
 			posF2 = ListPosition[WeylFermionList,_List?(#[[1]] == FType2 &)];
@@ -662,16 +665,16 @@ BeginPackage["ARGES`"];
 				Return[Sqrt[2] \[Beta][SType1, SType2, SType3, Re[SType4], SList1, SList2, SList3, SList4, loop]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType1)&)],
-				Return[Sqrt[2] \[Beta][Re[SType1], SType2, SType3, SType4, Prepend[SList1[3;;],{SList1[[2]], SList1[[1]]}], SList2, SList3, SList4, loop]];
+				Return[Sqrt[2] \[Beta][Re[SType1[[1]]], SType2, SType3, SType4, Join[{SList1[[2]], SList1[[1]]},SList1[[3;;]]], SList2, SList3, SList4, loop]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType2)&)],
-				Return[Sqrt[2] \[Beta][SType1, Re[SType2], SType3, SType4, SList1, Prepend[SList2[3;;],{SList2[[2]], SList2[[1]]}], SList3, SList4, loop]];
+				Return[Sqrt[2] \[Beta][SType1, Re[SType2[[1]]], SType3, SType4, SList1, Join[{SList2[[2]], SList2[[1]]},SList2[[3;;]]], SList3, SList4, loop]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType3)&)],
-				Return[Sqrt[2] \[Beta][SType1, SType2, Re[SType3], SType4, SList1, SList2, Prepend[SList3[3;;],{SList3[[2]], SList3[[1]]}], SList4, loop]];
+				Return[Sqrt[2] \[Beta][SType1, SType2, Re[SType3[[1]]], SType4, SList1, SList2, Join[{SList3[[2]], SList3[[1]]},SList3[[3;;]]], SList4, loop]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType4)&)],
-				Return[Sqrt[2] \[Beta][SType1, SType2, SType3, Re[SType4], SList1, SList2, SList3, Prepend[SList4[3;;],{SList4[[2]], SList4[[1]]}], loop]];
+				Return[Sqrt[2] \[Beta][SType1, SType2, SType3, Re[SType4[[1]]], SList1, SList2, SList3, Join[{SList4[[2]], SList4[[1]]},SList4[[3;;]]], loop]];
 			];
 			pos1  = ListPosition[RealScalarList,_List?(#[[1]] == SType1 &)];
 			pos2  = ListPosition[RealScalarList,_List?(#[[1]] == SType2 &)];
@@ -700,13 +703,13 @@ BeginPackage["ARGES`"];
 				Return[Sqrt[2] \[Beta][SType1, SType2, Re[SType3], SList1, SList2, SList3, loop]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType1)&)],
-				Return[Sqrt[2] \[Beta][Re[SType1], SType2, SType3, Prepend[SList1[3;;],{SList1[[2]], SList1[[1]]}], SList2, SList3, loop]];
+				Return[Sqrt[2] \[Beta][Re[SType1[[1]]], SType2, SType3, Join[{SList1[[2]], SList1[[1]]},SList1[[3;;]]], SList2, SList3, loop]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType2)&)],
-				Return[Sqrt[2] \[Beta][SType1, Re[SType2], SType3, SList1, Prepend[SList2[3;;],{SList2[[2]], SList2[[1]]}], SList3, loop]];
+				Return[Sqrt[2] \[Beta][SType1, Re[SType2[[1]]], SType3, SList1, Join[{SList2[[2]], SList2[[1]]},SList2[[3;;]]], SList3, loop]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType3)&)],
-				Return[Sqrt[2] \[Beta][SType1, SType2, Re[SType3], SList1, SList2, Prepend[SList3[3;;],{SList3[[2]], SList3[[1]]}], loop]];
+				Return[Sqrt[2] \[Beta][SType1, SType2, Re[SType3[[1]]], SList1, SList2, Join[{SList3[[2]], SList3[[1]]},SList3[[3;;]]], loop]];
 			];
 			pos1  = ListPosition[RealScalarList,_List?(#[[1]] == SType1 &)];
 			pos2  = ListPosition[RealScalarList,_List?(#[[1]] == SType2 &)];
@@ -731,10 +734,10 @@ BeginPackage["ARGES`"];
 				Return[Sqrt[2] \[Beta][SType1, Re[SType2], SList1, SList2, loop]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType1)&)],
-				Return[Sqrt[2] \[Beta][Re[SType1], SType2, Prepend[SList1[3;;],{SList1[[2]], SList1[[1]]}], SList2, loop]];
+				Return[Sqrt[2] \[Beta][Re[SType1[[1]]], SType2, Join[{SList1[[2]], SList1[[1]]},SList1[[3;;]]], SList2, loop]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType2)&)],
-				Return[Sqrt[2] \[Beta][SType1, Re[SType2], SList1, Prepend[SList2[3;;],{SList2[[2]], SList2[[1]]}], loop]];
+				Return[Sqrt[2] \[Beta][SType1, Re[SType2[[1]]], SList1, Join[{SList2[[2]], SList2[[1]]},SList2[[3;;]]], loop]];
 			];
 			pos1  = ListPosition[RealScalarList,_List?(#[[1]] == SType1 &)];
 			pos2  = ListPosition[RealScalarList,_List?(#[[1]] == SType2 &)];
@@ -755,7 +758,7 @@ BeginPackage["ARGES`"];
 				Return[Sqrt[2] \[Beta][Re[SType1], SList1, loop]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType1)&)],
-				Return[Sqrt[2] \[Beta][Re[SType1], Prepend[SList1[3;;],{SList1[[2]], SList1[[1]]}], loop]];
+				Return[Sqrt[2] \[Beta][Re[SType1[[1]]], Join[{SList1[[2]], SList1[[1]]},SList1[[3;;]]], loop]];
 			];
 			pos1  = ListPosition[RealScalarList,_List?(#[[1]] == SType1 &)];
 			If[pos1 == {},
