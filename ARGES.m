@@ -12,8 +12,12 @@ BeginPackage["ARGES`"];
 	ScalarMassMab::usage = "Add scalar mass (bilinear term)";
 	FermionMassMij::usage = "Add Fermionic mass matrix (with h.c.)";
 	FermionMassMij::usage = "Add Fermionic mass (with h.c.) and generation contraction";
-	SMassMatrix::usage = "Display bilinear scalar interaction";
-	FMassMatrix::usage = "Display bilinear fermion interaction";
+	VertexSSSS::usage = "4 scalar vertex";
+	VertexSSS::usage = "3 scalar vertex";
+	VertexSS::usage = "2 scalar vertex";
+	VertexS::usage = "1 scalar vertex";
+	VertexFF::usage = "2 fermion vertex";
+	VertexSFF::usage = "1 scalar 2 fermion vertex";
 	\[Beta]::usage = "Display coupling (LoopLevel = 0) or Beta function";
 	Reset::usage = "reset/initiate package";
 	\[Gamma]::usage = "Anomalous dimensions for scalar or fermion fields";
@@ -486,20 +490,60 @@ BeginPackage["ARGES`"];
 		];
 		
 		
-		(* Output scalar mass matrix *)
-		SMassMatrix[Sa_, Sb_, la_List, lb_List] := Module[
-			{posA, posB, mass, v1, v2},
+		(* Output Vertices *)
+		
+		(* Four scalars *)
+		VertexSSSS[Sa_, Sb_, Sc_, Sd_, la_, lb_, lc_, ld_ ] := \[Beta][Sa, Sb, Sc, Sd, la, lb, lc, ld, 0];
+		
+		(* Three scalars *)
+		VertexSSS[Sa_, Sb_, Sc_, la_, lb_, lc_] := Module[
+			{posA, posB, posC, v, res},
 			If[MemberQ[adj/@ComplexScalarList, Sa],
-				Return[1/Sqrt[2] SMassMatrix[Re[Sa[[1]]], Sb, Join[{la[[2]], la[[1]]}, la[[3;;]]], lb]];
+				Return[1/Sqrt[2] VertexSSS[Re[Sa[[1]]], Sb, Sc, Join[{la[[2]], la[[1]]}, la[[3;;]]], lb, lc]];
 			];
 			If[MemberQ[ComplexScalarList, Sa],
-				Return[1/Sqrt[2] SMassMatrix[Re[Sa], Sb, la, lb]];
+				Return[1/Sqrt[2] VertexSSS[Re[Sa], Sb, Sc, la, lb, lc]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, Sb],
-				Return[1/Sqrt[2] SMassMatrix[Sa, Re[Sb[[1]]], la, Join[{lb[[2]], lb[[1]]}, lb[[3;;]]]]];
+				Return[1/Sqrt[2] VertexSSS[Sa, Re[Sb[[1]]], Sc, la, Join[{lb[[2]], lb[[1]]}, lb[[3;;]]], lc]];
 			];
 			If[MemberQ[ComplexScalarList, Sb],
-				Return[1/Sqrt[2] SMassMatrix[Sa, Re[Sb], la, lb]];
+				Return[1/Sqrt[2] VertexSSS[Sa, Re[Sb], Sc, la, lb, lc]];
+			];
+			If[MemberQ[adj/@ComplexScalarList, Sc],
+				Return[1/Sqrt[2] VertexSSS[Sa, Sb, Re[Sc[[1]]], la, lb, Join[{lc[[2]], lc[[1]]}, lc[[3;;]]]]];
+			];
+			If[MemberQ[ComplexScalarList, Sc],
+				Return[1/Sqrt[2] VertexSSS[Sa, Sb, Re[Sc], la, lb, lc]];
+			];
+			posA = ListPosition[RealScalarList,_List?(#[[1]] == Sa &)];
+			posB = ListPosition[RealScalarList,_List?(#[[1]] == Sb &)];
+			posC = ListPosition[RealScalarList,_List?(#[[1]] == Sc &)];
+			If[posA == {} || posB == {} || posC == {},
+				Message[Scalar::UnknownParticle];,
+				res = 0;
+				res += BetaQuartic[posA[[1,1]], posB[[1,1]], posC[[1,1]], SNumber[]+1, la, lb, lc, Function[{x}, 1]/@Range[NumberOfSubgroups+2], 0];
+				For[v=1, v<=Dimensions[ListVEV][[1]], v++, 
+					res += ListVEV[[v, 1]] ListVEV[[v, 2]] BetaQuartic[posA[[1,1]], posB[[1,1]], posC[[1,1]], ListVEV[[v, 3, 1]], la, lb, lc, ListVEV[[v, 3, 2;;]], 0];
+				];
+				Return[Expand[24 res]];
+			];
+		];
+		
+		(* Two Scalars *)
+		VertexSS[Sa_, Sb_, la_List, lb_List] := Module[
+			{posA, posB, mass, v1, v2},
+			If[MemberQ[adj/@ComplexScalarList, Sa],
+				Return[1/Sqrt[2] VertexSS[Re[Sa[[1]]], Sb, Join[{la[[2]], la[[1]]}, la[[3;;]]], lb]];
+			];
+			If[MemberQ[ComplexScalarList, Sa],
+				Return[1/Sqrt[2] VertexSS[Re[Sa], Sb, la, lb]];
+			];
+			If[MemberQ[adj/@ComplexScalarList, Sb],
+				Return[1/Sqrt[2] VertexSS[Sa, Re[Sb[[1]]], la, Join[{lb[[2]], lb[[1]]}, lb[[3;;]]]]];
+			];
+			If[MemberQ[ComplexScalarList, Sb],
+				Return[1/Sqrt[2] VertexSS[Sa, Re[Sb], la, lb]];
 			];
 			posA = ListPosition[RealScalarList,_List?(#[[1]] == Sa &)];
 			posB = ListPosition[RealScalarList,_List?(#[[1]] == Sb &)];
@@ -517,7 +561,35 @@ BeginPackage["ARGES`"];
 			Return[Expand[24 mass]];
 		];
 		
-		FMassMatrix[Fa_, Fb_, la_List, lb_List] := Module[
+		(* One Scalar *)
+		VertexS[Sa_, la_] := Module[
+			{posA, res, v1, v2, v3},
+			If[MemberQ[adj/@ComplexScalarList, Sa],
+				Return[1/Sqrt[2] VertexS[Re[Sa[[1]]], Join[{la[[2]], la[[1]]}, la[[3;;]]]]];
+			];
+			If[MemberQ[ComplexScalarList, Sa],
+				Return[1/Sqrt[2] VertexS[Re[Sa], la]];
+			];
+			posA = ListPosition[RealScalarList,_List?(#[[1]] == Sa &)];
+			If[posA == {},
+				Message[Scalar::UnknownParticle];,
+				res = 0;
+				res += BetaQuartic[posA[[1,1]], SNumber[]+1, SNumber[]+1, SNumber[]+1, la, Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], 0];
+				For[v1=1, v1<=Dimensions[ListVEV][[1]], v1++,
+					res += ListVEV[[v1, 1]] ListVEV[[v1, 2]] BetaQuartic[posA[[1,1]], ListVEV[[v1, 3, 1]], SNumber[]+1, SNumber[]+1, la,  ListVEV[[v1, 3, 2;;]], Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], 0];
+					For[v2=1, v2<=Dimensions[ListVEV][[1]], v2++,
+						res += ListVEV[[v1, 1]] ListVEV[[v1, 2]] ListVEV[[v2, 1]] ListVEV[[v2, 2]] BetaQuartic[posA[[1,1]], ListVEV[[v1, 3, 1]], ListVEV[[v2, 3, 1]], SNumber[]+1, la, ListVEV[[v1, 3, 2;;]], ListVEV[[v2, 3, 2;;]], Function[{x}, 1]/@Range[NumberOfSubgroups+2], 0];
+						For[v3=1, v3<=Dimensions[ListVEV][[1]], v3++,
+							res += ListVEV[[v1, 1]] ListVEV[[v1, 2]] ListVEV[[v2, 1]] ListVEV[[v2, 2]] ListVEV[[v3, 1]] ListVEV[[v3, 2]] BetaQuartic[posA[[1,1]], ListVEV[[v1, 3, 1]], ListVEV[[v2, 3, 1]], ListVEV[[v3, 3, 1]], la, ListVEV[[v1, 3, 2;;]], ListVEV[[v2, 3, 2;;]], ListVEV[[v3, 3, 2;;]], 0];
+						];
+					];
+				];
+				Return[Expand[24 res]];
+			];
+		];
+		
+		(* Two fermions *)
+		VertexFF[Fa_, Fb_, la_List, lb_List] := Module[
 			{posA, posB, mass, vev},
 			posA = ListPosition[WeylFermionList,_List?(#[[1]] == Fa &)];
 			posB = ListPosition[WeylFermionList,_List?(#[[1]] == Fb &)];
@@ -531,6 +603,9 @@ BeginPackage["ARGES`"];
 			];
 			Return[Expand[mass]];
 		];
+		
+		(* One scalar two fermions *)
+		VertexSFF[Sa_, Fi_, Fj_, la_, li_, lj_] := \[Beta][Sa, Fi, Fj, la, li, lj, 0];
 		
 		(* Increment dummy field number before adding new scalar *)
 		UpdateDummy[] := Module[
