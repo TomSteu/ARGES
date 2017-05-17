@@ -709,7 +709,7 @@ BeginPackage["ARGES`"];
 				Return[Sqrt[2]\[Beta][Re[SType], FType1, FType2, SList, FList1, FList2, loop]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType)&)],
-				Return[Sqrt[2]\[Beta][Re[SType[[1]]], FType1, FType2, Prepend[{SList[[2]], SList[[1]]},SList[[3;;]]], FList1, FList2, loop]];
+				Return[Sqrt[2]\[Beta][Re[SType[[1]]], FType1, FType2, Prepend[SList[[3;;]], {SList[[2]], SList[[1]]}], FList1, FList2, loop]];
 			];
 			posS  = ListPosition[RealScalarList,_List?(#[[1]] == SType &)];
 			posF1 = ListPosition[WeylFermionList,_List?(#[[1]] == FType1 &)];
