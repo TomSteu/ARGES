@@ -2080,9 +2080,9 @@ BeginPackage["ARGES`"];
 		subYuk := {
 			Yuk[a_][i1_, i2_]:>
 				Block[
-					{posY, posYadj},
+					{posY, posYt},
 					posY = {};
-					posYadj = {};
+					posYt = {};
 					If[ListYukawa != {},
 						For[yuk = 1, yuk <= Dimensions[ListYukawa][[1]], yuk++,
 							If[
@@ -2095,13 +2095,52 @@ BeginPackage["ARGES`"];
 						For[yuk = 1, yuk <= Dimensions[ListYukawa][[1]], yuk++,
 							If[
 								ListYukawa[[yuk,2]] == a && ListYukawa[[yuk,3]] == i2 && ListYukawa[[yuk,4]] == i1, 
-								posYadj = Append[posYadj, yuk];
+								posYt = Append[posYt, yuk];
 							];
 						];
 					];
-					If[posY != {}, Plus@@(Function[{x}, Hold[Yukawa[x]]]/@posY), 0] +  If[posYadj != {}, Plus@@(Function[{x}, adj[Hold[Yukawa[x]]]]/@posYadj), 0]
+					If[posY != {}, Plus@@(Function[{x}, Hold[Yukawa[x]]]/@posY), 0] +  If[posYt != {}, Plus@@(Function[{x}, transpose[Hold[Yukawa[x]]]]/@posYt), 0]
 				],
-				
+			adj[transpose[Yukawa[pos_]]]:>Join[
+				{
+					{
+						ListYukawa[[pos,1]]//.subProd, 
+						Evaluate[Refine[Conjugate[ListYukawa[[pos,6]][#1,#2,#3,#4]]]]&, 
+						If[ListYukawa[[pos, 2]] > SNumber[], 1, RealScalarList[[ListYukawa[[pos, 2]], 2, 1]]], 
+						If[ListYukawa[[pos, 2]] > SNumber[], 1, RealScalarList[[ListYukawa[[pos, 2]], 2, 2]]], 
+						WeylFermionList[[ListYukawa[[pos, 3]], 2]], 
+						WeylFermionList[[ListYukawa[[pos, 4]], 2]]
+						
+					}
+				},
+				Function[
+					{x},
+					Join[
+						{Evaluate[Refine[Conjugate[ListYukawa[[pos, 5, x]][#1,#2,#3]]]]&}, 
+						{SMultiplicity[ListYukawa[[pos, 2]], x], FMultiplicity[ListYukawa[[pos, 3]], x], FMultiplicity[ListYukawa[[pos, 4]], x]}
+					]
+				]/@Range[NumberOfSubgroups]
+			],
+			transpose[Yukawa[pos_]]:>Join[
+				{
+					{
+						adj[ListYukawa[[pos,1]]]//.subProd, 
+						Evaluate[Refine[ListYukawa[[pos,6]][#1,#2,#4,#3]]]&, 
+						If[ListYukawa[[pos, 2]] > SNumber[], 1, RealScalarList[[ListYukawa[[pos, 2]], 2, 1]]], 
+						If[ListYukawa[[pos, 2]] > SNumber[], 1, RealScalarList[[ListYukawa[[pos, 2]], 2, 2]]], 
+						WeylFermionList[[ListYukawa[[pos, 4]], 2]], 
+						WeylFermionList[[ListYukawa[[pos, 3]], 2]]
+						
+					}
+				},
+				Function[
+					{x},
+					Join[
+						{Evaluate[Refine[ListYukawa[[pos, 5, x]][#1,#3,#2]]]&}, 
+						{SMultiplicity[ListYukawa[[pos, 2]], x], FMultiplicity[ListYukawa[[pos, 4]], x], FMultiplicity[ListYukawa[[pos, 3]], x]}
+					]
+				]/@Range[NumberOfSubgroups]
+			],
 			adj[Yukawa[pos_]]:>Join[
 				{
 					{
@@ -2122,7 +2161,6 @@ BeginPackage["ARGES`"];
 					]
 				]/@Range[NumberOfSubgroups]
 			],
-			
 			Yukawa[pos_]:>Join[
 				{
 					{
