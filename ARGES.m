@@ -1047,16 +1047,22 @@ BeginPackage["ARGES`"];
 				],
 				{s, 1, SNumber[]}, {s2, 1, SNumber[]}, {f, 1, FNumber[]}
 			] Power[\[Alpha][ListGauge[[pos,1]]], 2]]/(d[ListGauge[[pos,1]]] Power[4 \[Pi], 4]);
-			beta -= 7/(12 d[ListGauge[[pos,1]]] Power[4 \[Pi], 4]) SimplifyProduct[Sum[
+			beta -= 7/(24 d[ListGauge[[pos,1]]] Power[4 \[Pi], 4]) SimplifyProduct[Sum[
 				ContractSum@@Join[
 					{
 						SolveTrace2[Yuk[s], adj[Yuk[s2]], Prepend[
 							Function[{x}, {SIdx[2+x], SIdx2[2+x]}]/@Range[NumberOfSubgroups],
 							{SIdx[1], SIdx[2], SIdx2[1], SIdx2[2]}
-						]] SolveTrace3[Delt[f], adj[Yuk[s2]], Yuk[s], Prepend[
+						]](
+							SolveTrace3[Delt[f], adj[Yuk[s2]], Yuk[s], Prepend[
 							Function[{x}, {SIdx2[2+x], SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
 							{SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
-						]] C2[WeylFermionList[[f,1]], ListGauge[[pos,1]]],
+							]] + 
+							SolveTrace3[Delt[f], Yuk[s2], adj[Yuk[s]], Prepend[
+							Function[{x}, {SIdx2[2+x], SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
+							{SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
+							]]
+						)  C2[WeylFermionList[[f,1]], ListGauge[[pos,1]]],
 						{SIdx[1], 1, RealScalarList[[s, 2, 1]]},
 						{SIdx[2], 1, RealScalarList[[s, 2, 2]]},
 						{SIdx2[1], 1, RealScalarList[[s2, 2, 1]]},
@@ -1067,16 +1073,22 @@ BeginPackage["ARGES`"];
 				],
 				{s, 1, SNumber[]}, {s2, 1, SNumber[]}, {f, 1, FNumber[]}
 			] Power[\[Alpha][ListGauge[[pos,1]]], 2]];
-			beta += 1/(12 d[ListGauge[[pos,1]]] Power[4 \[Pi], 4]) SimplifyProduct[Sum[
+			beta += 1/(24 d[ListGauge[[pos,1]]] Power[4 \[Pi], 4]) SimplifyProduct[Sum[
 				ContractSum@@Join[
 					{
 						SolveTrace2[Yuk[s], adj[Yuk[s2]], Prepend[
 							Function[{x}, {SIdx[2+x], SIdx2[2+x]}]/@Range[NumberOfSubgroups],
 							{SIdx[1], SIdx[2], SIdx2[1], SIdx2[2]}
-						]] SolveTrace2[Yuk[s2], adj[Yuk[s]], Prepend[
+						]](
+							SolveTrace2[Yuk[s2], adj[Yuk[s]], Prepend[
 							Function[{x}, {SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
 							{SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
-						]] C2[RealScalarList[[s,1]], ListGauge[[pos,1]]],
+							]] + 
+							SolveTrace2[adj[Yuk[s2]], Yuk[s], Prepend[
+							Function[{x}, {SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
+							{SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
+							]]
+						) C2[RealScalarList[[s,1]], ListGauge[[pos,1]]],
 						{SIdx[1], 1, RealScalarList[[s, 2, 1]]},
 						{SIdx[2], 1, RealScalarList[[s, 2, 2]]},
 						{SIdx2[1], 1, RealScalarList[[s2, 2, 1]]},
