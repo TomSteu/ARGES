@@ -25,7 +25,7 @@
 \newpage
 \section{Motivation - Why ARGES?}
 Arges is the name of a cyclops in the greek mythology, which was exiled by the Titans but freed by Zeus to forge lightning bolts for his battle against his former masters. \newline
-In this tradition as a useful tool, ARGES - Advanced Renormalization Group Equation Simplifier is a framework to calculate perturbative renormalization group equations for renormalizable quantum field theories, using \cite{LuoWangXiao,MV1,MV2,MV3,vev1,vev2,OsbornJack,OsbornJack2,OsbornJack3,Decoding}. Of course, other tools exist which offer an intersection of the same core features, most famously SARAH \cite{SARAH,SARAH4} and PyR@TE \cite{pyrate,pyrate2}. However, this piece of software tries to adress some of their limitations and adopts their resolution as its guiding features:
+In this tradition as a useful tool, ARGES - Advanced Renormalization Group Equation Simplifier is a framework to calculate perturbative renormalization group equations for renormalizable quantum field theories, using \cite{LuoWangXiao,MV1,MV2,MV3,vev1,vev2,gauge3L,gauge3L2,OsbornJack,OsbornJack2,OsbornJack3,Decoding}. Of course, other tools exist which offer an intersection of the same core features, most famously SARAH \cite{SARAH,SARAH4} and PyR@TE \cite{pyrate,pyrate2}. However, this piece of software tries to adress some of their limitations and adopts their resolution as its guiding features:
 \begin{itemize}
 \item it is possible to define particle numbers, representations and gauge group ranks as variables, even at all at once
 \item gauge groups may be defined as totally unknown altogether
@@ -42,10 +42,11 @@ ARGES calculates $\overline{\mathrm{MS}}$ scheme Beta functions of the form:
 \end{align}
 The software assumes the following perturbative renormalizable Lagrangian to as a basis of its calculations:
 \begin{align}
-\mathcal{L} = &-\frac{1}{4} F^A_{\mu\nu}\; F_A^{\mu \nu} + \frac{1}{2} D^{ab}_\mu \phi_b \; D_{ab}^\mu \phi^b + i \psi_i^\dagger \sigma^\mu D^{ij}_\mu \psi_j  - \frac{1}{2}( m_{ij}\, \psi_i \,(i \sigma_2)\, \psi_j + \mathrm{h.c.} )\nonumber \\
-&- \frac{1}{2}( Y^a_{ij} \phi_a \psi_i \,(i \sigma_2)\, \psi_j + \mathrm{h.c.} ) - J_a \;\phi^a - m_{ab}\; \phi^a \phi^b - h_{abc}\; \phi^a \phi^b \phi^c \nonumber\\ &- \lambda_{abcd}\; \phi^a \phi^b \phi^c \phi^d  + \mathcal{L}_{gf} + \mathcal{L}_{gh}
+\mathcal{L} = &-\frac{1}{4} F^A_{\mu\nu}\; F_A^{\mu \nu} + \frac{1}{2} D^{ab}_\mu \phi_b \; D_{ab}^\mu \phi^b + i \psi_i^\dagger \sigma^\mu D^{ij}_\mu \psi_j  - ( m_{ij}\, \psi_i \,(i \sigma_2)\, \psi_j + \mathrm{h.c.} )\nonumber \\
+&- ( Y^a_{ij} \phi_a \psi_i \,(i \sigma_2)\, \psi_j + \mathrm{h.c.} ) - J_a \;\phi^a - m_{ab}\; \phi^a \phi^b - h_{abc}\; \phi^a \phi^b \phi^c \nonumber\\ &- \lambda_{abcd}\; \phi^a \phi^b \phi^c \phi^d  + \mathcal{L}_{gf} + \mathcal{L}_{gh}
 \end{align}
-Renormalization group equations may be generated up to two loop level for gauge couplings, Yukawas, quartic and cubic scalar interactions as well as masses and anomalous dimensions for fermions and scalars.
+It shall be denoted that no artificial symmetrization on indices is assumed, as this is the case in \cite{LuoWangXiao,MV1,MV2,MV3,vev1,vev2,gauge3L,gauge3L2}.
+Renormalization group equations may be generated up to two loop level for gauge couplings, Yukawas, quartic and cubic scalar interactions as well as masses and anomalous dimensions for fermions and scalars. For simple gauge groups, 3-loop Beta functions for the gauge coupling is available as well.
 The theory consists of Weyl fermions and real scalars. Nevertheless, ARGES can handle complex scalars and converts them to real compontent fields internally.
 $\mathcal{L}_{gf}$ and $\mathcal{L}_{gh}$ represent the gauge fixing and ghost part respectively, however, most RGEs are gauge independent anyway with exception of anomalous dimensions and vacuum expectation values. For those, $R_\xi$ gauge is implicitly assumed, yielding:
 \begin{align}
@@ -103,7 +104,7 @@ Furthermore, Yukawa couplings may be defined as scalars:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 YukawaY[Sym, Scalar, Ferm1, Ferm2, {Contr1, ...}, GenerationContr];
 \end{lstlisting}
-Which is the same thing with exception of the now mandatory last argument, which is a now a function with four arguments, and defines the contraction between the first and second generation index of the scalar, and the generation indices of the first and second fermion, strictly in that order. Again, the first arguments is auto-adjoint with the need to mark it that way, and the hermitian conjugate is added without further symmetry factors.
+Which is the same thing with exception of the now mandatory last argument, which is a now a function with four arguments, and defines the contraction between the first and second generation index of the scalar, and the generation indices of the first and second fermion, strictly in that order. Again, the first arguments is auto-adjoint with the need to mark it that way, and the hermitian conjugate is added without further symmetry factors. Any Yukawa coupling is generally considered complex.
 \FloatBarrier
 \subsection{Scalar quartic interactions}
 Scalar quartics may be defined via:
