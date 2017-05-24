@@ -36,6 +36,7 @@ BeginPackage["ARGES`"];
 	Y6::usage = "Yukawa Invariant";
 	prod::usage = "product of flavour matrices";
 	adj::usage = "adjoint";
+	conj::usage = "complex conjugate";
 	tr::usage = "trace of flavour matrices";
 	U::usage = "Unitary Group";
 	SU::usage = "Special Unitary Group";
@@ -109,7 +110,23 @@ BeginPackage["ARGES`"];
 			Return[0];
 		];
 		
-		SimplifyProduct[term_] := (term //. subProd //.{tr[adj[a_], b__] :> tr[b, adj[a]], (A_ tr[C___, a_, adj[b_], G___, c_, adj[d_], F___] + B_ tr[G___, c_, adj[d_], F___, C___, a_, adj[b_]]) :> (A+B)tr[C, a, adj[b], G, c, adj[d], F], (A_ tr[C___, a_, adj[b_], G___, c_, adj[d_], F___] + B_ tr[c_, adj[d_], F___, C___, a_, adj[b_], G___]) :> (A+B)tr[C, a, adj[b], G, c, adj[d], F]});
+		SimplifyProduct[term_] := (term //. subProd //.{
+			conj[conj[a_]] :> a,
+			tr[adj[a_], b__] :> tr[b, adj[a]],
+			(A_ tr[C___, a_, adj[b_], G___, c_, adj[d_], F___] + B_ tr[G___, c_, adj[d_], F___, C___, a_, adj[b_]]) :> (A+B)tr[C, a, adj[b], G, c, adj[d], F],
+			(A_ tr[C___, a_, adj[b_], G___, c_, adj[d_], F___] + B_ tr[c_, adj[d_], F___, C___, a_, adj[b_], G___]) :> (A+B)tr[C, a, adj[b], G, c, adj[d], F],
+			tr[conj[A_], adj[conj[B_]]]:>conj[tr[A,adj[B]]],
+			tr[conj[A_], adj[conj[B_]], conj[C_], adj[conj[E_]]]:>conj[tr[A,adj[B],C,adj[E]]],
+			tr[conj[A_], adj[conj[B_]], conj[C_], adj[conj[E_]], conj[F_], adj[conj[G_]]]:>conj[tr[A,adj[B],C,adj[E],F,adj[G]]],
+			prod[conj[A_], adj[conj[B_]]][i_,j_]:>conj[prod[A,adj[B]][i,j]],
+			prod[conj[A_], adj[conj[B_]], conj[C_], adj[conj[E_]]][i_,j_]:>conj[prod[A,adj[B],C,adj[E]][i,j]],
+			prod[conj[A_], adj[conj[B_]], conj[C_], adj[conj[E_]], conj[F_], adj[conj[G_]]][i_,j_]:>conj[tr[A,adj[B],C,adj[E],F,adj[G]][i,j]],
+			tr[A___, adj[B_], C___] :> tr[A, adj[B], C],
+			prod[A___, adj[B_], C___] :> prod[A, adj[B], C],
+			adj[conj[A_[i_,j_]]] :> A[j,i],
+			adj[A_[i_,j_]] :> conj[A[j,i]],
+			adj[conj[A_]] :> A, adj[A_]:>conj[A]
+		});
 		
 		WeylFermion[sym_, Nflavor_, Gauge_List] := Module[
 			{},
@@ -526,7 +543,7 @@ BeginPackage["ARGES`"];
 				For[v=1, v<=Dimensions[ListVEV][[1]], v++, 
 					res += ListVEV[[v, 1]] ListVEV[[v, 2]] BetaQuartic[posA[[1,1]], posB[[1,1]], posC[[1,1]], ListVEV[[v, 3, 1]], la, lb, lc, ListVEV[[v, 3, 2;;]], 0];
 				];
-				Return[Expand[24 res]];
+				Return[Expand[24 res]//SimplifyProduct];
 			];
 		];
 		
@@ -558,7 +575,7 @@ BeginPackage["ARGES`"];
 					];
 				];
 			];
-			Return[Expand[24 mass]];
+			Return[Expand[24 mass]//SimplifyProduct];
 		];
 		
 		(* One Scalar *)
@@ -584,7 +601,7 @@ BeginPackage["ARGES`"];
 						];
 					];
 				];
-				Return[Expand[24 res]];
+				Return[Expand[24 res]//SimplifyProduct];
 			];
 		];
 		
@@ -601,7 +618,7 @@ BeginPackage["ARGES`"];
 					mass += ListVEV[[vev, 2]] ListVEV[[vev, 1]] BetaYukawa[ListVEV[[vev, 3, 1]], posA[[1,1]], posB[[1,1]], ListVEV[[vev, 3, 2;;]], la, lb, 0];
 				];
 			];
-			Return[Expand[mass]];
+			Return[Expand[mass]//SimplifyProduct];
 		];
 		
 		(* One scalar two fermions *)
@@ -680,7 +697,7 @@ BeginPackage["ARGES`"];
 			{pos},
 			pos = ListPosition[ListGauge,_List?(#[[1]] == sym &)];
 			If[pos != {}, 
-				Return[BetaGauge[pos[[1,1]], loop]];
+				Return[BetaGauge[pos[[1,1]], loop]//SimplifyProduct];
 			];
 			Return[0];
 		];
@@ -691,14 +708,14 @@ BeginPackage["ARGES`"];
 			pos = ListPosition[ListGauge,_List?(#[[1]] == sym &)];
 			If[pos != {}, 
 				If[loop =!= 0, 
-					Return[Expand[(\[Beta][\[Alpha][sym], loop] Sqr[4 Pi]/(2 sym))//.subAlpha]];,
-					Return[sym];
+					Return[Expand[(\[Beta][\[Alpha][sym], loop] Sqr[4 Pi]/(2 sym))//.subAlpha]//SimplifyProduct];,
+					Return[sym//SimplifyProduct];
 				];
 			];
 			(* VEV *)
 			pos = ListPosition[ListVEV,_List?(#[[1]] == sym &)];
 			If[pos != {}, 
-				Return[BetaVEV[pos[[1,1]], loop]];
+				Return[BetaVEV[pos[[1,1]], loop]//SimplifyProduct];
 			];
 		];
 		
@@ -721,7 +738,7 @@ BeginPackage["ARGES`"];
 			If[BosonIndexOut[posS[[1,1]], SList] || FermionIndexOut[posF1[[1,1]], FList1] || FermionIndexOut[posF2[[1,1]], FList2],
 				Return[0];
 			];
-			Return[BetaYukawa[posS[[1,1]], posF1[[1,1]], posF2[[1,1]], SList, FList1, FList2, loop]];
+			Return[BetaYukawa[posS[[1,1]], posF1[[1,1]], posF2[[1,1]], SList, FList1, FList2, loop]//SimplifyProduct];
 		]/;(Dimensions[FList1][[1]] == NumberOfSubgroups+1 && Dimensions[FList2][[1]] == NumberOfSubgroups+1);
 		
 		(* Scalar Quartic *)
@@ -762,7 +779,7 @@ BeginPackage["ARGES`"];
 			If[BosonIndexOut[pos1[[1,1]], SList1] || BosonIndexOut[pos2[[1,1]], SList2] || BosonIndexOut[pos3[[1,1]], SList3] || BosonIndexOut[pos4[[1,1]], SList4],
 				Return[0];
 			];
-			Return[BetaQuartic[pos1[[1,1]], pos2[[1,1]], pos3[[1,1]], pos4[[1,1]], SList1, SList2, SList3, SList4, loop]];
+			Return[BetaQuartic[pos1[[1,1]], pos2[[1,1]], pos3[[1,1]], pos4[[1,1]], SList1, SList2, SList3, SList4, loop]//SimplifyProduct];
 		];
 		
 		(* Scalar Cubic *)
@@ -796,7 +813,7 @@ BeginPackage["ARGES`"];
 			If[BosonIndexOut[pos1[[1,1]], SList1] || BosonIndexOut[pos2[[1,1]], SList2] || BosonIndexOut[pos3[[1,1]], SList3],
 				Return[0];
 			];
-			Return[BetaQuartic[pos1[[1,1]], pos2[[1,1]], pos3[[1,1]], SNumber[]+1, SList1, SList2, SList3, Function[{x}, 1]/@Range[NumberOfSubgroups+2], loop]];
+			Return[BetaQuartic[pos1[[1,1]], pos2[[1,1]], pos3[[1,1]], SNumber[]+1, SList1, SList2, SList3, Function[{x}, 1]/@Range[NumberOfSubgroups+2], loop]//SimplifyProduct];
 		]/;(Dimensions[SList1][[1]] == NumberOfSubgroups+2 && Dimensions[SList2][[1]] == NumberOfSubgroups+2 && Dimensions[SList3][[1]] == NumberOfSubgroups+2);
 		
 		(* Scalar Mass *)
@@ -823,7 +840,7 @@ BeginPackage["ARGES`"];
 			If[BosonIndexOut[pos1[[1,1]], SList1] || BosonIndexOut[pos2[[1,1]], SList2],
 				Return[0];
 			];
-			Return[BetaQuartic[pos1[[1,1]], pos2[[1,1]], SNumber[]+1, SNumber[]+1, SList1, SList2, Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], loop]];
+			Return[BetaQuartic[pos1[[1,1]], pos2[[1,1]], SNumber[]+1, SNumber[]+1, SList1, SList2, Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], loop]//SimplifyProduct];
 		]/;(Dimensions[SList1][[1]] == NumberOfSubgroups+2 && Dimensions[SList2][[1]] == NumberOfSubgroups+2);
 		
 		(* Scalar Linear interaction *)
@@ -843,7 +860,7 @@ BeginPackage["ARGES`"];
 			If[BosonIndexOut[pos1[[1,1]], SList1],
 				Return[0];
 			];
-			Return[BetaQuartic[pos1[[1,1]], SNumber[]+1, SNumber[]+1, SNumber[]+1, SList1, Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], loop]];
+			Return[BetaQuartic[pos1[[1,1]], SNumber[]+1, SNumber[]+1, SNumber[]+1, SList1, Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], loop]//SimplifyProduct];
 		]/;(Dimensions[SList1][[1]] == NumberOfSubgroups+2);
 		
 		(* Fermion Mass *)
@@ -858,7 +875,7 @@ BeginPackage["ARGES`"];
 			If[FermionIndexOut[posF1[[1,1]], FList1] || FermionIndexOut[posF2[[1,1]], FList2],
 				Return[0];
 			];
-			Return[BetaYukawa[SNumber[]+1, posF1[[1,1]], posF2[[1,1]], Function[{x}, 1]/@Range[NumberOfSubgroups+2], FList1, FList2, loop]];
+			Return[BetaYukawa[SNumber[]+1, posF1[[1,1]], posF2[[1,1]], Function[{x}, 1]/@Range[NumberOfSubgroups+2], FList1, FList2, loop]//SimplifyProduct];
 		]/;(Dimensions[FList1][[1]] == NumberOfSubgroups+1 && Dimensions[FList2][[1]] == NumberOfSubgroups+1);
 		
 		
@@ -876,7 +893,7 @@ BeginPackage["ARGES`"];
 			If[FermionIndexOut[posF1[[1,1]], FList1] || FermionIndexOut[posF2[[1,1]], FList2],
 				Return[0];
 			];
-			Return[FGamma[posF1[[1,1]], posF2[[1,1]], FList1, FList2, loop]];
+			Return[FGamma[posF1[[1,1]], posF2[[1,1]], FList1, FList2, loop]//SimplifyProduct];
 		]/;(Dimensions[FList1][[1]] == NumberOfSubgroups+1 && Dimensions[FList2][[1]] == NumberOfSubgroups+1);
 		
 		(* Scalar *)
@@ -903,7 +920,7 @@ BeginPackage["ARGES`"];
 			If[BosonIndexOut[pos1[[1,1]], SList1] || BosonIndexOut[pos2[[1,1]], SList2],
 				Return[0];
 			];
-			Return[SGamma[pos1[[1,1]], pos2[[1,1]], SList1, SList2, loop]];
+			Return[SGamma[pos1[[1,1]], pos2[[1,1]], SList1, SList2, loop]//SimplifyProduct];
 		]/;(Dimensions[SList1][[1]] == NumberOfSubgroups+2 && Dimensions[SList2][[1]] == NumberOfSubgroups+2);
 		
 		(* Routines to zero RGEs for vertices with invalid particle indices*)
@@ -2116,7 +2133,7 @@ BeginPackage["ARGES`"];
 			adj[transpose[Yukawa[pos_]]]:>Join[
 				{
 					{
-						ListYukawa[[pos,1]]//.subProd, 
+						conj[ListYukawa[[pos,1]]]//.subProd, 
 						Evaluate[Refine[Conjugate[ListYukawa[[pos,6]][#1,#2,#3,#4]]]]&, 
 						If[ListYukawa[[pos, 2]] > SNumber[], 1, RealScalarList[[ListYukawa[[pos, 2]], 2, 1]]], 
 						If[ListYukawa[[pos, 2]] > SNumber[], 1, RealScalarList[[ListYukawa[[pos, 2]], 2, 2]]], 
@@ -2136,7 +2153,7 @@ BeginPackage["ARGES`"];
 			transpose[Yukawa[pos_]]:>Join[
 				{
 					{
-						adj[ListYukawa[[pos,1]]]//.subProd, 
+						adj[conj[ListYukawa[[pos,1]]]]//.subProd, 
 						Evaluate[Refine[ListYukawa[[pos,6]][#1,#2,#4,#3]]]&, 
 						If[ListYukawa[[pos, 2]] > SNumber[], 1, RealScalarList[[ListYukawa[[pos, 2]], 2, 1]]], 
 						If[ListYukawa[[pos, 2]] > SNumber[], 1, RealScalarList[[ListYukawa[[pos, 2]], 2, 2]]], 
