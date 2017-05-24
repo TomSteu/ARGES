@@ -44,7 +44,7 @@ BeginPackage["ARGES`"];
 
 	
 	Sqr[x_] := x*x;
-	Eps[a_Integer, b_Integer] := If[a + b == 3 && a > 0 && b > 0, If[b == a + 1, 1, -1], 0];
+	Eps[a_Integer, b_Integer] := (KroneckerDelta[a,1] KroneckerDelta[b,2] - KroneckerDelta[a,2] KroneckerDelta[b,1]);
 	subAlpha = {\[Alpha][g_] :> Sqr[g/(4 \[Pi])]};
 	NumberOfSubgroups = 1;
 
