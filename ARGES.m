@@ -1120,7 +1120,7 @@ BeginPackage["ARGES`"];
 			beta -= Power[\[Alpha][ListGauge[[pos,1]]], 3]/(6 d[ListGauge[[pos,1]]] Power[4 \[Pi], 2]) (\[Lambda]\[CapitalLambda]2[pos] //. subScalarInvariants);
 			beta -= Sqr[\[Alpha][ListGauge[[pos,1]]]]/(3 d[ListGauge[[pos,1]]] Power[4 \[Pi], 4]) Sum[
 				ContractSum[
-					ReleaseHold[SolveTrace[Delt[f], adj[Yuk[s]], Yuk[s2], Delt[f2], adj[Yuk[s2]], Yuk[s]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+					ReleaseHold[SolveTrace[Delt[f], adj[Yuk[s]], Yuk[s2], Delt[f2], adj[Yuk[s2]], Yuk[s]] + SolveTrace[transpose[Delt[f]], adj[transpose[Yuk[s]]], transpose[Yuk[s2]], transpose[Delt[f2]], adj[transpose[Yuk[s2]]], transpose[Yuk[s]]] //. {transpose[adj[A_]] :> adj[transpose[A]]} //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
 						tr[y1_, y2_, y3_, y4_, y5_, y6_]:>(
 							(
 								Refine[
@@ -2107,6 +2107,29 @@ BeginPackage["ARGES`"];
 		
 		(* replaces Yukawas and other Invariants in Fermion traces and products *)
 		subYuk := {
+			transpose[Yuk[a_]][i1_, i2_]:>
+				Block[
+					{posY, posYt},
+					posY = {};
+					posYt = {};
+					If[ListYukawa != {},
+						For[yuk = 1, yuk <= Dimensions[ListYukawa][[1]], yuk++,
+							If[
+								ListYukawa[[yuk,2]] == a && ListYukawa[[yuk,3]] == i1 && ListYukawa[[yuk,4]] == i2, 
+								posY = Append[posY, yuk];
+							];
+						];
+					];
+					If[ListYukawa != {},
+						For[yuk = 1, yuk <= Dimensions[ListYukawa][[1]], yuk++,
+							If[
+								ListYukawa[[yuk,2]] == a && ListYukawa[[yuk,3]] == i2 && ListYukawa[[yuk,4]] == i1, 
+								posYt = Append[posYt, yuk];
+							];
+						];
+					];
+					If[posYt != {}, Plus@@(Function[{x}, transpose[Hold[Yukawa[x]]]]/@posYt), 0]
+				],
 			Yuk[a_][i1_, i2_]:>
 				Block[
 					{posY, posYt},
@@ -2128,7 +2151,7 @@ BeginPackage["ARGES`"];
 							];
 						];
 					];
-					If[posY != {}, Plus@@(Function[{x}, Hold[Yukawa[x]]]/@posY), 0] +  If[posYt != {}, Plus@@(Function[{x}, transpose[Hold[Yukawa[x]]]]/@posYt), 0]
+					If[posY != {}, Plus@@(Function[{x}, Hold[Yukawa[x]]]/@posY), 0]
 				],
 			adj[transpose[Yukawa[pos_]]]:>Join[
 				{
@@ -2210,6 +2233,7 @@ BeginPackage["ARGES`"];
 					]
 				]/@Range[NumberOfSubgroups]
 			],
+			transpose[Delt[ii_]][i1_,i2_] :> If[i1 == ii && i2 == ii, Delta[ii], 0],
 			Delt[ii_][i1_,i2_] :> If[i1 == ii && i2 == ii, Delta[ii], 0],
 			Delta[ii_] :> Join[
 				{{del[ii], Mat[1]&, 1, 1, WeylFermionList[[ii,2]], WeylFermionList[[ii,2]]}},
@@ -2455,7 +2479,7 @@ BeginPackage["ARGES`"];
 				assHold = $Assumptions;
 				$Assumptions=$Assumptions&&Element[scGenIdx,Integers]&&(scGenIdx>0)&&Element[scGenIdx2,Integers]&&(scGenIdx2>0);
 				sum = Refine[Sum[
-					ReleaseHold[(ReleaseHold[SolveProd[Yuk[pa[[1]]], adj[Yuk[ss]], Yuk[ss], pi[[1]], pj[[1]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]/.{prod[A___, adj[Yukawa[a_]]]:>prod[A, adj[Yukawa[a]]][ListYukawa[[a,4]]], prod[A___, Yukawa[a_]]:>prod[A, Yukawa[a]][ListYukawa[[a,3]]]}//.subYuk //.{
+					ReleaseHold[(ReleaseHold[SolveProd[Yuk[pa[[1]]], adj[Yuk[ss]], Yuk[ss], pi[[1]], pj[[1]]] + SolveProd[transpose[Yuk[pa[[1]]]], adj[transpose[Yuk[ss]]], transpose[Yuk[ss]], pj[[1]], pi[[1]]] //. {transpose[adj[A_]] :> adj[transpose[A_]]} //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]/.{prod[A___, adj[Yukawa[a_]]]:>prod[A, adj[Yukawa[a]]][ListYukawa[[a,4]]], prod[A___, Yukawa[a_]]:>prod[A, Yukawa[a]][ListYukawa[[a,3]]]}//.subYuk //.{
 						prod[A_, B_, C_][a_] :> ContractSum@@Join[
 							{
 								Refine[ContractSum[GetGenProd[{A,B,C}, {{pa[[2]], pa[[3]]}, {scGenIdx, scGenIdx2}, {scGenIdx, scGenIdx2}}, pi[[2]], pj[[2]]] //.subProd, {scGenIdx, 1, C[[1,3]]}, {scGenIdx2, 1, C[[1,4]]}]] Refine[Conjugate[\[CapitalLambda][gauge][pi, Join[{a,1},ff3/@Range[NumberOfSubgroups]], Join[pi[[1;;2]], ff1/@Range[NumberOfSubgroups]], Join[{a,1},ff4/@Range[NumberOfSubgroups]]] //.sub\[CapitalLambda]F]] Times@@Function[{x}, A[[x+1, 1]][pa[[x+3]], ff1[x], ff2[x]] B[[x+1,1]][scGaugeIdx[x], ff2[x], ff3[x]] C[[x+1,1]][scGaugeIdx[x], ff4[x], pj[[x+2]]]]/@Range[NumberOfSubgroups]
@@ -2467,7 +2491,7 @@ BeginPackage["ARGES`"];
 							Function[{x},{ff4[x], 1, C[[x+1,3]]}]/@Range[NumberOfSubgroups]
 						]
 					})] + 
-					ReleaseHold[(ReleaseHold[SolveProd[Yuk[ss], adj[Yuk[ss]], Yuk[pa[[1]]], pi[[1]], pj[[1]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]/.{prod[adj[Yukawa[a_]], A___]:>prod[adj[Yukawa[a]], A][ListYukawa[[a,3]]], prod[Yukawa[a_], A___]:>prod[Yukawa[a], A][ListYukawa[[a,4]]]}//.subYuk //.{
+					ReleaseHold[(ReleaseHold[SolveProd[Yuk[ss], adj[Yuk[ss]], Yuk[pa[[1]]], pi[[1]], pj[[1]]] + SolveProd[transpose[Yuk[ss]], adj[transpose[Yuk[ss]]], transpose[Yuk[pa[[1]]]], pj[[1]], pi[[1]]] //. {transpose[adj[A_]] :> adj[transpose[A_]]} //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]/.{prod[adj[Yukawa[a_]], A___]:>prod[adj[Yukawa[a]], A][ListYukawa[[a,3]]], prod[Yukawa[a_], A___]:>prod[Yukawa[a], A][ListYukawa[[a,4]]]}//.subYuk //.{
 						prod[A_, B_, C_][a_] :> ContractSum@@Join[
 							{
 								Refine[ContractSum[GetGenProd[{A,B,C}, {{scGenIdx, scGenIdx2}, {scGenIdx, scGenIdx2}, {pa[[2]], pa[[3]]}}, pi[[2]], pj[[2]]] //.subProd, {scGenIdx, 1, A[[1,3]]}, {scGenIdx2, 1, A[[1,4]]}]] (\[CapitalLambda][gauge][Join[{a,1},ff1/@Range[NumberOfSubgroups]], Join[pj[[1;;2]], ff4/@Range[NumberOfSubgroups]], Join[{a,1},ff2/@Range[NumberOfSubgroups]], pj] //.sub\[CapitalLambda]F) Times@@Function[{x}, A[[x+1, 1]][scGaugeIdx[x], pi[[x+2]], ff1[x]] B[[x+1,1]][scGaugeIdx[x], ff2[x], ff3[x]] C[[x+1,1]][pa[[x+3]], ff3[x], ff4[x]]]/@Range[NumberOfSubgroups]
@@ -2826,7 +2850,7 @@ BeginPackage["ARGES`"];
 			BY[gauge_, gauge2_][a_, b_, c_, d_] :> Block[
 				{gg, ff, ff1, ff2, ff3, ff4, y1, y2, y3},
 				Sum[
-					(ReleaseHold[SolveTrace[Delt[ff],Yuk[c[[1]]],adj[Yuk[d[[1]]]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+					(ReleaseHold[SolveTrace[Delt[ff],Yuk[c[[1]]],adj[Yuk[d[[1]]]]] + SolveTrace[transpose[Delt[ff]],transpose[Yuk[c[[1]]]],adj[transpose[Yuk[d[[1]]]]]] //. {transpose[adj[A_]] :> adj[transpose[A]]} //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
 						tr[y1_, y2_, y3_]:>(
 							Sum[
 								ContractSum@@Join[
@@ -2852,7 +2876,7 @@ BeginPackage["ARGES`"];
 							]
 						)
 					}) + 
-					(ReleaseHold[SolveTrace[Delt[ff], adj[Yuk[d[[1]]]], Yuk[c[[1]]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+					(ReleaseHold[SolveTrace[Delt[ff], adj[Yuk[d[[1]]]], Yuk[c[[1]]]] + SolveTrace[transpose[Delt[ff]], adj[transpose[Yuk[d[[1]]]]], transpose[Yuk[c[[1]]]]] //. {transpose[adj[A_]] :> adj[transpose[A]]} //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
 						tr[y1_, y2_, y3_]:>(
 							Sum[
 								ContractSum@@Join[
@@ -2884,7 +2908,7 @@ BeginPackage["ARGES`"];
 			BbarY[gauge_, gauge2_][a_, b_, c_, d_] :> Module[
 				{ffA, ffB, gg, ff1, ff2, ff3, ff4, y1, y2, y3, y4},
 				Sum[
-					ReleaseHold[SolveTrace[Delt[ffA], Yuk[c[[1]]], Delt[ffB], adj[Yuk[d[[1]]]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+					ReleaseHold[SolveTrace[Delt[ffA], Yuk[c[[1]]], Delt[ffB], adj[Yuk[d[[1]]]]] + SolveTrace[transpose[Delt[ffA]], transpose[Yuk[c[[1]]]], transpose[Delt[ffB]], adj[transpose[Yuk[d[[1]]]]]] //. {transpose[adj[A_]] :> adj[transpose[A]]} //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
 						tr[y1_, y2_, y3_, y4_] :> (
 							Sum[
 								ContractSum@@Join[
@@ -3275,7 +3299,7 @@ BeginPackage["ARGES`"];
 		(* optimized functions for Yukawa traces and products *)
 		SolveTrace2[Y1_, Y2_, SIdx_] := Block[
 			{sumInd1,sumInd2},
-			ReleaseHold[SolveTrace[Y1,Y2] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveTrace[Y1,Y2] + SolveTrace[transpose[Y1], transpose[Y2]] //. {transpose[adj[A_]] :> adj[transpose[A_]]} //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
 				tr[y1_, y2_]:>Times@@Join[
 					{
 						Refine[
@@ -3293,7 +3317,7 @@ BeginPackage["ARGES`"];
 		
 		SolveTrace3[Y1_, Y2_, Y3_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3] + SolveTrace[transpose[Y1], transpose[Y2], transpose[Y3]] //. {transpose[adj[A_]] :> adj[transpose[A_]]} //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
 				tr[y1_, y2_, y3_]:>Times@@Join[
 					{
 						Refine[
@@ -3312,7 +3336,7 @@ BeginPackage["ARGES`"];
 		
 		SolveTrace4[Y1_, Y2_, Y3_, Y4_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3, sumInd4},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4] + SolveTrace[transpose[Y1], transpose[Y2], transpose[Y3], transpose[Y4]] //. {transpose[adj[A_]] :> adj[transpose[A_]]} //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
 				tr[y1_, y2_, y3_, y4_]:>Times@@Join[
 					{
 						Refine[
@@ -3332,7 +3356,7 @@ BeginPackage["ARGES`"];
 		
 		SolveTrace5[Y1_, Y2_, Y3_, Y4_, Y5_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3, sumInd4, sumInd5},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5] + SolveTrace[transpose[Y1], transpose[Y2], transpose[Y3], transpose[Y4], transpose[Y5]] //. {transpose[adj[A_]] :> adj[transpose[A_]]} //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
 				tr[y1_, y2_, y3_, y4_, y5_]:>Times@@Join[
 					{
 						Refine[
@@ -3353,7 +3377,7 @@ BeginPackage["ARGES`"];
 		
 		SolveTrace6[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3, sumInd4, sumInd5, sumInd6},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5,Y6] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5,Y6] + SolveTrace[transpose[Y1], transpose[Y2], transpose[Y3], transpose[Y4], transpose[Y5], transpose[Y6]] //. {transpose[adj[A_]] :> adj[transpose[A_]]} //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
 				tr[y1_, y2_, y3_, y4_, y5_, y6_]:>Times@@Join[
 					{
 						Refine[
@@ -3375,7 +3399,7 @@ BeginPackage["ARGES`"];
 		
 		SolveProd2[Y1_, Y2_, li_, lj_, SIdx_] := Block[
 			{sumInd1},
-			ReleaseHold[SolveProd[Y1, Y2, li[[1]], lj[[1]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveProd[Y1, Y2, li[[1]], lj[[1]]] + SolveProd[transpose[Y1], transpose[Y2], lj[[1]], li[[1]]] //. {transpose[adj[A_]] :> adj[transpose[A_]]} //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
 				prod[y1_, y2_]:>Times@@Join[
 					{
 						Refine[
@@ -3394,7 +3418,7 @@ BeginPackage["ARGES`"];
 		
 		SolveProd3[Y1_, Y2_, Y3_, li_, lj_, SIdx_] := Block[
 			{sumInd1, sumInd2},
-			ReleaseHold[SolveProd[Y1, Y2, Y3, li[[1]], lj[[1]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveProd[Y1, Y2, Y3, li[[1]], lj[[1]]] + SolveProd[transpose[Y1], transpose[Y2], transpose[Y3], lj[[1]], li[[1]]] //. {transpose[adj[A_]] :> adj[transpose[A_]]} //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
 				prod[y1_, y2_, y3_]:>Times@@Join[
 					{
 						Refine[
@@ -3414,7 +3438,7 @@ BeginPackage["ARGES`"];
 		
 		SolveProd4[Y1_, Y2_, Y3_, Y4_, li_, lj_, SIdx_] := Block[
 			{sumInd1, sumInd2, sumInd3},
-			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, li[[1]], lj[[1]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, li[[1]], lj[[1]]] + SolveProd[transpose[Y1], transpose[Y2], transpose[Y3], transpose[Y4], lj[[1]], li[[1]]] //. {transpose[adj[A_]] :> adj[transpose[A_]]} //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
 				prod[y1_, y2_, y3_, y4_]:>Times@@Join[
 					{
 						Refine[
@@ -3435,7 +3459,7 @@ BeginPackage["ARGES`"];
 		
 		SolveProd5[Y1_, Y2_, Y3_, Y4_, Y5_, li_, lj_, SIdx_] := Block[
 			{sumInd1, sumInd2, sumInd3, sumInd4},
-			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, Y5, li[[1]], lj[[1]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, Y5, li[[1]], lj[[1]]] + SolveProd[transpose[Y1], transpose[Y2], transpose[Y3], transpose[Y4], transpose[Y5], lj[[1]], li[[1]]] //. {transpose[adj[A_]] :> adj[transpose[A_]]} //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
 				prod[y1_, y2_, y3_, y4_, y5_]:>Times@@Join[
 					{
 						Refine[
