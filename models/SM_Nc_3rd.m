@@ -25,15 +25,15 @@ ComplexScalar[H, {1, 1}, {+1/2, 2, 1}];
 VEV[v, Re[H], {1, 1}, {1, 2, 1}, 1];
 
 (* Yukawa sector - third generations only *)
-YukawaY[ yb, H, Q, D, 
+YukawaY[ yb, H, adj[Q], D, 
  {1 &, KroneckerDelta[#1, #2] &, KroneckerDelta[#2, #3] &}, 
  (KroneckerDelta[#3, 3] KroneckerDelta[#4, 3])& ];
  
-YukawaY[ ytau, H, L, E, 
+YukawaY[ ytau, H, adj[L], E, 
  {1 &, KroneckerDelta[#1, #2] &, 1 &}, 
  (KroneckerDelta[#3, 3] KroneckerDelta[#4, 3])& ];
  
-YukawaY[ yt, adj[H], Q, U, 
+YukawaY[ yt, adj[H], adj[Q], U, 
  {1 &, Eps[#1, #2] &, KroneckerDelta[#2, #3] &},
  (KroneckerDelta[#3, 3] KroneckerDelta[#4, 3])& ];
 
