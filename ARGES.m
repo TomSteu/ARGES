@@ -50,7 +50,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 	
- 	Begin["Private`"];
+(* 	Begin["Private`"];*)
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -1704,7 +1704,7 @@ BeginPackage["ARGES`"];
 						If[pb > Length[RealScalarList], 0, C2[RealScalarList[[pb,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pb,1]], ListGauge[[ii2,1]]]] +
 						If[pc > Length[RealScalarList], 0, C2[RealScalarList[[pc,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pc,1]], ListGauge[[ii2,1]]]] +
 						If[pd > Length[RealScalarList], 0, C2[RealScalarList[[pd,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pd,1]], ListGauge[[ii2,1]]]] 
-					) - (
+					) - AA(
 						BY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 
 						BY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] + 
 						BY[ii,ii2][Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] + 
@@ -1717,7 +1717,7 @@ BeginPackage["ARGES`"];
 						BY[ii,ii2][Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] + 
 						BY[ii,ii2][Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb]] + 
 						BY[ii,ii2][Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa], Prepend[lb, pb]]
-					) + 10 (
+					) + 10 BB(
 						BbarY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 
 						BbarY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] + 
 						BbarY[ii,ii2][Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] + 
@@ -2877,10 +2877,10 @@ BeginPackage["ARGES`"];
 							Sum[
 								ContractSum@@Join[
 									{
-										GetGenTrace[{y2, y3}, {{c[[2]], c[[3]]}, {d[[2]], d[[3]]}}]*1/4*(KroneckerDelta[ff3[0], ff4[0]] + I Eps[ff3[0], ff4[0]])*(KroneckerDelta[ff4[0], ff1[0]] + I Eps[ff4[0], ff1[0]])*Times@@(Function[{x2}, y2[[1+x2,1]][c[[3+x2]], ff3[x2], ff4[x2]] y3[[1+x2,1]][d[[3+x2]], ff4[x2], ff1[x2]]]/@Range[NumberOfSubgroups]) Refine[(
+										GetGenTrace[{y2, y3}, {{c[[2]], c[[3]]}, {d[[2]], d[[3]]}}]*1/4*( KroneckerDelta[ff3[0], ff4[0]] + I Eps[ff3[0], ff4[0]])*( KroneckerDelta[ff4[0], ff1[0]] + I Eps[ff4[0], ff1[0]])*Times@@(Function[{x2}, y2[[1+x2,1]][c[[3+x2]], ff3[x2], ff4[x2]] y3[[1+x2,1]][d[[3+x2]], ff4[x2], ff1[x2]]]/@Range[NumberOfSubgroups]) Refine[(
 											\[CapitalLambda][gauge][a, Join[{ff, 1}, ff2/@Range[0,NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{AdjWeylFermionList[[ff,3]],1}, ff1/@Range[0,NumberOfSubgroups]]] \[CapitalLambda][gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{ff,1}, ff3/@Range[0,NumberOfSubgroups]], b, Join[{AdjWeylFermionList[[ff,3]],1}, ff2/@Range[0,NumberOfSubgroups]]] + 
 											\[CapitalLambda][gauge2][a, Join[{ff, 1}, ff3/@Range[0,NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{AdjWeylFermionList[[ff,3]],1}, ff2/@Range[0,NumberOfSubgroups]]] \[CapitalLambda][gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{ff,1}, ff2/@Range[0,NumberOfSubgroups]], b, Join[{AdjWeylFermionList[[ff,3]],1}, ff1/@Range[0,NumberOfSubgroups]]]
-										)/.sub\[CapitalLambda]SF],
+										)//.sub\[CapitalLambda]SF],
 										{gg[1], RealScalarList[[gg[0], 2, 1]]},
 										{gg[2], RealScalarList[[gg[0], 2, 2]]},
 										{ff1[0], 1, 2},
@@ -2903,10 +2903,10 @@ BeginPackage["ARGES`"];
 							Sum[
 								ContractSum@@Join[
 									{
-										GetGenTrace[{y2, y3}, {{d[[2]], d[[3]]}, {c[[2]], c[[3]]}}]*1/4*(KroneckerDelta[ff3[0], ff4[0]] + I Eps[ff3[0], ff4[0]])*(KroneckerDelta[ff4[0], ff1[0]] + I Eps[ff4[0], ff1[0]])* Times@@(Function[{x2}, y2[[1+x2,1]][d[[3+x2]], ff3[x2], ff4[x2]] y3[[1+x2,1]][c[[3+x2]], ff4[x2], ff1[x2]]]/@Range[NumberOfSubgroups]) Refine[(
+										GetGenTrace[{y2, y3}, {{d[[2]], d[[3]]}, {c[[2]], c[[3]]}}]*1/4*( KroneckerDelta[ff3[0], ff4[0]] + I Eps[ff3[0], ff4[0]])*( KroneckerDelta[ff4[0], ff1[0]] + I Eps[ff4[0], ff1[0]])* Times@@(Function[{x2}, y2[[1+x2,1]][d[[3+x2]], ff3[x2], ff4[x2]] y3[[1+x2,1]][c[[3+x2]], ff4[x2], ff1[x2]]]/@Range[NumberOfSubgroups]) Refine[(
 											\[CapitalLambda][gauge][a, Join[{AdjWeylFermionList[[ff,3]], 1}, ff1/@Range[0,NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff,1}, ff2/@Range[0,NumberOfSubgroups]]] \[CapitalLambda][gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{AdjWeylFermionList[[ff,3]],1}, ff2/@Range[0,NumberOfSubgroups]], b, Join[{ff,1}, ff3/@Range[0,NumberOfSubgroups]]] + 
 											\[CapitalLambda][gauge2][a, Join[{AdjWeylFermionList[[ff,3]], 1}, ff2/@Range[0,NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff,1}, ff3/@Range[0,NumberOfSubgroups]]] \[CapitalLambda][gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{AdjWeylFermionList[[ff,3]],1}, ff1/@Range[0,NumberOfSubgroups]], b, Join[{ff,1}, ff2/@Range[0,NumberOfSubgroups]]]
-										)/.sub\[CapitalLambda]SF],
+										)//.sub\[CapitalLambda]SF],
 										{gg[1], RealScalarList[[gg[0], 2, 1]]},
 										{gg[2], RealScalarList[[gg[0], 2, 2]]},
 										{ff1[0], 1, 2},
@@ -2938,7 +2938,7 @@ BeginPackage["ARGES`"];
 										GetGenTrace[{ y2, y4}, {{c[[2]], c[[3]]}, {d[[2]], d[[3]]}}]*1/4*(KroneckerDelta[ff2[0], ff3[0]] + I Eps[ff2[0], ff3[0]])*(KroneckerDelta[ff4[0], ff1[0]] + I Eps[ff4[0], ff1[0]])*Times@@(Function[{x2}, y2[[1+x2,1]][c[[3+x2]], ff2[x2], ff3[x2]] y4[[1+x2,1]][d[[3+x2]], ff4[x2], ff1[x2]]]/@Range[NumberOfSubgroups]) Refine[(
 											\[CapitalLambda][gauge][a, Join[{ffA, 1}, ff2/@Range[0,NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{AdjWeylFermionList[[ffA,3]],1}, ff1/@Range[0,NumberOfSubgroups]]] \[CapitalLambda][gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{AdjWeylFermionList[[ffB,3]],1}, ff3/@Range[0,NumberOfSubgroups]], b, Join[{ffB,1}, ff4/@Range[0,NumberOfSubgroups]]] + 
 											\[CapitalLambda][gauge2][a, Join[{AdjWeylFermionList[[ffB,3]], 1}, ff3/@Range[0,NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ffB,1}, ff4/@Range[0,NumberOfSubgroups]]] \[CapitalLambda][gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{ffA,1}, ff2/@Range[0,NumberOfSubgroups]], b, Join[{AdjWeylFermionList[[ffA,3]],1}, ff1/@Range[0,NumberOfSubgroups]]]
-										)/.sub\[CapitalLambda]SF],
+										)//.sub\[CapitalLambda]SF],
 										{gg[1], RealScalarList[[gg[0], 2, 1]]},
 										{gg[2], RealScalarList[[gg[0], 2, 2]]},
 										{ff1[0], 1, 2},
@@ -3377,7 +3377,7 @@ BeginPackage["ARGES`"];
 		(* optimized functions for Yukawa traces and products *)
 		SolveTrace2[Y1_, Y2_, SIdx_] := Block[
 			{sumInd1,sumInd2},
-			ReleaseHold[SolveTrace[Y1,Y2]]//.subYuk2 /.{
+			ReleaseHold[SolveTrace[Y1,Y2]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
 				tr[y1_, y2_]:>Times@@Join[
 					{
 						Refine[
@@ -3395,7 +3395,7 @@ BeginPackage["ARGES`"];
 		
 		SolveTrace3[Y1_, Y2_, Y3_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3]]//.subYuk2 /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
 				tr[y1_, y2_, y3_]:>Times@@Join[
 					{
 						Refine[
@@ -3414,7 +3414,7 @@ BeginPackage["ARGES`"];
 		
 		SolveTrace4[Y1_, Y2_, Y3_, Y4_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3, sumInd4},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4]]//.subYuk2 /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_]:>Times@@Join[
 					{
 						Refine[
@@ -3434,7 +3434,7 @@ BeginPackage["ARGES`"];
 		
 		SolveTrace5[Y1_, Y2_, Y3_, Y4_, Y5_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3, sumInd4, sumInd5},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5]]//.subYuk2 /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_, y5_]:>Times@@Join[
 					{
 						Refine[
@@ -3455,7 +3455,7 @@ BeginPackage["ARGES`"];
 		
 		SolveTrace6[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3, sumInd4, sumInd5, sumInd6},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5,Y6]]//.subYuk2 /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5,Y6]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_, y5_, y6_]:>Times@@Join[
 					{
 						Refine[
@@ -3477,7 +3477,7 @@ BeginPackage["ARGES`"];
 		
 		SolveProd2[Y1_, Y2_, li_, lj_, SIdx_] := Block[
 			{sumInd1},
-			ReleaseHold[SolveProd[Y1, Y2, li[[1]], lj[[1]]]]//.subYuk2 /.{
+			ReleaseHold[SolveProd[Y1, Y2, li[[1]], lj[[1]]]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
 				prod[y1_, y2_]:>Times@@Join[
 					{
 						Refine[
@@ -3496,7 +3496,7 @@ BeginPackage["ARGES`"];
 		
 		SolveProd3[Y1_, Y2_, Y3_, li_, lj_, SIdx_] := Block[
 			{sumInd1, sumInd2},
-			ReleaseHold[SolveProd[Y1, Y2, Y3, li[[1]], lj[[1]]]]//.subYuk2 /.{
+			ReleaseHold[SolveProd[Y1, Y2, Y3, li[[1]], lj[[1]]]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
 				prod[y1_, y2_, y3_]:>Times@@Join[
 					{
 						Refine[
@@ -3516,7 +3516,7 @@ BeginPackage["ARGES`"];
 		
 		SolveProd4[Y1_, Y2_, Y3_, Y4_, li_, lj_, SIdx_] := Block[
 			{sumInd1, sumInd2, sumInd3},
-			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, li[[1]], lj[[1]]]]//.subYuk2 /.{
+			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, li[[1]], lj[[1]]]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
 				prod[y1_, y2_, y3_, y4_]:>Times@@Join[
 					{
 						Refine[
@@ -3537,7 +3537,7 @@ BeginPackage["ARGES`"];
 		
 		SolveProd5[Y1_, Y2_, Y3_, Y4_, Y5_, li_, lj_, SIdx_] := Block[
 			{sumInd1, sumInd2, sumInd3, sumInd4},
-			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, Y5, li[[1]], lj[[1]]]]//.subYuk2 /.{
+			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, Y5, li[[1]], lj[[1]]]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
 				prod[y1_, y2_, y3_, y4_, y5_]:>Times@@Join[
 					{
 						Refine[
@@ -3588,9 +3588,9 @@ BeginPackage["ARGES`"];
 		
 		(* traces and products of fermion type indices *)
 		SolveProd[i1_, i2_] := KroneckerDelta[AdjWeylFermionList[[i1,3]], i2];
-		SolveProd[a_, i1_, i2_] := prod[a[i1,i2]]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd;
-		SolveProd[a_,b___, i1_, i2_] := Sum[prod[a[i1, s], SolveProd[b, AdjWeylFermionList[[s,3]], i2]]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd, {s, 1, Length[AdjWeylFermionList]}];
-		SolveTrace[a___] := Sum[tr[SolveProd[a, AdjWeylFermionList[[s,3]], s]]//. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk1 //.subProd, {s, 1, Length[AdjWeylFermionList]}];
+		SolveProd[a_, i1_, i2_] := prod[a[i1,i2]];
+		SolveProd[a_,b___, i1_, i2_] := Sum[prod[a[i1, s], SolveProd[b, AdjWeylFermionList[[s,3]], i2]], {s, 1, Length[AdjWeylFermionList]}];
+		SolveTrace[a___] := Sum[tr[SolveProd[a, AdjWeylFermionList[[s,3]], s]], {s, 1, Length[AdjWeylFermionList]}];
 		
 		(* permutations *)
 		Perm[f_[a_,b_,c_,d_]]:= f[a,b,c,d] + f[a,b,d,c] + f[a,c,b,d] + f[a,c,d,b] + f[a,d,b,c] + f[a,d,c,b] + f[b,a,c,d] + f[b,a,d,c] + f[b,c,a,d] + f[b,c,d,a] + f[b,d,a,c] + f[b,d,c,a] + f[c,a,b,d] + f[c,a,d,b] + f[c,b,a,d] + f[c,b,d,a] + f[c,d,a,b] + f[c,d,b,a] + f[d,a,b,c] + f[d,a,c,b] + f[d,b,a,c] + f[d,b,c,a] + f[d,c,a,b] + f[d,c,b,a];
@@ -3635,5 +3635,5 @@ BeginPackage["ARGES`"];
 		Fermion::UnknownParticle = "Undefined Fermion field";
 		
 		Reset[];
-	End[];
+(*	End[];*)
 EndPackage[];
