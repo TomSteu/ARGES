@@ -50,7 +50,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 	
-(* 	Begin["Private`"];*)
+ 	Begin["Private`"];
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -1704,7 +1704,7 @@ BeginPackage["ARGES`"];
 						If[pb > Length[RealScalarList], 0, C2[RealScalarList[[pb,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pb,1]], ListGauge[[ii2,1]]]] +
 						If[pc > Length[RealScalarList], 0, C2[RealScalarList[[pc,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pc,1]], ListGauge[[ii2,1]]]] +
 						If[pd > Length[RealScalarList], 0, C2[RealScalarList[[pd,1]], ListGauge[[ii,1]]] C2[RealScalarList[[pd,1]], ListGauge[[ii2,1]]]] 
-					) - AA(
+					) - (
 						BY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 
 						BY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] + 
 						BY[ii,ii2][Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] + 
@@ -1717,7 +1717,7 @@ BeginPackage["ARGES`"];
 						BY[ii,ii2][Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] + 
 						BY[ii,ii2][Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb]] + 
 						BY[ii,ii2][Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa], Prepend[lb, pb]]
-					) + 10 BB(
+					) + 10 (
 						BbarY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 
 						BbarY[ii,ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] + 
 						BbarY[ii,ii2][Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] + 
@@ -3635,5 +3635,5 @@ BeginPackage["ARGES`"];
 		Fermion::UnknownParticle = "Undefined Fermion field";
 		
 		Reset[];
-(*	End[];*)
+	End[];
 EndPackage[];
