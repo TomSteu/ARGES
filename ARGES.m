@@ -64,6 +64,9 @@ BeginPackage["ARGES`"];
 			ComplexScalarList = {};
 			subInvariants = {};
 			nonNumerics = {};
+			YukMat = {};
+			AdjYukMat = {};
+			QuartMat = {{{{0}}}};
 			$Assumptions = Element[KroneckerDelta[___], Reals];
 		];
 
@@ -148,6 +151,8 @@ BeginPackage["ARGES`"];
 			WeylFermionList = Append[WeylFermionList, {sym, Nflavor, Gauge}];
 			AdjWeylFermionList = Append[AdjWeylFermionList, {sym//.subProd, Length[WeylFermionList], Length[AdjWeylFermionList]+2, Length[AdjWeylFermionList]+1}];
 			AdjWeylFermionList = Append[AdjWeylFermionList, {adj[sym]//.subProd, Length[WeylFermionList], Length[AdjWeylFermionList], Length[AdjWeylFermionList]}];
+			YukMat = Table[If[i1 <= Length[AdjWeylFermionList] - 2 && i2 <= Length[AdjWeylFermionList] - 2, YukMat[[a, i1, i2]], 0], {a, 1, Length[RealScalarList]+1}, {i1, 1, Length[AdjWeylFermionList]}, {i2, 1, Length[AdjWeylFermionList]}];
+			AdjYukMat = Table[If[i1 <= Length[AdjWeylFermionList] - 2 && i2 <= Length[AdjWeylFermionList] - 2, AdjYukMat[[a, i1, i2]], 0], {a, 1, Length[RealScalarList]+1}, {i1, 1, Length[AdjWeylFermionList]}, {i2, 1, Length[AdjWeylFermionList]}];
 		];
 		
 		RealScalar[sym_, Nflavor_List, Gauge_List] := Module[
@@ -169,6 +174,44 @@ BeginPackage["ARGES`"];
 			AddAssumption/@Gauge;
 			UpdateDummy[];
 			RealScalarList = Append[RealScalarList, {sym, Nflavor, Gauge}];
+			YukMat = Table[
+				If[a <= Length[RealScalarList]-1, YukMat[[a, i1, i2]], 
+					If[a == Length[RealScalarList]+1, YukMat[[a-1, i1, i2]], 0]
+				],
+				{a, 1, Length[RealScalarList]+1},
+				{i1, 1, Length[AdjWeylFermionList]},
+				{i2, 1, Length[AdjWeylFermionList]}
+			];
+			AdjYukMat = Table[
+				If[a <= Length[RealScalarList]-1, AdjYukMat[[a, i1, i2]], 
+					If[a == Length[RealScalarList]+1, AdjYukMat[[a-1, i1, i2]], 0]
+				],
+				{a, 1, Length[RealScalarList]+1},
+				{i1, 1, Length[AdjWeylFermionList]},
+				{i2, 1, Length[AdjWeylFermionList]}
+			];
+			QuartMat = Table[
+				Block[
+					{aa, bb, cc, dd},
+					aa = If[a == Length[RealScalarList]+1, a-1, 
+						If[a == Length[RealScalarList], a+1, a]
+					];
+					bb = If[b == Length[RealScalarList]+1, b-1, 
+						If[b == Length[RealScalarList], b+1, b]
+					];
+					cc = If[c == Length[RealScalarList]+1, c-1, 
+						If[c == Length[RealScalarList], c+1, c]
+					];
+					dd = If[d == Length[RealScalarList]+1, d-1, 
+						If[d == Length[RealScalarList], d+1, d]
+					];
+					If[aa > Length[RealScalarList] || bb > Length[RealScalarList] || cc > Length[RealScalarList] || dd > Length[RealScalarList], 0, QuartMat[[aa, bb, cc, dd]]]
+				],
+				{a, 1, Length[RealScalarList]+1},
+				{b, 1, Length[RealScalarList]+1},
+				{c, 1, Length[RealScalarList]+1},
+				{d, 1, Length[RealScalarList]+1}
+			];
 		];
 		
 		ComplexScalar[sym_, Nflavor_, Gauge_List] := Module[
@@ -223,6 +266,10 @@ BeginPackage["ARGES`"];
 			If[posS == {} || posFi == {} || posFj == {},
 				Message[Yukawa::UnknownParticle];,
 				ListYukawa = Append[ListYukawa,{sym, posS[[1,1]], posFi[[1,1]], posFj[[1,1]], gauge, Mat[fak]&}];
+				YukMat[[posS[[1,1]], posFi[[1,1]], posFj[[1,1]]]] += Yukawa[Length[ListYukawa]];
+				YukMat[[posS[[1,1]], posFj[[1,1]], posFi[[1,1]]]] += transpose[Yukawa[Length[ListYukawa]]];
+				AdjYukMat[[posS[[1,1]], AdjWeylFermionList[[posFj[[1,1]], 3]], AdjWeylFermionList[[posFi[[1,1]], 3]]]] += adj[Yukawa[Length[ListYukawa]]];
+				AdjYukMat[[posS[[1,1]], AdjWeylFermionList[[posFi[[1,1]], 3]], AdjWeylFermionList[[posFj[[1,1]], 3]]]] += adj[transpose[Yukawa[Length[ListYukawa]]]];
 			];
 		];
 		
@@ -248,6 +295,10 @@ BeginPackage["ARGES`"];
 			If[posS == {} || posFi == {} || posFj == {},
 				Message[Yukawa::UnknownParticle];,
 				ListYukawa = Append[ListYukawa,{sym, posS[[1,1]], posFi[[1,1]], posFj[[1,1]], gauge, fak}];
+				YukMat[[posS[[1,1]], posFi[[1,1]], posFj[[1,1]]]] += Yukawa[Length[ListYukawa]];
+				YukMat[[posS[[1,1]], posFj[[1,1]], posFi[[1,1]]]] += transpose[Yukawa[Length[ListYukawa]]];
+				AdjYukMat[[posS[[1,1]], AdjWeylFermionList[[posFj[[1,1]], 3]], AdjWeylFermionList[[posFi[[1,1]], 3]]]] += adj[Yukawa[Length[ListYukawa]]];
+				AdjYukMat[[posS[[1,1]], AdjWeylFermionList[[posFi[[1,1]], 3]], AdjWeylFermionList[[posFj[[1,1]], 3]]]] += adj[transpose[Yukawa[Length[ListYukawa]]]];
 			];
 		];
 		
@@ -317,6 +368,7 @@ BeginPackage["ARGES`"];
 						If[iter > Dimensions[ListQuarticSym][[1]], Break[];];
 						If[ListQuarticSym[[iter, 7]] === (0&), 
 							ListQuarticSym = Delete[ListQuarticSym, iter];
+							QuartMat = (QuartMat /. {Quart[iter] :> 0, Quart[n_] :> Quart[n-1] /; n>iter});
 							Continue[];
 						];
 						iter++;
@@ -380,6 +432,7 @@ BeginPackage["ARGES`"];
 						If[iter > Dimensions[ListQuarticSym][[1]], Break[];];
 						If[ListQuarticSym[[iter, 7]] === (0&), 
 							ListQuarticSym = Delete[ListQuarticSym, iter];
+							QuartMat = (QuartMat /. {Quart[iter] :> 0, Quart[n_] :> Quart[n-1] /; n>iter});
 							Continue[];
 						];
 						iter++;
@@ -432,6 +485,7 @@ BeginPackage["ARGES`"];
 						If[iter > Dimensions[ListQuarticSym][[1]], Break[];];
 						If[ListQuarticSym[[iter, 7]] === (0&), 
 							ListQuarticSym = Delete[ListQuarticSym, iter];
+							QuartMat = (QuartMat /. {Quart[iter] :> 0, Quart[n_] :> Quart[n-1] /; n>iter});
 							Continue[];
 						];
 						iter++;
@@ -473,6 +527,7 @@ BeginPackage["ARGES`"];
 						If[iter > Dimensions[ListQuarticSym][[1]], Break[];];
 						If[ListQuarticSym[[iter, 7]] === (0&), 
 							ListQuarticSym = Delete[ListQuarticSym, iter];
+							QuartMat = (QuartMat /. {Quart[iter] :> 0, Quart[n_] :> Quart[n-1] /; n>iter});
 							Continue[];
 						];
 						iter++;
@@ -492,6 +547,10 @@ BeginPackage["ARGES`"];
 			If[posFi == {} || posFj == {},
 				Message[Fermion::UnknownParticle];,
 				ListYukawa = Append[ListYukawa, {sym, Length[RealScalarList]+1, posFi[[1,1]], posFj[[1,1]], Function[{x}, Evaluate[x[#2,#3]]&]/@gauge, Mat[fak]&}];
+				YukMat[[posS[[1,1]], posFi[[1,1]], posFj[[1,1]]]] += Yukawa[Length[ListYukawa]];
+				YukMat[[posS[[1,1]], posFj[[1,1]], posFi[[1,1]]]] += transpose[Yukawa[Length[ListYukawa]]];
+				AdjYukMat[[posS[[1,1]], AdjWeylFermionList[[posFj[[1,1]], 3]], AdjWeylFermionList[[posFi[[1,1]], 3]]]] += adj[Yukawa[Length[ListYukawa]]];
+				AdjYukMat[[posS[[1,1]], AdjWeylFermionList[[posFi[[1,1]], 3]], AdjWeylFermionList[[posFj[[1,1]], 3]]]] += adj[transpose[Yukawa[Length[ListYukawa]]]];
 			];
 		];
 		
@@ -506,6 +565,10 @@ BeginPackage["ARGES`"];
 			If[posFi == {} || posFj == {},
 				Message[Fermion::UnknownParticle];,
 				ListYukawa = Append[ListYukawa, {sym, Length[RealScalarList]+1, posFi[[1,1]], posFj[[1,1]], Function[{x}, Evaluate[x[#2,#3]]&]/@gauge, Evaluate[fak[#2,#3]]&}];
+				YukMat[[posS[[1,1]], posFi[[1,1]], posFj[[1,1]]]] += Yukawa[Length[ListYukawa]];
+				YukMat[[posS[[1,1]], posFj[[1,1]], posFi[[1,1]]]] += transpose[Yukawa[Length[ListYukawa]]];
+				AdjYukMat[[posS[[1,1]], AdjWeylFermionList[[posFj[[1,1]], 3]], AdjWeylFermionList[[posFi[[1,1]], 3]]]] += adj[Yukawa[Length[ListYukawa]]];
+				AdjYukMat[[posS[[1,1]], AdjWeylFermionList[[posFi[[1,1]], 3]], AdjWeylFermionList[[posFj[[1,1]], 3]]]] += adj[transpose[Yukawa[Length[ListYukawa]]]];
 			];
 		];
 		
@@ -616,7 +679,7 @@ BeginPackage["ARGES`"];
 			If[posA == {} || posB == {},
 				Message[Fermion::UnknownParticle];,
 				mass = 0;
-				mass += BetaYukawa[Length[RealScalarList]+1, posA[[1,1]], posB[[1,1]], Function[{x},1]/@Range[NumberOfSubgroups+2], la, lb, 0];
+				mass += VertexSFF[Length[RealScalarList]+1, posA[[1,1]], posB[[1,1]], Function[{x},1]/@Range[NumberOfSubgroups+2], la, lb];
 				For[vev=1, vev<=Dimensions[ListVEV][[1]], vev++, 
 					mass += ListVEV[[vev, 2]] ListVEV[[vev, 1]] BetaYukawa[ListVEV[[vev, 3, 1]], posA[[1,1]], posB[[1,1]], ListVEV[[vev, 3, 2;;]], la, lb, 0];
 				];
@@ -625,7 +688,12 @@ BeginPackage["ARGES`"];
 		];
 		
 		(* One scalar two fermions *)
-		VertexSFF[Sa_, Fi_, Fj_, la_, li_, lj_] := \[Beta][Sa, Fi, Fj, la, li, lj, 0];
+		VertexSFF[Sa_, Fi_, Fj_, la_, li_, lj_] := ReleaseHold[Yuk[pa][Fi,Fj] + adj[Yuk[pa][AdjWeylFermionList[[Fj[[1]],3]],AdjWeylFermionList[[Fi[[1]],3]]]]/. subYuk1]/.{
+			adj[transpose[Yukawa[a_]]]:>(If[(MatchQ[ListYukawa[[a,6]], Mat[___]] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]] || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]]  || MatchQ[ListYukawa[[a,6]], Mat[___]&] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]&]  || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]&] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]&]), conj[ListYukawa[[a, 1]][li[[1]], lj[[1]]]], conj[ListYukawa[[a, 1]]]] Refine[Conjugate[(ListYukawa[[a,6]][la[[1]], la[[2]], li[[1]], lj[[1]]]/.{Mat:>Identity}) Times@@(Function[{x}, ListYukawa[[a,5,x]][la[[2+x]], li[[1+x]], lj[[1+x]]]]/@Range[NumberOfSubgroups])]]),
+			transpose[Yukawa[a_]]:>(If[(MatchQ[ListYukawa[[a,6]], Mat[___]] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]] || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]]  || MatchQ[ListYukawa[[a,6]], Mat[___]&] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]&]  || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]&] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]&]), transpose[ListYukawa[[a, 1]]][lj[[1]], li[[1]]], ListYukawa[[a, 1]]] Refine[ListYukawa[[a,6]][la[[1]], la[[2]], lj[[1]], li[[1]]]/.{Mat:>Identity}] Times@@(Function[{x}, Refine[Conjugate[ListYukawa[[a,5,x]][la[[2+x]], lj[[1+x]], li[[1+x]]]]]]/@Range[NumberOfSubgroups])),
+			adj[Yukawa[a_]]:>(If[(MatchQ[ListYukawa[[a,6]], Mat[___]] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]] || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]]  || MatchQ[ListYukawa[[a,6]], Mat[___]&] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]&]  || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]&] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]&]), adj[ListYukawa[[a, 1]]][lj[[1]], li[[1]]], ListYukawa[[a, 1]]] Conjugate[Refine[ListYukawa[[a,6]][la[[1]], la[[2]], lj[[1]], li[[1]]]/.{Mat:>Identity} Times@@(Function[{x}, Refine[Conjugate[ListYukawa[[a,5,x]][la[[2+x]], lj[[1+x]], li[[1+x]]]]]]/@Range[NumberOfSubgroups])]]),
+			Yukawa[a_]:>(If[(MatchQ[ListYukawa[[a,6]], Mat[___]] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]] || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]]  || MatchQ[ListYukawa[[a,6]], Mat[___]&] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]&]  || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]&] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]&]), ListYukawa[[a, 1]][li[[1]], lj[[1]]], ListYukawa[[a, 1]]] (ListYukawa[[a,6]][la[[1]], la[[2]], li[[1]], lj[[1]]]/.{Mat:>Identity}) Times@@(Function[{x}, ListYukawa[[a,5,x]][la[[2+x]], li[[1+x]], lj[[1+x]]]]/@Range[NumberOfSubgroups]))
+		}//SimplifyProduct;
 		
 		(* Increment dummy field number before adding new scalar *)
 		UpdateDummy[] := Module[
@@ -662,7 +730,8 @@ BeginPackage["ARGES`"];
 				];
 			];
 			If[pos == 0,
-				ListQuarticSym = Append[ListQuarticSym, {sym, pa, pb, pc, pd, gauge, fak}];,
+				ListQuarticSym = Append[ListQuarticSym, {sym, pa, pb, pc, pd, gauge, fak}];
+				QuartMat[[pa,pb,pc,pd]] += Quart[Length[ListQuarticSym]];,
 				ListQuarticSym[[pos, 7]] = Evaluate[ListQuarticSym[[pos, 7]][#1,#2,#3,#4,#5,#6,#7,#8] + fak[#1,#2,#3,#4,#5,#6,#7,#8]]&;
 			];
 		];
@@ -1123,7 +1192,7 @@ BeginPackage["ARGES`"];
 			beta -= Power[\[Alpha][ListGauge[[pos,1]]], 3]/(6 d[ListGauge[[pos,1]]] Power[4 \[Pi], 2]) (\[Lambda]\[CapitalLambda]2[pos] //. subScalarInvariants);
 			beta -= Sqr[\[Alpha][ListGauge[[pos,1]]]]/(3 d[ListGauge[[pos,1]]] Power[4 \[Pi], 4]) Sum[
 				ContractSum[
-					ReleaseHold[tr[adj[Yuk[s]][AdjWeylFermionList[[f,3]], f2], Yuk[s2][AdjWeylFermionList[[f2,3]], f3], adj[Yuk[s2]][AdjWeylFermionList[[f3,3]], f4], Yuk[s][AdjWeylFermionList[[f4,3]], f]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+					ReleaseHold[tr[adj[Yuk[s]][AdjWeylFermionList[[f,3]], f2], Yuk[s2][AdjWeylFermionList[[f2,3]], f3], adj[Yuk[s2]][AdjWeylFermionList[[f3,3]], f4], Yuk[s][AdjWeylFermionList[[f4,3]], f]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
 						tr[y1_, y2_, y3_, y4_]:>(
 							(
 								Refine[
@@ -1163,8 +1232,8 @@ BeginPackage["ARGES`"];
 			Return[-6 beta];
 		]/;(NumberOfSubgroups == 1);
 		
-		BetaYukawa[pa_, pi_, pj_, la_, li_, lj_, 0] := ReleaseHold[Yuk[pa][pi,pj] /. subYuk]/.{
-			adj[Yukawa[a_]]:>(If[(MatchQ[ListYukawa[[a,6]], Mat[___]] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]] || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]]  || MatchQ[ListYukawa[[a,6]], Mat[___]&] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]&]  || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]&] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]&]), adj[ListYukawa[[a, 1]]][lj[[1]], li[[1]]], adj[ListYukawa[[a, 1]]]] Refine[Conjugate[ListYukawa[[a,6]][la[[1]], la[[2]], lj[[1]], li[[1]]]/.{Mat:>Identity}]] Times@@(Function[{x}, Refine[Conjugate[ListYukawa[[a,5,x]][la[[2+x]], lj[[1+x]], li[[1+x]]]]]]/@Range[NumberOfSubgroups])),
+		BetaYukawa[pa_, pi_, pj_, la_, li_, lj_, 0] := ReleaseHold[Yuk[pa][pi,pj] /. subYuk1]/.{
+			transpose[Yukawa[a_]]:>(If[(MatchQ[ListYukawa[[a,6]], Mat[___]] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]] || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]]  || MatchQ[ListYukawa[[a,6]], Mat[___]&] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]&]  || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]&] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]&]), transpose[ListYukawa[[a, 1]]][lj[[1]], li[[1]]], ListYukawa[[a, 1]]] Refine[ListYukawa[[a,6]][la[[1]], la[[2]], lj[[1]], li[[1]]]/.{Mat:>Identity}] Times@@(Function[{x}, Refine[Conjugate[ListYukawa[[a,5,x]][la[[2+x]], lj[[1+x]], li[[1+x]]]]]]/@Range[NumberOfSubgroups])),
 			Yukawa[a_]:>(If[(MatchQ[ListYukawa[[a,6]], Mat[___]] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]] || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]]  || MatchQ[ListYukawa[[a,6]], Mat[___]&] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]&]  || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]&] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]&]), ListYukawa[[a, 1]][li[[1]], lj[[1]]], ListYukawa[[a, 1]]] (ListYukawa[[a,6]][la[[1]], la[[2]], li[[1]], lj[[1]]]/.{Mat:>Identity}) Times@@(Function[{x}, ListYukawa[[a,5,x]][la[[2+x]], li[[1+x]], lj[[1+x]]]]/@Range[NumberOfSubgroups]))
 		};
 		
@@ -1490,7 +1559,7 @@ BeginPackage["ARGES`"];
 		BetaQuartic[a_, b_, c_, d_, la_, lb_, lc_, ld_, 0] := Module[
 			{q},
 			Return[
-				ReleaseHold[(Quartic[a,b,c,d]/.subQuart)]//.{
+				ReleaseHold[(Quartic[a,b,c,d]/.subQuart1)]//.{
 				Quart[q_]:>((ListQuarticSym[[q,1]] ListQuarticSym[[q,7]][la[[1]], la[[2]], lb[[1]], lb[[2]], lc[[1]], lc[[2]], ld[[1]], ld[[2]]])(Times@@(Function[{x},ListQuarticSym[[q,6,x]][la[[2+x]], lb[[2+x]], lc[[2+x]], ld[[2+x]]]]/@Range[NumberOfSubgroups])))}
 			];
 		];
@@ -2085,9 +2154,9 @@ BeginPackage["ARGES`"];
 		(* Matrix multiplication and traces for Yukawas *)
 		subProd := {
 			prod[a___, b_ + c_, d___]:>(prod[a, b, d] + prod[a, c, d]),
-			prod[][i1_,i2_]:>KroneckerDelta[i1,i2],
+			prod[][ii1_,ii2_]:>KroneckerDelta[ii1,ii2],
 			prod[]:>1,
-			prod[a_][i1_,i2_]:>a[i1,i2], 
+			prod[a_][ii1_,ii2_]:>a[ii1,ii2], 
 			prod[a___, prod[b___], c___]:>prod[a, b, c], 
 			prod[a___, n_, b___]:>(n prod[a,b])/; NumberQ[n],
 			prod[a___, n_ c_, b___]:>(n prod[a,c,b])/; NumberQ[n],
@@ -2099,7 +2168,7 @@ BeginPackage["ARGES`"];
 			tr[a___, prod[b___], c___]:>tr[a,b,c],
 			adj[tr[a___]]:>tr[adj[a]],
 			adj[prod[a___]]:>prod[adj[a]],
-			prod[adj[a___,b___]]:>prod[adj[b],adj[a]],
+			prod[adj[a__,b__]]:>prod[adj[b],adj[a]],
 			tr[adj[a___,b___]]:>tr[adj[b],adj[a]],
 			adj[n_ a_]:> (Conjugate[n] adj[a]) /; NumberQ[n],
 			prod[a___, tr[b___], c___]:>(tr[b] prod[a,c]),
@@ -2111,53 +2180,12 @@ BeginPackage["ARGES`"];
 		};
 		
 		(* replaces Yukawas and other Invariants in Fermion traces and products *)
-		subYuk := {
-			adj[Yuk[a_][i1_, i2_]]:>
-				Block[
-					{posY, posYt},
-					posY = {};
-					posYt = {};
-					If[ListYukawa != {},
-						For[yuk = 1, yuk <= Dimensions[ListYukawa][[1]], yuk++,
-							If[
-								ListYukawa[[yuk,2]] == a && AdjWeylFermionList[[ListYukawa[[yuk,3]],3]] == i1 && AdjWeylFermionList[[ListYukawa[[yuk,4]],3]] == i2, 
-								posY = Append[posY, yuk];
-							];
-						];
-					];
-					If[ListYukawa != {},
-						For[yuk = 1, yuk <= Dimensions[ListYukawa][[1]], yuk++,
-							If[
-								ListYukawa[[yuk,2]] == a && AdjWeylFermionList[[ListYukawa[[yuk,3]],3]] == i2 && AdjWeylFermionList[[ListYukawa[[yuk,4]],3]] == i1, 
-								posYt = Append[posYt, yuk];
-							];
-						];
-					];
-					If[posY != {}, Plus@@(Function[{x}, Hold[adj[Yukawa[x]]]]/@posY), 0] +  If[posYt != {}, Plus@@(Function[{x}, adj[transpose[Hold[Yukawa[x]]]]]/@posYt), 0]
-				],
-			Yuk[a_][i1_, i2_]:>
-				Block[
-					{posY, posYt},
-					posY = {};
-					posYt = {};
-					If[ListYukawa != {},
-						For[yuk = 1, yuk <= Dimensions[ListYukawa][[1]], yuk++,
-							If[
-								ListYukawa[[yuk,2]] == a && ListYukawa[[yuk,3]] == i1 && ListYukawa[[yuk,4]] == i2, 
-								posY = Append[posY, yuk];
-							];
-						];
-					];
-					If[ListYukawa != {},
-						For[yuk = 1, yuk <= Dimensions[ListYukawa][[1]], yuk++,
-							If[
-								ListYukawa[[yuk,2]] == a && ListYukawa[[yuk,3]] == i2 && ListYukawa[[yuk,4]] == i1, 
-								posYt = Append[posYt, yuk];
-							];
-						];
-					];
-					If[posY != {}, Plus@@(Function[{x}, Hold[Yukawa[x]]]/@posY), 0] +  If[posYt != {}, Plus@@(Function[{x}, transpose[Hold[Yukawa[x]]]]/@posYt), 0]
-				],
+		subYuk1 := {
+			adj[Yuk[a_][i1_, i2_]] :> AdjYukMat[[a, i2, i1]], 
+			Yuk[a_][i1_, i2_] :> YukMat[[a, i1, i2]],
+			Delt[ii_][i1_,i2_] :> If[AdjWeylFermionList[[i1,2]] == ii && AdjWeylFermionList[[i1,2]] == ii && AdjWeylFermionList[[i1,3]] == i2, Delta[ii], 0]
+		};
+		subYuk2 := {
 			adj[transpose[Yukawa[pos_]]]:>Join[
 				{
 					{
@@ -2237,7 +2265,6 @@ BeginPackage["ARGES`"];
 					]
 				]/@Range[NumberOfSubgroups]
 			],
-			Delt[ii_][i1_,i2_] :> If[AdjWeylFermionList[[i1,2]] == ii && AdjWeylFermionList[[i1,2]] == ii && AdjWeylFermionList[[i1,3]] == i2, Delta[ii], 0],
 			Delta[ii_] :> Join[
 				{{del[ii], Mat[1]&, 1, 1, WeylFermionList[[ii,2]], WeylFermionList[[ii,2]]}},
 				Function[{x}, {KroneckerDelta[#2,#3]&, 1, FMultiplicity[ii,x], FMultiplicity[ii,x]}]/@Range[NumberOfSubgroups]
@@ -2245,22 +2272,8 @@ BeginPackage["ARGES`"];
 		};
 		
 		(* substitution rule for scalar sector *)
-		subQuart := {
-			Quartic[a_, b_, c_, d_] :> Block[
-				{pos, qq},
-				pos = {};
-				If[ListQuartic != {},
-					For[qq=1, qq<=Dimensions[ListQuarticSym][[1]], qq++,
-						If[ListQuarticSym[[qq,2]] == a && ListQuarticSym[[qq,3]] == b && ListQuarticSym[[qq, 4]] == c && ListQuarticSym[[qq,5]] == d,
-							pos = Append[pos, qq];
-						];
-					];
-				];
-				If[pos == {}, 
-					0,
-					Plus@@(Hold/@(Quart/@pos))
-				]
-			],
+		subQuart1 := {Quartic[a_, b_, c_, d_] :> QuartMat[[a,b,c,d]]};
+		subQuart2 := {
 			Quart[q_] :> Join[
 				{
 					{
@@ -2482,7 +2495,7 @@ BeginPackage["ARGES`"];
 				assHold = $Assumptions;
 				$Assumptions=$Assumptions&&Element[scGenIdx,Integers]&&(scGenIdx>0)&&Element[scGenIdx2,Integers]&&(scGenIdx2>0)&&(And@@(Function[{x},Element[scGaugeIdx[x],Integers]&&(scGaugeIdx[x]>0)&&Element[ff1[x],Integers]&&(ff1[x]>0)&&Element[ff2[x],Integers]&&(ff2[x]>0)&&Element[ff3[x],Integers]&&(ff3[x]>0)&&Element[ff4[x],Integers]&&(ff4[x]>0)]/@Range[NumberOfSubgroups]));
 				sum = Refine[Sum[
-					(ReleaseHold[prod[Yuk[pa[[1]]][pi[[1]], f1], adj[Yuk[ss]][AdjWeylFermionList[[f1,3]], f2], Yuk[ss][AdjWeylFermionList[[f2,3]],pj[[1]]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk //.{
+					(ReleaseHold[prod[Yuk[pa[[1]]][pi[[1]], f1], adj[Yuk[ss]][AdjWeylFermionList[[f1,3]], f2], Yuk[ss][AdjWeylFermionList[[f2,3]],pj[[1]]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk1 //.subProd]//.subYuk2 //.{
 						prod[A_, B_, C_] :> ContractSum@@Join[
 							{
 								Refine[ContractSum[GetGenProd[{A,B,C}, {{pa[[2]], pa[[3]]}, {scGenIdx, scGenIdx2}, {scGenIdx, scGenIdx2}}, pi[[2]], pj[[2]]] //.subProd, {scGenIdx, 1, RealScalarList[[ss,2,1]]}, {scGenIdx2, 1, RealScalarList[[ss,2,2]]}]] Refine[Conjugate[
@@ -2496,7 +2509,7 @@ BeginPackage["ARGES`"];
 							Function[{x},{ff4[x], 1, FMultiplicity[AdjWeylFermionList[[f2,2]],x]}]/@Range[NumberOfSubgroups]
 						]
 					}) +
-					(ReleaseHold[prod[Yuk[ss][pi[[1]], f1], adj[Yuk[ss]][AdjWeylFermionList[[f1,3]], f2], Yuk[pa[[1]]][AdjWeylFermionList[[f2,3]],pj[[1]]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk //.{
+					(ReleaseHold[prod[Yuk[ss][pi[[1]], f1], adj[Yuk[ss]][AdjWeylFermionList[[f1,3]], f2], Yuk[pa[[1]]][AdjWeylFermionList[[f2,3]],pj[[1]]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk1 //.subProd]//.subYuk2 //.{
 						prod[A_, B_, C_] :> ContractSum@@Join[
 							{
 								Refine[ContractSum[GetGenProd[{A,B,C}, {{scGenIdx, scGenIdx2}, {scGenIdx, scGenIdx2}, {pa[[2]], pa[[3]]}}, pi[[2]], pj[[2]]] //.subProd, {scGenIdx, 1, RealScalarList[[ss,2,1]]}, {scGenIdx2, 1, RealScalarList[[ss,2,2]]}]] Refine[
@@ -2859,7 +2872,7 @@ BeginPackage["ARGES`"];
 			BY[gauge_, gauge2_][a_, b_, c_, d_] :> Block[
 				{gg, ff, ff1, ff2, ff3, ff4, y2, y3},
 				Sum[
-					(ReleaseHold[tr[SolveProd[Yuk[c[[1]]], adj[Yuk[d[[1]]]], AdjWeylFermionList[[ff,3]], ff]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+					(ReleaseHold[tr[SolveProd[Yuk[c[[1]]], adj[Yuk[d[[1]]]], AdjWeylFermionList[[ff,3]], ff]]//. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
 						tr[y2_, y3_]:>(
 							Sum[
 								ContractSum@@Join[
@@ -2885,7 +2898,7 @@ BeginPackage["ARGES`"];
 							]
 						)
 					}) + 
-					(ReleaseHold[tr[SolveProd[adj[Yuk[d[[1]]]], Yuk[c[[1]]], AdjWeylFermionList[[ff,3]], ff]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+					(ReleaseHold[tr[SolveProd[adj[Yuk[d[[1]]]], Yuk[c[[1]]], AdjWeylFermionList[[ff,3]], ff]]//. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
 						tr[y2_, y3_]:>(
 							Sum[
 								ContractSum@@Join[
@@ -2917,7 +2930,7 @@ BeginPackage["ARGES`"];
 			BbarY[gauge_, gauge2_][a_, b_, c_, d_] :> Block[
 				{ffA, ffB, gg, ff1, ff2, ff3, ff4, y2,  y4},
 				Sum[
-					ReleaseHold[tr[Yuk[c[[1]]][AdjWeylFermionList[[ffA,3]], ffB], adj[Yuk[d[[1]]]][AdjWeylFermionList[[ffB,3]], ffA]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+					ReleaseHold[tr[Yuk[c[[1]]][AdjWeylFermionList[[ffA,3]], ffB], adj[Yuk[d[[1]]]][AdjWeylFermionList[[ffB,3]], ffA]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
 						tr[y2_, y4_] :> (
 							Sum[
 								ContractSum@@Join[
@@ -3364,7 +3377,7 @@ BeginPackage["ARGES`"];
 		(* optimized functions for Yukawa traces and products *)
 		SolveTrace2[Y1_, Y2_, SIdx_] := Block[
 			{sumInd1,sumInd2},
-			ReleaseHold[SolveTrace[Y1,Y2] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveTrace[Y1,Y2]]//.subYuk2 /.{
 				tr[y1_, y2_]:>Times@@Join[
 					{
 						Refine[
@@ -3382,7 +3395,7 @@ BeginPackage["ARGES`"];
 		
 		SolveTrace3[Y1_, Y2_, Y3_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3]]//.subYuk2 /.{
 				tr[y1_, y2_, y3_]:>Times@@Join[
 					{
 						Refine[
@@ -3401,7 +3414,7 @@ BeginPackage["ARGES`"];
 		
 		SolveTrace4[Y1_, Y2_, Y3_, Y4_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3, sumInd4},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4]]//.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_]:>Times@@Join[
 					{
 						Refine[
@@ -3421,7 +3434,7 @@ BeginPackage["ARGES`"];
 		
 		SolveTrace5[Y1_, Y2_, Y3_, Y4_, Y5_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3, sumInd4, sumInd5},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5]]//.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_, y5_]:>Times@@Join[
 					{
 						Refine[
@@ -3442,7 +3455,7 @@ BeginPackage["ARGES`"];
 		
 		SolveTrace6[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3, sumInd4, sumInd5, sumInd6},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5,Y6] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5,Y6]]//.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_, y5_, y6_]:>Times@@Join[
 					{
 						Refine[
@@ -3464,7 +3477,7 @@ BeginPackage["ARGES`"];
 		
 		SolveProd2[Y1_, Y2_, li_, lj_, SIdx_] := Block[
 			{sumInd1},
-			ReleaseHold[SolveProd[Y1, Y2, li[[1]], lj[[1]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveProd[Y1, Y2, li[[1]], lj[[1]]]]//.subYuk2 /.{
 				prod[y1_, y2_]:>Times@@Join[
 					{
 						Refine[
@@ -3483,7 +3496,7 @@ BeginPackage["ARGES`"];
 		
 		SolveProd3[Y1_, Y2_, Y3_, li_, lj_, SIdx_] := Block[
 			{sumInd1, sumInd2},
-			ReleaseHold[SolveProd[Y1, Y2, Y3, li[[1]], lj[[1]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveProd[Y1, Y2, Y3, li[[1]], lj[[1]]]]//.subYuk2 /.{
 				prod[y1_, y2_, y3_]:>Times@@Join[
 					{
 						Refine[
@@ -3503,7 +3516,7 @@ BeginPackage["ARGES`"];
 		
 		SolveProd4[Y1_, Y2_, Y3_, Y4_, li_, lj_, SIdx_] := Block[
 			{sumInd1, sumInd2, sumInd3},
-			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, li[[1]], lj[[1]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, li[[1]], lj[[1]]]]//.subYuk2 /.{
 				prod[y1_, y2_, y3_, y4_]:>Times@@Join[
 					{
 						Refine[
@@ -3524,7 +3537,7 @@ BeginPackage["ARGES`"];
 		
 		SolveProd5[Y1_, Y2_, Y3_, Y4_, Y5_, li_, lj_, SIdx_] := Block[
 			{sumInd1, sumInd2, sumInd3, sumInd4},
-			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, Y5, li[[1]], lj[[1]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk //.subProd]//.subYuk /.{
+			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, Y5, li[[1]], lj[[1]]]]//.subYuk2 /.{
 				prod[y1_, y2_, y3_, y4_, y5_]:>Times@@Join[
 					{
 						Refine[
@@ -3546,7 +3559,7 @@ BeginPackage["ARGES`"];
 		
 		SolveSProd2[L1_, L2_, SIdx_] := Block[
 			{},
-			ReleaseHold[prod[L1, L2]/.subQuart//.subProd]//.subQuart/.{
+			ReleaseHold[prod[L1, L2]/.subQuart1//.subProd]//.subQuart2/.{
 				prod[l1_, l2_] :> Times@@Join[
 					{
 						l1[[1,1]] l2[[1,1]] l1[[1,2]][SIdx[[1,1]], SIdx[[1,2]], SIdx[[1,3]], SIdx[[1,4]], SIdx[[1,5]], SIdx[[1,6]], SIdx[[1,7]], SIdx[[1,8]]] l2[[1,2]][SIdx[[1,9]], SIdx[[1,10]], SIdx[[1,11]], SIdx[[1,12]], SIdx[[1,13]], SIdx[[1,14]], SIdx[[1,15]], SIdx[[1,16]]]
@@ -3560,7 +3573,7 @@ BeginPackage["ARGES`"];
 		
 		SolveSProd3[L1_, L2_, L3_, SIdx_] := Block[
 			{},
-			ReleaseHold[prod[L1, L2, L3]/.subQuart//.subProd]//.subQuart/.{
+			ReleaseHold[prod[L1, L2, L3]/.subQuart1//.subProd]//.subQuart2/.{
 				prod[l1_, l2_, l3_] :> Times@@Join[
 					{
 						l1[[1,1]] l2[[1,1]] l3[[1,1]] l1[[1,2]][SIdx[[1,1]], SIdx[[1,2]], SIdx[[1,3]], SIdx[[1,4]], SIdx[[1,5]], SIdx[[1,6]], SIdx[[1,7]], SIdx[[1,8]]] l2[[1,2]][SIdx[[1,9]], SIdx[[1,10]], SIdx[[1,11]], SIdx[[1,12]], SIdx[[1,13]], SIdx[[1,14]], SIdx[[1,15]], SIdx[[1,16]]] l3[[1,2]][SIdx[[1,17]], SIdx[[1,18]], SIdx[[1,19]], SIdx[[1,20]], SIdx[[1,21]], SIdx[[1,22]], SIdx[[1,23]], SIdx[[1,24]]]
@@ -3574,13 +3587,10 @@ BeginPackage["ARGES`"];
 		
 		
 		(* traces and products of fermion type indices *)
-		SolveProd[a_, b___, c_, i1_, i2_] := Sum[prod[
-			a[i1, s1], SolveProd[b, AdjWeylFermionList[[s1,3]], AdjWeylFermionList[[s2,3]]], c[s2, i2]],
-			{s1, 1, Length[AdjWeylFermionList]}, {s2, 1, Length[AdjWeylFermionList]}
-		];
 		SolveProd[i1_, i2_] := KroneckerDelta[AdjWeylFermionList[[i1,3]], i2];
-		SolveProd[a_, i1_, i2_] := prod[a[i1,i2]];
-		SolveTrace[a___] := Sum[tr[SolveProd[a, AdjWeylFermionList[[s,3]], s]], {s, 1, Length[AdjWeylFermionList]}];
+		SolveProd[a_, i1_, i2_] := prod[a[i1,i2]]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd;
+		SolveProd[a_,b___, i1_, i2_] := Sum[prod[a[i1, s], SolveProd[b, AdjWeylFermionList[[s,3]], i2]]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd, {s, 1, Length[AdjWeylFermionList]}];
+		SolveTrace[a___] := Sum[tr[SolveProd[a, AdjWeylFermionList[[s,3]], s]]//. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk1 //.subProd, {s, 1, Length[AdjWeylFermionList]}];
 		
 		(* permutations *)
 		Perm[f_[a_,b_,c_,d_]]:= f[a,b,c,d] + f[a,b,d,c] + f[a,c,b,d] + f[a,c,d,b] + f[a,d,b,c] + f[a,d,c,b] + f[b,a,c,d] + f[b,a,d,c] + f[b,c,a,d] + f[b,c,d,a] + f[b,d,a,c] + f[b,d,c,a] + f[c,a,b,d] + f[c,a,d,b] + f[c,b,a,d] + f[c,b,d,a] + f[c,d,a,b] + f[c,d,b,a] + f[d,a,b,c] + f[d,a,c,b] + f[d,b,a,c] + f[d,b,c,a] + f[d,c,a,b] + f[d,c,b,a];
