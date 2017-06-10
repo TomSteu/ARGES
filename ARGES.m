@@ -3239,25 +3239,25 @@ BeginPackage["ARGES`"];
 				If[
 					(a[[1]] == c[[1]])
 					,	
-					1/4 (KroneckerDelta[a[[gaug+3]],d[[gaug+2]]] KroneckerDelta[b[[gaug+2]],c[[gaug+3]]]  - KroneckerDelta[a[[gaug+3]],b[[gaug+2]]] KroneckerDelta[c[[gaug+3]],d[[gaug+2]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+2][[2;;]], Delete[d,gaug+2][[2;;]]] ( aa1 KroneckerDelta[b[[1]], AdjWeylFermionList[[b[[1]], 4]]] KroneckerDelta[d[[1]], AdjWeylFermionList[[d[[1]], 4]]] + aa2 KroneckerDelta[AdjWeylFermionList[[b[[1]], 3]], AdjWeylFermionList[[b[[1]], 4]]] KroneckerDelta[AdjWeylFermionList[[d[[1]], 3]], AdjWeylFermionList[[d[[1]], 4]]] + aa3 KroneckerDelta[b[[1]], AdjWeylFermionList[[b[[1]], 4]]] KroneckerDelta[AdjWeylFermionList[[d[[1]], 3]], AdjWeylFermionList[[d[[1]], 4]]] + aa4 KroneckerDelta[d[[1]], AdjWeylFermionList[[d[[1]], 4]]] KroneckerDelta[AdjWeylFermionList[[b[[1]], 3]], AdjWeylFermionList[[b[[1]], 4]]])
+					1/4 (KroneckerDelta[a[[gaug+3]],d[[gaug+3]]] KroneckerDelta[b[[gaug+3]],c[[gaug+3]]]  - KroneckerDelta[a[[gaug+3]],b[[gaug+3]]] KroneckerDelta[c[[gaug+3]],d[[gaug+3]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+3][[3;;]], Delete[d,gaug+3][[3;;]]]
 					,
 					0
 				] + If[
 						(RealScalarList[[a[[1]], 1]][[1]] === RealScalarList[[c[[1]], 1]][[1]] &&
 						RealScalarList[[a[[1]], 1]][[0]] =!= RealScalarList[[c[[1]], 1]][[0]] &&
 						RealScalarList[[a[[1]], 1]][[0]] === Re && RealScalarList[[c[[1]], 1]][[0]] === Im),
-						+I/2 ( KroneckerDelta[a[[gaug+3]],d[[gaug+2]]] KroneckerDelta[b[[gaug+2]],c[[gaug+3]]] +  KroneckerDelta[a[[gaug+3]],b[[gaug+2]]] KroneckerDelta[c[[gaug+3]],d[[gaug+2]]] - 2/ListGauge[[gaug,3]] KroneckerDelta[a[[gaug+3]],c[[gaug+3]]] KroneckerDelta[b[[gaug+2]],d[[gaug+2]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+2][[2;;]], Delete[d,gaug+2][[2;;]]]( bb1 KroneckerDelta[b[[1]], AdjWeylFermionList[[b[[1]], 4]]] KroneckerDelta[d[[1]], AdjWeylFermionList[[d[[1]], 4]]] + bb2 KroneckerDelta[AdjWeylFermionList[[b[[1]], 3]], AdjWeylFermionList[[b[[1]], 4]]] KroneckerDelta[AdjWeylFermionList[[d[[1]], 3]], AdjWeylFermionList[[d[[1]], 4]]] + bb3 KroneckerDelta[b[[1]], AdjWeylFermionList[[b[[1]], 4]]] KroneckerDelta[AdjWeylFermionList[[d[[1]], 3]], AdjWeylFermionList[[d[[1]], 4]]] + bb4 KroneckerDelta[d[[1]], AdjWeylFermionList[[d[[1]], 4]]] KroneckerDelta[AdjWeylFermionList[[b[[1]], 3]], AdjWeylFermionList[[b[[1]], 4]]])
+						-1/4 ( KroneckerDelta[a[[gaug+3]],d[[gaug+3]]] KroneckerDelta[b[[gaug+3]],c[[gaug+3]]] +  KroneckerDelta[a[[gaug+3]],b[[gaug+3]]] KroneckerDelta[c[[gaug+3]],d[[gaug+3]]] - 2/ListGauge[[gaug,3]] KroneckerDelta[a[[gaug+3]],c[[gaug+3]]] KroneckerDelta[b[[gaug+3]],d[[gaug+3]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+3][[3;;]], Delete[d,gaug+3][[3;;]]]
 						 ,
 						0
 					] + If[
 							(RealScalarList[[a[[1]], 1]][[1]] === RealScalarList[[c[[1]], 1]][[1]] &&
 							RealScalarList[[a[[1]], 1]][[0]] =!= RealScalarList[[c[[1]], 1]][[0]] &&
 							RealScalarList[[a[[1]], 1]][[0]] === Im && RealScalarList[[c[[1]], 1]][[0]] === Re),
-							-I/2 ( KroneckerDelta[a[[gaug+3]],d[[gaug+2]]] KroneckerDelta[b[[gaug+2]],c[[gaug+3]]] + KroneckerDelta[a[[gaug+3]],b[[gaug+2]]] KroneckerDelta[c[[gaug+3]],d[[gaug+2]]] - 2/ListGauge[[gaug,3]] KroneckerDelta[a[[gaug+3]],c[[gaug+3]]] KroneckerDelta[b[[gaug+2]],d[[gaug+2]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+2], Delete[d,gaug+2]]  ( dd1 KroneckerDelta[b[[1]], AdjWeylFermionList[[b[[1]], 4]]] KroneckerDelta[d[[1]], AdjWeylFermionList[[d[[1]], 4]]] + dd2 KroneckerDelta[AdjWeylFermionList[[b[[1]], 3]], AdjWeylFermionList[[b[[1]], 4]]] KroneckerDelta[AdjWeylFermionList[[d[[1]], 3]], AdjWeylFermionList[[d[[1]], 4]]] + dd3 KroneckerDelta[b[[1]], AdjWeylFermionList[[b[[1]], 4]]] KroneckerDelta[AdjWeylFermionList[[d[[1]], 3]], AdjWeylFermionList[[d[[1]], 4]]] + dd4 KroneckerDelta[d[[1]], AdjWeylFermionList[[d[[1]], 4]]] KroneckerDelta[AdjWeylFermionList[[b[[1]], 3]], AdjWeylFermionList[[b[[1]], 4]]])
+							1/4 ( KroneckerDelta[a[[gaug+3]],d[[gaug+3]]] KroneckerDelta[b[[gaug+3]],c[[gaug+3]]] + KroneckerDelta[a[[gaug+3]],b[[gaug+3]]] KroneckerDelta[c[[gaug+3]],d[[gaug+3]]] - 2/ListGauge[[gaug,3]] KroneckerDelta[a[[gaug+3]],c[[gaug+3]]] KroneckerDelta[b[[gaug+3]],d[[gaug+3]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+3][[3;;]], Delete[d,gaug+3][[3;;]]]
 							,
 							0
 						]
-			)/;(
+			)(KroneckerDelta[AdjWeylFermionList[[b[[1]],3]], d[[1]]] KroneckerDelta[AdjWeylFermionList[[d[[1]],4]], d[[1]]])/;(
 				ListGauge[[gaug,2]] === SU && 
 				RealScalarList[[a[[1]], 3, gaug]] == ListGauge[[gaug,3]] && 
 				WeylFermionList[[AdjWeylFermionList[[b[[1]], 2]], 3, gaug]] == ListGauge[[gaug,3]] && 
@@ -3274,7 +3274,7 @@ BeginPackage["ARGES`"];
 				b[[1]] == AdjWeylFermionList[[b[[1]], 4]] && AdjWeylFermionList[[d[[1]], 3]] == b[[1]]
 			),
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (
-				(KroneckerDelta[a[[gaug+3]],d[[gaug+2]]] KroneckerDelta[b[[gaug+2]],c[[gaug+3]]] - KroneckerDelta[a[[gaug+3]],b[[gaug+2]]] KroneckerDelta[c[[gaug+3]],d[[gaug+2]]]) TensorDelta[Delete[a,gaug+3], Delete[c,gaug+3]] TensorDelta[Delete[b,gaug+2][[2;;]], Delete[d,gaug+2][[2;;]]] KroneckerDelta[AdjWeylFermionList[[b[[1]], 3]], d[[1]]]
+				(KroneckerDelta[a[[gaug+3]],d[[gaug+3]]] KroneckerDelta[b[[gaug+3]],c[[gaug+3]]] - KroneckerDelta[a[[gaug+3]],b[[gaug+3]]] KroneckerDelta[c[[gaug+3]],d[[gaug+3]]]) TensorDelta[Delete[a,gaug+3], Delete[c,gaug+3]] TensorDelta[Delete[b,gaug+3][[2;;]], Delete[d,gaug+3][[2;;]]] KroneckerDelta[AdjWeylFermionList[[b[[1]], 3]], d[[1]]]
 			)/;(
 				ListGauge[[gaug,2]] === SO && 
 				RealScalarList[[a[[1]], 3, gaug]] == ListGauge[[gaug,3]] && 
@@ -3290,11 +3290,11 @@ BeginPackage["ARGES`"];
 					(If[RealScalarList[[a[[1]],1]][[0]] === Re &&  RealScalarList[[c[[1]],1]][[0]] === Im, +1 ,
 						If[RealScalarList[[a[[1]],1]][[0]] === Im &&  RealScalarList[[c[[1]],1]][[0]] === Re, -1 , 0]
 					]) 
-					TensorDelta[a[[2;;]],c[[2;;]]] TensorDelta[b[[2;;]],d[[2;;]]] KroneckerDelta[AdjWeylFermionList[[b[[1]],3]], d[[1]]] I cc ( KroneckerDelta[AdjWeylFermionList[[b[[1]],4]], b[[1]]] - KroneckerDelta[AdjWeylFermionList[[d[[1]],4]], d[[1]]])
+					TensorDelta[a[[2;;]],c[[2;;]]] TensorDelta[b[[3;;]],d[[3;;]]] KroneckerDelta[AdjWeylFermionList[[b[[1]],3]], d[[1]]] I cc ( KroneckerDelta[AdjWeylFermionList[[b[[1]],4]], b[[1]]] - KroneckerDelta[AdjWeylFermionList[[d[[1]],4]], d[[1]]]) Eps[b[[2]], d[[2]]]
 				)
 			)/;(ListGauge[[gaug, 3]] === 1),
 			(** unknown gauge group*)
-			\[CapitalLambda][gaug_][a_,b_, c_, d_] :>(\[CapitalLambda][ListGauge[[gaug,1]], RealScalarList[[a[[1]],1]], AdjWeylFermionList[[b[[1]],1]], RealScalarList[[c[[1]],1]], AdjWeylFermionList[[d[[1]],1]]][a[[3+gaug]], b[[2+gaug]], c[[3+gaug]], d[[2+gaug]]] TensorDelta[a[[2;;2+gaug]], c[[2;;2+gaug]]] TensorDelta[b[[2;;1+gaug]], d[[2;;1+gaug]]] TensorDelta[a[[4+gaug;;]], c[[4+gaug;;]]]  TensorDelta[b[[3+gaug;;]], d[[3+gaug;;]]])
+			\[CapitalLambda][gaug_][a_,b_, c_, d_] :>(\[CapitalLambda][ListGauge[[gaug,1]], RealScalarList[[a[[1]],1]], AdjWeylFermionList[[b[[1]],1]], RealScalarList[[c[[1]],1]], AdjWeylFermionList[[d[[1]],1]]][a[[3+gaug]], b[[3+gaug]], c[[3+gaug]], d[[3+gaug]]] TensorDelta[a[[2;;2+gaug]], c[[2;;2+gaug]]] TensorDelta[b[[2;;2+gaug]], d[[2;;2+gaug]]] TensorDelta[a[[4+gaug;;]], c[[4+gaug;;]]]  TensorDelta[b[[4+gaug;;]], d[[4+gaug;;]]])
 		};
 		
 
