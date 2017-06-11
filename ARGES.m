@@ -50,7 +50,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 	
- 	(*Begin["Private`"];*)
+ 	Begin["Private`"];
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -3623,5 +3623,5 @@ BeginPackage["ARGES`"];
 		Fermion::UnknownParticle = "Undefined Fermion field";
 		
 		Reset[];
-	(*End[];*)
+	End[];
 EndPackage[];
