@@ -99,12 +99,12 @@ Two possibilities exist to define Yukawa interactions. One is the classical appr
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 YukawaYaij[Symbol, Scalar, Ferm1, Ferm2, {Contraction1, ...}, Factor];
 \end{lstlisting}
-The arguments two to four are the symbols of the fields involved. The Scalar entered may be real (or the real/imaginary part of complex field - using $\mathtt{Re[...]}$/$\mathtt{Im[...]}$) or complex. The hermitian conjugate of a complex field may be used as well, utilizing $\mathtt{adj[...]}$. The first fermion is considered hermitian conjugated as well, but there is no need to mark the symbol. The last argument is a prefactor which might be complex, but its usage is optional, and the default value 1. The fifth arguments is to define the contraction between the gauge indices of the fields involved for this term. This list has $\mathtt{NumberOfSubgroups}$ elements and contains functions with three arguments, where which correspond to the gauge indices of the scalar, first and second fermion, strictly in this order. The hermitian conjugate of this Yukawa term is added automatically, no further prefactor or symmetrization will be employed. There is no contraction for scalar generations for these terms, but traces and products in the fermionic indices are denoted as $\mathtt{tr[...]}$ and $\mathtt{prod[...][i,j]}$ respectively.\newline 
+The arguments two to four are the symbols of the fields involved. The Scalar entered may be real (or the real/imaginary part of complex field - using $\mathtt{Re[...]}$/$\mathtt{Im[...]}$) or complex. The hermitian conjugate of a complex field may be used as well, utilizing $\mathtt{adj[...]}$. The latter applies both to the fermions and scalars. The last argument is a prefactor which might be complex, but its usage is optional, and the default value 1. The fifth arguments is to define the contraction between the gauge indices of the fields involved for this term. This list has $\mathtt{NumberOfSubgroups}$ elements and contains functions with three arguments, where which correspond to the gauge indices of the scalar, first and second fermion, strictly in this order. The hermitian conjugate of this Yukawa term is added automatically, no further prefactor or symmetrization will be employed. There is no contraction for scalar generations for these terms, but traces and products in the fermionic indices are denoted as $\mathtt{tr[...]}$ and $\mathtt{prod[...][i,j]}$ respectively.\newline 
 Furthermore, Yukawa couplings may be defined as scalars:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 YukawaY[Sym, Scalar, Ferm1, Ferm2, {Contr1, ...}, GenerationContr];
 \end{lstlisting}
-Which is the same thing with exception of the now mandatory last argument, which is a now a function with four arguments, and defines the contraction between the first and second generation index of the scalar, and the generation indices of the first and second fermion, strictly in that order. Again, the first arguments is auto-adjoint with the need to mark it that way, and the hermitian conjugate is added without further symmetry factors. Any Yukawa coupling is generally considered complex.
+Which is the same thing with exception of the now mandatory last argument, which is a now a function with four arguments, and defines the contraction between the first and second generation index of the scalar, and the generation indices of the first and second fermion, strictly in that order. Again, the hermitian conjugate is added without further symmetry factors. Any Yukawa coupling is generally considered complex.
 \FloatBarrier
 \subsection{Scalar quartic interactions}
 Scalar quartics may be defined via:
@@ -148,7 +148,7 @@ Here, gauge contractions only take one argument, and Generation contraction two 
 \newpage
 \section{Output}
 \subsection{General remarks}
-Beta functions are in general calculated on demand, the user has full control over which function to calculate and to which loop order. The general syntax follows $\mathtt{\beta[..., Loop Order]}$. Other inputs may be the involved fields and their quantum numbers. If the loop order is set to 0, the linear combination of couplings is returned as written in the Lagrangian modulo the fields and indices specified. This is particularly useful to find out prefactors after symmetrization and from taking real and imaginary parts of complex scalars. This is also the main mechanism to disentangle the running of couplings.\newline The gauge and generation indices of the involved fields are entered as lists. For abelian gauge groups, it is necessary to insert 1 instead of the charge. If the representation, generations or rank are variables (for both the definition or the input indices), the situation is slightly more complicated, since the Mathematica kernel tries to cover all special cases when handling sums with variables, and drags them through the entire computation. This may slow the calculation severely or even break it. ARGES utilizes the global variable \$\texttt{Assumptions} (be careful if you use it as well, \texttt{Reset[]} wipes it completely) to refine these cases. If variables appear in the definition, the index 1 is always safe as input, for higher numbers, a global assumption must be appended to respecify the range of the variables. If there is an input of variables, their range as well as the fact that these are integers must be appended as well. \newline 
+Beta functions are in general calculated on demand, the user has full control over which function to calculate and to which loop order. The general syntax follows $\mathtt{\beta[..., Loop Order]}$. Other inputs may be the involved fields and their quantum numbers. If the loop order is set to 0, the linear combination of couplings is returned as written in the Lagrangian modulo the fields and indices specified. This is particularly useful to find out prefactors after symmetrization and from taking real and imaginary parts of complex scalars. This is also the main mechanism to disentangle the running of couplings.\newline The gauge and generation indices of the involved fields are entered as lists. For abelian gauge groups, it is necessary to insert 1 instead of the charge. If the representation, generations or rank are variables (for both the definition or the input indices), the situation is slightly more complicated, since the Mathematica kernel tries to cover all special cases when handling sums with variables, and drags them through the entire computation. This may slow the calculation severely or even break it. ARGES utilizes the global variable \$\texttt{Assumptions} (special care must be taken when using this outside of ARGES, since \texttt{Reset[]} wipes it completely) to refine these cases. If variables appear in the definition, the index 1 is always safe as input, for higher numbers, a global assumption must be appended to respecify the range of the variables. If there is an input of variables, their range as well as the fact that these are integers must be appended as well. \newline 
 Gauge invariants are by default not resolved. To do so, the function $\mathtt{ComputeInvariants[\;]}$ must first be evoked, which fills the replacement rule list \texttt{subInvariants} with appropriate substitutions. It shall be denoted that for scalars, at two loop in the Yukawa betas and one loop in the quartic betas, as well as for fermions at two loop in the quartic betas, gauge terms appear which may not be expressed by Casimirs and Dynkin Indices, but rather: $ \Lambda_{ijkl} = T ^a_{ik}\;T^a_{jl}$, where $T^a_{ij}$ are generators of a gauge subgroup for one particle. However, closed formulas for any rank may not exist for all representations, as it is the case for instance for the fundamental representation of SU(N).
 \subsection{Gauge coupling beta function}
 For gauge couplings, the beta functions may be calculated via:
@@ -237,15 +237,15 @@ ComplexScalar[H, {1, 1}, {+1/2, 2, 1}];
 VEV[v, Re[H], {1, 1}, {1, 2, 1}, 1];
 
 (* Yukawa sector - third generations only *)
-YukawaY[ yb, H, Q, D, 
+YukawaY[ yb, H, adj[Q], D, 
  {1 &, KroneckerDelta[#1, #2] &, KroneckerDelta[#2, #3] &}, 
  (KroneckerDelta[#3, 3] KroneckerDelta[#4, 3])& ];
  
-YukawaY[ ytau, H, L, E, 
+YukawaY[ ytau, H, adj[L], E, 
  {1 &, KroneckerDelta[#1, #2] &, 1 &}, 
  (KroneckerDelta[#3, 3] KroneckerDelta[#4, 3])& ];
  
-YukawaY[ yt, adj[H], Q, U, 
+YukawaY[ yt, adj[H], adj[Q], U, 
  {1 &, Eps[#1, #2] &, KroneckerDelta[#2, #3] &},
  (KroneckerDelta[#3, 3] KroneckerDelta[#4, 3])& ];
 
@@ -273,7 +273,7 @@ In[1]:= Get["SM_Nc_3rd.m", Path -> {"~/ARGES/models/"}]
         
         (* real matrix elements, substitute gauge invariants *)        
 In[2]:= subs = Join[subInvariants, 
-        {adj[yt] -> yt, adj[yb] -> yb, adj[ytau] -> ytau}];
+        {conj[yt] -> yt, conj[yb] -> yb, conj[ytau] -> ytau}];
 
         (* gauge couplings beta functions - here just gs for brevity *)        
 In[3]:= Power[4 \[Pi], 2] \[Beta][gs, 1] //. subs // Expand
@@ -286,17 +286,17 @@ Out[4]= (9 g^2 gs^3)/2 + (11 gs^3 gy^2)/6 - (6 gs^5)/Nc + 26 gs^5 Nc -
         (2 gs^3 Nc^2 yt^2)/(-1 + Nc^2)
         
         (* Yukawa yt coupling: get symmetry factors first *)
-In[5]:=  \[Beta][H, Q, U, {1, 1, 1, 1, 1}, {3, 1, 2, 1}, 
+In[5]:=  \[Beta][H, adj[Q], U, {1, 1, 1, 1, 1}, {3, 1, 2, 1}, 
          {3, 1, 1, 1}, 0] //. subs // Expand
 Out[5]= yt
 
-In[6]:= Power[4 \[Pi], 2] \[Beta][H, Q, U, {1, 1, 1, 1, 1}, 
+In[6]:= Power[4 \[Pi], 2] \[Beta][H, adj[Q], U, {1, 1, 1, 1, 1}, 
         {3, 1, 2, 1}, {3, 1, 1, 1}, 1] //. subs // Expand
 Out[6]= -((9 g^2 yt)/4) - (17 gy^2 yt)/12 + (3 gs^2 yt)/Nc - 
         3 gs^2 Nc yt - (3 yb^2 yt)/2 + Nc yb^2 yt + (3 yt^3)/2 + 
         Nc yt^3 + yt ytau^2
         
-In[7]:= Power[4 \[Pi], 4] \[Beta][H, Q, U, {1, 1, 1, 1, 1}, 
+In[7]:= Power[4 \[Pi], 4] \[Beta][H, adj[Q], U, {1, 1, 1, 1, 1}, 
         {3, 1, 2, 1}, {3, 1, 1, 1}, 2] //. subs // Expand
 Out[7]= -8 g^4 yt + (53 gs^4 yt)/3 - 3/4 g^2 gy^2 yt + (61 gy^4 yt)/24 - 
         (3 gs^4 yt)/(4 Nc^2) - (27 g^2 gs^2 yt)/(8 Nc) - (10 gs^4 yt)/Nc
@@ -333,11 +333,11 @@ Out[9]= (451 g^4 v)/32 - 9/16 g^2 gy^2 v - (211 gy^4 v)/96 -
         3/4 g^2 gy^2 v \[Xi]^2 + 1/8 gy^4 v \[Xi]^2
 
          (* Quartic *)
-In[10]:= \[Beta][H, H, H, H, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, 
+In[10]:= \[Beta][adj[H], H, adj[H], H, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, 
          {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, 0]
 Out[10]= \[Lambda]/2
 
-In[11]:= 2 Power[4 \[Pi], 2] \[Beta][H, H, H, H, 
+In[11]:= 2 Power[4 \[Pi], 2] \[Beta][adj[H], H, adj[H], H, 
          {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, 
          {1, 1, 1, 1, 1}, 1] //. subs // Expand
 Out[11]= (9 g^4)/4 + (3 g^2 gy^2)/2 + (3 gy^4)/4 - 4 Nc yb^4 - 4 Nc yt^4 
@@ -345,7 +345,7 @@ Out[11]= (9 g^4)/4 + (3 g^2 gy^2)/2 + (3 gy^4)/4 - 4 Nc yb^4 - 4 Nc yt^4
          4 Nc yb^2 \[Lambda] + 4 Nc yt^2 \[Lambda] + 4 ytau^2 \[Lambda] 
          + 12 \[Lambda]^2
 
-In[12]:= 2 Power[4 \[Pi], 4] \[Beta][H, H, H, H, 
+In[12]:= 2 Power[4 \[Pi], 4] \[Beta][adj[H], H, adj[H], H, 
          {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, 
          {1, 1, 1, 1, 1}, 2] //. subs // Expand         
 Out[12]= (449 g^6)/8 - (145 g^4 gy^2)/24 - (383 g^2 gy^4)/24 - 
