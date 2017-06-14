@@ -41,7 +41,7 @@ BeginPackage["ARGES`"];
 	U::usage = "Unitary Group";
 	SU::usage = "Special Unitary Group";
 	SO::usage = "Special Orthogonal Group";
-	\[CapitalLambda] = "Product of Generators";
+	\[CapitalLambda]::usage = "Product of Generators";
 	\[Xi]::usage = "Gauge fixing constant";
 
 	
