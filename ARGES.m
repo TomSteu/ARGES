@@ -3075,10 +3075,21 @@ BeginPackage["ARGES`"];
 		sub\[CapitalLambda]S := {
 			(** At least one is a dummy field *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(a[[1]] > Length[RealScalarList] || b[[1]] > Length[RealScalarList] || c[[1]] > Length[RealScalarList] || d[[1]] > Length[RealScalarList]),
+			(** Different Scalar Fields *)
+			\[CapitalLambda][a_, b_, c_, d_] :> (0)/;(
+				(Length[RealScalarList[[a[[1]],1]]] =!= Length[RealScalarList[[c[[1]],1]]]) ||
+				(Length[RealScalarList[[a[[1]],1]]] === 0 && a[[1]] != c[[1]]) || 
+				(Length[RealScalarList[[a[[1]],1]]] === 1 && RealScalarList[[a[[1]],1]][[1]] != RealScalarList[[c[[1]],1]][[1]])
+			),
+			\[CapitalLambda][a_, b_, c_, d_] :> (0)/;(
+				(Length[RealScalarList[[b[[1]],1]]] =!= Length[RealScalarList[[d[[1]],1]]]) ||
+				(Length[RealScalarList[[b[[1]],1]]] === 0 && b[[1]] != d[[1]]) || 
+				(Length[RealScalarList[[b[[1]],1]]] === 1 && RealScalarList[[b[[1]],1]][[1]] != RealScalarList[[d[[1]],1]][[1]])
+			),
 			(** At least one is gauge singlet *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(ListGauge[[gaug,3]] =!= 1 && (RealScalarList[[a[[1]],3,gaug]] == 1 || RealScalarList[[b[[1]],3,gaug]] == 1 || RealScalarList[[c[[1]],3,gaug]] == 1 || RealScalarList[[d[[1]],3,gaug]] == 1)),
 			(** Gauge Multiplicities do not match *)
-			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(RealScalarList[[a[[1]],3,gaug]] != RealScalarList[[c[[1]],3,gaug]] || RealScalarList[[b[[1]],3,gaug]] != RealScalarList[[d[[1]],3,gaug]]),
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(RealScalarList[[a[[1]],3,gaug]] =!= RealScalarList[[c[[1]],3,gaug]] || RealScalarList[[b[[1]],3,gaug]] =!= RealScalarList[[d[[1]],3,gaug]]),
 			(** SU(N) -- all in fundamental representation *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (
 				If[
@@ -3144,7 +3155,7 @@ BeginPackage["ARGES`"];
 				ListGauge[[gaug,3]] =!= 1 && (WeylFermionList[[AdjWeylFermionList[[a[[1]],2]],3,gaug]] == 1 || WeylFermionList[[AdjWeylFermionList[[b[[1]],2]],3,gaug]] == 1 || WeylFermionList[[AdjWeylFermionList[[c[[1]],2]],3,gaug]] == 1 || WeylFermionList[[AdjWeylFermionList[[d[[1]],2]],3,gaug]] == 1)
 			),
 			(** Gauge Multiplicities do not match *)
-			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;((WeylFermionList[[AdjWeylFermionList[[a[[1]],2]],3,gaug]] != WeylFermionList[[AdjWeylFermionList[[c[[1]],2]],3,gaug]]) || (WeylFermionList[[AdjWeylFermionList[[b[[1]],2]],3,gaug]] != WeylFermionList[[AdjWeylFermionList[[d[[1]],2]],3,gaug]])
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;((WeylFermionList[[AdjWeylFermionList[[a[[1]],2]],3,gaug]] =!= WeylFermionList[[AdjWeylFermionList[[c[[1]],2]],3,gaug]]) || (WeylFermionList[[AdjWeylFermionList[[b[[1]],2]],3,gaug]] =!= WeylFermionList[[AdjWeylFermionList[[d[[1]],2]],3,gaug]])
 			),
 			(** SU(N) -- all in fundamental representation *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (\[CapitalLambda][gaug][c, b, a, d])/;(
@@ -3211,10 +3222,16 @@ BeginPackage["ARGES`"];
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(a[[1]] > Length[RealScalarList] || c[[1]] > Length[RealScalarList]),
 			(** Fermion Fields are different Weyl Fermions *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(AdjWeylFermionList[[b[[1]], 2]] != AdjWeylFermionList[[d[[1]], 2]]),
+			(** Scalar Fields are different *)
+			\[CapitalLambda][a_, b_, c_, d_] :> (0)/;(
+				(Length[RealScalarList[[a[[1]],1]]] =!= Length[RealScalarList[[c[[1]],1]]]) ||
+				(Length[RealScalarList[[a[[1]],1]]] === 0 && a[[1]] != c[[1]]) || 
+				(Length[RealScalarList[[a[[1]],1]]] === 1 && RealScalarList[[a[[1]],1]][[1]] != RealScalarList[[c[[1]],1]][[1]])
+			),
 			(** At least one is gauge singlet *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(ListGauge[[gaug,3]] =!= 1 && (RealScalarList[[a[[1]],3,gaug]] == 1 || WeylFermionList[[AdjWeylFermionList[[b[[1]], 2]], 3, gaug]] == 1 || RealScalarList[[c[[1]],3,gaug]] == 1 || WeylFermionList[[AdjWeylFermionList[[d[[1]], 2]], 3, gaug]] == 1)),
 			(** Gauge Multiplicities do not match *)
-			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;((RealScalarList[[a[[1]],3,gaug]] != RealScalarList[[c[[1]],3,gaug]]) || (WeylFermionList[[AdjWeylFermionList[[b[[1]], 2]], 3, gaug]] != WeylFermionList[[AdjWeylFermionList[[d[[1]], 2]], 3, gaug]])),
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;((RealScalarList[[a[[1]],3,gaug]] =!= RealScalarList[[c[[1]],3,gaug]]) || (WeylFermionList[[AdjWeylFermionList[[b[[1]], 2]], 3, gaug]] =!= WeylFermionList[[AdjWeylFermionList[[d[[1]], 2]], 3, gaug]])),
 			(** SU(N) -- all in fundamental representation *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (
 				If[
