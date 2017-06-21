@@ -117,7 +117,7 @@ BeginPackage["ARGES`"];
 			Return[0];
 		];
 		
-		SimplifyProduct[term_] := (term //. subProd //.{
+		SimplifyProduct[term_] := (ContractSum2[term //. subProd //.{
 			conj[conj[a_]] :> a,
 			tr[adj[a_], b__] :> tr[b, adj[a]],
 			(A_ tr[C___, a_, adj[b_], G___, c_, adj[d_], F___] + B_ tr[G___, c_, adj[d_], F___, C___, a_, adj[b_]]) :> (A+B)tr[C, a, adj[b], G, c, adj[d], F],
@@ -133,7 +133,8 @@ BeginPackage["ARGES`"];
 			adj[conj[A_[i_,j_]]] :> A[j,i],
 			adj[A_[i_,j_]] :> conj[A[j,i]],
 			adj[conj[A_]] :> A, adj[A_]:>conj[A]
-		});
+		} //. {Sum->SimplifySum}]
+		);
 		
 		WeylFermion[sym_, Nflavor_, Gauge_List] := Module[
 			{},
@@ -1961,7 +1962,6 @@ BeginPackage["ARGES`"];
 			If[NumberOfSubgroups==0 || Length[ListGauge], Return[];];
 			For[i=1, i<=NumberOfSubgroups, i++,
 				(* Gauge Boson Invariants *)
-				subInvariants = Append[subInvariants, T2[ListGauge[[i,1]]]->C2[ListGauge[[i,1]]]];
 				If[ListGauge[[i,2]] === U && ListGauge[[i,3]] === 1 && ListGauge[[i,4,i]] === 0,
 					(* Singulet U(1) *)
 					subInvariants = Append[subInvariants, d[ListGauge[[i,1]]]->1];
@@ -3621,8 +3621,9 @@ BeginPackage["ARGES`"];
 		(* workaround a mathematica bug *)
 		ListPosition[A_, B___] := Position[A//. {{} -> $EMPTYLIST}, B];
 		
-		(* Define Sum that resolves all KroneckerDelta[__] before it does the summation *)
+		(* Define Sum that resolves all KroneckerDelta[__] and Generators before it does the summation *)
 		subSum := {
+			A_ SimplifySum[B_, C___] :> SimplifySum[A B, C],
 			SimplifySum[A_ + B_, C___] :> SimplifySum[A, C] + SimplifySum[B, C],
 			SimplifySum[SimplifySum[A_, B___], C___] :> SimplifySum[A, B, C],
 			SimplifySum[A_ KroneckerDelta[aa_, bb_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
@@ -3635,15 +3636,47 @@ BeginPackage["ARGES`"];
 			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {j_, 1, jj_}, SS2___, {a_, 1, aa_}, SS3___] :> SimplifySum[C C2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
 			SimplifySum[Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {a_, 1, aa_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C2[A] KroneckerDelta[i, k], SS1, SS2, SS3], 
 			SimplifySum[Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {j_, 1, jj_}, SS2___, {a_, 1, aa_}, SS3___] :> SimplifySum[C2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
-			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][b_, j_, i_], SS1___, {i_, 1, ii_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C T2[A]KroneckerDelta[i, k], SS1, SS2, SS3],
-			SimplifySum[Generator[A___][a_, i_, j_] Generator[A___][b_, j_, i_], SS1___, {i_, 1, ii_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[T2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
+			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][b_, j_, i_], SS1___, {i_, 1, ii_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C T2[A]KroneckerDelta[a, b], SS1, SS2, SS3],
+			SimplifySum[Generator[A___][a_, i_, j_] Generator[A___][b_, j_, i_], SS1___, {i_, 1, ii_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[T2[A] KroneckerDelta[a, b], SS1, SS2, SS3],
 			SimplifySum[A_] :> A,
 			SimplifySum[] :> 0
 		};
 		
+		(* like subSum, but with more advanced simplifications to be utilized in SimplifyProduct *)
+		subSum2 := {
+			A_ SimplifySum[B_, C___] :> SimplifySum[A B, C],
+			SimplifySum[A_ + B_, C___] :> SimplifySum[A, C] + SimplifySum[B, C],
+			SimplifySum[SimplifySum[A_, B___], C___] :> SimplifySum[A, B, C],
+			SimplifySum[A_ KroneckerDelta[aa_, bb_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
+			SimplifySum[KroneckerDelta[aa_, bb_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[1 , SS1, SS2],
+			SimplifySum[A_ KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
+			SimplifySum[KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[1 , SS1, SS2],
+			Power[KroneckerDelta[A___], a_] :> KroneckerDelta[A],
+			Conjugate[Generator[A___][a_, i_, j_]] :> Generator[A][a, j, i],
+			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {a_, 1, aa_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C C2[A] KroneckerDelta[i, k], SS1, SS2, SS3], 
+			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {j_, 1, jj_}, SS2___, {a_, 1, aa_}, SS3___] :> SimplifySum[C C2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
+			SimplifySum[Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {a_, 1, aa_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C2[A] KroneckerDelta[i, k], SS1, SS2, SS3], 
+			SimplifySum[Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {j_, 1, jj_}, SS2___, {a_, 1, aa_}, SS3___] :> SimplifySum[C2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
+			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][b_, j_, i_], SS1___, {i_, 1, ii_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C T2[A]KroneckerDelta[a, b], SS1, SS2, SS3],
+			SimplifySum[Generator[A___][a_, i_, j_] Generator[A___][b_, j_, i_], SS1___, {i_, 1, ii_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[T2[A] KroneckerDelta[a, b], SS1, SS2, SS3],
+			SimplifySum[C_ Generator[A_, B___][a_, i_, j_] Generator[A_, B___][b_, j_, k_] Generator[A_, B___][a_, k_, l_], SS1___, {j_, 1, jj_}, SS2___, {k_, 1, kk_}, SS3___] :> SimplifySum[C (C2[A, B] - 1/2 C2[B]) Generator[A, B][b, i, l], SS1, SS2, SS3],
+			SimplifySum[C_ Generator[A_, B___][a_, i_, j_] Generator[A_, B___][b_, j_, k_] Generator[A_, B___][a_, k_, l_], SS1___, {k_, 1, kk_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C (C2[A, B] - 1/2 C2[B]) Generator[A, B][b, i, l], SS1, SS2, SS3],
+			SimplifySum[Generator[A_, B___][a_, i_, j_] Generator[A_, B___][b_, j_, k_] Generator[A_, B___][a_, k_, l_], SS1___, {j_, 1, jj_}, SS2___, {k_, 1, kk_}, SS3___] :> SimplifySum[(C2[A, B] - 1/2 C2[B]) Generator[A, B][b, i, l], SS1, SS2, SS3],
+			SimplifySum[Generator[A_, B___][a_, i_, j_] Generator[A_, B___][b_, j_, k_] Generator[A_, B___][a_, k_, l_], SS1___, {k_, 1, kk_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[(C2[A, B] - 1/2 C2[B]) Generator[A, B][b, i, l], SS1, SS2, SS3],
+			SimplifySum[A_] :> A,
+			SimplifySum[] :> 0
+		};
+		
+		
 		ContractSum[A_, B___] := Block[
 			{res},
 			res = SimplifySum[Expand[A],B]//.subSum;
+			Return[Refine[res/.SimplifySum -> Sum]];
+		];
+		
+		ContractSum2[A_, B___] := Block[
+			{res},
+			res = SimplifySum[Expand[A],B]//.subSum2;
 			Return[Refine[res/.SimplifySum -> Sum]];
 		];
 		
