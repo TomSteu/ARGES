@@ -31,6 +31,7 @@ BeginPackage["ARGES`"];
 	d::usage="Dimension of Representation";
 	C2::usage = "Casimir Invariant";
 	S2::usage = "Dynkin Index";
+	T2::usage = "Dynkin Index without Trace all particles";
 	Y2::usage = "Yukawa Invariant";
 	Y4::usage = "Yukawa Invariant";
 	Y6::usage = "Yukawa Invariant";
@@ -1960,6 +1961,7 @@ BeginPackage["ARGES`"];
 			If[NumberOfSubgroups==0 || Length[ListGauge], Return[];];
 			For[i=1, i<=NumberOfSubgroups, i++,
 				(* Gauge Boson Invariants *)
+				subInvariants = Append[subInvariants, T2[ListGauge[[i,1]]]->C2[ListGauge[[i,1]]]];
 				If[ListGauge[[i,2]] === U && ListGauge[[i,3]] === 1 && ListGauge[[i,4,i]] === 0,
 					(* Singulet U(1) *)
 					subInvariants = Append[subInvariants, d[ListGauge[[i,1]]]->1];
@@ -1984,6 +1986,8 @@ BeginPackage["ARGES`"];
 				(* Fermion Invariants *)
 				If[WeylFermionList != {},
 					For[f=1, f<=Length[WeylFermionList], f++,
+						subInvariants = Append[subInvariants, d[WeylFermionList[[f,1]], ListGauge[[i,1]]]->FMultiplicity[f,i]];
+						subInvariants = Append[subInvariants, T2[WeylFermionList[[f,1]], ListGauge[[i,1]]]->FMultiplicity[f,i]/FMultiplicity[f] S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]];
 						(* SU(N) subgroup *)
 						If[ListGauge[[i,2]] === SU,
 							If[WeylFermionList[[f,3,i]] === 1,
@@ -2050,6 +2054,8 @@ BeginPackage["ARGES`"];
 				(* Scalar Invariants *)
 				If[RealScalarList != {},
 					For[s=1, s<=Length[RealScalarList], s++,
+						subInvariants = Append[subInvariants, d[RealScalarList[[s,1]], ListGauge[[i,1]]]->SMultiplicity[s,i]];
+						subInvariants = Append[subInvariants, T2[RealScalarList[[s,1]], ListGauge[[i,1]]]->SMultiplicity[s,i]/SMultiplicity[s] S2[RealScalarList[[s,1]], ListGauge[[i,1]]]];
 						(* SU(N) subgroup *)
 						If[ListGauge[[i,2]] === SU,
 							If[RealScalarList[[s,3,i]] === 1,
@@ -3629,8 +3635,8 @@ BeginPackage["ARGES`"];
 			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {j_, 1, jj_}, SS2___, {a_, 1, aa_}, SS3___] :> SimplifySum[C C2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
 			SimplifySum[Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {a_, 1, aa_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C2[A] KroneckerDelta[i, k], SS1, SS2, SS3], 
 			SimplifySum[Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {j_, 1, jj_}, SS2___, {a_, 1, aa_}, SS3___] :> SimplifySum[C2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
-			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][b_, j_, i_], SS1___, {i_, 1, ii_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C S2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
-			SimplifySum[Generator[A___][a_, i_, j_] Generator[A___][b_, j_, i_], SS1___, {i_, 1, ii_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[S2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
+			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][b_, j_, i_], SS1___, {i_, 1, ii_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C T2[A]KroneckerDelta[i, k], SS1, SS2, SS3],
+			SimplifySum[Generator[A___][a_, i_, j_] Generator[A___][b_, j_, i_], SS1___, {i_, 1, ii_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[T2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
 			SimplifySum[A_] :> A,
 			SimplifySum[] :> 0
 		};
