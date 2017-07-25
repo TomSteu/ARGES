@@ -45,6 +45,8 @@ BeginPackage["ARGES`"];
 	\[CapitalLambda]::usage = "Product of Generators";
 	\[Xi]::usage = "Gauge fixing constant";
 	Generator::usage = "Gauge Generator";
+	subSimplifySum = "Rules for advanced Simplification";
+	SimplifySum = "Label for advanced Simplification, to be used only within subSimplifySum";
 
 	
 	Sqr[x_] := x*x;
@@ -70,6 +72,7 @@ BeginPackage["ARGES`"];
 			YukMat = {};
 			AdjYukMat = {};
 			QuartMat = {{{{0}}}};
+			subSimplifySum = {};
 			$Assumptions = Element[KroneckerDelta[___], Reals];
 		];
 
@@ -3706,7 +3709,7 @@ BeginPackage["ARGES`"];
 		
 		ContractSum2[A_, B___] := Block[
 			{res},
-			res = SimplifySum[Expand[A],B]//.subSum2;
+			res = SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum];
 			Return[Refine[res/.SimplifySum -> Sum]];
 		];
 		
