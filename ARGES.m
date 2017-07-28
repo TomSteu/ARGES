@@ -11,7 +11,7 @@ BeginPackage["ARGES`"];
 	ScalarLinearJa::usage = "Add scalar linear interaction";
 	ScalarMassMab::usage = "Add scalar mass (bilinear term)";
 	FermionMassMij::usage = "Add Fermionic mass matrix (with h.c.)";
-	FermionMassMij::usage = "Add Fermionic mass (with h.c.) and generation contraction";
+	FermionMassM::usage = "Add Fermionic mass (with h.c.) and generation contraction";
 	VertexSSSS::usage = "4 scalar vertex";
 	VertexSSS::usage = "3 scalar vertex";
 	VertexSS::usage = "2 scalar vertex";
@@ -554,10 +554,10 @@ BeginPackage["ARGES`"];
 			If[posFi == {} || posFj == {},
 				Message[Fermion::UnknownParticle];,
 				ListYukawa = Append[ListYukawa, {sym, Length[RealScalarList]+1, posFi[[1,1]], posFj[[1,1]], Function[{x}, Evaluate[x[#2,#3]]&]/@gauge, Mat[fak]&}];
-				YukMat[[posS[[1,1]], posFi[[1,1]], posFj[[1,1]]]] += Yukawa[Length[ListYukawa]];
-				YukMat[[posS[[1,1]], posFj[[1,1]], posFi[[1,1]]]] += transpose[Yukawa[Length[ListYukawa]]];
-				AdjYukMat[[posS[[1,1]], AdjWeylFermionList[[posFj[[1,1]], 3]], AdjWeylFermionList[[posFi[[1,1]], 3]]]] += adj[Yukawa[Length[ListYukawa]]];
-				AdjYukMat[[posS[[1,1]], AdjWeylFermionList[[posFi[[1,1]], 3]], AdjWeylFermionList[[posFj[[1,1]], 3]]]] += adj[transpose[Yukawa[Length[ListYukawa]]]];
+				YukMat[[Length[RealScalarList]+1, posFi[[1,1]], posFj[[1,1]]]] += Yukawa[Length[ListYukawa]];
+				YukMat[[Length[RealScalarList]+1, posFj[[1,1]], posFi[[1,1]]]] += transpose[Yukawa[Length[ListYukawa]]];
+				AdjYukMat[[Length[RealScalarList]+1, AdjWeylFermionList[[posFj[[1,1]], 3]], AdjWeylFermionList[[posFi[[1,1]], 3]]]] += adj[Yukawa[Length[ListYukawa]]];
+				AdjYukMat[[Length[RealScalarList]+1, AdjWeylFermionList[[posFi[[1,1]], 3]], AdjWeylFermionList[[posFj[[1,1]], 3]]]] += adj[transpose[Yukawa[Length[ListYukawa]]]];
 			];
 		];
 		
@@ -572,10 +572,10 @@ BeginPackage["ARGES`"];
 			If[posFi == {} || posFj == {},
 				Message[Fermion::UnknownParticle];,
 				ListYukawa = Append[ListYukawa, {sym, Length[RealScalarList]+1, posFi[[1,1]], posFj[[1,1]], Function[{x}, Evaluate[x[#2,#3]]&]/@gauge, Evaluate[fak[#2,#3]]&}];
-				YukMat[[posS[[1,1]], posFi[[1,1]], posFj[[1,1]]]] += Yukawa[Length[ListYukawa]];
-				YukMat[[posS[[1,1]], posFj[[1,1]], posFi[[1,1]]]] += transpose[Yukawa[Length[ListYukawa]]];
-				AdjYukMat[[posS[[1,1]], AdjWeylFermionList[[posFj[[1,1]], 3]], AdjWeylFermionList[[posFi[[1,1]], 3]]]] += adj[Yukawa[Length[ListYukawa]]];
-				AdjYukMat[[posS[[1,1]], AdjWeylFermionList[[posFi[[1,1]], 3]], AdjWeylFermionList[[posFj[[1,1]], 3]]]] += adj[transpose[Yukawa[Length[ListYukawa]]]];
+				YukMat[[Length[RealScalarList]+1, posFi[[1,1]], posFj[[1,1]]]] += Yukawa[Length[ListYukawa]];
+				YukMat[[Length[RealScalarList]+1, posFj[[1,1]], posFi[[1,1]]]] += transpose[Yukawa[Length[ListYukawa]]];
+				AdjYukMat[[Length[RealScalarList]+1, AdjWeylFermionList[[posFj[[1,1]], 3]], AdjWeylFermionList[[posFi[[1,1]], 3]]]] += adj[Yukawa[Length[ListYukawa]]];
+				AdjYukMat[[Length[RealScalarList]+1, AdjWeylFermionList[[posFi[[1,1]], 3]], AdjWeylFermionList[[posFj[[1,1]], 3]]]] += adj[transpose[Yukawa[Length[ListYukawa]]]];
 			];
 		];
 		
