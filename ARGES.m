@@ -1828,7 +1828,7 @@ BeginPackage["ARGES`"];
 		(* Backend for anomalous dimensions *)
 		
 		(* Fermion anomalous dimensions *)
-		FGamma[f1_, f2_, l1_, l2_, 0] := TensorDelta[l1,l2] KroneckerDelta[f1,f2];
+		FGamma[f1_, f2_, l1_, l2_, 0] := TensorDelta[l1,l2] KroneckerDelta[AdjWeylFermionList[[f1,3]],f2];
 		
 		FGamma[f1_, f2_, l1_, l2_, 1] := Module[
 			{gamma, ii, ss, x},
@@ -1845,7 +1845,7 @@ BeginPackage["ARGES`"];
 				{ss[0], 1, Length[RealScalarList]}
 			]//SimplifyProduct;
 			gamma += \[Xi] Sum[
-				Sqr[ListGauge[[ii,1]]] TensorDelta[l1,l2] KroneckerDelta[f1,f2] C2[WeylFermionList[[AdjWeylFermionList[[f1,2]], 1]], ListGauge[[ii,1]]],
+				Sqr[ListGauge[[ii,1]]] TensorDelta[l1,l2] KroneckerDelta[AdjWeylFermionList[[f1,3]],f2] C2[WeylFermionList[[AdjWeylFermionList[[f1,2]], 1]], ListGauge[[ii,1]]],
 				{ii, 1, NumberOfSubgroups}
 			];
 			Return[gamma/Power[4 \[Pi], 2]];
@@ -1923,7 +1923,7 @@ BeginPackage["ARGES`"];
 					{ii2, 1, NumberOfSubgroups}
 				],
 				{ii1, 1, NumberOfSubgroups}
-			] TensorDelta[l1,l2] KroneckerDelta[f1,f2];
+			] TensorDelta[l1,l2] KroneckerDelta[AdjWeylFermionList[[f1,3]],f2];
 			Return[gamma/Power[4 \[Pi], 4]];
 		];
 		
