@@ -571,7 +571,7 @@ BeginPackage["ARGES`"];
 			posFj = ListPosition[AdjWeylFermionList,_List?(#[[1]] == Fj &)];
 			If[posFi == {} || posFj == {},
 				Message[Fermion::UnknownParticle];,
-				ListYukawa = Append[ListYukawa, {sym, Length[RealScalarList]+1, posFi[[1,1]], posFj[[1,1]], Function[{x}, Evaluate[x[#2,#3]]&]/@gauge, Evaluate[fak[#2,#3]]&}];
+				ListYukawa = Append[ListYukawa, {sym, Length[RealScalarList]+1, posFi[[1,1]], posFj[[1,1]], Function[{x}, Evaluate[x[#2,#3]]&]/@gauge, Evaluate[fak[#3,#4]]&}];
 				YukMat[[Length[RealScalarList]+1, posFi[[1,1]], posFj[[1,1]]]] += Yukawa[Length[ListYukawa]];
 				YukMat[[Length[RealScalarList]+1, posFj[[1,1]], posFi[[1,1]]]] += transpose[Yukawa[Length[ListYukawa]]];
 				AdjYukMat[[Length[RealScalarList]+1, AdjWeylFermionList[[posFj[[1,1]], 3]], AdjWeylFermionList[[posFi[[1,1]], 3]]]] += adj[Yukawa[Length[ListYukawa]]];
