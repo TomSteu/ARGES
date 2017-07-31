@@ -1628,10 +1628,10 @@ BeginPackage["ARGES`"];
 			)//.subScalarInvariants;
 			beta -= 12 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] 
 				(
-					3 H2S[Prepend[la, pa], Prepend[la, pa]] + 2 Hbar2S[Prepend[la, pa], Prepend[la, pa]] + 
-					3 H2S[Prepend[lb, pb], Prepend[lb, pb]] + 2 Hbar2S[Prepend[lb, pb], Prepend[lb, pb]] +
-					3 H2S[Prepend[lc, pc], Prepend[lc, pc]] + 2 Hbar2S[Prepend[lc, pc], Prepend[lc, pc]] +
-					3 H2S[Prepend[ld, pd], Prepend[ld, pd]] + 2 Hbar2S[Prepend[ld, pd], Prepend[ld, pd]]
+					If[pa > Length[RealScalarList], 0, 3 H2S[Prepend[la, pa], Prepend[la, pa]] + 2 Hbar2S[Prepend[la, pa], Prepend[la, pa]]] + 
+					If[pb > Length[RealScalarList], 0, 3 H2S[Prepend[lb, pb], Prepend[lb, pb]] + 2 Hbar2S[Prepend[lb, pb], Prepend[lb, pb]]] +
+					If[pc > Length[RealScalarList], 0, 3 H2S[Prepend[lc, pc], Prepend[lc, pc]] + 2 Hbar2S[Prepend[lc, pc], Prepend[lc, pc]]] +
+					If[pd > Length[RealScalarList], 0, 3 H2S[Prepend[ld, pd], Prepend[ld, pd]] + 2 Hbar2S[Prepend[ld, pd], Prepend[ld, pd]]]
 				)//.subScalarInvariants;
 			beta += 2(Perm[HY[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]])//.subScalarInvariants;
 			beta += 2(Perm[HbarY[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]])//.subScalarInvariants;
