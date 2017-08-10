@@ -12,12 +12,12 @@
 }
 \definecolor{light-gray}{gray}{0.95}
 \addbibresource{ref.bib}
+\title{ARGES: \\ Advanced Renormalization Group Equation Simplifier \\ User Manual}
+\date{2017}
+\author{Tom Steudtner}
 \begin{document}
 \begin{titlepage}
-\centering
-{\LARGE \bfseries ARGES - Advanced Renormalization Group Equation Simplifier}\\
-\vspace{20em}
-\LARGE User Manual
+\maketitle
 \end{titlepage}
 \newpage
 \tableofcontents
@@ -54,9 +54,9 @@ $\mathcal{L}_{gf}$ and $\mathcal{L}_{gh}$ represent the gauge fixing and ghost p
 \end{align}
 Contributions from the gauge sector are expressed in form of the quadratic Casimir, the Dynkin indices and $\Lambda$ invariants:
 \begin{align}
-C_2(R)^{ab} &= T^A_{ac} \;T^A_{cb} \\
-S_2(R) \;\delta^{AB} &= T^A_{ab} \; T^B_{ba} \\
-\Lambda_{abcd} &= T^A_{ac} \; T^A_{bd}
+C_2(R)\;\delta_{ab} &= T^A_{ac} \;T^A_{cb} \label{casimir}\\
+S_2(R) \;\delta^{AB} &= T^A_{ab} \; T^B_{ba} \label{dynkin}\\
+\Lambda_{abcd} &= T^A_{ac} \; T^A_{bd} \label{lambda}
 \end{align}
 Where $T^A_{ab}$ denominate generator of the representation of the gauge subgroup for scalar, fermionic and vector fields. Since scalars are decomposed to be real, their generators are imaginary and antisymmetric in the indices $a \leftrightarrow b$. Since vectors are considered to be real and in the adjoint representation, their generator are imaginary, totally antisymmetric and exhibit a Jacobi identity.
 \newpage
@@ -206,6 +206,54 @@ Anomalous dimensions for scalar fields are very similar to the fermionic case:
 $\gamma$[Scalar1, Scalar2, S1IndexList, S2IndexList, LoopOrder]
 \end{lstlisting}
 Only that scalars (which are again automatically decomposed) are added for the first two arguments, and the second two contain $\mathtt{NumberOfGaugegroups+2}$ elements due to the additional generation indices. If $\mathtt{LoopLevel}$ is set to zero, a product of delta symbols over the particle type, generation and gauge indices is returned. The result is in general gauge depended and assumed in a the $R_\xi$ gauge for all couplings. \\ \FloatBarrier
+\newpage
+\section{Advanced Options}
+\subsection{Advanced Simplification}
+By default, ARGES resolves index contraction by explicitly summing over these. However, especially when dealing with indefinite bounds or non-numerical external indices, the Mathematica kernel runs into trouble resolving these sums, or fills up the memory be dragging a plethora of conditions with the solutions. One possibility to overcome is to append conditions for non-numerical bounds or indices to Mathematica standard assumption condition $\$\mathtt{Assumptions}$. \\ In favour of wasting system resources by performing nested sums, advanced pattern matching techniques are employed by ARGES to simplify any index sum before residing to actual summation. In fact, two versions of this algorithm exist. One to employ with every index sum calculated, which is deliberately kept lightweight and inaccessible to the user to protect the performance of ARGES. The second one is automatically performed at the end of each calculation to simplify the result. It is accessible by the user through:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+SimplifyProduct[expression]
+\end{lstlisting}
+The following simplifications are implemented in both versions of the algorithms:
+\begin{itemize}
+\item the expression is expanded and factor dragged under the sum
+\item trivial summations $\sum_{i=1}^1$ are resolved
+\item summations like $\sum_{i=1}^{k} \mathtt{KroneckerDelta}[i,j]$ are resolved - here it is implicitly assumed that $j \leq k$; it is hence wise to formulate contraction rules using $\mathtt{KroneckerDelta}[...]$
+\item some simplifications for terms containing the $\mathtt{Generator}$ keyword are applied - refer to the next section for more details
+\item simplify consecutive operations of $\mathtt{conj}$, $\mathtt{transpose}$, $\mathtt{adj}$
+\item reorder and simplify Yukawa traces 
+\end{itemize}
+While the version accessible to $\mathtt{SimplifyProduct}$ additionally may:
+\begin{itemize}
+\item simplify expressions with the $\mathtt{Generator}$ keyword much further
+\item simplify $\Lambda_{abbc} = C_2 \,\delta_{ac}$ for fermions
+\item employ user specified simplification rules
+\end{itemize}
+Indeed, one may add additional assumption to the simplification rules for $\mathtt{SimplifyProduct}$ by defining the variable $\mathtt{subSimplifySum}$. Any rules defined within those should assume that every $\mathtt{Sum}$ keyword is rebranded as $\mathtt{SimplifySum}$, an example could look like this:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+subSimplifySum = {
+   ...
+   SimplifySum[fac_ func[x_], Sum1___, {x_, 1, xmax_}, Sum2___] :> 
+      SimplifySum[ fac simplefunc, Sum1, Sum2],
+   ...
+}
+\end{lstlisting}
+\subsection{The $\mathtt{Generator}$ keyword}
+In order to handle adjoint representations better, ARGES allows to use the following structure
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+Generator[Args][a, i, j]
+\end{lstlisting}
+Which represents a generator of the gauge group $T^a_{ij}$ (note that here, indices do not run over other gauge groups, generations or particle types), where $\mathtt{Args}$ marks arbitrary argument which can be chosen by the user, however, the canonical way in ARGES is to choose $\mathtt{Generator}[\mathtt{FieldSymbol},\;\mathtt{GaugeSymbol}]$ or $\mathtt{Generator}[\mathtt{GaugeSymbol}]$ for the adjoint representation.
+The following relations are build into the simplification algorithm in ARGES:
+\begin{itemize}
+\item ${T^a_{ij}}^* = T^a_{ji}$
+\item $T^a_{ij} T^a_{jk} = C_2\, \delta_{ik}$
+\item $T^a_{ij} T^b_{ji} = T_2\, \delta^{ab}$
+\end{itemize}
+Where $T_2$ is easily translated into $S_2$ employing $\mathtt{subInvariants}$. Furthermore, for $\mathtt{SimplifyProduct}$, the relation
+\begin{align*}
+T^a_{ij} T^b_{jk} T^a_{kl} = \left(C_2(R) - \dfrac{1}{2} C_2(G)\right) T^b_{il}
+\end{align*}
+is also included.
 \newpage
 \section{Example: SM with $N_c$ colors and third generation fermions}
 In this section, we will present an example of usage featuring the Standard Model with $N_c$ colors and only considering third generation fermions. The model file looks like this (depicted in plain text without notebook specific replacements):
