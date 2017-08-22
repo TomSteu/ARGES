@@ -1960,15 +1960,14 @@ BeginPackage["ARGES`"];
 			Return[gamma/Power[4 \[Pi], 4]];
 		];
 		
-		(* Checks if there are Yukawa terms missing allowed by symmeties *)
+		(* Checks if there are couplings missing  allowed by symmeties *)
+
 		CheckYukawa[loop_, func_:(#&)] := Block[
 			{treeL,loopL,f1,f2,s,res,assHold,i,pos},
 			assHold = $Assumptions;
 			$Assumptions = $Assumptions && And@@((Element[#,Integers]&&(#>=1))/@Join[{gen[S,1], gen[S,2], gen[F,1], gen[F,2]}, Flatten[{gauge[S,#], gauge[F,1,#], gauge[F,2,#]}& /@ Range[NumberOfSubgroups]]]);
 			res = {};
 			For[f1=1, f1<=Length[AdjWeylFermionList], f1++,
-				treeL = {};
-				loopL = {};
 				For[f2=1, f2<=f1, f2++,
 					For[s=1, s<=Length[RealScalarList], s++,
 						treeL = ExtractIndexStructure[
@@ -2038,6 +2037,65 @@ BeginPackage["ARGES`"];
 			];
 			$Assumptions = assHold;
 			Return[res//.{FF1___, {_, _, _, _, 0, 0}, FF2___ } :> {FF1,FF2}];
+		];
+
+		CheckFermionMass[loop_, func_:(#&)] := Block[
+			{treeL,loopL,f1,f2,res,assHold,i,pos},
+			assHold = $Assumptions;
+			$Assumptions = $Assumptions && And@@((Element[#,Integers]&&(#>=1))/@Join[{gen[F,1], gen[F,2]}, Flatten[{gauge[F,1,#], gauge[F,2,#]}& /@ Range[NumberOfSubgroups]]]);
+			res = {};
+			For[f1=1, f1<=Length[AdjWeylFermionList], f1++,
+				For[f2=1, f2<=f1, f2++,
+					treeL = ExtractIndexStructure[
+						func[\[Beta][
+							AdjWeylFermionList[[f1,1]], 
+							AdjWeylFermionList[[f2,1]],
+							Join[
+								{ If[WeylFermionList[[AdjWeylFermionList[[f1,2]],2]] === 1, 1, gen[F,1]] }, 
+								(If[FMultiplicity[AdjWeylFermionList[[f1,2]],#] === 1, 1, gauge[F,1,#]])&/@Range[NumberOfSubgroups]
+							], 
+							Join[
+								{ If[WeylFermionList[[AdjWeylFermionList[[f2,2]],2]] === 1, 1, gen[F,2]] }, 
+								(If[FMultiplicity[AdjWeylFermionList[[f2,2]],#] === 1, 1, gauge[F,2,#]])&/@Range[NumberOfSubgroups]
+							], 
+							0
+						]], 
+						Join[{gen[F,1], gen[F,2]}, Flatten[{gauge[F,1,#], gauge[F,2,#]}& /@ Range[NumberOfSubgroups]]]
+					]/.{Factorize->List};
+					loopL = ExtractIndexStructure[
+						func[\[Beta][
+							AdjWeylFermionList[[f1,1]], 
+							AdjWeylFermionList[[f2,1]], 
+							Join[
+								{ If[WeylFermionList[[AdjWeylFermionList[[f1,2]],2]] === 1, 1, gen[F,1]] }, 
+								(If[FMultiplicity[AdjWeylFermionList[[f1,2]],#] === 1, 1, gauge[F,1,#]])&/@Range[NumberOfSubgroups]
+							], 
+							Join[
+								{ If[WeylFermionList[[AdjWeylFermionList[[f2,2]],2]] === 1, 1, gen[F,2]] }, 
+								(If[FMultiplicity[AdjWeylFermionList[[f2,2]],#] === 1, 1, gauge[F,2,#]])&/@Range[NumberOfSubgroups]
+							], 
+							loop
+						]], 
+						Join[{gen[F,1], gen[F,2]}, Flatten[{gauge[F,1,#], gauge[F,2,#]}& /@ Range[NumberOfSubgroups]]]
+					]/.{Factorize->List};
+					For[i=1, i<=Length[treeL], i++,
+						pos=Flatten[Position[res, {AdjWeylFermionList[[f1,1]], AdjWeylFermionList[[f2,1]], treeL[[i,2]], _, _}]];
+						If[pos==={},
+							res = Append[res, {AdjWeylFermionList[[f1,1]], AdjWeylFermionList[[f2,1]], treeL[[i,2]], treeL[[i,1]], 0}];,
+							res[[pos[[1]], 5]] += treeL[[i,1]];
+						];
+					];
+					For[i=1, i<=Length[loopL], i++,
+						pos=Flatten[Position[res, {AdjWeylFermionList[[f1,1]], AdjWeylFermionList[[f2,1]], loopL[[i,2]], _, _}]];
+						If[pos==={},
+							res = Append[res, {AdjWeylFermionList[[f1,1]], AdjWeylFermionList[[f2,1]], loopL[[i,2]], 0, loopL[[i,1]]}];,
+							res[[pos[[1]], 6]] += loopL[[i,1]];
+						];
+					];
+				];
+			];
+			$Assumptions = assHold;
+			Return[res//.{FF1___, { _, _, _, 0, 0}, FF2___ } :> {FF1,FF2}];
 		];
 		
 		(* Definition of Invariants *)
