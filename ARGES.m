@@ -2312,10 +2312,9 @@ BeginPackage["ARGES`"];
 					];
 				];
 			];
+			$Assumptions = assHold;
+			Return[res//.{FF1___, { ___, 0, 0}, FF2___ } :> {FF1,FF2}];
 		];
-		$Assumptions = assHold;
-		Return[res//.{FF1___, { ___, 0, 0}, FF2___ } :> {FF1,FF2}];
-	];
 
 	CheckScalarMass[loop_, func_:(#&)] := Block[
 			{treeL, loopL, s1, s2, assHold, i, pos},
@@ -2393,11 +2392,9 @@ BeginPackage["ARGES`"];
 					];
 				];
 			];
+			$Assumptions = assHold;
+			Return[res//.{FF1___, { ___, 0, 0}, FF2___ } :> {FF1,FF2}];
 		];
-	];
-	$Assumptions = assHold;
-	Return[res//.{FF1___, { ___, 0, 0}, FF2___ } :> {FF1,FF2}];
-];
 
 		
 		(* Definition of Invariants *)
