@@ -1587,13 +1587,19 @@ BeginPackage["ARGES`"];
 				\[CapitalLambda]2[Join[{pa}, la], Join[{pc}, lc], Join[{pb}, lb], Join[{pd}, ld]] + 
 				\[CapitalLambda]2[Join[{pa}, la], Join[{pd}, ld], Join[{pc}, lc], Join[{pb}, lb]] 
 			)//.subScalarInvariants;
-			beta -= 4 (
+			beta -= 2 (
 				H[Join[{pa}, la], Join[{pb}, lb], Join[{pc}, lc], Join[{pd}, ld]] +
 				H[Join[{pa}, la], Join[{pb}, lb], Join[{pd}, ld], Join[{pc}, lc]] + 
 				H[Join[{pa}, la], Join[{pc}, lc], Join[{pb}, lb], Join[{pd}, ld]] + 
 				H[Join[{pa}, la], Join[{pc}, lc], Join[{pd}, ld], Join[{pb}, lb]] + 
 				H[Join[{pa}, la], Join[{pd}, ld], Join[{pb}, lb], Join[{pc}, lc]] + 
-				H[Join[{pa}, la], Join[{pd}, ld], Join[{pc}, lc], Join[{pb}, lb]]
+				H[Join[{pa}, la], Join[{pd}, ld], Join[{pc}, lc], Join[{pb}, lb]] +
+				H[Join[{pb}, lb], Join[{pc}, lc], Join[{pd}, ld], Join[{pa}, la]] +
+				H[Join[{pb}, lb], Join[{pd}, ld], Join[{pc}, lc], Join[{pa}, la]] + 
+				H[Join[{pc}, lc], Join[{pb}, lb], Join[{pd}, ld], Join[{pa}, la]] + 
+				H[Join[{pc}, lc], Join[{pd}, ld], Join[{pb}, lb], Join[{pa}, la]] + 
+				H[Join[{pd}, ld], Join[{pb}, lb], Join[{pc}, lc], Join[{pa}, la]] + 
+				H[Join[{pd}, ld], Join[{pc}, lc], Join[{pb}, lb], Join[{pa}, la]]
 			)//.subScalarInvariants//.{tr[adj[a_], b_, adj[c_], d_]:>tr[b, adj[c], d, adj[a]]};
 			beta = beta + 24 \[CapitalLambda]Y[Join[{pa}, la], Join[{pb}, lb], Join[{pc}, lc], Join[{pd}, ld]]//.subScalarInvariants//.{tr[adj[a_], b_]:>tr[b, adj[a]]};
 			beta = beta - 3*24 Sum[Sqr[ListGauge[[ii,1]]]\[CapitalLambda]S[ii][Join[{pa}, la], Join[{pb}, lb], Join[{pc}, lc], Join[{pd}, ld]], {ii, 1, NumberOfSubgroups}]//.subScalarInvariants;
@@ -1642,7 +1648,7 @@ BeginPackage["ARGES`"];
 				)//.subScalarInvariants;
 			beta += 2(Perm[HY[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]])//.subScalarInvariants;
 			beta += 2(Perm[HbarY[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]])//.subScalarInvariants;
-			beta += 4(
+			beta += 2(
 				H3[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 
 				H3[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] + 
 				H3[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] + 
@@ -1654,7 +1660,19 @@ BeginPackage["ARGES`"];
 				H3[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] + 
 				H3[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] + 
 				H3[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] + 
-				H3[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]]
+				H3[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] + 
+				H3[Prepend[lc, pc], Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd]] + 
+				H3[Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb]] + 
+				H3[Prepend[lc, pc], Prepend[lb, pb], Prepend[la, pa], Prepend[ld, pd]] +
+				H3[Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa]] +
+				H3[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				H3[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]] +
+				H3[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] + 
+				H3[Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb]] + 
+				H3[Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa], Prepend[lc, pc]] + 
+				H3[Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa]] + 
+				H3[Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa], Prepend[lb, pb]] +
+				H3[Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb], Prepend[la, pa]] 
 			)//.subScalarInvariants;
 			beta += Sqr[24]*2 (
 				\[CapitalLambda]bar2S[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 
@@ -1662,7 +1680,7 @@ BeginPackage["ARGES`"];
 				\[CapitalLambda]bar2S[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] 
 			)//.subScalarInvariants;
 			beta -= (2 Perm[HF[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]])//.subScalarInvariants;
-			beta += (2 Sum[Sqr[ListGauge[[ii,1]]](
+			beta += (Sum[Sqr[ListGauge[[ii,1]]](
 				If[pa > Length[RealScalarList], 0, C2[RealScalarList[[pa, 1]] , ListGauge[[ii,1]]]] +
 				If[pb > Length[RealScalarList], 0, C2[RealScalarList[[pb, 1]] , ListGauge[[ii,1]]]] + 
 				If[pc > Length[RealScalarList], 0, C2[RealScalarList[[pc, 1]] , ListGauge[[ii,1]]]] + 
@@ -1673,7 +1691,13 @@ BeginPackage["ARGES`"];
 				H[Join[{pa}, la], Join[{pc}, lc], Join[{pb}, lb], Join[{pd}, ld]] + 
 				H[Join[{pa}, la], Join[{pc}, lc], Join[{pd}, ld], Join[{pb}, lb]] + 
 				H[Join[{pa}, la], Join[{pd}, ld], Join[{pb}, lb], Join[{pc}, lc]] + 
-				H[Join[{pa}, la], Join[{pd}, ld], Join[{pc}, lc], Join[{pb}, lb]]
+				H[Join[{pa}, la], Join[{pd}, ld], Join[{pc}, lc], Join[{pb}, lb]] +
+				H[Join[{pb}, lb], Join[{pc}, lc], Join[{pd}, ld], Join[{pa}, la]] +
+				H[Join[{pb}, lb], Join[{pd}, ld], Join[{pc}, lc], Join[{pa}, la]] + 
+				H[Join[{pc}, lc], Join[{pb}, lb], Join[{pd}, ld], Join[{pa}, la]] + 
+				H[Join[{pc}, lc], Join[{pd}, ld], Join[{pb}, lb], Join[{pa}, la]] + 
+				H[Join[{pd}, ld], Join[{pb}, lb], Join[{pc}, lc], Join[{pa}, la]] + 
+				H[Join[{pd}, ld], Join[{pc}, lc], Join[{pb}, lb], Join[{pa}, la]]
 			))//.subScalarInvariants;
 			beta += (5*24 BetaQuartic[pa, pb, pc, pd, la, lb, lc, ld, 0] ( 
 				If[pa > Length[RealScalarList], 0, Y2FS[Prepend[la, pa], Prepend[la,pa]]] + 
