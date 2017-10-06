@@ -40,6 +40,7 @@ BeginPackage["ARGES`"];
 	prod::usage = "product of flavour matrices";
 	adj::usage = "adjoint";
 	conj::usage = "complex conjugate";
+	transpose::usage = "transposition";
 	tr::usage = "trace of flavour matrices";
 	U::usage = "Unitary Group";
 	SU::usage = "Special Unitary Group";
@@ -103,7 +104,7 @@ BeginPackage["ARGES`"];
 				Return[];
 			];
 			AddAssumption[n];
-			AddAssumption/@reps;
+			AddAssumptionGauge[reps];
 			ListGauge = Append[ListGauge, {sym, group, n, reps}];
 		];
 		
@@ -161,7 +162,7 @@ BeginPackage["ARGES`"];
 				Return[];
 			];
 			AddAssumption[Nflavor];
-			AddAssumption/@Gauge;
+			AddAssumptionGauge[Gauge];
 			WeylFermionList = Append[WeylFermionList, {sym, Nflavor, Gauge}];
 			AdjWeylFermionList = Append[AdjWeylFermionList, {sym//.subProd, Length[WeylFermionList], Length[AdjWeylFermionList]+2, Length[AdjWeylFermionList]+1}];
 			AdjWeylFermionList = Append[AdjWeylFermionList, {adj[sym]//.subProd, Length[WeylFermionList], Length[AdjWeylFermionList], Length[AdjWeylFermionList]}];
@@ -185,7 +186,7 @@ BeginPackage["ARGES`"];
 			];
 			AddAssumption[Nflavor[[1]]];
 			AddAssumption[Nflavor[[2]]];
-			AddAssumption/@Gauge;
+			AddAssumptionGauge[Gauge];
 			UpdateDummy[];
 			RealScalarList = Append[RealScalarList, {sym, Nflavor, Gauge}];
 			YukMat = Table[
@@ -754,9 +755,19 @@ BeginPackage["ARGES`"];
 		AddAssumption[sym_] := Module[
 			{},
 			If[NumberQ[sym], Return[];];
-			If[MemberQ[nonNumerics,sym], Return;];
+			If[MemberQ[nonNumerics,sym], Return[];];
 			$Assumptions=$Assumptions&&Element[sym, Integers]&&(sym>1);
 			nonNumerics = Append[nonNumerics,sym];
+		];
+
+		(* add assumptions for gauge list - fish out U(1) cases *)
+		AddAssumptionGauge[symList] := Module[
+			{i},
+			If[Length[symList] > NumberOfSubgroups, Return[];];
+			For[i=1, i <= Length[symList], i++,
+				If[ListGauge[[i,3]] === 1, Coninue[];];
+				AddAssumption[symList[[i]]];
+			];
 		];
 		
 		(* Check that indices are Integers *)
