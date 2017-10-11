@@ -63,7 +63,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 	
- 	Begin["Private`"];
+	Begin["Private`"];
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -87,7 +87,7 @@ BeginPackage["ARGES`"];
 		(* Interfaces to define the theory *)
 		Gauge[sym_, group_, n_, reps_List] := Module[
 			{},
-			If[!NumberQb[NumberOfSubgroups] || !MatchQ[NumberOfSubgroups, _Integer] || NumberOfSubgroups<0, 
+			If[!NumberQ[NumberOfSubgroups] || !MatchQ[NumberOfSubgroups, _Integer] || NumberOfSubgroups<0, 
 				Message[Gauge::NAN];
 				Return[];
 			];
