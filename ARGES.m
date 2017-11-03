@@ -99,10 +99,6 @@ BeginPackage["ARGES`"];
 				Message[Gauge::RepMismatch];
 				Return[];
 			];
-			If[GaugeIdxCheck[reps],
-				Message[Gauge::RepInvalid];
-				Return[];
-			];
 			AddAssumption[n];
 			AddAssumptionGauge[reps];
 			ListGauge = Append[ListGauge, {sym, group, n, reps}];

@@ -1,7 +1,6 @@
 Needs["ARGES`"]
 Reset[];
 NumberOfSubgroups = 3;
-Eps[a_Integer, b_Integer] := If[a + b == 3 && a > 0 && b > 0, If[b == a + 1, 1, -1], 0];
 Gauge[g1, U, 1, {0, 1, 1}];
 Gauge[g2, SU, 2, {0, 3, 1}];
 Gauge[g3, SU, 3, {0, 1, 8}];
@@ -12,11 +11,11 @@ WeylFermion[U, 3, {+ 2/3, 1, 3}];
 WeylFermion[E, 3, {-1, 1, 1}];
 WeylFermion[PsiL, Nf, {QY, d[R2], d[R3]}];
 WeylFermion[PsiR, Nf, {QY, d[R2], d[R3]}];
-ComplexScalar[H, {1,1}, { +1/2, 2, 1}];
+ComplexScalar[H, {1,1}, { -1/2, 2, 1}];
 ComplexScalar[S, {Nf,Nf}, {0, 1, 1}];
-YukawaY[yb, H, adj[Q], D, {1 &, KroneckerDelta[#1, #2] &, KroneckerDelta[#2, #3] &}, (KroneckerDelta[#3,3] KroneckerDelta[#4,3])&];
-YukawaY[ytau, H, adj[L], E, {1 &, KroneckerDelta[#1, #2] &, 1 &}, (KroneckerDelta[#3,3] KroneckerDelta[#4,3])&];
-YukawaY[yt, adj[H], adj[Q], U, {1 &, Eps[#1, #2] &, KroneckerDelta[#2, #3] &}, (KroneckerDelta[#3,3] KroneckerDelta[#4,3])&];
-YukawaY[y, S, adj[PsiL], PsiR, {1&, KroneckerDelta[#2,#3]&, KroneckerDelta[#2,#3]&}, (KroneckerDelta[#1,#3] KroneckerDelta[#2,#4])&];
+YukawaY[yb, H, Q, adj[D], {1 &, KroneckerDelta[#1, #2] &, KroneckerDelta[#2, #3] &}, (KroneckerDelta[#3,3] KroneckerDelta[#4,3])&];
+YukawaY[ytau, H, L, adj[E], {1 &, KroneckerDelta[#1, #2] &, 1 &}, (KroneckerDelta[#3,3] KroneckerDelta[#4,3])&];
+YukawaY[yt, adj[H], Q, adj[U], {1 &, Eps[#1, #2] &, KroneckerDelta[#2, #3] &}, (KroneckerDelta[#3,3] KroneckerDelta[#4,3])&];
+YukawaY[y, S, PsiL, adj[PsiR], {1&, KroneckerDelta[#2,#3]&, KroneckerDelta[#2,#3]&}, (KroneckerDelta[#1,#3] KroneckerDelta[#2,#4])&];
 Quartic\[Lambda]abcd[\[Lambda], adj[H], H, adj[H], H, {1&, (KroneckerDelta[#1, #2] KroneckerDelta[#3, #4])&, 1&}, 1/2(KroneckerDelta[#2,#3] KroneckerDelta[#1,#4] KroneckerDelta[#5,#8] KroneckerDelta[#6,#7])&];
 ComputeInvariants[];
