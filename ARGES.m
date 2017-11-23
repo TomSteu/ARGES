@@ -143,9 +143,9 @@ BeginPackage["ARGES`"];
 		} //. {Sum->SimplifySum}]
 		);
 		
-		WeylFermion[sym_, Nflavor_, Gauge_List] := Module[
+		WeylFermion[sym_, Nflavor_, gauge_List] := Module[
 			{},
-			If[Dimensions[Gauge][[1]] != NumberOfSubgroups, 
+			If[Dimensions[gauge][[1]] != NumberOfSubgroups, 
 				Message[WeylFermion::RepMismatch];
 				Return[];
 			];
@@ -153,22 +153,22 @@ BeginPackage["ARGES`"];
 				Message[Gen::RepInvalid];
 				Return[];
 			];
-			If[GaugeIdxCheck[Gauge],
+			If[GaugeIdxCheck[gauge],
 				Message[Gauge::RepInvalid];
 				Return[];
 			];
 			AddAssumption[Nflavor];
-			AddAssumptionGauge[Gauge];
-			WeylFermionList = Append[WeylFermionList, {sym, Nflavor, Gauge}];
+			AddAssumptionGauge[gauge];
+			WeylFermionList = Append[WeylFermionList, {sym, Nflavor, gauge}];
 			AdjWeylFermionList = Append[AdjWeylFermionList, {sym//.subProd, Length[WeylFermionList], Length[AdjWeylFermionList]+2, Length[AdjWeylFermionList]+1}];
 			AdjWeylFermionList = Append[AdjWeylFermionList, {adj[sym]//.subProd, Length[WeylFermionList], Length[AdjWeylFermionList], Length[AdjWeylFermionList]}];
 			YukMat = Table[If[i1 <= Length[AdjWeylFermionList] - 2 && i2 <= Length[AdjWeylFermionList] - 2, YukMat[[a, i1, i2]], 0], {a, 1, Length[RealScalarList]+1}, {i1, 1, Length[AdjWeylFermionList]}, {i2, 1, Length[AdjWeylFermionList]}];
 			AdjYukMat = Table[If[i1 <= Length[AdjWeylFermionList] - 2 && i2 <= Length[AdjWeylFermionList] - 2, AdjYukMat[[a, i1, i2]], 0], {a, 1, Length[RealScalarList]+1}, {i1, 1, Length[AdjWeylFermionList]}, {i2, 1, Length[AdjWeylFermionList]}];
 		];
 		
-		RealScalar[sym_, Nflavor_List, Gauge_List] := Module[
+		RealScalar[sym_, Nflavor_List, gauge_List] := Module[
 			{},
-			If[Dimensions[Gauge][[1]] != NumberOfSubgroups || Dimensions[Nflavor][[1]] != 2, 
+			If[Dimensions[gauge][[1]] != NumberOfSubgroups || Dimensions[Nflavor][[1]] != 2, 
 				Message[RealScalar::RepMismatch];
 				Return[];
 			];
@@ -176,15 +176,15 @@ BeginPackage["ARGES`"];
 				Message[Gen::RepInvalid];
 				Return[];
 			];
-			If[GaugeIdxCheck[Gauge],
+			If[GaugeIdxCheck[gauge],
 				Message[Gauge::RepInvalid];
 				Return[];
 			];
 			AddAssumption[Nflavor[[1]]];
 			AddAssumption[Nflavor[[2]]];
-			AddAssumptionGauge[Gauge];
+			AddAssumptionGauge[gauge];
 			UpdateDummy[];
-			RealScalarList = Append[RealScalarList, {sym, Nflavor, Gauge}];
+			RealScalarList = Append[RealScalarList, {sym, Nflavor, gauge}];
 			YukMat = Table[
 				If[a <= Length[RealScalarList]-1, YukMat[[a, i1, i2]], 
 					If[a == Length[RealScalarList]+1, YukMat[[a-1, i1, i2]], 0]
