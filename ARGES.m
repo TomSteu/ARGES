@@ -4098,6 +4098,7 @@ BeginPackage["ARGES`"];
 		subSum := {
 			A_ SimplifySum[B_, C___] :> SimplifySum[A B, C],
 			SimplifySum[A_ + B_, C___] :> SimplifySum[A, C] + SimplifySum[B, C],
+			SimplifySum[D_ (A_ + B_), C___] :> SimplifySum[D A, C] + SimplifySum[D B, C],
 			SimplifySum[SimplifySum[A_, B___], C___] :> SimplifySum[A, B, C],
 			SimplifySum[A_, SS1___, {aa_, 1, 1}, SS2___] :> SimplifySum[A//.{aa->1}, SS1, SS2],
 			SimplifySum[A_ KroneckerDelta[aa_, bb_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
@@ -4120,6 +4121,7 @@ BeginPackage["ARGES`"];
 		subSum2 := {
 			A_ SimplifySum[B_, C___] :> SimplifySum[A B, C],
 			SimplifySum[A_ + B_, C___] :> SimplifySum[A, C] + SimplifySum[B, C],
+			SimplifySum[D_ (A_ + B_), C___] :> SimplifySum[D A, C] + SimplifySum[D B, C],
 			SimplifySum[SimplifySum[A_, B___], C___] :> SimplifySum[A, B, C],
 			SimplifySum[A_, SS1___, {aa_, 1, 1}, SS2___] :> SimplifySum[A//.{aa->1}, SS1, SS2],
 			SimplifySum[A_ KroneckerDelta[aa_, bb_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
