@@ -140,7 +140,7 @@ BeginPackage["ARGES`"];
 			adj[conj[A_[i_,j_]]] :> A[j,i],
 			adj[A_[i_,j_]] :> conj[A[j,i]],
 			adj[conj[A_]] :> A, adj[A_]:>conj[A]
-		} //. {Sum->SimplifySum}]
+		} //. {Sum[A_, B___]:>SimplifySum[Expand[A],B]}]
 		);
 		
 		WeylFermion[sym_, Nflavor_, gauge_List] := Module[
