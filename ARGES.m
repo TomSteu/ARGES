@@ -63,7 +63,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 	
-	Begin["Private`"];
+	Begin["ARGESp`"];
 		Reset[] := Module[
 			{},
 			ListGauge = {};
