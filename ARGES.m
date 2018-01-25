@@ -3839,7 +3839,7 @@ BeginPackage["ARGES`"];
 								]],
 								Refine[ContractSum[
 									((prod@@symList[[;;split-1, 1, 1]])[sumInd1,sumInd2] /.{prod[del[aa_]][i1_,i2_] :> KroneckerDelta[i1,i2], prod[A___, del[aa_], B___][C___] :> prod[A,B][C]}) Refine[Times@@(Function[{x},x[1]]/@symList[[;;split-1, 1, 2]]//.Mat:>Identity)] symList[[split, 1, 1]] symList[[split, 1, 2]][sVarList[[split,1]], sVarList[[split,2]], sumInd2, sumInd3] GetGenProd[symList[[split+1;;]], sVarList[[split+1;;]], sumInd3, sumInd1],
-									{sumInd1, 1, symList[[-1,1,5]]},
+									{sumInd1, 1, symList[[-1,1,6]]},
 									{sumInd2, 1, symList[[split,1,5]]},
 									{sumInd3, 1, symList[[split,1,6]]}
 								]]
