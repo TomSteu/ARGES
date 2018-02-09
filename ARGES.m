@@ -3476,7 +3476,7 @@ BeginPackage["ARGES`"];
 				sum=Sum[
 					ContractSum@@Join[
 						{
-							Sqr[24] Sum[\[Alpha][ListGauge[[ii,1]]] C2[RealScalarList[[ss1[0], 1]], ListGauge[[ii,1]]], {ii, 1, NumberOfSubgroups}] SolveSProd2[
+							Sqr[24] Sum[\[Alpha][ListGauge[[ii,1]]]^2 C2[RealScalarList[[ss1[0], 1]], ListGauge[[ii,1]]], {ii, 1, NumberOfSubgroups}] SolveSProd2[
 								Quartic[ss1[0], ss2[0], ss3[0], ss4[0]],
 								Quartic[ss1[0], ss2[0], ss3[0], ss4[0]],
 								Prepend[
