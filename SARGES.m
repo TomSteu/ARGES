@@ -72,6 +72,9 @@ BeginPackage["SARGES`"];
 			ListQuartic = {};
 			ListQuarticSym = {};
 			ListVEV = {};
+			ListSYukawa = {};
+			ListSMass = {};
+			ListSTadpole = {};
 			ChiralSuperFieldList = {};
 			WeylFermionList = {};
 			AdjWeylFermionList = {};
@@ -291,8 +294,8 @@ BeginPackage["SARGES`"];
 			ListVEV = Append[ListVEV, {sym, fak, Join[{posS[[1,1]]}, SGenIdx, SGaugeIdx]}];
 		];
 
-		SuperYukawa[sym_, Si_, Sj_, S_k, gauge_List, fak_:1] := Block[
-			{posSi, posSj, posSk},
+		SuperYukawa[sym_, Si_, Sj_, S_k, gauge_List, fak_:1&] := Block[
+			{posSi, posSj, posSk, permList},
 			If[Length[gauge] != NumberOfSubgroups,
 				Message[Yukawa::ContractionError];
 				Return[];
@@ -302,7 +305,20 @@ BeginPackage["SARGES`"];
 			posSk = ListPosition[ChiralSuperFieldList, _List?(#[[1]] == Sk &)];
 			If[posSi == {} || posSj == {} || posSk == {},
 				Message[Yukawa::UnknownParticle];,
-
+				permList = Permutations[{#1, #2, #3}];
+				For[i=1, i<=6, i++, 
+					ListSYukawa = Append[ListSYukawa, Join[
+						{sym}, 
+						Evaluate[permList[[i]]]&[posSi[[1,1]], posSj[[1,1]], posSk[[1,1]]],
+						Table[Evaluate[gauge[[j]]@@permList[[i]]]&, {j, 1, NumberOfSubgroups}], 
+						Evaluate[fak@@permList[[i]]/6]&
+					]];
+				];
+				SimplifySYukawaList[];
+				SYukMat = Table[0, {i, 0, Length[ListSYukawa]}, {j, 0, Length[ListSYukawa]}, {k, 0, Length[ListSYukawa]}];
+				For[i=1, i<=Length[ListSYukawa], i++,
+					SYukMat[[ListSYukawa[[i,2]], ListSYukawa[[i,3]], ListSYukawa[[i,4]]]] = SYukawa[i];
+				];
 			];
 		];
 		
@@ -634,6 +650,30 @@ BeginPackage["SARGES`"];
 			];
 		];
 		
+		(* clean up ListSYukawa by adding entries bacl together and then removing zero ones *)
+		SimplifySYukawaList[] := Block[
+			{ARG1, ARG2, ARG3},
+			For[i=1, i<=Length[ListSYukawa]-1, ,
+				For[j=i+1, j<=Length[ListSYukawa], ,
+					If[ListSYukawa[[i, 1;;4]] === ListSYukawa[[j, 1;;4]] && And@@((# === 0)& /@ (Simplify/@((Apply[#, {ARG1, ARG2, ARG3}] /@ ListSYukawa[[i, 5]]) - (Apply[#, {ARG1, ARG2, ARG3}] /@ ListSYukawa[[i, 5]])))) ,
+						If[ Simplify[ListSYukawa[[i, 6]][ARG1, ARG2, ARG3] + ListSYukawa[[j, 6]][ARG1, ARG2, ARG3]] === 0,
+							ListSYukawa = Delete[ListSYukawa, j];
+							ListSYukawa = Delete[ListSYukawa, i];
+							j = i + 1;
+							Continue[];,
+							ListYukawa[[i]] = Join[
+								ListSYukawa[[i, 1;;5]],
+								{Evaluate[Simplify[ListSYukawa[[i, 6]][ARG1, ARG2, ARG3] + ListSYukawa[[j, 6]][ARG1, ARG2, ARG3]] /. {ARG1->#1, ARG2->#2, ARG3->#3}]& }
+							];
+							ListSYukawa = Delete[ListSYukawa, j];
+							Continue[];
+						];
+					];
+					j++;
+				];
+				i++;
+			];
+		];
 		
 		(* Output Vertices *)
 		
