@@ -344,7 +344,7 @@ BeginPackage["SARGES`"];
 				SimplifySMassList[];
 				SMassMat = Table[0, {i, 0, Length[ListSMass]}, {j, 0, Length[ListSMass]}];
 				For[i=1, i<=Length[ListSMass], i++,
-					SYukMat[[ListSMass[[i,2]], ListSMass[[i,3]]]] = SMass[i];
+					SMassMat[[ListSMass[[i,2]], ListSMass[[i,3]]]] = SMass[i];
 				];
 			];
 		];
@@ -362,7 +362,7 @@ BeginPackage["SARGES`"];
 				SimplifySTadpoleList[];
 				STadMat = Table[0, {i, 0, Length[ListSMass]}];
 				For[i=1, i<=Length[ListSMass], i++,
-					SYukMat[[ListSMass[[i,2]]]] = STadpole[i];
+					STadMat[[ListSMass[[i,2]]]] = STadpole[i];
 				];
 			];
 		];
@@ -4263,6 +4263,75 @@ BeginPackage["SARGES`"];
 						l1[[x+1,1]][SIdx[[1+x,1]], SIdx[[1+x,2]], SIdx[[1+x,3]], SIdx[[1+x,4]]] l2[[x+1,1]][SIdx[[1+x,5]], SIdx[[1+x,6]], SIdx[[1+x,7]], SIdx[[1+x,8]]] l3[[x+1,1]][SIdx[[1+x,9]], SIdx[[1+x,10]], SIdx[[1+x,11]], SIdx[[1+x,12]]]
 					]/@Range[NumberOfSubgroups]
 				]
+			}
+		];
+
+		(* grand unified function to calc products and traces  *)
+		(*
+		** args		... list specifying what kind of coupling is at which position
+		** contr 	... index contraction - one index per superfield is assumed
+		** n 		... total number of indices involved
+		** external	... list of indices that are external {position, {Field, Flavour, {Gauge1, ...}} }
+		*)
+		SolveSuperProd[args_List, contr_, n_, external_List] := Block[
+			{
+				SIdx, res, FIdx, GIdx,
+				$Assumptions = $Assumptions && And@@Table[Element[SIdx[i], Integers] && SIdx[i]>0 && Element[SIdx[i], Integers] && SIdx[i]>0 && And@@Table[Element[GIdx[i,j], Integers] && GIdx[i,j]>0, {j, 1, NumberOfSubgroups}], {i, 1, n}]
+			},
+			
+			Simplify[SimplifySum@@Join[
+				{(SProd[args]@@(SIdx/@Range[n]) contr@@(SIdx/@Range[n])) /. Table[SIdx[external[[i,1]]] -> external[[i,2,1]], {i, 1, Length[external]}]}, 
+				(SIdx[#], 1, Length[ChiralSuperFieldList])& /@ (Range[n] //. {A___, m_, B___} :> {A,B} /; MemberQ[external[[;;,1]], m])
+			] //.Join[subSum,subSimplifySum] /. SimplifySum -> Sum] //. {
+				SProd[conj[Yuk], A___][a_, b_, c_, d___] :> SProd[conj[SYukMat[[a, b, c]]], A][a, b, c, d],
+				SProd[Yuk, A___][a_, b_, c_, d___] :> SProd[SYukMat[[a, b, c]], A][a, b, c, d],
+				SProd[conj[SMass], A___][a_, b_, c___] :> SProd[conj[SMassMat[[a, b]]], A][a, b, c],
+				SProd[SMass, A___][a_, b_, c___] :> SProd[SMassMat[[a, b]], A][a, b, c],
+				SProd[conj[STad], A___][a_, b___] :> SProd[conj[STadMat[[a]]], A][a, b],
+				SProd[STad, A___][a_, b___] :> SProd[STadMat[[a]], A][a, b]
+			} //. {
+				SProd[A___, conj[0], B___][C___] :> 0,
+				SProd[A___, 0, B___][C___] :> 0
+			} //. {
+				SProd[A___][B___] :> FProd[A][B] Times[A],
+				SYukawa[x_] :> ListSYukawa[[x, 1]],
+				SMass[x_] :> ListSMass[[x, 1]],
+				STadpole[x_] :> ListSTadpole[[x, 1]]
+			} /. {
+				FProd[A___][B___] :> GProd[1][A][B] Simplify[SimplifySum@@Join[
+					{
+						(
+							(fContr[A]@@(FIdx/@Range[n])) //. {
+								fContr[][A___] :> 1,
+								fContr[conj[SYukawa[x_]], A___][a_, b_, c_, d___] :> Conjugate[ListSYukawa[[x, 6]][a, b, c]] fContr[A][d],
+								fContr[SYukawa[x_], A___][a_, b_, c_, d___] :> ListSYukawa[[x, 6]][a, b, c] fContr[A][d],
+								fContr[conj[SMass[x_]], A___][a_, b_, c___] :> Conjugate[ListSMass[[x, 5]][a, b]] fContr[A][c],
+								fContr[SMass[x_], A___][a_, b_, c___] :> ListSMass[[x, 5]][a, b] fContr[A][c],
+								fContr[conj[STadpole[x_]], A___][a_, b___] :> Conjugate[ListSTadpole[[x, 4]][a]] fContr[A][b],
+								fContr[STadpole[x_], A___][a_, b___] :> ListSTadpole[[x, 4]][a] fContr[A][b]
+							}  
+						) /. Table[FIdx[external[[i,1]]] -> external[[i,2,2]], {i, 1, Length[external]}]
+					},
+					(FIdx[#], 1, ChiralSuperFieldList[[List[B][[#]], 2]])& /@ (Range[n] //. {A___, m_, B___} :> {A,B} /; MemberQ[external[[;;,1]], m])
+				] //. Join[subSum,subSimplifySum] /. SimplifySum -> Sum]
+			} //. {
+				GProd[x_][A___][B___] :> 1 /; (x > NumberOfSubgroups),
+				GProd[x_][A___][B___] :> GProd[x+1][A][B] Simplify[SimplifySum@@Join[
+					{
+						(
+							(gContr[A]@@((GIdx[#, x])&/@Range[n])) //. {
+								gContr[][A___] :> 1,
+								gContr[conj[SYukawa[y_]], A___][a_, b_, c_, d___] :> Conjugate[ListSYukawa[[y, 5, x]][a, b, c]] gContr[A][d],
+								gContr[SYukawa[y_], A___][a_, b_, c_, d___] :> ListSYukawa[[y, 5, x]][a, b, c] gContr[A][d],
+								gContr[conj[SMass[y_]], A___][a_, b_, c___] :> Conjugate[ListSMass[[y, 4, x]][a, b]] gContr[A][c],
+								gContr[SMass[y_], A___][a_, b_, c___] :> ListSMass[[y, 4, x]][a, b] fContr[A][c],
+								gContr[conj[STadpole[y_]], A___][a_, b___] :> Conjugate[ListSTadpole[[y, 3, x]][a]] gContr[A][b],
+								gContr[STadpole[y_], A___][a_, b___] :> ListSTadpole[[y, 3, x]][a] gContr[A][b]
+							} 
+						) /. Table[GIdx[external[[i,1]], x] -> external[[i,2,3,x]], {i, 1, Length[external]}]
+					},
+					(GIdx[#,x], 1, ChiralSuperFieldList[[List[B][[#]], 3, x]])& /@ (Range[n] //. {A___, m_, B___} :> {A,B} /; MemberQ[external[[;;,1]], m])
+				]//. Join[subSum,subSimplifySum] /. SimplifySum -> Sum]
 			}
 		];
 		
