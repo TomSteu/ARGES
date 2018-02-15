@@ -294,7 +294,7 @@ BeginPackage["SARGES`"];
 			ListVEV = Append[ListVEV, {sym, fak, Join[{posS[[1,1]]}, SGenIdx, SGaugeIdx]}];
 		];
 
-		SuperYukawa[sym_, Si_, Sj_, S_k, gauge_List, fak_:1&] := Block[
+		SuperYukawa[sym_, Si_, Sj_, Sk_, gauge_List, fak_:1&] := Block[
 			{posSi, posSj, posSk, permList},
 			If[Length[gauge] != NumberOfSubgroups,
 				Message[Yukawa::ContractionError];
@@ -305,7 +305,7 @@ BeginPackage["SARGES`"];
 			posSk = ListPosition[ChiralSuperFieldList, _List?(#[[1]] == Sk &)];
 			If[posSi == {} || posSj == {} || posSk == {},
 				Message[Yukawa::UnknownParticle];,
-				permList = Permutations[{#1, #2, #3}];
+				permList = {{#1, #2, #3}, {#1, #3, #2}, {#2, #1, #3}, {#2, #3, #1}, {#3, #1, #2}, {#3, #2, #1}};
 				For[i=1, i<=6, i++, 
 					ListSYukawa = Append[ListSYukawa, Join[
 						{sym}, 
@@ -321,6 +321,53 @@ BeginPackage["SARGES`"];
 				];
 			];
 		];
+
+		SuperMass[sym_, Si_, Sj_, gauge_List, fak_:1&] := Block[
+			{posSi, posSj, permList},
+			If[Length[gauge] != NumberOfSubgroups,
+				Message[Mass::ContractionError];
+				Return[];
+			];
+			posSi = ListPosition[ChiralSuperFieldList, _List?(#[[1]] == Si &)];
+			posSj = ListPosition[ChiralSuperFieldList, _List?(#[[1]] == Sj &)];
+			If[posSi == {} || posSj == {},
+				Message[Mass::UnknownParticle];,
+				permList = {{#1, #2}, {#2, #1}};
+				For[i=1, i<=2, i++, 
+					ListSMass = Append[ListSMass, Join[
+						{sym}, 
+						Evaluate[permList[[i]]]&[posSi[[1,1]], posSj[[1,1]]],
+						Table[Evaluate[gauge[[j]]@@permList[[i]]]&, {j, 1, NumberOfSubgroups}], 
+						Evaluate[fak@@permList[[i]]/2]&
+					]];
+				];
+				SimplifySMassList[];
+				SMassMat = Table[0, {i, 0, Length[ListSMass]}, {j, 0, Length[ListSMass]}];
+				For[i=1, i<=Length[ListSMass], i++,
+					SYukMat[[ListSMass[[i,2]], ListSMass[[i,3]]]] = SMass[i];
+				];
+			];
+		];
+
+		SuperTadpole[sym_, Si_,  gauge_List, fak_:1&] := Block[
+			{posSi, permList},
+			If[Length[gauge] != NumberOfSubgroups,
+				Message[Tadpole::ContractionError];
+				Return[];
+			];
+			posSi = ListPosition[ChiralSuperFieldList, _List?(#[[1]] == Si &)];
+			If[posSi == {} || posSj == {},
+				Message[Tadpole::UnknownParticle];,
+				ListSTadpole = Append[ListSMass, {sym, posSi[[1,1]], gauge, fak}];
+				SimplifySTadpoleList[];
+				STadMat = Table[0, {i, 0, Length[ListSMass]}];
+				For[i=1, i<=Length[ListSMass], i++,
+					SYukMat[[ListSMass[[i,2]]]] = STadpole[i];
+				];
+			];
+		];
+
+
 		
 		YukawaYaij[sym_, Sa_, Fi_, Fj_, gauge_List, fak_:1] := Module[
 			{posS, posFi, posFj},
@@ -650,22 +697,72 @@ BeginPackage["SARGES`"];
 			];
 		];
 		
-		(* clean up ListSYukawa by adding entries bacl together and then removing zero ones *)
+		(* clean up ListSYukawa by adding entries back together and then removing zero ones *)
 		SimplifySYukawaList[] := Block[
 			{ARG1, ARG2, ARG3},
 			For[i=1, i<=Length[ListSYukawa]-1, ,
 				For[j=i+1, j<=Length[ListSYukawa], ,
-					If[ListSYukawa[[i, 1;;4]] === ListSYukawa[[j, 1;;4]] && And@@((# === 0)& /@ (Simplify/@((Apply[#, {ARG1, ARG2, ARG3}] /@ ListSYukawa[[i, 5]]) - (Apply[#, {ARG1, ARG2, ARG3}] /@ ListSYukawa[[i, 5]])))) ,
+					If[ListSYukawa[[i, 1;;4]] === ListSYukawa[[j, 1;;4]] && And@@((# === 0)& /@ (Simplify/@((Apply[#, {ARG1, ARG2, ARG3}] /@ ListSYukawa[[i, 5]]) - (Apply[#, {ARG1, ARG2, ARG3}] /@ ListSYukawa[[i, 5]])))),
 						If[ Simplify[ListSYukawa[[i, 6]][ARG1, ARG2, ARG3] + ListSYukawa[[j, 6]][ARG1, ARG2, ARG3]] === 0,
 							ListSYukawa = Delete[ListSYukawa, j];
 							ListSYukawa = Delete[ListSYukawa, i];
 							j = i + 1;
 							Continue[];,
-							ListYukawa[[i]] = Join[
+							ListSYukawa[[i]] = Join[
 								ListSYukawa[[i, 1;;5]],
 								{Evaluate[Simplify[ListSYukawa[[i, 6]][ARG1, ARG2, ARG3] + ListSYukawa[[j, 6]][ARG1, ARG2, ARG3]] /. {ARG1->#1, ARG2->#2, ARG3->#3}]& }
 							];
 							ListSYukawa = Delete[ListSYukawa, j];
+							Continue[];
+						];
+					];
+					j++;
+				];
+				i++;
+			];
+		];
+
+		(* clean up ListSMass by adding entries back together and then removing zero ones *)
+		SimplifySMassList[] := Block[
+			{ARG1, ARG2},
+			For[i=1, i<=Length[ListSMass]-1, ,
+				For[j=i+1, j<=Length[ListSMass], ,
+					If[ListSMass[[i, 1;;3]] === ListSMass[[j, 1;;3]] && And@@((# === 0)& /@ (Simplify/@((Apply[#, {ARG1, ARG2}] /@ ListSMass[[i, 4]]) - (Apply[#, {ARG1, ARG2}] /@ ListSMass[[i, 4]])))),
+						If[ Simplify[ListSMass[[i, 5]][ARG1, ARG2] + ListSMass[[j, 5]][ARG1, ARG2]] === 0,
+							ListSMass = Delete[ListSMass, j];
+							ListSMass = Delete[ListSMass, i];
+							j = i + 1;
+							Continue[];,
+							ListSMass[[i]] = Join[
+								ListSMass[[i, 1;;4]],
+								{Evaluate[Simplify[ListSMass[[i, 5]][ARG1, ARG2] + ListSMass[[j, 5]][ARG1, ARG2]] /. {ARG1->#1, ARG2->#2}]& }
+							];
+							ListSMass = Delete[ListSMass, j];
+							Continue[];
+						];
+					];
+					j++;
+				];
+				i++;
+			];
+		];
+
+		(* clean up ListSTadpole by adding entries back together and then removing zero ones *)
+		SimplifySTadpoleList[] := Block[
+			{ARG1},
+			For[i=1, i<=Length[ListSTadpole]-1, ,
+				For[j=i+1, j<=Length[ListSTadpole], ,
+					If[ListSTadpole[[i, 1;;2]] === ListSTadpole[[j, 1;;2]] && And@@((# === 0)& /@ (Simplify/@((Apply[#, {ARG1}] /@ ListSTadpole[[i, 3]]) - (Apply[#, {ARG1}] /@ ListSTadpole[[i, 3]])))),
+						If[ Simplify[ListSTadpole[[i, 4]][ARG1] + ListSTadpole[[j, 4]][ARG1]] === 0,
+							ListSTadpole = Delete[ListSTadpole, j];
+							ListSTadpole = Delete[ListSTadpole, i];
+							j = i + 1;
+							Continue[];,
+							ListSTadpole[[i]] = Join[
+								ListSTadpole[[i, 1;;3]],
+								{Evaluate[Simplify[ListSTadpole[[i, 4]][ARG1] + ListSTadpole[[j, 4]][ARG1]] /. {ARG1->#1}]& }
+							];
+							ListSTadpole = Delete[ListSTadpole, j];
 							Continue[];
 						];
 					];
@@ -4297,6 +4394,10 @@ BeginPackage["SARGES`"];
 		RealScalar::RepMismatch = "Representation list does not match number of subgroups";
 		Yukawa::ContractionError = "Number of gauge contractions does not match number of subgroups";
 		Yukawa::UnknownParticle = "Undefined particle in Yukawa sector";
+		Mass::ContractionError = "Number of gauge contractions does not match number of subgroups";
+		Mass::UnknownParticle = "Undefined particle in mass term";
+		Tadpole::ContractionError = "Number of gauge contractions does not match number of subgroups";
+		Tadpole::UnknownParticle = "Undefined particle";
 		Quartic::ContractionError = "Number of gauge contractions does not match number of subgroups";
 		Scalar::UnknownParticle = "Undefined Scalar field";
 		Fermion::UnknownParticle = "Undefined Fermion field";
