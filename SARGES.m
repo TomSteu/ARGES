@@ -4,6 +4,9 @@ BeginPackage["SARGES`"];
 	WeylFermion::usage = "Add Weyl fermion";
 	RealScalar::usage = "Add real scalar";
 	ComplexScalar::usage = "Add complex scalar";
+	SuperYukawa::usage = "Add Superpotential Yukawa term";
+	SuperMass::usage = "Add Superpotential mass term";
+	SuperTadpole::usage = "Add Superpotential tadpole term";
 	YukawaYaij::usage = "Add Yukawa matrix term (with h.c.) ";
 	YukawaY::usage = "Add Yukawa term (with h.c.) and specify generation contraction";
 	Quartic\[Lambda]abcd::usage = "Add scalar quartic coupling";
@@ -311,7 +314,7 @@ BeginPackage["SARGES`"];
 						{sym}, 
 						Evaluate[permList[[i]]]&[posSi[[1,1]], posSj[[1,1]], posSk[[1,1]]],
 						Table[Evaluate[gauge[[j]]@@permList[[i]]]&, {j, 1, NumberOfSubgroups}], 
-						Evaluate[fak@@permList[[i]]/6]&
+						{Evaluate[fak@@(permList[[i]])/6]&}
 					]];
 				];
 				SimplifySYukawaList[];
@@ -338,7 +341,7 @@ BeginPackage["SARGES`"];
 						{sym}, 
 						Evaluate[permList[[i]]]&[posSi[[1,1]], posSj[[1,1]]],
 						Table[Evaluate[gauge[[j]]@@permList[[i]]]&, {j, 1, NumberOfSubgroups}], 
-						Evaluate[fak@@permList[[i]]/2]&
+						{Evaluate[fak@@permList[[i]]/2]&}
 					]];
 				];
 				SimplifySMassList[];
@@ -700,8 +703,8 @@ BeginPackage["SARGES`"];
 		(* clean up ListSYukawa by adding entries back together and then removing zero ones *)
 		SimplifySYukawaList[] := Block[
 			{ARG1, ARG2, ARG3},
-			For[i=1, i<=Length[ListSYukawa]-1, ,
-				For[j=i+1, j<=Length[ListSYukawa], ,
+			For[i=1, i<=Length[ListSYukawa]-1, Null,
+				For[j=i+1, j<=Length[ListSYukawa], Null,
 					If[ListSYukawa[[i, 1;;4]] === ListSYukawa[[j, 1;;4]] && And@@((# === 0)& /@ (Simplify/@((Apply[#, {ARG1, ARG2, ARG3}] /@ ListSYukawa[[i, 5]]) - (Apply[#, {ARG1, ARG2, ARG3}] /@ ListSYukawa[[i, 5]])))),
 						If[ Simplify[ListSYukawa[[i, 6]][ARG1, ARG2, ARG3] + ListSYukawa[[j, 6]][ARG1, ARG2, ARG3]] === 0,
 							ListSYukawa = Delete[ListSYukawa, j];
@@ -725,8 +728,8 @@ BeginPackage["SARGES`"];
 		(* clean up ListSMass by adding entries back together and then removing zero ones *)
 		SimplifySMassList[] := Block[
 			{ARG1, ARG2},
-			For[i=1, i<=Length[ListSMass]-1, ,
-				For[j=i+1, j<=Length[ListSMass], ,
+			For[i=1, i<=Length[ListSMass]-1, Null,
+				For[j=i+1, j<=Length[ListSMass], Null,
 					If[ListSMass[[i, 1;;3]] === ListSMass[[j, 1;;3]] && And@@((# === 0)& /@ (Simplify/@((Apply[#, {ARG1, ARG2}] /@ ListSMass[[i, 4]]) - (Apply[#, {ARG1, ARG2}] /@ ListSMass[[i, 4]])))),
 						If[ Simplify[ListSMass[[i, 5]][ARG1, ARG2] + ListSMass[[j, 5]][ARG1, ARG2]] === 0,
 							ListSMass = Delete[ListSMass, j];
@@ -750,8 +753,8 @@ BeginPackage["SARGES`"];
 		(* clean up ListSTadpole by adding entries back together and then removing zero ones *)
 		SimplifySTadpoleList[] := Block[
 			{ARG1},
-			For[i=1, i<=Length[ListSTadpole]-1, ,
-				For[j=i+1, j<=Length[ListSTadpole], ,
+			For[i=1, i<=Length[ListSTadpole]-1, Null,
+				For[j=i+1, j<=Length[ListSTadpole], Null,
 					If[ListSTadpole[[i, 1;;2]] === ListSTadpole[[j, 1;;2]] && And@@((# === 0)& /@ (Simplify/@((Apply[#, {ARG1}] /@ ListSTadpole[[i, 3]]) - (Apply[#, {ARG1}] /@ ListSTadpole[[i, 3]])))),
 						If[ Simplify[ListSTadpole[[i, 4]][ARG1] + ListSTadpole[[j, 4]][ARG1]] === 0,
 							ListSTadpole = Delete[ListSTadpole, j];
@@ -2781,6 +2784,74 @@ BeginPackage["SARGES`"];
 					];
 				];
 			];
+			(* Superfield invariants *)
+			If[ChiralSuperFieldList != {},
+					For[f=1, f<=Length[ChiralSuperFieldList], f++,
+						subInvariants = Append[subInvariants, d[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]->FMultiplicity[f,i]];
+						subInvariants = Append[subInvariants, T2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]->FMultiplicity[f,i]/FMultiplicity[f] S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]];
+						(* SU(N) subgroup *)
+						If[ListGauge[[i,2]] === SU,
+							If[ChiralSuperFieldList[[f,3,i]] === 1,
+								subInvariants = Append[subInvariants, C2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 0];
+								subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 0];
+								Continue[];,
+								(* Fundamental Representation *)
+								If[ChiralSuperFieldList[[f,3,i]] === ListGauge[[i,3]],
+									subInvariants = Append[subInvariants, C2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 1/2 (Sqr[ChiralSuperFieldList[[f,3,i]]]-1)/ChiralSuperFieldList[[f,3,i]]];
+									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 1/2 FMultiplicity[f]/ChiralSuperFieldList[[f,3,i]]];
+								];
+								(* Adjoint Representation *)
+								If[ChiralSuperFieldList[[f,3,i]] === Sqr[ListGauge[[i,3]]] - 1,
+									subInvariants = Append[subInvariants, C2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> ListGauge[[i,3]]];
+									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> FMultiplicity[f]/ChiralSuperFieldList[[f,3,i]] ListGauge[[i,3]]];
+								];
+								(* Symmetric Representation *)
+								If[ChiralSuperFieldList[[f,3,i]] === 1/2 ListGauge[[i,3]] (ListGauge[[i,3]] + 1),
+									subInvariants = Append[subInvariants, C2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] + 2)(ListGauge[[i,3]] - 1)/ListGauge[[i,3]]];
+									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> FMultiplicity[f]/ChiralSuperFieldList[[f,3,i]] (1/2 ListGauge[[i,3]] + 1)];
+								];
+								(* Anitsymmetric Representation *)
+								If[ChiralSuperFieldList[[f,3,i]] === 1/2 ListGauge[[i,3]] (ListGauge[[i,3]] - 1),
+									subInvariants = Append[subInvariants, C2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] - 2)(ListGauge[[i,3]] + 1)/ListGauge[[i,3]]];
+									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> FMultiplicity[f]/ChiralSuperFieldList[[f,3,i]] (1/2 ListGauge[[i,3]] - 1)];
+								];
+							];
+						];
+						(* SO(N) subgroup *)
+						If[ListGauge[[i,2]] === SO,
+							If[ChiralSuperFieldList[[f,3,i]] === 1,
+								subInvariants = Append[subInvariants, C2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 0];
+								subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 0];
+								Continue[];,
+								(* Fundamental Representation *)
+								If[ChiralSuperFieldList[[f,3,i]] === ListGauge[[i,3]],
+									subInvariants = Append[subInvariants, C2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] - 1)];
+									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 2 FMultiplicity[f]/ChiralSuperFieldList[[f,3,i]]];
+								];
+								(* Adjoint Representation *)
+								If[ChiralSuperFieldList[[f,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] - 1),
+									subInvariants = Append[subInvariants, C2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> (2 ListGauge[[i,3]] - 4)];
+									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> (2 ListGauge[[i,3]] - 4) FMultiplicity[f]/ChiralSuperFieldList[[f,3,i]]];
+								];
+								(* Symmetric Representation *)
+								If[ChiralSuperFieldList[[f,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] + 1) - 1,
+									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 2(ListGauge[[i,3]] + 2) FMultiplicity[f]/ChiralSuperFieldList[[f,3,i]]];
+									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]->ListGauge[[i,3]](ListGauge[[i,3]] - 1)(ListGauge[[i,3]] + 2)/(1/2 ListGauge[[i,3]] (ListGauge[[i,3]] + 1) - 1)];
+								];
+								(* Anitsymmetric Representation *)
+								If[ChiralSuperFieldList[[f,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] - 1) + 1,
+									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 2(ListGauge[[i,3]] + 2) FMultiplicity[f]/ChiralSuperFieldList[[f,3,i]]];
+									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]->ListGauge[[i,3]](ListGauge[[i,3]] - 1)(ListGauge[[i,3]] - 2)/(1/2 ListGauge[[i,3]] (ListGauge[[i,3]] - 1) + 1)];
+								];
+							];
+						];
+						(* U(1) subgroup *)
+						If[ListGauge[[i,2]] === U && ListGauge[[i,3]] === 1,
+							subInvariants = Append[subInvariants, C2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]->Sqr[ChiralSuperFieldList[[f,3,i]]]];
+							subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]->Sqr[ChiralSuperFieldList[[f,3,i]]] FMultiplicity[f]];
+						];
+					];
+				];
 			(* Gauge-Yukawa Invariants *)
 			assHold=$Assumptions;
 			$Assumptions=$Assumptions&&And@@Function[{x}, Element[sIdx[x],Integers]&&(sIdx[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -2812,6 +2883,12 @@ BeginPackage["SARGES`"];
 				];
 			];
 			$Assumptions=assHold;
+			(* SUSY Yukawa Invariants *)
+			For[f=1, f<=Length[ChiralSuperFieldList], f++,
+				subInvariants = Append[subInvariants, Y2[f]-> (
+					SolveSuperProd[{Delta[f], Yuk, conj[Yuk]}, (Evaluate[TensorDelta[{#1, #2, #3, #4}, {#4, #5, #6, #7}]])&, 7, {}]
+				)];
+			];
 		];
 		
 		(* Kronecker delta for arbitray list of arguments*)
@@ -4280,23 +4357,26 @@ BeginPackage["SARGES`"];
 			},
 			
 			Simplify[SimplifySum@@Join[
-				{(SProd[args]@@(SIdx/@Range[n]) contr@@(SIdx/@Range[n])) /. Table[SIdx[external[[i,1]]] -> external[[i,2,1]], {i, 1, Length[external]}]}, 
-				(SIdx[#], 1, Length[ChiralSuperFieldList])& /@ (Range[n] //. {A___, m_, B___} :> {A,B} /; MemberQ[external[[;;,1]], m])
+				{((SProd@@args)@@(SIdx/@Range[n]) contr@@(SIdx/@Range[n])) /. Table[SIdx[external[[i,1]]] -> external[[i,2,1]], {i, 1, Length[external]}]}, 
+				({SIdx[#], 1, Length[ChiralSuperFieldList]} & /@ (Range[n] //. {A___, m_, B___} :> {A,B} /; MemberQ[external[[;;,1]], m]))
 			] //.Join[subSum,subSimplifySum] /. SimplifySum -> Sum] //. {
 				SProd[conj[Yuk], A___][a_, b_, c_, d___] :> SProd[conj[SYukMat[[a, b, c]]], A][a, b, c, d],
 				SProd[Yuk, A___][a_, b_, c_, d___] :> SProd[SYukMat[[a, b, c]], A][a, b, c, d],
 				SProd[conj[SMass], A___][a_, b_, c___] :> SProd[conj[SMassMat[[a, b]]], A][a, b, c],
 				SProd[SMass, A___][a_, b_, c___] :> SProd[SMassMat[[a, b]], A][a, b, c],
 				SProd[conj[STad], A___][a_, b___] :> SProd[conj[STadMat[[a]]], A][a, b],
-				SProd[STad, A___][a_, b___] :> SProd[STadMat[[a]], A][a, b]
+				SProd[STad, A___][a_, b___] :> SProd[STadMat[[a]], A][a, b],
+				SProd[Delta[a_], A___][b_, c___] :> KroneckerDelta[a, b] SProd[Delta[a], A][b, c]
 			} //. {
 				SProd[A___, conj[0], B___][C___] :> 0,
 				SProd[A___, 0, B___][C___] :> 0
 			} //. {
-				SProd[A___][B___] :> FProd[A][B] Times[A],
-				SYukawa[x_] :> ListSYukawa[[x, 1]],
-				SMass[x_] :> ListSMass[[x, 1]],
-				STadpole[x_] :> ListSTadpole[[x, 1]]
+				SProd[A___][B___] :> FProd[A][B] (Times[A] /. {
+					SYukawa[x_] :> ListSYukawa[[x, 1]],
+					SMass[x_] :> ListSMass[[x, 1]],
+					STadpole[x_] :> ListSTadpole[[x, 1]],
+					Delta[x_] :> 1
+				})
 			} /. {
 				FProd[A___][B___] :> GProd[1][A][B] Simplify[SimplifySum@@Join[
 					{
@@ -4308,11 +4388,12 @@ BeginPackage["SARGES`"];
 								fContr[conj[SMass[x_]], A___][a_, b_, c___] :> Conjugate[ListSMass[[x, 5]][a, b]] fContr[A][c],
 								fContr[SMass[x_], A___][a_, b_, c___] :> ListSMass[[x, 5]][a, b] fContr[A][c],
 								fContr[conj[STadpole[x_]], A___][a_, b___] :> Conjugate[ListSTadpole[[x, 4]][a]] fContr[A][b],
-								fContr[STadpole[x_], A___][a_, b___] :> ListSTadpole[[x, 4]][a] fContr[A][b]
+								fContr[STadpole[x_], A___][a_, b___] :> ListSTadpole[[x, 4]][a] fContr[A][b],
+								fContr[Delta[x_], A___][a_, b___] :> fContr[A][b]
 							}  
 						) /. Table[FIdx[external[[i,1]]] -> external[[i,2,2]], {i, 1, Length[external]}]
 					},
-					(FIdx[#], 1, ChiralSuperFieldList[[List[B][[#]], 2]])& /@ (Range[n] //. {A___, m_, B___} :> {A,B} /; MemberQ[external[[;;,1]], m])
+					({FIdx[#], 1, ChiralSuperFieldList[[List[B][[#]], 2]]}& /@ (Range[n] //. {A___, m_, B___} :> {A,B} /; MemberQ[external[[;;,1]], m]))
 				] //. Join[subSum,subSimplifySum] /. SimplifySum -> Sum]
 			} //. {
 				GProd[x_][A___][B___] :> 1 /; (x > NumberOfSubgroups),
@@ -4326,11 +4407,12 @@ BeginPackage["SARGES`"];
 								gContr[conj[SMass[y_]], A___][a_, b_, c___] :> Conjugate[ListSMass[[y, 4, x]][a, b]] gContr[A][c],
 								gContr[SMass[y_], A___][a_, b_, c___] :> ListSMass[[y, 4, x]][a, b] fContr[A][c],
 								gContr[conj[STadpole[y_]], A___][a_, b___] :> Conjugate[ListSTadpole[[y, 3, x]][a]] gContr[A][b],
-								gContr[STadpole[y_], A___][a_, b___] :> ListSTadpole[[y, 3, x]][a] gContr[A][b]
+								gContr[STadpole[y_], A___][a_, b___] :> ListSTadpole[[y, 3, x]][a] gContr[A][b],
+								gContr[Delta[y_], A___][a_, b___] :> gContr[A][b]
 							} 
 						) /. Table[GIdx[external[[i,1]], x] -> external[[i,2,3,x]], {i, 1, Length[external]}]
 					},
-					(GIdx[#,x], 1, ChiralSuperFieldList[[List[B][[#]], 3, x]])& /@ (Range[n] //. {A___, m_, B___} :> {A,B} /; MemberQ[external[[;;,1]], m])
+					({GIdx[#,x], 1, ChiralSuperFieldList[[List[B][[#]], 3, x]]}& /@ (Range[n] //. {A___, m_, B___} :> {A,B} /; MemberQ[external[[;;,1]], m]))
 				]//. Join[subSum,subSimplifySum] /. SimplifySum -> Sum]
 			}
 		];
