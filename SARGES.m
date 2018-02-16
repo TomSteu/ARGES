@@ -297,7 +297,7 @@ BeginPackage["SARGES`"];
 			ListVEV = Append[ListVEV, {sym, fak, Join[{posS[[1,1]]}, SGenIdx, SGaugeIdx]}];
 		];
 
-		SuperYukawa[sym_, Si_, Sj_, Sk_, gauge_List, fak_:1&] := Block[
+		SuperYukawa[sym_, Si_, Sj_, Sk_, gauge_List, fak_] := Block[
 			{posSi, posSj, posSk, permList},
 			If[Length[gauge] != NumberOfSubgroups,
 				Message[Yukawa::ContractionError];
@@ -313,11 +313,11 @@ BeginPackage["SARGES`"];
 					ListSYukawa = Append[ListSYukawa, Join[
 						{sym}, 
 						Evaluate[permList[[i]]]&[posSi[[1,1]], posSj[[1,1]], posSk[[1,1]]],
-						Table[Evaluate[gauge[[j]]@@permList[[i]]]&, {j, 1, NumberOfSubgroups}], 
-						{Evaluate[fak@@(permList[[i]])/6]&}
+						{Table[Evaluate[gauge[[j]]@@permList[[i]]]&, {j, 1, NumberOfSubgroups}]}, 
+						{Evaluate[fak@@permList[[i]]/6]&}
 					]];
 				];
-				SimplifySYukawaList[];
+				(*SimplifySYukawaList[];*)
 				SYukMat = Table[0, {i, 0, Length[ListSYukawa]}, {j, 0, Length[ListSYukawa]}, {k, 0, Length[ListSYukawa]}];
 				For[i=1, i<=Length[ListSYukawa], i++,
 					SYukMat[[ListSYukawa[[i,2]], ListSYukawa[[i,3]], ListSYukawa[[i,4]]]] = SYukawa[i];
@@ -325,7 +325,7 @@ BeginPackage["SARGES`"];
 			];
 		];
 
-		SuperMass[sym_, Si_, Sj_, gauge_List, fak_:1&] := Block[
+		SuperMass[sym_, Si_, Sj_, gauge_List, fak_] := Block[
 			{posSi, posSj, permList},
 			If[Length[gauge] != NumberOfSubgroups,
 				Message[Mass::ContractionError];
@@ -352,7 +352,7 @@ BeginPackage["SARGES`"];
 			];
 		];
 
-		SuperTadpole[sym_, Si_,  gauge_List, fak_:1&] := Block[
+		SuperTadpole[sym_, Si_,  gauge_List, fak_] := Block[
 			{posSi, permList},
 			If[Length[gauge] != NumberOfSubgroups,
 				Message[Tadpole::ContractionError];
@@ -2783,9 +2783,8 @@ BeginPackage["SARGES`"];
 						];
 					];
 				];
-			];
-			(* Superfield invariants *)
-			If[ChiralSuperFieldList != {},
+				(* Superfield invariants *)
+				If[ChiralSuperFieldList != {},
 					For[f=1, f<=Length[ChiralSuperFieldList], f++,
 						subInvariants = Append[subInvariants, d[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]->FMultiplicity[f,i]];
 						subInvariants = Append[subInvariants, T2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]->FMultiplicity[f,i]/FMultiplicity[f] S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]];
@@ -2852,6 +2851,7 @@ BeginPackage["SARGES`"];
 						];
 					];
 				];
+			];
 			(* Gauge-Yukawa Invariants *)
 			assHold=$Assumptions;
 			$Assumptions=$Assumptions&&And@@Function[{x}, Element[sIdx[x],Integers]&&(sIdx[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -2886,7 +2886,7 @@ BeginPackage["SARGES`"];
 			(* SUSY Yukawa Invariants *)
 			For[f=1, f<=Length[ChiralSuperFieldList], f++,
 				subInvariants = Append[subInvariants, Y2[f]-> (
-					SolveSuperProd[{Delta[f], Yuk, conj[Yuk]}, (Evaluate[TensorDelta[{#1, #2, #3, #4}, {#4, #5, #6, #7}]])&, 7, {}]
+					SolveSuperProd[{Delta[f], Yuk, conj[Yuk]}, (Evaluate[TensorDelta[{#1, #2, #3, #4}, {#5, #8, #6, #7}]])&, 8, {}]
 				)];
 			];
 		];
@@ -4043,9 +4043,11 @@ BeginPackage["SARGES`"];
 
 		
 		(* overall multiplicity of particles / gauges *)
-		FMultiplicity[f_] := WeylFermionList[[f,2]] Times@@(Function[{x},If[ListGauge[[x,3]]===1, 1, WeylFermionList[[f,3,x]]]]/@Range[NumberOfSubgroups]);
+		(*FMultiplicity[f_] := WeylFermionList[[f,2]] Times@@(Function[{x},If[ListGauge[[x,3]]===1, 1, WeylFermionList[[f,3,x]]]]/@Range[NumberOfSubgroups]);*)
+		(*FMultiplicity[f_, g_] := If[ListGauge[[g,3]]===1, 1, WeylFermionList[[f,3,g]]];*)
+		FMultiplicity[f_] := ChiralSuperFieldList[[f,2]] Times@@(Function[{x},If[ListGauge[[x,3]]===1, 1, ChiralSuperFieldList[[f,3,x]]]]/@Range[NumberOfSubgroups]);
+		FMultiplicity[f_, g_] := If[ListGauge[[g,3]]===1, 1, ChiralSuperFieldList[[f,3,g]]];
 		SMultiplicity[s_] := If[s<=Length[RealScalarList], RealScalarList[[s,2,1]] RealScalarList[[s,2,2]] Times@@(Function[{x},If[ListGauge[[x,3]]===1, 1, RealScalarList[[s,3,x]]]]/@Range[NumberOfSubgroups]), 1];
-		FMultiplicity[f_, g_] := If[ListGauge[[g,3]]===1, 1, WeylFermionList[[f,3,g]]];
 		SMultiplicity[s_, g_] := If[s<=Length[RealScalarList], If[ListGauge[[g,3]]===1, 1, RealScalarList[[s,3,g]]], 1];
 		
 		(* Generation contraction for Yukawa products and traces *)
@@ -4359,14 +4361,16 @@ BeginPackage["SARGES`"];
 			Simplify[SimplifySum@@Join[
 				{((SProd@@args)@@(SIdx/@Range[n]) contr@@(SIdx/@Range[n])) /. Table[SIdx[external[[i,1]]] -> external[[i,2,1]], {i, 1, Length[external]}]}, 
 				({SIdx[#], 1, Length[ChiralSuperFieldList]} & /@ (Range[n] //. {A___, m_, B___} :> {A,B} /; MemberQ[external[[;;,1]], m]))
-			] //.Join[subSum,subSimplifySum] /. SimplifySum -> Sum] //. {
-				SProd[conj[Yuk], A___][a_, b_, c_, d___] :> SProd[conj[SYukMat[[a, b, c]]], A][a, b, c, d],
-				SProd[Yuk, A___][a_, b_, c_, d___] :> SProd[SYukMat[[a, b, c]], A][a, b, c, d],
-				SProd[conj[SMass], A___][a_, b_, c___] :> SProd[conj[SMassMat[[a, b]]], A][a, b, c],
-				SProd[SMass, A___][a_, b_, c___] :> SProd[SMassMat[[a, b]], A][a, b, c],
-				SProd[conj[STad], A___][a_, b___] :> SProd[conj[STadMat[[a]]], A][a, b],
-				SProd[STad, A___][a_, b___] :> SProd[STadMat[[a]], A][a, b],
-				SProd[Delta[a_], A___][b_, c___] :> KroneckerDelta[a, b] SProd[Delta[a], A][b, c]
+			] //.Join[subSum,subSimplifySum] /. SimplifySum -> Sum] /. SProd[A___][B___] :> SProd[{A}][{B}] //. {
+				SProd[{}, A___][{}, B___] :> SProd[A][B],
+				SProd[{conj[Yuk], A___}, B___][{a_, b_, c_, d___}, e___] :> SProd[{A}, conj[SYukMat[[a, b, c]]], B][{d}, a, b, c, e],
+				SProd[{Yuk, A___}, B___][{a_, b_, c_, d___}, e___] :> SProd[{A}, SYukMat[[a, b, c]], B][{d}, a, b, c, e],
+				SProd[{conj[SMass], A___}, B___][{a_, b_, c___}, d___] :> SProd[{A}, conj[SMassMat[[a, b]]], B][{c}, a, b, d],
+				SProd[{SMass, A___}, B___][{a_, b_, c___}, d___] :> SProd[{A}, SMassMat[[a, b]], B][{c}, a, b, d],
+				SProd[{conj[STad], A___}, B___][{a_, b___}, c___] :> SProd[{A}, conj[STadMat[[a]]], B][{b}, a, c],
+				SProd[{STad, A___}, B___][{a_, b___}, c___] :> SProd[{A}, STadMat[[a]], B][{b}, a, c],
+				SProd[{conj[Delta[a_]], A___}, B___][{b_, c_, d___}, e___] :> KroneckerDelta[a, b] KroneckerDelta[a, c] SProd[{A}, delta, B][{d}, b, c, e],
+				SProd[{Delta[a_], A___}, B___][{b_, c_, d___}, e___] :> KroneckerDelta[a, b] KroneckerDelta[a, c] SProd[{A}, delta, B][{d}, b, c, e]
 			} //. {
 				SProd[A___, conj[0], B___][C___] :> 0,
 				SProd[A___, 0, B___][C___] :> 0
@@ -4375,25 +4379,25 @@ BeginPackage["SARGES`"];
 					SYukawa[x_] :> ListSYukawa[[x, 1]],
 					SMass[x_] :> ListSMass[[x, 1]],
 					STadpole[x_] :> ListSTadpole[[x, 1]],
-					Delta[x_] :> 1
+					delta :> 1
 				})
 			} /. {
 				FProd[A___][B___] :> GProd[1][A][B] Simplify[SimplifySum@@Join[
 					{
 						(
 							(fContr[A]@@(FIdx/@Range[n])) //. {
-								fContr[][A___] :> 1,
-								fContr[conj[SYukawa[x_]], A___][a_, b_, c_, d___] :> Conjugate[ListSYukawa[[x, 6]][a, b, c]] fContr[A][d],
-								fContr[SYukawa[x_], A___][a_, b_, c_, d___] :> ListSYukawa[[x, 6]][a, b, c] fContr[A][d],
-								fContr[conj[SMass[x_]], A___][a_, b_, c___] :> Conjugate[ListSMass[[x, 5]][a, b]] fContr[A][c],
-								fContr[SMass[x_], A___][a_, b_, c___] :> ListSMass[[x, 5]][a, b] fContr[A][c],
-								fContr[conj[STadpole[x_]], A___][a_, b___] :> Conjugate[ListSTadpole[[x, 4]][a]] fContr[A][b],
-								fContr[STadpole[x_], A___][a_, b___] :> ListSTadpole[[x, 4]][a] fContr[A][b],
-								fContr[Delta[x_], A___][a_, b___] :> fContr[A][b]
+								fContr[][X___] :> 1,
+								fContr[conj[SYukawa[x_]], X___][a_, b_, c_, d___] :> Conjugate[ListSYukawa[[x, 6]][a, b, c]] fContr[X][d],
+								fContr[SYukawa[x_], X___][a_, b_, c_, d___] :> ListSYukawa[[x, 6]][a, b, c] fContr[X][d],
+								fContr[conj[SMass[x_]], X___][a_, b_, c___] :> Conjugate[ListSMass[[x, 5]][a, b]] fContr[X][c],
+								fContr[SMass[x_], X___][a_, b_, c___] :> ListSMass[[x, 5]][a, b] fContr[X][c],
+								fContr[conj[STadpole[x_]], X___][a_, b___] :> Conjugate[ListSTadpole[[x, 4]][a]] fContr[X][b],
+								fContr[STadpole[x_], X___][a_, b___] :> ListSTadpole[[x, 4]][a] fContr[X][b],
+								fContr[delta, X___][a_, b_, c___] :> KroneckerDelta[a,b] fContr[X][c]
 							}  
 						) /. Table[FIdx[external[[i,1]]] -> external[[i,2,2]], {i, 1, Length[external]}]
 					},
-					({FIdx[#], 1, ChiralSuperFieldList[[List[B][[#]], 2]]}& /@ (Range[n] //. {A___, m_, B___} :> {A,B} /; MemberQ[external[[;;,1]], m]))
+					({FIdx[#], 1, ChiralSuperFieldList[[List[B][[#]], 2]]}& /@ (Range[n] //. {Y___, m_, Z___} :> {Y,Z} /; MemberQ[external[[;;,1]], m]))
 				] //. Join[subSum,subSimplifySum] /. SimplifySum -> Sum]
 			} //. {
 				GProd[x_][A___][B___] :> 1 /; (x > NumberOfSubgroups),
@@ -4401,18 +4405,18 @@ BeginPackage["SARGES`"];
 					{
 						(
 							(gContr[A]@@((GIdx[#, x])&/@Range[n])) //. {
-								gContr[][A___] :> 1,
-								gContr[conj[SYukawa[y_]], A___][a_, b_, c_, d___] :> Conjugate[ListSYukawa[[y, 5, x]][a, b, c]] gContr[A][d],
-								gContr[SYukawa[y_], A___][a_, b_, c_, d___] :> ListSYukawa[[y, 5, x]][a, b, c] gContr[A][d],
-								gContr[conj[SMass[y_]], A___][a_, b_, c___] :> Conjugate[ListSMass[[y, 4, x]][a, b]] gContr[A][c],
-								gContr[SMass[y_], A___][a_, b_, c___] :> ListSMass[[y, 4, x]][a, b] fContr[A][c],
-								gContr[conj[STadpole[y_]], A___][a_, b___] :> Conjugate[ListSTadpole[[y, 3, x]][a]] gContr[A][b],
-								gContr[STadpole[y_], A___][a_, b___] :> ListSTadpole[[y, 3, x]][a] gContr[A][b],
-								gContr[Delta[y_], A___][a_, b___] :> gContr[A][b]
+								gContr[][X___] :> 1,
+								gContr[conj[SYukawa[y_]], X___][a_, b_, c_, d___] :> Conjugate[ListSYukawa[[y, 5, x]][a, b, c]] gContr[X][d],
+								gContr[SYukawa[y_], X___][a_, b_, c_, d___] :> ListSYukawa[[y, 5, x]][a, b, c] gContr[X][d],
+								gContr[conj[SMass[y_]], X___][a_, b_, c___] :> Conjugate[ListSMass[[y, 4, x]][a, b]] gContr[X][c],
+								gContr[SMass[y_], X___][a_, b_, c___] :> ListSMass[[y, 4, x]][a, b] fContr[X][c],
+								gContr[conj[STadpole[y_]], X___][a_, b___] :> Conjugate[ListSTadpole[[y, 3, x]][a]] gContr[X][b],
+								gContr[STadpole[y_], X___][a_, b___] :> ListSTadpole[[y, 3, x]][a] gContr[X][b],
+								gContr[delta, X___][a_, b_, c___] :> KroneckerDelta[a,b] gContr[X][c]
 							} 
 						) /. Table[GIdx[external[[i,1]], x] -> external[[i,2,3,x]], {i, 1, Length[external]}]
 					},
-					({GIdx[#,x], 1, ChiralSuperFieldList[[List[B][[#]], 3, x]]}& /@ (Range[n] //. {A___, m_, B___} :> {A,B} /; MemberQ[external[[;;,1]], m]))
+					({GIdx[#,x], 1, ChiralSuperFieldList[[List[B][[#]], 3, x]]}& /@ (Range[n] //. {Y___, m_, Z___} :> {Y,Z} /; MemberQ[external[[;;,1]], m]))
 				]//. Join[subSum,subSimplifySum] /. SimplifySum -> Sum]
 			}
 		];
@@ -4440,6 +4444,8 @@ BeginPackage["SARGES`"];
 			SimplifySum[D_ (A_ + B_), C___] :> SimplifySum[D A, C] + SimplifySum[D B, C],
 			SimplifySum[SimplifySum[A_, B___], C___] :> SimplifySum[A, B, C],
 			SimplifySum[A_, SS1___, {aa_, 1, 1}, SS2___] :> SimplifySum[A//.{aa->1}, SS1, SS2],
+			Conjugate[KroneckerDelta[A___]] :> KroneckerDelta[A],
+			Conjugate[B_ KroneckerDelta[A___]] :> Conjugate[B] KroneckerDelta[A],
 			SimplifySum[A_ KroneckerDelta[aa_, bb_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
 			SimplifySum[KroneckerDelta[aa_, bb_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[1 , SS1, SS2],
 			SimplifySum[A_ KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
