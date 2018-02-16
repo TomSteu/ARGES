@@ -4363,14 +4363,14 @@ BeginPackage["SARGES`"];
 				({SIdx[#], 1, Length[ChiralSuperFieldList]} & /@ (Range[n] //. {A___, m_, B___} :> {A,B} /; MemberQ[external[[;;,1]], m]))
 			] //.Join[subSum,subSimplifySum] /. SimplifySum -> Sum] /. SProd[A___][B___] :> SProd[{A}][{B}] //. {
 				SProd[{}, A___][{}, B___] :> SProd[A][B],
-				SProd[{conj[Yuk], A___}, B___][{a_, b_, c_, d___}, e___] :> SProd[{A}, conj[SYukMat[[a, b, c]]], B][{d}, a, b, c, e],
-				SProd[{Yuk, A___}, B___][{a_, b_, c_, d___}, e___] :> SProd[{A}, SYukMat[[a, b, c]], B][{d}, a, b, c, e],
-				SProd[{conj[SMass], A___}, B___][{a_, b_, c___}, d___] :> SProd[{A}, conj[SMassMat[[a, b]]], B][{c}, a, b, d],
-				SProd[{SMass, A___}, B___][{a_, b_, c___}, d___] :> SProd[{A}, SMassMat[[a, b]], B][{c}, a, b, d],
-				SProd[{conj[STad], A___}, B___][{a_, b___}, c___] :> SProd[{A}, conj[STadMat[[a]]], B][{b}, a, c],
-				SProd[{STad, A___}, B___][{a_, b___}, c___] :> SProd[{A}, STadMat[[a]], B][{b}, a, c],
-				SProd[{conj[Delta[a_]], A___}, B___][{b_, c_, d___}, e___] :> KroneckerDelta[a, b] KroneckerDelta[a, c] SProd[{A}, delta, B][{d}, b, c, e],
-				SProd[{Delta[a_], A___}, B___][{b_, c_, d___}, e___] :> KroneckerDelta[a, b] KroneckerDelta[a, c] SProd[{A}, delta, B][{d}, b, c, e]
+				SProd[{conj[Yuk], A___}, B___][{a_, b_, c_, d___}, e___] :> SProd[{A}, B, conj[SYukMat[[a, b, c]]]][{d}, e, a, b, c],
+				SProd[{Yuk, A___}, B___][{a_, b_, c_, d___}, e___] :> SProd[{A}, B, SYukMat[[a, b, c]]][{d}, e, a, b, c],
+				SProd[{conj[SMass], A___}, B___][{a_, b_, c___}, d___] :> SProd[{A}, B, conj[SMassMat[[a, b]]]][{c}, d, a, b],
+				SProd[{SMass, A___}, B___][{a_, b_, c___}, d___] :> SProd[{A}, B, SMassMat[[a, b]]][{c}, d, a, b],
+				SProd[{conj[STad], A___}, B___][{a_, b___}, c___] :> SProd[{A}, B, conj[STadMat[[a]]]][{b}, c, a],
+				SProd[{STad, A___}, B___][{a_, b___}, c___] :> SProd[{A}, B, STadMat[[a]]][{b}, c, a],
+				SProd[{conj[Delta[a_]], A___}, B___][{b_, c_, d___}, e___] :> KroneckerDelta[a, b] KroneckerDelta[a, c] SProd[{A}, B, delta][{d}, e, b, c],
+				SProd[{Delta[a_], A___}, B___][{b_, c_, d___}, e___] :> KroneckerDelta[a, b] KroneckerDelta[a, c] SProd[{A}, B, delta][{d}, e, b, c]
 			} //. {
 				SProd[A___, conj[0], B___][C___] :> 0,
 				SProd[A___, 0, B___][C___] :> 0
@@ -4384,7 +4384,7 @@ BeginPackage["SARGES`"];
 			} /. {
 				FProd[A___][B___] :> GProd[1][A][B] Simplify[SimplifySum@@Join[
 					{
-						Expand[(
+						Expand[(contr@@(FIdx/@Range[n])) (
 							(fContr[A]@@(FIdx/@Range[n])) //. {
 								fContr[][X___] :> 1,
 								fContr[conj[SYukawa[x_]], X___][a_, b_, c_, d___] :> Conjugate[ListSYukawa[[x, 6]][a, b, c]] fContr[X][d],
@@ -4403,7 +4403,7 @@ BeginPackage["SARGES`"];
 				GProd[x_][A___][B___] :> 1 /; (x > NumberOfSubgroups),
 				GProd[x_][A___][B___] :> GProd[x+1][A][B] Simplify[SimplifySum@@Join[
 					{
-						Expand[(
+						Expand[(contr@@((GIdx[#, x])&/@Range[n])) (
 							(gContr[A]@@((GIdx[#, x])&/@Range[n])) //. {
 								gContr[][X___] :> 1,
 								gContr[conj[SYukawa[y_]], X___][a_, b_, c_, d___] :> Conjugate[ListSYukawa[[y, 5, x]][a, b, c]] gContr[X][d],
