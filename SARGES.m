@@ -4359,7 +4359,7 @@ BeginPackage["SARGES`"];
 			},
 			
 			Simplify[SimplifySum@@Join[
-				{((SProd@@args)@@(SIdx/@Range[n]) contr@@(SIdx/@Range[n])) /. Table[SIdx[external[[i,1]]] -> external[[i,2,1]], {i, 1, Length[external]}]}, 
+				{Expand[((SProd@@args)@@(SIdx/@Range[n]) contr@@(SIdx/@Range[n])) /. Table[SIdx[external[[i,1]]] -> external[[i,2,1]], {i, 1, Length[external]}]]}, 
 				({SIdx[#], 1, Length[ChiralSuperFieldList]} & /@ (Range[n] //. {A___, m_, B___} :> {A,B} /; MemberQ[external[[;;,1]], m]))
 			] //.Join[subSum,subSimplifySum] /. SimplifySum -> Sum] /. SProd[A___][B___] :> SProd[{A}][{B}] //. {
 				SProd[{}, A___][{}, B___] :> SProd[A][B],
@@ -4384,7 +4384,7 @@ BeginPackage["SARGES`"];
 			} /. {
 				FProd[A___][B___] :> GProd[1][A][B] Simplify[SimplifySum@@Join[
 					{
-						(
+						Expand[(
 							(fContr[A]@@(FIdx/@Range[n])) //. {
 								fContr[][X___] :> 1,
 								fContr[conj[SYukawa[x_]], X___][a_, b_, c_, d___] :> Conjugate[ListSYukawa[[x, 6]][a, b, c]] fContr[X][d],
@@ -4395,7 +4395,7 @@ BeginPackage["SARGES`"];
 								fContr[STadpole[x_], X___][a_, b___] :> ListSTadpole[[x, 4]][a] fContr[X][b],
 								fContr[delta, X___][a_, b_, c___] :> KroneckerDelta[a,b] fContr[X][c]
 							}  
-						) /. Table[FIdx[external[[i,1]]] -> external[[i,2,2]], {i, 1, Length[external]}]
+						) /. Table[FIdx[external[[i,1]]] -> external[[i,2,2]], {i, 1, Length[external]}]]
 					},
 					({FIdx[#], 1, ChiralSuperFieldList[[List[B][[#]], 2]]}& /@ (Range[n] //. {Y___, m_, Z___} :> {Y,Z} /; MemberQ[external[[;;,1]], m]))
 				] //. Join[subSum,subSimplifySum] /. SimplifySum -> Sum]
@@ -4403,7 +4403,7 @@ BeginPackage["SARGES`"];
 				GProd[x_][A___][B___] :> 1 /; (x > NumberOfSubgroups),
 				GProd[x_][A___][B___] :> GProd[x+1][A][B] Simplify[SimplifySum@@Join[
 					{
-						(
+						Expand[(
 							(gContr[A]@@((GIdx[#, x])&/@Range[n])) //. {
 								gContr[][X___] :> 1,
 								gContr[conj[SYukawa[y_]], X___][a_, b_, c_, d___] :> Conjugate[ListSYukawa[[y, 5, x]][a, b, c]] gContr[X][d],
@@ -4414,7 +4414,7 @@ BeginPackage["SARGES`"];
 								gContr[STadpole[y_], X___][a_, b___] :> ListSTadpole[[y, 3, x]][a] gContr[X][b],
 								gContr[delta, X___][a_, b_, c___] :> KroneckerDelta[a,b] gContr[X][c]
 							} 
-						) /. Table[GIdx[external[[i,1]], x] -> external[[i,2,3,x]], {i, 1, Length[external]}]
+						) /. Table[GIdx[external[[i,1]], x] -> external[[i,2,3,x]], {i, 1, Length[external]}]]
 					},
 					({GIdx[#,x], 1, ChiralSuperFieldList[[List[B][[#]], 3, x]]}& /@ (Range[n] //. {Y___, m_, Z___} :> {Y,Z} /; MemberQ[external[[;;,1]], m]))
 				]//. Join[subSum,subSimplifySum] /. SimplifySum -> Sum]
@@ -4469,6 +4469,8 @@ BeginPackage["SARGES`"];
 			SimplifySum[D_ (A_ + B_), C___] :> SimplifySum[D A, C] + SimplifySum[D B, C],
 			SimplifySum[SimplifySum[A_, B___], C___] :> SimplifySum[A, B, C],
 			SimplifySum[A_, SS1___, {aa_, 1, 1}, SS2___] :> SimplifySum[A//.{aa->1}, SS1, SS2],
+			Conjugate[KroneckerDelta[A___]] :> KroneckerDelta[A],
+			Conjugate[B_ KroneckerDelta[A___]] :> Conjugate[B] KroneckerDelta[A],
 			SimplifySum[A_ KroneckerDelta[aa_, bb_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
 			SimplifySum[KroneckerDelta[aa_, bb_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[1 , SS1, SS2],
 			SimplifySum[A_ KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
