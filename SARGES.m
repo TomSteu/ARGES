@@ -1222,18 +1222,18 @@ BeginPackage["SARGES`"];
 		
 		(* Backend for Beta functions *)
 		
-		BetaGauge[pos_, 0] := \[Alpha][ListGauge[[pos,1]]];
+		(*BetaGauge[pos_, 0] := \[Alpha][ListGauge[[pos,1]]];*)
 		
-		BetaGauge[pos_, 1] := Module[
+		(*BetaGauge[pos_, 1] := Module[
 			{beta,x, ii},
 			beta = 0;
 			beta = beta - 22/3 Sqr[\[Alpha][ListGauge[[pos,1]]]] C2[ListGauge[[pos,1]]]; 
 			beta = beta + 4/3 Sqr[\[Alpha][ListGauge[[pos,1]]]] Sum[S2[WeylFermionList[[ii,1]],ListGauge[[pos,1]]], {ii, 1, Length[WeylFermionList]}];
 			beta = beta + 1/3 Sqr[\[Alpha][ListGauge[[pos,1]]]] Sum[S2[RealScalarList[[ii,1]], ListGauge[[pos,1]]], {ii, 1, Length[RealScalarList]}];
 			Return[beta];
-		];
+		];*)
 		
-		BetaGauge[pos_, 2] := Module[
+		(*BetaGauge[pos_, 2] := Module[
 			{beta,f,s,i},
 			beta = 0;
 			beta = beta - 2 Sqr[\[Alpha][ListGauge[[pos,1]]]] Sum[Y4[RealScalarList[[s,1]], ListGauge[[pos, 1]]], {s, 1, Length[RealScalarList]}]/Sqr[4 Pi];
@@ -1241,9 +1241,9 @@ BeginPackage["SARGES`"];
 			beta = beta + Sqr[\[Alpha][ListGauge[[pos,1]]]] Sum[(Sum[4 \[Alpha][ListGauge[[i,1]]] C2[WeylFermionList[[f,1]], ListGauge[[i,1]]], {i,1,NumberOfSubgroups}] + 20/3 \[Alpha][ListGauge[[pos,1]]] C2[ListGauge[[pos,1]]])S2[WeylFermionList[[f,1]], ListGauge[[pos,1]]], {f, 1, Length[WeylFermionList]}];
 			beta = beta + Sqr[\[Alpha][ListGauge[[pos,1]]]] Sum[(Sum[4 \[Alpha][ListGauge[[i,1]]] C2[RealScalarList[[s,1]], ListGauge[[i,1]]],{i,1,NumberOfSubgroups}] + 2/3 \[Alpha][ListGauge[[pos,1]]] C2[ListGauge[[pos,1]]])S2[RealScalarList[[s,1]], ListGauge[[pos,1]]], {s, 1, Length[RealScalarList]}];
 			Return[beta];
-		];
+		];*)
 		
-		BetaGauge[pos_, 3] := Module[
+		(*BetaGauge[pos_, 3] := Module[
 			{beta, f, f2, f3,f4, s, s2, SIdx, SIdx2, x},
 			beta = 0;
 			beta += (
@@ -1442,14 +1442,218 @@ BeginPackage["SARGES`"];
 				{s2, 1, Length[RealScalarList]}
 			]; 
 			Return[-6 beta];
-		]/;(NumberOfSubgroups == 1);
+		]/;(NumberOfSubgroups == 1);*)
+
+		SuperFieldGamma[s1_, s2_, 0] := TensorDelta[s1, s2];
+
+		SuperFieldGamma[s1_, s2_, 1] := Block[
+			{gamma=0},
+			gamma += 1/2 SolveSuperProd[
+				{conj[Yuk], Yuk}, 
+				KroneckerDelta[#2, #5] KroneckerDelta[#3, #6]&, 6, {
+					{1, {Join[s1[[1;;2]], {s1[[3;;]]}]}}, 
+					{4, {Join[s2[[1;;2]], {s2[[3;;]]}]}}
+				}
+			];
+			gamma += -2 TensorDelta[s1, s2] Sum[Power[ListGauge[[i,1]], 2] C2[ChiralSuperFieldList[[s1, 1]], ListGauge[[i,1]]], {i, 1, NumberOfSubgroups}];
+			Return[gamma/Power[4 Pi, 2]];
+		];
+
+		SuperFieldGamma[s1_, s2_, 2] := Block[
+			{gamma=0},
+			gamma += -1/2 SolveSuperProd[
+				{conj[Yuk], Yuk, conj[Yuk], Yuk}, 
+				Evaluatable[TensorDelta[{#2, #3, #5, #6, #9}, {#10, #4, #7, #8, #11}]]&,
+				12,
+				{
+					{1, {Join[s1[[1;;2]], {s1[[3;;]]}]}},
+					{12, {Join[s2[[1;;2]], {s2[[3;;]]}]}}
+				}
+
+			];
+			gamma += Sum[
+				Sum[Power[ListGauge[[i,1]], 2] (2 C2[ChiralSuperFieldList[[s3[[1]], 1]], ListGauge[[i, 1]]] - C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[i, 1]]]), {i, 1, NumberOfSubgroups}] SolveSuperProd[
+					{conj[Yuk], Yuk, Delta[s3]},
+					Evaluatable[TensorDelta[{#3, #2, #5}, {#6, #7, #8}]]&,
+					8,
+					{
+						{1, {Join[s1[[1;;2]], {s1[[3;;]]}]}}, 
+						{4, {Join[s2[[1;;2]], {s2[[3;;]]}]}}
+					}
+				], 
+				{s3, 1, Length[ChiralSuperFieldList]}
+			];
+			gamma += 2 TensorDelta[s1, s2] Sum[C2[ChiralSuperFieldList[[s1[[1]], 1]] ListGauge[[i,1]]] ( 
+				( S2[ChiralSuperFieldList[[s1[[1]], 1]] ListGauge[[i,1]]] - 3 C2[ListGauge[[i,1]]] ) Power[ListGauge[[i,1]], 4] 
+				+ Sum[ C2[ChiralSuperFieldList[[s1[[1]], 1]] ListGauge[[j, 1]]] Power[ListGauge[[i,1]] ListGauge[[j,1]], 2], {j, 1, NumberOfSubgroups}] 
+			), {i, 1, NumberOfSubgroups}];
+			
+			Return[gamma/Power[4 Pi, 4]];
+		];
+
+		BetaGauge[g_, 0] := ListGauge[[g, 1]];
+
+		BetaGauge[g_, 1] := Block[
+			{beta = 0},
+			beta += -3 Power[ListGauge[[g, 1]], 3] C2[ListGauge[[g, 1]]];
+			beta += Power[ListGauge[[g, 1]], 3] Sum[S2[ChiralSuperFieldList[[s, 1]], ListGauge[[g, 1]]], {s, 1, Length[ChiralSuperFieldList]}];
+			Return[beta/Power[4 Pi, 2]];
+		];
+
+		BetaGauge[g_, 2] := Block[
+			{beta = 0},
+			beta += -6 Power[ListGauge[[g, 1]], 5] Power[C2[ListGauge[[g, 1]]], 2];
+			beta += 2 Power[ListGauge[[g, 1]], 5] C2[ListGauge[[g, 1]]] Sum[S2[ChiralSuperFieldList[[s, 1]], ListGauge[[g, 1]]], {s, 1, Length[ChiralSuperFieldList]}];
+			beta += 4 Power[ListGauge[[g, 1]], 3] Sum[Power[ListGauge[[i, 1]], 2] C2[ChiralSuperFieldList[[s, 1]], ListGauge[[i, 1]]] S2[ChiralSuperFieldList[[s, 1]], ListGauge[[g, 1]]], {s, 1, Length[ChiralSuperFieldList]}, {i, 1, NumberOfSubgroups}];
+			beta += - Power[ListGauge[[g, 1]], 3]/d[ListGauge[[g, 1]]] Sum[ C2[ChiralSuperFieldList[[s, 1]], ListGauge[[g, 1]]] Y2[s], {s, 1, Length[ChiralSuperFieldList]}];
+			Return[beta/Power[4 Pi, 4]];
+		];
+
+		BetaYukawa[s1_, s2_, s3_, 0] := SolveSuperProd[ {Yuk}, 1&, 3, { {1, {Join[s1[[1;;2]], {s1[[3;;]]}]}}, {2, {Join[s2[[1;;2]], {s2[[3;;]]}]}}, {3, {Join[s3[[1;;2]], {s3[[3;;]]}]}}}];
 		
-		BetaYukawa[pa_, pi_, pj_, la_, li_, lj_, 0] := ReleaseHold[Yuk[pa][pi,pj] /. subYuk1]/.{
+		BetaYukawa[s1_, s2_, s3_, n_] := (Simplify[(BetaGamma[s1, s2, s3, n] + BetaGamma[s2, s3, s1, n] + BetaGamma[s3, s1, s2, n]) //. {
+				BetaGamma[A___, x1_, x2_  B___ , m_] :> BetaGamma[A, x2, x1, B, m] /; (x1[[1]] > x2[[1]])
+			}] /. BetaGamma[y1_, y2_, y3_, l_] :> GammaYukawa[y1, y2, y3, l] 
+		)
+
+		GammaYukawa[s1_, s2_, s3_, 1] := Block[
+			{beta=0},
+			beta += 1/2 SolveSuperProd[
+				{Yuk, conj[Yuk], Yuk},
+				Evaluate[TensorDelta[{#3, #5, #6}, {#4, #8, #9}]]&,
+				9,
+				{
+						{1, {Join[s1[[1;;2]], {s1[[3;;]]}]}}, 
+						{2, {Join[s2[[1;;2]], {s2[[3;;]]}]}},
+						{7, {Join[s3[[1;;2]], {s3[[3;;]]}]}}
+				}
+			];
+			beta += -2 Sum[Power[ListGauge[[i,1]], 2] C2[ChiralSuperFieldList[[s3[[1]], 1]], ListGauge[[i,1]]] BetaYukawa[s1, s2, s3, 0], {i, 1, NumberOfSubgroups}];
+			Return[beta/Power[4 Pi, 2]];
+		];
+
+		GammaYukawa[s1_, s2_, s3_, 2] := Block[
+			{beta=0},
+			beta += -1/2 SolveSuperProd[
+				{Yuk, conj[Yuk], Yuk, conj[Yuk], Yuk},
+				Evaluate[TensorDelta[{#3, #5, #6, #8, #9, #12}, {#4, #13, #7, #10, #11, #14}]]&,
+				15,
+				{
+						{1, {Join[s1[[1;;2]], {s1[[3;;]]}]}}, 
+						{2, {Join[s2[[1;;2]], {s2[[3;;]]}]}},
+						{15, {Join[s3[[1;;2]], {s3[[3;;]]}]}}
+				}
+			];
+			beta += Sum[ Sum[Power[ListGauge[[i,1]], 2] (2 C2[ChiralSuperFieldList[[s4[[1]], 1]], ListGauge[[i, 1]]] - C2[ChiralSuperFieldList[[s3[[1]], 1]], ListGauge[[i, 1]]]), {i, 1, NumberOfSubgroups}] SolveSuperProd[
+				{Yuk, conj[Yuk], Yuk, Delta[s4]},
+				Evaluate[TensorDelta[{#3, #5, #6, #8}, {#4, #10, #9, #11}]]&,
+				11,
+				{
+						{1, {Join[s1[[1;;2]], {s1[[3;;]]}]}}, 
+						{2, {Join[s2[[1;;2]], {s2[[3;;]]}]}},
+						{7, {Join[s3[[1;;2]], {s3[[3;;]]}]}}
+				}
+			], {s4, 1, Length[ChiralSuperFieldList]}];
+			beta += 2 BetaYukawa[s1, s2, s3, 0] Sum[C2[ChiralSuperFieldList[[s3[[1]], 1]] ListGauge[[i,1]]] ( 
+				( S2[ChiralSuperFieldList[[s3[[1]], 1]] ListGauge[[i,1]]] - 3 C2[ListGauge[[i,1]]] ) Power[ListGauge[[i,1]], 4] 
+				+ Sum[ C2[ChiralSuperFieldList[[s3[[1]], 1]] ListGauge[[j, 1]]] Power[ListGauge[[i,1]] ListGauge[[j,1]], 2], {j, 1, NumberOfSubgroups}] 
+			), {i, 1, NumberOfSubgroups}];
+			Return[beta/Power[4 Pi, 4]];
+		];
+
+		BetaMass[s1_, s2_, 0] := SolveSuperProd[ {SMass}, 1&, 2, { {1, {Join[s1[[1;;2]], {s1[[3;;]]}]}}, {2, {Join[s2[[1;;2]], {s2[[3;;]]}]}}}];
+
+		BetaMass[s1_, s2_, n_] := If[s1 === s2, 2 BetaGamma[s1, s2, n],  BetaGamma[s1, s2, n] + BetaGamma[s2, s1, n]]
+
+		GammaMass[s1_, s2_, 1] := Block[
+			{beta},
+			beta += 1/2 SolveSuperProd[
+				{SMass, conj[Yuk], Yuk},
+				Evaluate[TensorDelta[{#2, #4, #5}, {#3, #7, #8}]]&,
+				8,
+				{
+						{1, {Join[s1[[1;;2]], {s1[[3;;]]}]}}, 
+						{6, {Join[s2[[1;;2]], {s2[[3;;]]}]}}
+				}
+			];
+			beta += -2 Sum[Power[ListGauge[[i,1]], 2] C2[ChiralSuperFieldList[[s2[[1]], 1]], ListGauge[[i,1]]] BetaMass[s1, s2, 0], {i, 1, NumberOfSubgroups}];
+			Return[beta/Power[4 Pi, 2]];
+		];
+
+		GammaMass[s1_, s2_, 2] := Block[
+			{beta=0},
+			beta += -1/2 SolveSuperProd[
+				{SMass, conj[Yuk], Yuk, conj[Yuk], Yuk},
+				Evaluate[TensorDelta[{#2, #4, #5, #7, #8, #11}, {#3, #12, #6, #9, #10, #13}]]&,
+				14,
+				{
+						{1, {Join[s1[[1;;2]], {s1[[3;;]]}]}}, 
+						{14, {Join[s2[[1;;2]], {s2[[3;;]]}]}}
+				}
+			];
+			beta += Sum[ Sum[Power[ListGauge[[i,1]], 2] (2 C2[ChiralSuperFieldList[[s3[[1]], 1]], ListGauge[[i, 1]]] - C2[ChiralSuperFieldList[[s2[[1]], 1]], ListGauge[[i, 1]]]), {i, 1, NumberOfSubgroups}] SolveSuperProd[
+				{SMass, conj[Yuk], Yuk, Delta[s3]},
+				Evaluate[TensorDelta[{#2, #4, #5, #7}, {#3, #9, #8, #10}]]&,
+				10,
+				{
+						{1, {Join[s1[[1;;2]], {s1[[3;;]]}]}}, 
+						{6, {Join[s2[[1;;2]], {s2[[3;;]]}]}}
+				}
+			], {s3, 1, Length[ChiralSuperFieldList]}];
+			beta += 2 BetaMass[s1, s2, 0] Sum[C2[ChiralSuperFieldList[[s2[[1]], 1]] ListGauge[[i,1]]] ( 
+				( S2[ChiralSuperFieldList[[s2[[1]], 1]] ListGauge[[i,1]]] - 3 C2[ListGauge[[i,1]]] ) Power[ListGauge[[i,1]], 4] 
+				+ Sum[ C2[ChiralSuperFieldList[[s2[[1]], 1]] ListGauge[[j, 1]]] Power[ListGauge[[i,1]] ListGauge[[j,1]], 2], {j, 1, NumberOfSubgroups}] 
+			), {i, 1, NumberOfSubgroups}];
+			Return[beta/Power[4 Pi, 4]];
+		];
+
+		BetaTadpole[s1_, 0] := SolveSuperProd[ {STad}, 1&, 1, { {1, {Join[s1[[1;;2]], {s1[[3;;]]}]}}}];
+
+		BetaTadpole[s1_, 1] := Block[
+			{beta},
+			beta += 1/2 SolveSuperProd[
+				{STad, conj[Yuk], Yuk},
+				Evaluate[TensorDelta[{#1, #3, #4}, {#2, #6, #7}]]&,
+				7,
+				{
+						{5, {Join[s1[[1;;2]], {s1[[3;;]]}]}}
+				}
+			];
+			beta += -2 Sum[Power[ListGauge[[i,1]], 2] C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[i,1]]] BetaTadpole[s1, 0], {i, 1, NumberOfSubgroups}];
+			Return[beta/Power[4 Pi, 2]];
+		];
+
+		BetaTadpole[s1_, 2] := Block[
+			{beta=0},
+			beta += -1/2 SolveSuperProd[
+				{STad, conj[Yuk], Yuk, conj[Yuk], Yuk},
+				Evaluate[TensorDelta[{#1, #3, #4, #6, #7, #10}, {#2, #11, #5, #8, #9, #12}]]&,
+				13,
+				{
+						{13, {Join[s1[[1;;2]], {s1[[3;;]]}]}}
+				}
+			];
+			beta += Sum[ Sum[Power[ListGauge[[i,1]], 2] (2 C2[ChiralSuperFieldList[[s2[[1]], 1]], ListGauge[[i, 1]]] - C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[i, 1]]]), {i, 1, NumberOfSubgroups}] SolveSuperProd[
+				{STad, conj[Yuk], Yuk, Delta[s2]},
+				Evaluate[TensorDelta[{#1, #3, #4, #6}, {#2, #8, #7, #9}]]&,
+				9,
+				{
+						{5, {Join[s1[[1;;2]], {s1[[3;;]]}]}}
+				}
+			], {s2, 1, Length[ChiralSuperFieldList]}];
+			beta += 2 BetaTadpole[s1, 0] Sum[C2[ChiralSuperFieldList[[s1[[1]], 1]] ListGauge[[i,1]]] ( 
+				( S2[ChiralSuperFieldList[[s1[[1]], 1]] ListGauge[[i,1]]] - 3 C2[ListGauge[[i,1]]] ) Power[ListGauge[[i,1]], 4] 
+				+ Sum[ C2[ChiralSuperFieldList[[s1[[1]], 1]] ListGauge[[j, 1]]] Power[ListGauge[[i,1]] ListGauge[[j,1]], 2], {j, 1, NumberOfSubgroups}] 
+			), {i, 1, NumberOfSubgroups}];
+			Return[beta/Power[4 Pi, 4]];
+		];
+
+		(*BetaYukawa[pa_, pi_, pj_, la_, li_, lj_, 0] := ReleaseHold[Yuk[pa][pi,pj] /. subYuk1]/.{
 			transpose[Yukawa[a_]]:>(If[(MatchQ[ListYukawa[[a,6]], Mat[___]] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]] || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]]  || MatchQ[ListYukawa[[a,6]], Mat[___]&] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]&]  || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]&] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]&]), transpose[ListYukawa[[a, 1]]][lj[[1]], li[[1]]], ListYukawa[[a, 1]]] Refine[ListYukawa[[a,6]][la[[1]], la[[2]], lj[[1]], li[[1]]]/.{Mat:>Identity}] Times@@(Function[{x}, Refine[Conjugate[ListYukawa[[a,5,x]][la[[2+x]], lj[[1+x]], li[[1+x]]]]]]/@Range[NumberOfSubgroups])),
 			Yukawa[a_]:>(If[(MatchQ[ListYukawa[[a,6]], Mat[___]] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]] || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]]  || MatchQ[ListYukawa[[a,6]], Mat[___]&] || MatchQ[ListYukawa[[a,6]], Conjugate[Mat[___]]&]  || MatchQ[ListYukawa[[a,6]], aa_ Mat[___]&] || MatchQ[ListYukawa[[a,6]], aa_ Conjugate[Mat[___]]&]), ListYukawa[[a, 1]][li[[1]], lj[[1]]], ListYukawa[[a, 1]]] (ListYukawa[[a,6]][la[[1]], la[[2]], li[[1]], lj[[1]]]/.{Mat:>Identity}) Times@@(Function[{x}, ListYukawa[[a,5,x]][la[[2+x]], li[[1+x]], lj[[1+x]]]]/@Range[NumberOfSubgroups]))
-		};
+		};*)
 		
-		BetaYukawa[pa_, pi_, pj_, la_, li_, lj_, 1] := Module[
+		(*BetaYukawa[pa_, pi_, pj_, la_, li_, lj_, 1] := Module[
 			{beta, ss1, ii, x, x2, x3, sumIdx, assHold},
 			assHold=$Assumptions;
 			$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -1505,9 +1709,9 @@ BeginPackage["SARGES`"];
 			beta -= 3 Sum[Sqr[ListGauge[[ii,1]]](C2[WeylFermionList[[AdjWeylFermionList[[pi,2]],1]], ListGauge[[ii,1]]] + C2[WeylFermionList[[AdjWeylFermionList[[pj,2]],1]], ListGauge[[ii,1]]]) BetaYukawa[pa, pi, pj, la, li, lj, 0], {ii, 1, NumberOfSubgroups}];
 			$Assumptions=assHold;
 			Return[beta/Sqr[4\[Pi]]];
-		];
+		];*)
 		
-		BetaYukawa[pa_, pi_, pj_, la_, li_, lj_, 2] := Module[
+		(*BetaYukawa[pa_, pi_, pj_, la_, li_, lj_, 2] := Module[
 			{beta, fHold, ssb, ssc, ss, ss1, ss2, ss3, ff, ii, ii2, x, x2, assHold},
 			assHold = $Assumptions;
 			$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss[x],Integers]&&(ss[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -1765,7 +1969,7 @@ BeginPackage["SARGES`"];
 			];
 			$Assumptions=assHold;
 			Return[beta/Power[4\[Pi], 4]];
-		];
+		];*)
 		
 		
 		BetaQuartic[a_, b_, c_, d_, la_, lb_, lc_, ld_, 0] := Module[
