@@ -297,14 +297,14 @@ BeginPackage["SARGES`"];
 			RealScalar[Im[sym], Nflavor, Gauge];
 		];
 		
-		VEV[sym_, Sa_, SGenIdx_List, SGaugeIdx_List, fak_:1] := Module[
+		VEV[sym_, Sa_, SGenIdx_, SGaugeIdx_List, fak_:1] := Module[
 			{posS},
-			posS  = ListPosition[RealScalarList,_List?(#[[1]] == Sa &)];
+			posS  = ListPosition[ChiralSuperFieldList, _List?(#[[1]] == Sa &)];
 			If[posS == {},
 				Message[Scalar::UnknownParticle];
 				Return[];
 			];
-			If[Dimensions[SGenIdx][[1]] != 2 || IdxCheck[SGenIdx],
+			If[IdxCheck[SGenIdx],
 				Message[Gen::RepMismatch];
 				Return[];
 			];
@@ -317,7 +317,7 @@ BeginPackage["SARGES`"];
 				Message[Gauge::RepMismatch];
 				Return[];
 			];
-			ListVEV = Append[ListVEV, {sym, fak, Join[{posS[[1,1]]}, SGenIdx, SGaugeIdx]}];
+			ListVEV = Append[ListVEV, {sym, fak, Join[{posS[[1,1]], SGenIdx}, SGaugeIdx]}];
 		];
 
 		SuperYukawa[sym_, Si_, Sj_, Sk_, gauge_List, fak_] := Block[
@@ -477,6 +477,11 @@ BeginPackage["SARGES`"];
 				ListGMass[[posG[[1,1]]]] = ListGMass[[posG[[1,1]]]] + sym;
 			];
 		];
+
+		BosonIndexOut[bos_, BList_] := (
+			(NumberQ[RealScalarList[[bos,2]]] && NumberQ[BList[[1]]] && ChiralSuperFieldList[[bos,2]] < BList[[1]] && IntegerQ[BList[[1]]] && BList[[1]] > 0) ||
+			Or@@(Function[{x},(NumberQ[FMultiplicity[bos, x]] && NumberQ[BList[[1+x]]] && BList[[1+x]] > FMultiplicity[bos, x] && IntegerQ[BList[[1+x]]] && BList[[1+x]] > 0)]/@Range[NumberOfSubgroups])
+		);
 		
 		YukawaYaij[sym_, Sa_, Fi_, Fj_, gauge_List, fak_:1] := Module[
 			{posS, posFi, posFj},
@@ -1653,7 +1658,7 @@ BeginPackage["SARGES`"];
 				Power[ListGauge[[i, 1]], 2] C2[ChiralSuperFieldList[[s3[[1]], 1]], ListGauge[[i, 1]]] (2 BetaTrilinear[s1, s2, s3, 0] - 8 ListGMass[[i]] BetaYukawa[s1, s2, s3, 0]) (
 					Power[ListGauge[[i, 1]], 2] Sum[S2[ChiralSuperFieldList[[s4, 1]], ListGauge[[i, 1]]], {s4, 1, Length[ChiralSuperFieldList]}] +
 					2 Sum[Power[ListGauge[[j, 1]], 2] C2[ChiralSuperFieldList[[s3[[1]], 1]], ListGauge[[j, 1]]] , {j, 1, NumberOfSubgroups}] -
-					3 C2[ListGauge[[i, 1]]]
+					3 Power[ListGauge[[i, 1]], 2] C2[ListGauge[[i, 1]]]
 				), 
 				{i, 1, NumberOfSubgroups}
 			];
@@ -1806,7 +1811,7 @@ BeginPackage["SARGES`"];
 				Power[ListGauge[[i, 1]], 2] C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[i, 1]]] (2 BetaBilinear[s1, s2, 0] - 8 ListGMass[[i]] BetaMass[s1, s2, 0]) (
 					Power[ListGauge[[i, 1]], 2] Sum[S2[ChiralSuperFieldList[[s3, 1]], ListGauge[[i, 1]]], {s3, 1, Length[ChiralSuperFieldList]}] +
 					2 Sum[Power[ListGauge[[j, 1]], 2] C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[j, 1]]] , {j, 1, NumberOfSubgroups}] -
-					3 C2[ListGauge[[i, 1]]]
+					3 Power[ListGauge[[i, 1]], 2] C2[ListGauge[[i, 1]]]
 				), 
 				{i, 1, NumberOfSubgroups}
 			];
@@ -1867,7 +1872,7 @@ BeginPackage["SARGES`"];
 			Return[beta/Power[4 Pi, 2]];
 		];
 		
-		BetaSSMass[s1_, s2_, 1] := Block[
+		BetaSSMass[s1_, s2_, 2] := Block[
 			{beta=0},
 			beta += -1/2 SolveSuperProd[
 				{SSMass, conj[Yuk], Yuk, conj[Yuk], Yuk},
@@ -2067,18 +2072,138 @@ BeginPackage["SARGES`"];
 					] 
 				),
 				{s3, 1, Length[ChiralSuperFieldList]}
-			]; 
+			];
+			beta += -2 Sum[
+				Power[ListGauge[[i, 1]], 2] SolveSuperProd[
+					{Lambda[i], SSMass, conj[Yuk], Yuk},
+					Evaluate[TensorDelta[{#2, #4, #6, #8, #9}, {#10, #5, #7, #11, #12}]]&,
+					12,
+					{
+						{1, Join[s1[[1;;2]], {s1[[3;;]]}]}, 
+						{3, Join[s2[[1;;2]], {s2[[3;;]]}]}
+					}
+				],
+				{i, 1, NumberOfSubgroups}
+			];
+			beta += 8 Sum[
+				Power[ListGauge[[i, 1]], 2] Sum[
+					Power[ListGauge[[j, 1]], 2] C2[ChiralSuperFieldList[[s3, 1]], ListGauge[[j, 1]]], 
+					{j, 1, NumberOfSubgroups}
+				] SolveSuperProd[
+					{Lambda[i], Delta[s3], SSMass},
+					Evaluate[TensorDelta[{#2, #4, #6}, {#8, #5, #7}]]&,
+					8,
+					{
+						{1, Join[s1[[1;;2]], {s1[[3;;]]}]}, 
+						{3, Join[s2[[1;;2]], {s2[[3;;]]}]}
+					}
+				],
+				{s3, 1, Length[ChiralSuperFieldList]},
+				{i, 1, NumberOfSubgroups}
+			];
+			beta += 8 TensorDelta[s1, s2] Sum[
+				Power[ListGauge[[i, 1]] ListGMass[[i]], 2] C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[i, 1]]] (
+					3 Power[ListGauge[[i, 1]], 2] Sum[S2[ChiralSuperFieldList[[s3, 1]], ListGauge[[i, 1]]], {s3, 1, Length[ChiralSuperFieldList]}] +
+					6 Sum[Power[ListGauge[[j, 1]], 2] C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[j, 1]]] , {j, 1, NumberOfSubgroups}] -
+					10 Power[ListGauge[[i, 1]], 2] C2[ListGauge[[i, 1]]] +
+					Power[ListGauge[[i, 1]], 2] Sum[
+						S2[ChiralSuperFieldList[[s3, 1]], ListGauge[[i, 1]]] SolveSuperProd[
+							{Delta[s3], SSMass},
+							Evaluate[TensorDelta[{#1, #2}, {#4, #3}]]&,
+							4,
+							{}
+						],
+						{s3, 1, Length[ChiralSuperFieldList]}
+					]
+				), 
+				{i, 1, NumberOfSubgroups}
+			];
+			Return[beta/Power[4 Pi, 4]];
+		];
 
+		BetaVEV[va_, 0] := ListVEV[[va,2]] ListVEV[[va,1]];
+
+		BetaVEV[va_, 1] := Block[
+			{beta=0},
+			beta += Sum[
+				TensorDelta[ListVEV[[va,3]], ListVEV[[vb,3]]] ListVEV[[vb,2]] ListVEV[[vb,1]] Sum[
+					Power[ListGauge[[i,1]], 2] (1 + \[Xi]) C2[ChiralSuperFieldList[[ListVEV[[va, 3, 1]], 1]], ListGauge[[i, 1]]]
+					{i, 1, NumberOfSubgroups}
+				],
+				{vb, 1, Length[ListVEV]}
+			];
+			beta += -1/2 Sum[ 
+				ListVEV[[vb,2]] ListVEV[[vb,1]] SolveSuperProd[
+					{conj[Yuk], Yuk},
+					Evaluate[TensorDelta[{#2, #3}, {#5, #6}]]&,
+					6,
+					{
+						{1, Join[ListVEV[[va, 3, 1;;2]], {ListVEV[[va, 3, 3;;]]}]}, 
+						{4, Join[ListVEV[[vb, 3, 1;;2]], {ListVEV[[vb, 3, 3;;]]}]} 
+					}
+				],
+				{vb, 1, Length[ListVEV]}
+			];
+			Return[beta/Power[4 Pi, 2]];
+		];
+
+		BetaVEV[va_, 2] := Block[
+			{beta = 0},
+			beta += Sum[
+				TensorDelta[ListVEV[[va,3]], ListVEV[[vb,3]]] ListVEV[[vb,2]] ListVEV[[vb,1]] Sum[
+					Power[ListGauge[[i, 1]], 4] C2[ChiralSuperFieldList[[ListVEV[[va, 3, 1]], 1]], ListGauge[[i, 1]]](
+						(9/4 - 5/3 \[Xi] - 1/4 Power[\[Xi], 2] + (7 - \[Xi]) \[Xi]/2 ) C2[ListGauge[[i, 1]]] - 
+						Sum[S2[ChiralSuperFieldList[[s, 1]], ListGauge[[i, 1]]], {s, 1, Length[ChiralSuperFieldList]}]
+					),
+					{i, 1, NumberOfSubgroups}
+				],
+				{vb, 1, Length[ListVEV]}
+			];
+			beta += -4 Sum[
+				TensorDelta[ListVEV[[va,3]], ListVEV[[vb,3]]] ListVEV[[vb,2]] ListVEV[[vb,1]] Sum[
+					Power[ListGauge[[i, 1]] ListGauge[[j, 1]], 2] C2[ChiralSuperFieldList[[ListVEV[[va,3,1]], 1]], ListGauge[[i, 1]]] C2[ChiralSuperFieldList[[ListVEV[[va,3,1]], 1]], ListGauge[[f, 1]]](
+						2 + 2 \[Xi] (1 - \[Xi])
+					),
+					{i, 1, NumberOfSubgroups},
+					{j, 1, NumberOfSubgroups}
+				],
+				{vb, 1, Length[ListVEV]}
+			];
+			beta += (1 - \[Xi]) Sum[
+				ListVEV[[vb,2]] ListVEV[[vb,1]] Sum[Power[ListGauge[[i, 1]], 2] C2[ChiralSuperFieldList[[ListVEV[[va, 3, 1]], 1]], ListGauge[[i, 1]]], {i, 1, NumberOfSubgroups}] SolveSuperProd[
+					{conj[Yuk], Yuk},
+					Evaluate[TensorDelta[{#2, #3}, {#5, #6}]]&,
+					6,
+					{
+						{1, Join[ListVEV[[va, 3, 1;;2]], {ListVEV[[va, 3, 3;;]]}]},
+						{4, Join[ListVEV[[vb, 3, 1;;2]], {ListVEV[[vb, 3, 3;;]]}]},
+					}
+				],
+				{vb, 1, Length[ListVEV]}
+			];
+			beta += -2 Sum[
+				ListVEV[[vb,2]] ListVEV[[vb,1]] Sum[Power[ListGauge[[i, 1]], 2] C2[ChiralSuperFieldList[[s, 1]], ListGauge[[i, 1]]], {i, 1, NumberOfSubgroups}] SolveSuperProd[
+					{conj[Yuk], Delta[s], Yuk},
+					Evaluate[TensorDelta[{#2, #5, #3}, {#4, #7, #8}]]&,
+					8,
+					{
+						{1, Join[ListVEV[[va, 3, 1;;2]], {ListVEV[[va, 3, 3;;]]}]},
+						{6, Join[ListVEV[[vb, 3, 1;;2]], {ListVEV[[vb, 3, 3;;]]}]},
+					}
+				],
+				{vb, 1, Length[ListVEV]},
+				{s, 1, Length[ChiralSuperFieldList]}
+			];
 			Return[beta/Power[4 Pi, 4]];
 		];
 		
-		BetaVEV[va_, 0] := va;
+		(*BetaVEV[va_, 0] := va;
 		
 		BetaVEV[va_, 1] := Module[
 			{beta, vb, ii},
 			beta = 0;
 			beta += Sum[
-				Sqr[ListGauge[[ii,1]]] ( 3 + \[Xi]) C2[RealScalarList[[ListVEV[[vb,3,1]],1]],ListGauge[[ii,1]]] TensorDelta[ListVEV[[va,3]],ListVEV[[vb,3]]] ListVEV[[vb,2]] ListVEV[[vb,1]], 
+				Sqr[ListGauge[[ii,1]]] ( 3 + \[Xi]) C2[RealScalarList[[ListVEV[[vb,3,1]], 1]], ListGauge[[ii,1]]] TensorDelta[ListVEV[[va,3]],ListVEV[[vb,3]]] ListVEV[[vb,2]] ListVEV[[vb,1]], 
 				{vb, 1, Dimensions[ListVEV][[1]]},
 				{ii, 1, NumberOfSubgroups}
 			];
@@ -2119,7 +2244,7 @@ BeginPackage["SARGES`"];
 			];
 			beta -= 5 Sum[Y2FS[ListVEV[[va,3]], ListVEV[[vb,3]]] ListVEV[[vb,2]] ListVEV[[vb,1]]/. subScalarInvariants, {vb, 1, Dimensions[ListVEV][[1]]}];
 			Return[beta/( ListVEV[[va,2]] Power[4 \[Pi], 4])];
-		];
+		];*)
 		
 		(* Backend for anomalous dimensions *)
 		
