@@ -172,12 +172,13 @@ BeginPackage["SARGES`"];
 			If[posSi == {} || posSj == {} || posSk == {},
 				Message[Yukawa::UnknownParticle];,
 				permList = {{#1, #2, #3}, {#1, #3, #2}, {#2, #1, #3}, {#2, #3, #1}, {#3, #1, #2}, {#3, #2, #1}};
+				invPermList = {{#1, #2, #3}, {#1, #3, #2}, {#2, #1, #3}, {#3, #1, #2}, {#2, #3, #1}, {#3, #2, #1}};
 				For[i=1, i<=6, i++, 
 					ListSYukawa = Append[ListSYukawa, Join[
 						{sym}, 
-						Evaluate[permList[[i]]]&[posSi[[1,1]], posSj[[1,1]], posSk[[1,1]]],
+						Evaluate[invPermList[[i]]]&[posSi[[1,1]], posSj[[1,1]], posSk[[1,1]]],
 						{Table[Evaluate[gauge[[j]]@@permList[[i]]]&, {j, 1, NumberOfSubgroups}]}, 
-						{Evaluate[fak@@permList[[i]]/6]&}
+						{Evaluate[fak@@permList[[i]]]&}
 					]];
 				];
 				SimplifySYukawaList[];
@@ -204,7 +205,7 @@ BeginPackage["SARGES`"];
 						{sym}, 
 						Evaluate[permList[[i]]]&[posSi[[1,1]], posSj[[1,1]]],
 						{Table[Evaluate[gauge[[j]]@@permList[[i]]]&, {j, 1, NumberOfSubgroups}]}, 
-						{Evaluate[fak@@permList[[i]]/2]&}
+						{Evaluate[fak@@permList[[i]]]&}
 					]];
 				];
 				SimplifySMassList[];
@@ -245,12 +246,13 @@ BeginPackage["SARGES`"];
 			If[posSi == {} || posSj == {} || posSk == {},
 				Message[Yukawa::UnknownParticle];,
 				permList = {{#1, #2, #3}, {#1, #3, #2}, {#2, #1, #3}, {#2, #3, #1}, {#3, #1, #2}, {#3, #2, #1}};
+				invPermList = {{#1, #2, #3}, {#1, #3, #2}, {#2, #1, #3}, {#3, #1, #2}, {#2, #3, #1}, {#3, #2, #1}};
 				For[i=1, i<=6, i++, 
 					ListSTriLin = Append[ListSTriLin, Join[
 						{sym}, 
-						Evaluate[permList[[i]]]&[posSi[[1,1]], posSj[[1,1]], posSk[[1,1]]],
+						Evaluate[invPermList[[i]]]&[posSi[[1,1]], posSj[[1,1]], posSk[[1,1]]],
 						{Table[Evaluate[gauge[[j]]@@permList[[i]]]&, {j, 1, NumberOfSubgroups}]}, 
-						{Evaluate[fak@@permList[[i]]/6]&}
+						{Evaluate[fak@@permList[[i]]]&}
 					]];
 				];
 				SimplifySTriLinList[];
@@ -277,7 +279,7 @@ BeginPackage["SARGES`"];
 						{sym}, 
 						Evaluate[permList[[i]]]&[posSi[[1,1]], posSj[[1,1]]],
 						{Table[Evaluate[gauge[[j]]@@permList[[i]]]&, {j, 1, NumberOfSubgroups}]}, 
-						{Evaluate[fak@@permList[[i]]/2]&}
+						{Evaluate[fak@@permList[[i]]]&}
 					]];
 				];
 				SimplifySBiLinList[];
@@ -737,10 +739,13 @@ BeginPackage["SARGES`"];
 						{7, Join[s3[[1;;2]], {s3[[3;;]]}]}
 				}
 			], {s4, 1, Length[ChiralSuperFieldList]}];
-			beta += 2 BetaYukawa[s1, s2, s3, 0] Sum[C2[ChiralSuperFieldList[[s3[[1]], 1]], ListGauge[[i,1]]] ( 
-				( S2[ChiralSuperFieldList[[s3[[1]], 1]], ListGauge[[i,1]]] - 3 C2[ListGauge[[i,1]]] ) Power[ListGauge[[i,1]], 4] 
-				+ Sum[ C2[ChiralSuperFieldList[[s3[[1]], 1]], ListGauge[[j, 1]]] Power[ListGauge[[i,1]] ListGauge[[j,1]], 2], {j, 1, NumberOfSubgroups}] 
-			), {i, 1, NumberOfSubgroups}];
+			beta += 2 BetaYukawa[s1, s2, s3, 0] Sum[
+				C2[ChiralSuperFieldList[[s3[[1]], 1]], ListGauge[[i,1]]] Power[ListGauge[[i,1]], 2] ( 
+					- 3 C2[ListGauge[[i,1]]] Power[ListGauge[[i,1]], 2]
+					+ Sum[ S2[ChiralSuperFieldList[[s4, 1]], ListGauge[[i,1]]], {s4, 1, Length[ChiralSuperFieldList]}] Power[ListGauge[[i,1]], 2]
+					+ 2 Sum[ C2[ChiralSuperFieldList[[s3[[1]], 1]], ListGauge[[j, 1]]] Power[ListGauge[[j,1]], 2], {j, 1, NumberOfSubgroups}] 
+				), 
+				{i, 1, NumberOfSubgroups}];
 			Return[beta/Power[4 Pi, 4]];
 		];
 
@@ -783,10 +788,13 @@ BeginPackage["SARGES`"];
 						{6, Join[s2[[1;;2]], {s2[[3;;]]}]}
 				}
 			], {s3, 1, Length[ChiralSuperFieldList]}];
-			beta += 2 BetaMass[s1, s2, 0] Sum[C2[ChiralSuperFieldList[[s2[[1]], 1]], ListGauge[[i,1]]] ( 
-				( S2[ChiralSuperFieldList[[s2[[1]], 1]], ListGauge[[i,1]]] - 3 C2[ListGauge[[i,1]]] ) Power[ListGauge[[i,1]], 4] 
-				+ Sum[ C2[ChiralSuperFieldList[[s2[[1]], 1]], ListGauge[[j, 1]]] Power[ListGauge[[i,1]] ListGauge[[j,1]], 2], {j, 1, NumberOfSubgroups}] 
-			), {i, 1, NumberOfSubgroups}];
+			beta += 2 BetaMass[s1, s2, 0] Sum[
+				C2[ChiralSuperFieldList[[s2[[1]], 1]], ListGauge[[i,1]]] Power[ListGauge[[i,1]], 2] ( 
+					- 3 C2[ListGauge[[i,1]]] Power[ListGauge[[i,1]], 2]
+					+ Sum[ S2[ChiralSuperFieldList[[s3, 1]], ListGauge[[i,1]]], {s3, 1, Length[ChiralSuperFieldList]}] Power[ListGauge[[i,1]], 2]
+					+ 2 Sum[ C2[ChiralSuperFieldList[[s2[[1]], 1]], ListGauge[[j, 1]]] Power[ListGauge[[j,1]], 2], {j, 1, NumberOfSubgroups}] 
+				), 
+				{i, 1, NumberOfSubgroups}];
 			Return[beta/Power[4 Pi, 4]];
 		];
 
@@ -824,10 +832,13 @@ BeginPackage["SARGES`"];
 						{5, Join[s1[[1;;2]], {s1[[3;;]]}]}
 				}
 			], {s2, 1, Length[ChiralSuperFieldList]}];
-			beta += 2 BetaTadpole[s1, 0] Sum[C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[i,1]]] ( 
-				( S2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[i,1]]] - 3 C2[ListGauge[[i,1]]] ) Power[ListGauge[[i,1]], 4] 
-				+ Sum[ C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[j, 1]]] Power[ListGauge[[i,1]] ListGauge[[j,1]], 2], {j, 1, NumberOfSubgroups}] 
-			), {i, 1, NumberOfSubgroups}];
+			beta += 2 BetaTadpole[s1, 0]  Sum[
+				C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[i,1]]] Power[ListGauge[[i,1]], 2] ( 
+					- 3 C2[ListGauge[[i,1]]] Power[ListGauge[[i,1]], 2]
+					+ Sum[ S2[ChiralSuperFieldList[[s2, 1]], ListGauge[[i,1]]], {s2, 1, Length[ChiralSuperFieldList]}] Power[ListGauge[[i,1]], 2]
+					+ 2 Sum[ C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[j, 1]]] Power[ListGauge[[j,1]], 2], {j, 1, NumberOfSubgroups}] 
+				), 
+				{i, 1, NumberOfSubgroups}];
 			Return[beta/Power[4 Pi, 4]];
 		];
 
@@ -1098,7 +1109,7 @@ BeginPackage["SARGES`"];
 				),
 				{s3, 1, Length[ChiralSuperFieldList]}
 			];
-			beta += Sum[
+			beta += -2 Sum[
 				Sum[Power[ListGauge[[i, 1]], 2] ListGMass[[i]] (2 C2[ChiralSuperFieldList[[s3, 1]], ListGauge[[i, 1]]] - C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[i, 1]]]), {i, 1, NumberOfSubgroups}] (
 					SolveSuperProd[
 						{SMass, conj[Yuk], Delta[s3], Yuk},
