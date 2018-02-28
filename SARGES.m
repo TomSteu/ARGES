@@ -1418,12 +1418,24 @@ BeginPackage["SARGES`"];
 				{i, 1, NumberOfSubgroups}
 			];
 			beta += 8 TensorDelta[s1, s2] Sum[
-				Power[ListGauge[[i, 1]] ListGMass[[i]], 2] C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[i, 1]]] (
-					3 Power[ListGauge[[i, 1]], 2] Sum[S2[ChiralSuperFieldList[[s3, 1]], ListGauge[[i, 1]]], {s3, 1, Length[ChiralSuperFieldList]}] +
-					6 Sum[Power[ListGauge[[j, 1]], 2] C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[j, 1]]] , {j, 1, NumberOfSubgroups}] -
-					10 Power[ListGauge[[i, 1]], 2] C2[ListGauge[[i, 1]]] +
-					Power[ListGauge[[i, 1]], 2] Sum[
-						S2[ChiralSuperFieldList[[s3, 1]], ListGauge[[i, 1]]] SolveSuperProd[
+				Power[ListGauge[[i, 1]] ListGauge[[i, 1]] ListGMass[[i]], 2] C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[i, 1]]] (
+					3 Sum[S2[ChiralSuperFieldList[[s3, 1]], ListGauge[[i, 1]]], {s3, 1, Length[ChiralSuperFieldList]}] - 10 C2[ListGauge[[i, 1]]]
+				), 
+				{i, 1, NumberOfSubgroups}
+			];
+			beta += 16 TensorDelta[s1, s2] Sum[
+				Power[ListGauge[[i, 1]] ListGauge[[j, 1]], 2] C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[i, 1]]] C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[j, 1]]] (
+						2 Power[ListGMass[[i]], 2] + ListGMass[[i]] ListGMass[[j]]
+					),
+				{i, 1, NumberOfSubgroups},
+				{j, 1, NumberOfSubgroups}
+			];
+			beta += 8 TensorDelta[s1, s2] Sum[
+				If[
+					ListGauge[[i, 3]] === 1,
+					0,
+					Power[ListGauge[[i, 1]], 4] C2[ChiralSuperFieldList[[s1[[1]], 1]], ListGauge[[i, 1]]] Sum[
+						T2[ChiralSuperFieldList[[s3, 1]], ListGauge[[i, 1]]]/SMultiplicity[s3, i]  SolveSuperProd[
 							{Delta[s3], SSMass},
 							Evaluate[TensorDelta[{#1, #2}, {#4, #3}]]&,
 							4,
@@ -1431,8 +1443,26 @@ BeginPackage["SARGES`"];
 						],
 						{s3, 1, Length[ChiralSuperFieldList]}
 					]
-				), 
+				], 
 				{i, 1, NumberOfSubgroups}
+			];
+			beta += 8 TensorDelta[s1, s2] Sum[
+				If[
+					ListGauge[[i, 3]] === 1 && ListGauge[[j, 3]] === 1,
+					Power[ListGauge[[i, 1]] ListGauge[[j, 1]], 2] Sum[
+						 ChiralSuperFieldList[[s1[[1]], 3, i]] ChiralSuperFieldList[[s1[[1]], 3, j]] ChiralSuperFieldList[[s3, 3, i]] ChiralSuperFieldList[[s4, 3, j]] SolveSuperProd[
+							{Delta[s3], Delta[s4], SSMass},
+							Evaluate[TensorDelta[{#1, #2, #4}, {#6, #3, #5}]]&,
+							6,
+							{}
+						],
+						{s3, 1, Length[ChiralSuperFieldList]},
+						{s4, 1, Length[ChiralSuperFieldList]}
+					],
+					0
+				], 
+				{i, 1, NumberOfSubgroups},
+				{j, 1, NumberOfSubgroups}
 			];
 			Return[beta/Power[4 Pi, 4]];
 		];
@@ -1475,7 +1505,7 @@ BeginPackage["SARGES`"];
 				],
 				{vb, 1, Length[ListVEV]}
 			];
-			beta += -4 Sum[
+			beta += -Sum[
 				TensorDelta[ListVEV[[va,3]], ListVEV[[vb,3]]] ListVEV[[vb,2]] ListVEV[[vb,1]] Sum[
 					Power[ListGauge[[i, 1]] ListGauge[[j, 1]], 2] C2[ChiralSuperFieldList[[ListVEV[[va,3,1]], 1]], ListGauge[[i, 1]]] C2[ChiralSuperFieldList[[ListVEV[[va,3,1]], 1]], ListGauge[[j, 1]]](
 						2 + 2 \[Xi] (1 - \[Xi])
@@ -1509,6 +1539,18 @@ BeginPackage["SARGES`"];
 				],
 				{vb, 1, Length[ListVEV]},
 				{s, 1, Length[ChiralSuperFieldList]}
+			];
+			beta += 1/2 Sum[
+				ListVEV[[vb,2]] ListVEV[[vb,1]] SolveSuperProd[
+					{conj[Yuk], Yuk, conj[Yuk], Yuk},
+					Evaluate[TensorDelta[{#2, #3, #5, #6, #9}, {#4, #11, #7, #8, #12}]]&,
+					12,
+					{
+						{1, Join[ListVEV[[va, 3, 1;;2]], {ListVEV[[va, 3, 3;;]]}]},
+						{10, Join[ListVEV[[vb, 3, 1;;2]], {ListVEV[[vb, 3, 3;;]]}]}
+					}
+				],
+				{vb, 1, Length[ListVEV]}
 			];
 			Return[beta/Power[4 Pi, 4]];
 		];
@@ -1773,7 +1815,7 @@ BeginPackage["SARGES`"];
 		(*  non-abelian gauge singlet *)
 		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := 0 /; (ListGauge[[g, 3]] =!= 1 && ( ChiralSuperFieldList[[pa, 3, g]] === 1 || ChiralSuperFieldList[[pb, 3, g]] === 1));
 		(*  SU(N) all fields in fundamental representation *)
-		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := 1/2 ( KroneckerDelta[a, d] KroneckerDelta[b, c]  - 1/ListGauge[[g, 3]] KroneckerDelta[a, b] KroneckerDelta[c, d]) /; (ListGauge[[g, 2]] === SU && ListGauge[[g, 3]] === ChiralSuperFieldList[[pa, 3, g]] && ListGauge[[g, 3]] === ChiralSuperFieldList[[pb, 3, g]]);
+		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := 1/2 ( KroneckerDelta[a, d] KroneckerDelta[b, c]  - 1/ListGauge[[g, 3]] KroneckerDelta[a, c] KroneckerDelta[b, d]) /; (ListGauge[[g, 2]] === SU && ListGauge[[g, 3]] === ChiralSuperFieldList[[pa, 3, g]] && ListGauge[[g, 3]] === ChiralSuperFieldList[[pb, 3, g]]);
 		(*  SO(N) all fields in fundamental representation *)
 		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := ( KroneckerDelta[a, d] KroneckerDelta[b, c]  - KroneckerDelta[a, b] KroneckerDelta[c, d]) /; (ListGauge[[g, 2]] === SO && ListGauge[[g, 3]] === ChiralSuperFieldList[[pa, 3, g]] && ListGauge[[g, 3]] === ChiralSuperFieldList[[pb, 3, g]]);
 		(*  U(1) subgroup *)
