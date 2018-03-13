@@ -61,12 +61,6 @@ BeginPackage["SARGES`"];
 			ChiralSuperFieldList = {};
 			subInvariants = {};
 			nonNumerics = {};
-			SYukMat = {};
-			SMassMat = {};
-			STadMat = {};
-			STriLinMat = {};
-			SBiLinMat = {};
-			SSMassMat = {};
 			subSimplifySum = {};
 			$Assumptions = Element[KroneckerDelta[___], Reals];
 		];
@@ -108,34 +102,6 @@ BeginPackage["SARGES`"];
 			AddAssumption[Nflavor];
 			AddAssumptionGauge[gauge];
 			ChiralSuperFieldList = Append[ChiralSuperFieldList, {sym, Nflavor, gauge}];
-			STadMat = Append[STadMat, 0];
-			SMassMat = Table[
-				If[i < Length[ChiralSuperFieldList] && j < Length[ChiralSuperFieldList], SMassMat[[i, j]], 0], 
-				{i, 1, Length[ChiralSuperFieldList]}, 
-				{j, 1, Length[ChiralSuperFieldList]}
-			];
-			SYukMat = Table[
-				If[i < Length[ChiralSuperFieldList] && j < Length[ChiralSuperFieldList] && k < Length[ChiralSuperFieldList], SYukMat[[i, j, k]], 0], 
-				{i, 1, Length[ChiralSuperFieldList]}, 
-				{j, 1, Length[ChiralSuperFieldList]},
-				{k, 1, Length[ChiralSuperFieldList]}
-			];
-			STriLinMat = Table[
-				If[i < Length[ChiralSuperFieldList] && j < Length[ChiralSuperFieldList] && k < Length[ChiralSuperFieldList], STriLinMat[[i, j, k]], 0], 
-				{i, 1, Length[ChiralSuperFieldList]}, 
-				{j, 1, Length[ChiralSuperFieldList]},
-				{k, 1, Length[ChiralSuperFieldList]}
-			];
-			SBiLinMat = Table[
-				If[i < Length[ChiralSuperFieldList] && j < Length[ChiralSuperFieldList], SBiLinMat[[i, j]], 0], 
-				{i, 1, Length[ChiralSuperFieldList]}, 
-				{j, 1, Length[ChiralSuperFieldList]}
-			];
-			SSMassMat = Table[
-				If[i < Length[ChiralSuperFieldList] && j < Length[ChiralSuperFieldList], SSMassMat[[i, j]], 0], 
-				{i, 1, Length[ChiralSuperFieldList]}, 
-				{j, 1, Length[ChiralSuperFieldList]}
-			];
 		];
 		
 		VEV[sym_, Sa_, SGenIdx_, SGaugeIdx_List, fak_:1] := Block[
@@ -183,10 +149,6 @@ BeginPackage["SARGES`"];
 					]];
 				];
 				SimplifySYukawaList[];
-				SYukMat = Table[0, {i, 0, Length[ChiralSuperFieldList]}, {j, 0, Length[ChiralSuperFieldList]}, {k, 0, Length[ChiralSuperFieldList]}];
-				For[i=1, i<=Length[ListSYukawa], i++,
-					SYukMat[[ListSYukawa[[i,2]], ListSYukawa[[i,3]], ListSYukawa[[i,4]]]] += SYukawa[i];
-				];
 			];
 		];
 
@@ -210,10 +172,6 @@ BeginPackage["SARGES`"];
 					]];
 				];
 				SimplifySMassList[];
-				SMassMat = Table[0, {i, 0, Length[ChiralSuperFieldList]}, {j, 0, Length[ChiralSuperFieldList]}];
-				For[i=1, i<=Length[ListSMass], i++,
-					SMassMat[[ListSMass[[i,2]], ListSMass[[i,3]]]] += SMass[i];
-				];
 			];
 		];
 
@@ -228,10 +186,6 @@ BeginPackage["SARGES`"];
 				Message[Tadpole::UnknownParticle];,
 				ListSTadpole = Append[ListSTad, {sym, posSi[[1,1]], gauge, fak}];
 				SimplifySTadpoleList[];
-				STadMat = Table[0, {i, 0, Length[ChiralSuperFieldList]}];
-				For[i=1, i<=Length[ListSTadpole], i++,
-					STadMat[[ListSTadpole[[i,2]]]] += STadpole[i];
-				];
 			];
 		];
 
@@ -257,10 +211,6 @@ BeginPackage["SARGES`"];
 					]];
 				];
 				SimplifySTriLinList[];
-				STriLinMat = Table[0, {i, 0, Length[ChiralSuperFieldList]}, {j, 0, Length[ChiralSuperFieldList]}, {k, 0, Length[ChiralSuperFieldList]}];
-				For[i=1, i<=Length[ListSTriLin], i++,
-					STriLinMat[[ListSTriLin[[i,2]], ListSTriLin[[i,3]], ListSTriLin[[i,4]]]] += STriLin[i];
-				];
 			];
 		];
 
@@ -284,10 +234,6 @@ BeginPackage["SARGES`"];
 					]];
 				];
 				SimplifySBiLinList[];
-				SBiLinMat = Table[0, {i, 0, Length[ChiralSuperFieldList]}, {j, 0, Length[ChiralSuperFieldList]}];
-				For[i=1, i<=Length[ListSBiLin], i++,
-					SBiLinMat[[ListSBiLin[[i,2]], ListSBiLin[[i,3]]]] += SBiLin[i];
-				];
 			];
 		];
 
@@ -302,10 +248,6 @@ BeginPackage["SARGES`"];
 			If[posSi == {} || posSj == {},
 				Message[Mass::UnknownParticle];,
 				ListSSMass = Append[ListSSMass, {sym,  posSi[[1,1]], posSj[[1,1]], gauge, fak}];
-				SSMassMat = Table[0, {i, 0, Length[ChiralSuperFieldList]}, {j, 0, Length[ChiralSuperFieldList]}];
-				For[i=1, i<=Length[ListSSMass], i++,
-					SSMassMat[[ListSSMass[[i,2]], ListSSMass[[i,3]]]] += SSMass[i];
-				];
 			];
 		];
 
