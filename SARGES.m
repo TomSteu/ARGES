@@ -612,20 +612,22 @@ BeginPackage["SARGES`"];
 				], 
 				{s3, 1, Length[ChiralSuperFieldList]}
 			];
-			gamma += 2 TensorDelta[s1, s2] Sum[C2[ChiralSuperFieldList[[s2[[1]], 1]], ListGauge[[i,1]]] ( 
-				( S2[ChiralSuperFieldList[[s2[[1]], 1]], ListGauge[[i,1]]] - 3 C2[ListGauge[[i,1]]] ) Power[ListGauge[[i,1]], 4] 
-				+ Sum[ C2[ChiralSuperFieldList[[s2[[1]], 1]], ListGauge[[j, 1]]] Power[ListGauge[[i,1]] ListGauge[[j,1]], 2], {j, 1, NumberOfSubgroups}] 
-			), {i, 1, NumberOfSubgroups}];
-			
+			gamma += 2 TensorDelta[s1, s2] Sum[
+				C2[ChiralSuperFieldList[[s2[[1]], 1]], ListGauge[[i,1]]] Power[ListGauge[[i,1]], 2] ( 
+					- 3 C2[ListGauge[[i,1]]] Power[ListGauge[[i,1]], 2]
+					+ Sum[ S2[ChiralSuperFieldList[[s, 1]], ListGauge[[i,1]]], {s, 1, Length[ChiralSuperFieldList]}] Power[ListGauge[[i,1]], 2]
+					+ 2 Sum[ C2[ChiralSuperFieldList[[s2[[1]], 1]], ListGauge[[j, 1]]] Power[ListGauge[[j,1]], 2], {j, 1, NumberOfSubgroups}] 
+				), 
+				{i, 1, NumberOfSubgroups}];
 			Return[gamma/Power[4 Pi, 4]];
 		];
 
 		SuperFieldGamma[s1_, s2_, 3] := Block[
 			{gamma=0, kappa=6 \[Zeta][3], B},
 			B[g_] := 6 C2[ListGauge[[g, 1]]] - 2 Sum[S2[ChiralSuperFieldList[[s, 1]], ListGauge[[g, 1]]], {s, 1, Length[ChiralSuperFieldList]}];
-			gamma += Sum[
+			gamma +=  Sum[
 				C2[ChiralSuperFieldList[[s2[[1]], 1]], ListGauge[[i, 1]]] TensorDelta[s1, s2] Power[ListGauge[[i, 1]], 6] (
-					12 kappa Power[C2[ChiralSuperFieldList[[s2[[1]], 1]], ListGauge[[i, 1]]], 2] -
+					12 kappa Power[C2[ListGauge[[i, 1]]], 2] -
 					(2 kappa + 5) B[i] C2[ListGauge[[i, 1]]] +
 					1/2 Power[B[i], 2] - 
 					4 kappa Sum[
