@@ -112,7 +112,7 @@ BeginPackage["SARGES`"];
 				Return[];
 			];
 			If[IdxCheck[{SGenIdx}],
-				Message[Gen::RepMismatch];
+				Message[Gen::RepInvalid];
 				Return[];
 			];
 			If[Dimensions[SGaugeIdx][[1]] != NumberOfSubgroups || GaugeIdxCheck[SGaugeIdx], 
@@ -120,7 +120,7 @@ BeginPackage["SARGES`"];
 				Return[];
 			];
 			If[SuperIndexOut[posS[[1,1]], Join[{SGenIdx}, SGaugeIdx]],
-				Message[Gen::RepMismatch];
+				Message[Gen::RepInvalid];
 				Message[Gauge::RepMismatch];
 				Return[];
 			];
@@ -2604,11 +2604,11 @@ BeginPackage["SARGES`"];
 								KroneckerDelta[a, ListSMass[[i, 2]]] KroneckerDelta[b, ListSMass[[i, 3]]] ListSMass[[i, 1]] SProd[A, SMass[i], B][C],
 								{i, 1, Length[ListSMass]}
 							],
-							SProd[A___, conj[STadContr[a_, b_]], B___][C___] :> Sum[
+							SProd[A___, conj[STadContr[a_]], B___][C___] :> Sum[
 								KroneckerDelta[a, ListSTadpole[[i, 2]]] conj[ListSTadpole[[i, 1]]] SProd[A, conj[STadpole[i]], B][C],
 								{i, 1, Length[ListSTadpole]}
 							],
-							SProd[A___, STadContr[a_, b_], B___][C___] :> Sum[
+							SProd[A___, STadContr[a_], B___][C___] :> Sum[
 								KroneckerDelta[a, ListSTadpole[[i, 2]]] ListSTadpole[[i, 1]] SProd[A, STadpole[i], B][C],
 								{i, 1, Length[ListSTadpole]}
 							],
