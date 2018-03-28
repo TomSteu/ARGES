@@ -40,7 +40,7 @@ ARGES calculates $\overline{\mathrm{MS}}$ scheme Beta functions of the form:
 \begin{align}
 \beta_x = \frac{\partial x}{\partial \mathrm{ln}(\mu)}
 \end{align}
-The software assumes the following perturbative renormalizable Lagrangian to as a basis of its calculations:
+The software assumes the following perturbative renormalizable Lagrangian as a basis of its calculations:
 \begin{align}
 \mathcal{L} = &-\frac{1}{4} F^A_{\mu\nu}\; F_A^{\mu \nu} + \frac{1}{2} D^{ab}_\mu \phi_b \; D_{ab}^\mu \phi^b + i \psi_i^\dagger \sigma^\mu D^{ij}_\mu \psi_j  - ( m_{ij}\, \psi_i \,(i \sigma_2)\, \psi_j + \mathrm{h.c.} )\nonumber \\
 &- ( Y^a_{ij} \phi_a \psi_i \,(i \sigma_2)\, \psi_j + \mathrm{h.c.} ) - J_a \;\phi^a - m_{ab}\; \phi^a \phi^b - h_{abc}\; \phi^a \phi^b \phi^c \nonumber\\ &- \lambda_{abcd}\; \phi^a \phi^b \phi^c \phi^d  + \mathcal{L}_{gf} + \mathcal{L}_{gh}
@@ -72,11 +72,11 @@ Reset[];
 NumberOfSubgroups=1;
 \end{lstlisting}
 \vspace{1em}
-In order to define gauge groups and their respective fields the function $\mathtt{Gauge[\dots]}$ must be invoded $\mathtt{NumberOfSubgroups}$ times. The syntax is:
+In order to define gauge groups and their respective fields the function $\mathtt{Gauge[\dots]}$ must be invoked $\mathtt{NumberOfSubgroups}$ times. The syntax is:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 Gauge[Symbol, Algebra, Rank, {Charge/Representation1, ...}];
 \end{lstlisting}
-The last argument is a list of the charges (in case of $\mathrm{U}(1)$ subgroups) or representations of gauge bosons. The first charge/representation will be associated with the group first declared with $\mathtt{Gauge[\dots]}$, and so on. The dimension of this list must match $\mathtt{NumberOfSubgroups}$. ARGES is agnostic regarding anti-representations, only positive numbers are valid. However, charges, representations and rank of the subgroup may be declared as a variable. \newline Currently available algebras and ranks are $\mathrm{U}(1)$ , $\mathrm{SU}(N_U)$, and $\mathrm{SO}(N_O)$ with $N_U > 1$ and $N_O > 2$. Gauge fields are assumed to be in the adjoint representation of their own subgroup and singulets in the others. Kinetic mixing is not implemented. \newline Unknown Gauge groups are allowed, but their invariants can of course not be further resolved.
+The last argument is a list of the charges (in case of $\mathrm{U}(1)$ subgroups) or representations of gauge bosons. The first charge/representation will be associated with the group first declared with $\mathtt{Gauge[\dots]}$, and so on. The dimension of this list must match $\mathtt{NumberOfSubgroups}$. ARGES is agnostic regarding conjugate representations, only positive numbers are valid. However, charges, representations and rank of the subgroup may be declared as a variable. \newline Currently available algebras and ranks are $\mathrm{U}(1)$ , $\mathrm{SU}(N_U)$, and $\mathrm{SO}(N_O)$ with $N_U > 1$ and $N_O > 2$. Gauge fields are assumed to be in the adjoint representation of their own subgroup and singulets in the others. Kinetic mixing is not implemented. \newline Unknown Gauge groups are allowed, but their invariants can of course not be further resolved.
 \FloatBarrier
 \subsection{Fermionic fields}
 Fermions may be defined via $\mathtt{WeylFermion}$:
@@ -228,7 +228,7 @@ While the version accessible to $\mathtt{SimplifyProduct}$ additionally may:
 \item simplify $\Lambda_{abbc} = C_2 \,\delta_{ac}$ for fermions
 \item employ user specified simplification rules
 \end{itemize}
-Indeed, one may add additional assumption to the simplification rules for $\mathtt{SimplifyProduct}$ by defining the variable $\mathtt{subSimplifySum}$. Any rules defined within those should assume that every $\mathtt{Sum}$ keyword is rebranded as $\mathtt{SimplifySum}$, an example could look like this:
+Indeed, one may add additional assumptions to the simplification rules for $\mathtt{SimplifyProduct}$ by defining the variable $\mathtt{subSimplifySum}$. Any rules defined within those should assume that every $\mathtt{Sum}$ keyword is rebranded as $\mathtt{SimplifySum}$, an example could look like this:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 subSimplifySum = {
    ...
