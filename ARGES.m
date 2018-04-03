@@ -4093,6 +4093,163 @@ BeginPackage["ARGES`"];
 		
 		(* workaround a mathematica bug *)
 		ListPosition[A_, B___] := Position[A//. {{} -> $EMPTYLIST}, B];
+
+		(* grand unified backend function to calc products and traces  *)
+		(*
+		** args			... list specifying what kind of coupling is at which position
+		** fcontr 		... fermion index contraction - one index per fermion
+		** nf 			... total number of fermion indices involved
+		** externalf	... list of fermion indices that are external {position, {Field, Flavour, {Gauge1, ...}} }
+		** scontr 		... scalar index contraction - one index per scalar
+		** ns 			... total number of scalar indices involved
+		** externals	... list of scalar indices that are external {position, {Field, {Flavour1, Falvour2}, {Gauge1, ...}} }
+		*)
+		Contraction[args_List, fcontr_, nf_, fexternal_List, scontr_, ns_, sexternal_List,] := Block[
+			{
+				STIdx, FTIdx, SFIdx, FFIdx, res, GIdx,
+				$Assumptions = $Assumptions && And@@Table[Element[FTIdx[i], Integers] && FTIdx[i]>0 && Element[FFIdx[i], Integers] && FFIdx[i]>0 && And@@Table[Element[FGIdx[i,j], Integers] && FGIdx[i,j]>0, {j, 1, NumberOfSubgroups}], {i, 1, nf}] && And@@Table[Element[STIdx[i], Integers] && STIdx[i]>0 && Element[SFIdx[1, i], Integers] && SFIdx[1, i]>0 && Element[SFIdx[2, i], Integers] && SFIdx[2, i]>0 && And@@Table[Element[SGIdx[i,j], Integers] && SGIdx[i,j]>0, {j, 1, NumberOfSubgroups}], {i, 1, ns}]
+			},
+
+			SimplifyTProd[p_] := (
+				If[! MemberQ[{p}, TProd[a___][b___], Infinity], Return[p];];
+				Return[
+					SimplifyTProd[
+						p /. {
+							TProd[A___, AdjYukContr[a_, b_, c_], B___][F___][S___] :> Sum[
+								KroneckerDelta[a, ListAdjYukawaSym[[i, 2]]] KroneckerDelta[b, ListAdjYukawaSym[[i, 3]]] KroneckerDelta[c, ListAdjYukawaSym[[i, 4]]] ListAdjYukawaSym[[i, 1]] TProd[A, AdjYukawa[i], B][F][S],
+								{i, 1, Length[ListAdjYukawaSym]}
+							],
+							TProd[A___, YukContr[a_, b_, c_], B___][F___][S___]  :> Sum[
+								KroneckerDelta[a, ListYukawaSym[[i, 2]]] KroneckerDelta[b, ListYukawaSym[[i, 3]]] KroneckerDelta[c, ListYukawaSym[[i, 4]]] ListYukawaSym[[i, 1]] TProd[A, Yukawa[i], B][F][S],
+								{i, 1, Length[ListYukawaSym]}
+							],
+							TProd[A___, QuartContr[a_, b_, c_, d_], B___][F___][S___] :> Sum[
+								KroneckerDelta[a, ListQuarticSym[[i, 2]]] KroneckerDelta[b, ListQuarticSym[[i, 3]]] KroneckerDelta[c, ListQuarticSym[[i, 4]]] KroneckerDelta[d, ListQuarticSym[[i, 5]]] ListQuarticSym[[i, 1]] TProd[A, Quartic[i], B][F][S],
+								{i, 1, Length[ListQuarticSym]}
+							],
+							TProd[A___] :> FProd[A]
+						} /. {
+							SimplifySum[a_, b___] :> SimplifySum[Expand[a], b]
+						} //. Join[subSum, subSimplifySum]
+					]
+				];
+			);
+			
+			Refine[(SimplifySum@@Join[
+				{Expand[((TProd@@args)@@(FTIdx/@Range[nf])@@(STIdx/@Range[ns]) fcontr@@(FTIdx/@Range[nf]) scontr@@(STIdx/@Range[ns])) /. 
+					Table[FTIdx[externalf[[i,1]]] -> externalf[[i,2,1]], {i, 1, Length[externalf]}] /.
+					Table[STIdx[externals[[i,1]]] -> externals[[i,2,1]], {i, 1, Length[externals]}]
+				]}, 
+				({FTIdx[#], 1, Length[AdjWeylFermionList]} & /@ (Range[nf] //. {A___, m_, B___} :> {A,B} /; MemberQ[externalf[[;;,1]], m])),
+				({STIdx[#], 1, Length[RealScalarList]} & /@ (Range[ns] //. {A___, m_, B___} :> {A,B} /; MemberQ[externals[[;;,1]], m]))
+			] //.Join[subSum,subSimplifySum] /. TProd[A___][B___][C___] :> TProd[{A}][{B}][{C}] //. {
+				TProd[{}, A___][{b___}, B___][{c___}, C___] :> SProd[A][B][C],
+				TProd[{a___, b_ + c_, d___ }, e___][{f___}, F___][{s___}, S___] :> TProd[{a, b, d}, e][{f}, F][{s}, S] + TProd[{a, c, d}, e][{f}, F][{s}, S], 				
+				TProd[{adj[Yuk], A___}, B___][{a_, b_, c___}, d___][{e_, f___}, g___] :> TProd[{A}, B, AdjYukContr[e, a, b]][{c}, d, a, b][{f}, g, e],
+				TProd[{Yuk, A___}, B___][{a_, b_, c___}, d___][{e_, f___}, g___] :> TProd[{A}, B, YukContr[e, a, b]][{c}, d, a, b][{f}, g, e],
+				TProd[{Quart, A___}, B___][F___][{a_, b_, c_, d_, e___}, S___] :> TProd[{A}, B, QuartContr[a, b, c, d]][F][{e}, S],
+				TProd[{DeltaF[ff_], A___}, B___][{a_, b_, c___}, d___][S___] :> KroneckerDelta[a, ff] KroneckerDelta[b, ff] TProd[{A}, B, deltaF][{c}, d][S],
+				TProd[{DeltaS[ss_], A___}, B___][F___][{a_, b_, c___}, d___] :> KroneckerDelta[a, ss] KroneckerDelta[b, ss] TProd[{A}, B, deltaS][F][{c}, d],
+				TProd[{LambdaFF[i_], A___}, B___][{a_, b_, c_, d_, e___}, F___][S___] :> KroneckerDelta[a, c] KroneckerDelta[b, d] TProd[{A}, B, lambdaFF[i, a, b, c, d]][{e}, F, a, b, c, d][S],
+				TProd[{LambdaSS[i_], A___}, B___][F][{a_, b_, c_, d_, e___}, S___] :> Expand[(KroneckerDelta[a, c] + KroneckerDelta[a, ConjugateScalar[c]]) (KroneckerDelta[b, d] + KroneckerDelta[b, ConjugateScalar[d]]) TProd[{A}, B, lambdaSS[i, a, b, c, d]][F][{e}, S, a, b, c, d]],
+				TProd[{LambdaFS[i_], A___}, B___][{a_, c_, f___}, F___][{b_, d_, s___}, S___] :> Expand[KroneckerDelta[a, c] (KroneckerDelta[b, d] + KroneckerDelta[b, ConjugateScalar[d]]) TProd[{A}, B, lambdaFS[i, a, b, c, d]][{f}, F, a, c][{s}, S, b, d]]
+			} // SimplifyTProd) //. Join[subSum, subSimplifySum] /. SimplifySum -> Sum]  /.  {
+				FProd[A___][B___][C___] :> GProd[1][A][B][C] Refine[SimplifySum@@Join[
+					{
+						Expand[
+							(contrf@@(FFIdx/@Range[nf])) (contrs@@(SFIdx[1, #]& /@ Range[ns])) (contrs@@(SFIdx[2, #]& /@ Range[ns])) (
+								(fContr[A]@@(FFIdx/@Range[nf]))@@Flatten[{SFIdx[1, #], SFIdx[2, #]}& /@ Range[ns]] //. {
+									fContr[][X___][Y___] :> 1,
+									fContr[AdjYukawa[x_], X___][f1_, f2_, f___][s1_, s2_, s___] :> ListAdjYukawaSym[[x, 6]][s1, s2, f1, f2] fContr[X][f][s],
+									fContr[Yukawa[x_], X___][f1_, f2_, f___][s1_, s2_, s___] :> ListYukawaSym[[x, 6]][s1, s2, f1, f2] fContr[X][f][s],
+									fContr[Quartic[x_], X___][f___][s11_, s12_, s21_, s22_, s31_, s32_, s41_, s42_, s___] :> ListQuarticSym[[x, 7]][s11, s12, s21, s22, s31, s32, s41, s42] fContr[X][f][s],
+									fContr[deltaF, X___][f1_, f2_, f___][s___] :> KroneckerDelta[f1, f2] fContr[X][f][s],
+									fContr[deltaS, X___][f___][s11_, s12_, s21, s22, s___] :> KroneckerDelta[s11, s21] KroneckerDelta[s12, s22] fContr[X][f][s],
+									fContr[lambdaFF[ff___], X___][f1_, f2_, f3_, f4_, f___][s___] :> KroneckerDelta[f1, f3] KroneckerDelta[f2, f4] fContr[X][f][s],
+									fContr[lambdaSS[ss___], X___][f___][s11_, s12_, s21_, s22_, s31_, s32_, s41_, s42_, s___] :> KroneckerDelta[s11, s31] KroneckerDelta[s12, s32] KroneckerDelta[s21, s41] KroneckerDelta[s22, s42] fContr[X][f][s],
+									fContr[lambdaFS[ss___], X___][f1_, f2_, f___][s11_, s12_, s21_, s22_, s___] :> KroneckerDelta[s11, s21] KroneckerDelta[s12, s22] KroneckerDelta[f1, f2]  fContr[X][f][s]
+								} 
+							) /. 
+							Table[FFIdx[externalf[[i,1]]] -> externalf[[i,2,2]], {i, 1, Length[externalf]}] /. 
+							Table[SFIdx[1, externals[[i,1]]] -> externals[[i,2,2,1]], {i, 1, Length[externals]}] /.
+							Table[SFIdx[2, externals[[i,1]]] -> externals[[i,2,2,2]], {i, 1, Length[externals]}]
+						]
+					},
+					({FFIdx[#], 1, WeylFermionList[[AdjWeylFermionList[[List[B][[#]], 2]], 2]]}& /@ (Range[nf] //. {Y___, m_, Z___} :> {Y,Z} /; MemberQ[externalf[[;;,1]], m])),
+					({SFIdx[1, #], 1, RealScalarList[[List[C][[#]], 2, 1]]}& /@ (Range[ns] //. {Y___, m_, Z___} :> {Y,Z} /; MemberQ[externals[[;;,1]], m])),
+					({SFIdx[2, #], 1, RealScalarList[[List[C][[#]], 2, 2]]}& /@ (Range[ns] //. {Y___, m_, Z___} :> {Y,Z} /; MemberQ[externals[[;;,1]], m]))
+				] //. Join[subSum,subSimplifySum, subMat] /. SimplifySum -> Sum]
+			} //. {
+				GProd[x_][A___][B___][C___] :> 1 /; (x > NumberOfSubgroups),
+				GProd[x_][A___][B___][C___] :> GProd[x+1][A][B][C] Refine[SimplifySum@@Join[
+					{
+						Expand[
+							(contrf@@((FGIdx[#, x])&/@Range[nf])) (contrs@@((SGIdx[#, x])&/@Range[ns])) (
+								(gContr[A]@@((FGIdx[#, x])&/@Range[nf]))@@((SGIdx[#, x])&/@Range[ns]) //. {
+									gContr[][X___] :> 1,
+									gContr[AdjYukawa[y_], X___][f1_, f2_, f___][s1_, s___] :> ListAdjYukawaSym[[y, 5, x]][s1, f1, f2] gContr[X][f][s],
+									gContr[Yukawa[y_], X___][f1_, f2_, f___][s1_, s___] :> ListYukawaSym[[y, 5, x]][s1, f1, f2] gContr[X][f][s],
+									gContr[Quartic[y_], X___][f___][s1_, s2_, s3_, s4_, s___] :> ListQuarticSym[[y, 6, x]][s1, s2, s3, s4] gContr[X][f][s],
+									gContr[deltaF, X___][f1_, f2_, f___][s___] :> KroneckerDelta[f1, f2] gContr[X][f][s],
+									gContr[deltaS, X___][f___][s1_, s2_, s___] :> KroneckerDelta[s1, s2] gContr[X][f][s],
+									gContr[lambdaFF[y_, F1_, F2, F3_, F4_], X___][f1_, f2_, f3_, f4_, f___][s___] :> \[CapitalLambda]FF[x][F1, F2, F3, F4][f1, f2, f3, f4] gContr[X][f][s] /; (x == y),
+									gContr[lambdaSS[y_, F1_, F2, F3_, F4_], X___][f___][s1_, s2_, s3_, s4_, s___] :> \[CapitalLambda]SS[x][F1, F2, F3, F4][s1, s2, s3, s4] gContr[X][f][s] /; (x == y),
+									gContr[lambdaFS[y_, F1_, F2, F3_, F4_], X___][f1_, f2_, f___][s1_, s2_, s___] :> \[CapitalLambda]FS[x][F1, F2, F3, F4][f1, s1, f2, s2] gContr[X][f][s] /; (x == y),
+									gContr[lambdaFF[y_, F1_, F2, F3_, F4_], X___][f1_, f2_, f3_, f4_, f___][s___] :> KroneckerDelta[f1, f3] KroneckerDelta[f2, f4] gContr[X][f][s],
+									gContr[lambdaSS[y_, F1_, F2, F3_, F4_], X___][f___][s1_, s2_, s3_, s4_, s___] :> KroneckerDelta[s1, s3] KroneckerDelta[s2, s4] gContr[X][f][s],
+									gContr[lambdaFS[y_, F1_, F2, F3_, F4_], X___][f1_, f2_, f___][s1_, s2_, s___] :> KroneckerDelta[f1, f2] KroneckerDelta[s1, s2] gContr[X][f][s] 
+								} 
+							) /. 
+							Table[FGIdx[externalf[[i,1]], x] -> externalf[[i,2,3,x]], {i, 1, Length[externalf]}] /.
+							Table[SGIdx[externals[[i,1]], x] -> externals[[i,2,3,x]], {i, 1, Length[externals]}]
+						]
+					},
+					({FGIdx[#,x], 1, FMultiplicity[List[B][[#]], x]}& /@ (Range[nf] //. {Y___, m_, Z___} :> {Y,Z} /; MemberQ[externalf[[;;,1]], m])),
+					({SGIdx[#,x], 1, SMultiplicity[List[C][[#]], x]}& /@ (Range[ns] //. {Y___, m_, Z___} :> {Y,Z} /; MemberQ[externals[[;;,1]], m]))
+				] //. Join[subSum,subSimplifySum] /. SimplifySum -> Sum]
+			}
+		];
+
+		(* Replacement for Lambda functions - Fermion, Fermion *)
+		(*  Generator of different fermions *)
+		\[CapitalLambda][g_][pa_, pb_, pc_, pd_][a_, b_, c_, d_] := 0 /; (pa =!= pc  || pb =!= pd);
+		(*  non-abelian gauge singlet *)
+		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := 0 /; (ListGauge[[g, 3]] =!= 1 && (FMultiplicity[pa, g] === 1 || FMultiplicity[pb, g] === 1));
+		(*  SU(N) all fields in fundamental representation *)
+		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := 1/2 ( KroneckerDelta[a, d] KroneckerDelta[b, c]  - 1/ListGauge[[g, 3]] KroneckerDelta[a, c] KroneckerDelta[b, d]) /; (ListGauge[[g, 2]] === SU && ListGauge[[g, 3]] === FMultiplicity[pa, g] && ListGauge[[g, 3]] === FMultiplicity[pb, g]);
+		(*  SO(N) all fields in fundamental representation *)
+		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := ( KroneckerDelta[a, d] KroneckerDelta[b, c]  - KroneckerDelta[a, b] KroneckerDelta[c, d]) /; (ListGauge[[g, 2]] === SO && ListGauge[[g, 3]] === FMultiplicity[pa, g] && ListGauge[[g, 3]] === FMultiplicity[pb, g]);
+		(*  U(1) subgroup *)
+		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := KroneckerDelta[a, c] KroneckerDelta[b, d] WeylFermionList[[AdjWeylFermionList[[pa, 2]], 3, g]] WeylFermionList[[AdjWeylFermionList[[pb, 2]], 3, g]] /; (ListGauge[[g, 2]] === U && ListGauge[[g, 3]] === 1 );
+		(*  unknown case *)
+		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := \[CapitalLambda][ListGauge[[g, 1]], AdjWeylFermionList[[pa, 1]], AdjWeylFermionList[[pb, 1]], AdjWeylFermionList[[AdjWeylFermionList[[pa, 3]], 1]], AdjWeylFermionList[[AdjWeylFermionList[[pb, 3]], 1]]][a, b, c, d];
+
+		(* Replacement for Lambda functions - Scalar, Scalar *)
+		(*  One field is a dummy *)
+		\[CapitalLambda][g_][pa_, pb_, pc_, pd_][a_, b_, c_, d_] := 0 /; (pa > Length[RealScalarList]  || pb > Length[RealScalarList] || pc > Length[RealScalarList] || pd > Length[RealScalarList]);
+		(*  Generator of different scalars *)
+		\[CapitalLambda][g_][pa_, pb_, pc_, pd_][a_, b_, c_, d_] := 0 /; (pa =!= pc  || pb =!= pd);
+		(*  non-abelian gauge singlet *)
+		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := 0 /; (ListGauge[[g, 3]] =!= 1 && (SMultiplicity[pa, g] === 1 || SMultiplicity[pb, g] === 1));
+		(*  SU(N) all fields in fundamental representation *)
+		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := 1/2 ( KroneckerDelta[a, d] KroneckerDelta[b, c]  - 1/ListGauge[[g, 3]] KroneckerDelta[a, c] KroneckerDelta[b, d]) /; (ListGauge[[g, 2]] === SU && ListGauge[[g, 3]] === FMultiplicity[pa, g] && ListGauge[[g, 3]] === FMultiplicity[pb, g]);
+		(*  SO(N) all fields in fundamental representation *)
+		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := ( KroneckerDelta[a, d] KroneckerDelta[b, c]  - KroneckerDelta[a, b] KroneckerDelta[c, d]) /; (ListGauge[[g, 2]] === SO && ListGauge[[g, 3]] === FMultiplicity[pa, g] && ListGauge[[g, 3]] === FMultiplicity[pb, g]);
+		(*  U(1) subgroup *)
+		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := KroneckerDelta[a, c] KroneckerDelta[b, d] WeylFermionList[[AdjWeylFermionList[[pa, 2]], 3, g]] WeylFermionList[[AdjWeylFermionList[[pb, 2]], 3, g]] /; (ListGauge[[g, 2]] === U && ListGauge[[g, 3]] === 1 );
+		(*  unknown case *)
+		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := \[CapitalLambda][ListGauge[[g, 1]], AdjWeylFermionList[[pa, 1]], AdjWeylFermionList[[pb, 1]], AdjWeylFermionList[[AdjWeylFermionList[[pa, 3]], 1]], AdjWeylFermionList[[AdjWeylFermionList[[pb, 3]], 1]]][a, b, c, d];
+
+		(* rule to simplify products *)
+		subMat := {
+			prod[][a_,b_] :> KroneckerDelta[a,b],
+			Conjugate[prod[v___][i1_, i2_]] :> (prod@@conj /@ {v})@@{i1,i2},
+			prod[a___, conj[transpose[b]], c___][i1_, i2_] :> prod[a, adj[b], c][i1, i2],
+			SimplifySum[A_ prod[p1___][a_, b_] prod[p2___][b_, c_], ss1___, {b_, ___}, ss2___] :> SimplifySum[A prod[p1, p2][a, c], ss1, ss2],
+			SimplifySum[prod[p1___][a_, b_] prod[p2___][b_, c_], ss1___, {b_, ___}, ss2___] :> SimplifySum[prod[p1, p2][a, c], ss1, ss2],
+			SimplifySum[A_ prod[p___][i_, i_], ss1___, {i_, ___}, ss2___] :> SimplifySum[A tr[p], ss1, ss2],
+			SimplifySum[prod[p___][i_, i_], ss1___, {i_, ___}, ss2___] :> SimplifySum[tr[p], ss1, ss2]
+		}
 		
 		(* Define Sum that resolves all KroneckerDelta[__] and Generators before it does the summation *)
 		subSum := {
