@@ -1,0 +1,372 @@
+\documentclass{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[backend=biber,style=numeric-comp, sorting=none]{biblatex}
+\usepackage{hyperref}
+\usepackage{placeins}
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+}
+\definecolor{light-gray}{gray}{0.95}
+\addbibresource{ref.bib}
+\title{SARGES: \\ Supersymmetric Advanced Renormalization Group Equation Simplifier -- \\ User Manual}
+\date{2018}
+\author{Tom Steudtner}
+\begin{document}
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+\newpage
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+\section{Introduction}
+SARGES, the Supersymmetric Advanced Renormalization Group Equation Simplifier, is a fast and powerful tool to calculate renormalization group equations for general four dimensional, renormalizable, $N=1$ supersymmetric quantum field theories. SARGES can be considered the superpartner of ARGES, which handles non-supersymmetric theories, and hence shares its design goals and motivations:
+\begin{itemize}
+\item particle numbers, representations and gauge groups can be specified as symbolic variables
+\item gauge groups can be defined as being general, gauge invariants are not simplified by default
+\item contractions of gauge and flavour indices on each interaction vertex are totally configureable by the user
+\item algebra is not provided by means of array contractions, which enforce non-symbolic representations, but is meant to be implemented symbolically; for more difficult constructs, this has to be done by the user, but the this is possible in a very straightforward manner 
+\item disentaglement of parameter RGEs is up to the user, keeping the code from freezing on difficult parameter relations
+\item the code is written to be both usable in a script and in an interactive session and is almost state-less, new fields and interactions may be added on the fly
+\item RGEs are calculated piece by piece, not all at once, to cope with the fact that some might be more difficult to derive than others; there is no internal cache for parts of these calculations
+\end{itemize}
+Due to the close relation of both codes, some parts of the syntax and notations are very similar, while other differ in order to take full advantage of the more straightforward structure of supersymmetric QFTs.
+\section{Prerequisites}
+SARGES works in the $\overline{\mathrm{DR}}$ renormalization scheme, and assumes the following general form of the superpotential:
+\begin{align}
+W &= \frac{1}{6} Y^{ijk} \Phi_i \Phi_j \Phi_k + \frac{1}{2} \mu^{ij} \Phi_i \Phi_j + L^i \Phi_i,\label{super_par}
+\end{align}
+where $\Phi_i$ denotes chiral superfields each parameter is assumed to be symmetrized under permutation of its indices.
+Following the non-renormalization theorem for $N=1$ supersymmetric theories (see e.g. \cite{NonRenorm}), there is no vertex renormalization for the superpotential, the running of its parameters only depends on leg-corrections of the anomalous dimensions $\gamma^i_{\;j}$ for the chiral superfields:
+\begin{align}
+\beta_\chi ^{i_1,\,..,\,i_n} = \frac{\partial}{\partial\,\mathrm{ln}\,\mu} \chi^{i_1,\,..,\,i_n} = \sum_{\textrm{permutations of } i_1}^n \gamma^{i_1\;}_{\;\;j}\, \chi^{j,\,..,\,i_n}\;. \label{anomdim}
+\end{align}
+For unbroken supersymmetry, this anomalous dimensions and gauge beta functions determine the entire renormalization group flow. Up to two-loop order, these quantities have been determined in \cite{MartinVaughnSUSY,vev1,vev2}, and three loop RGEs are available by the generalization of results in \cite{JackJones1,JackJones2,JackJones3} to semi-simple gauge groups. Furthermore, soft supersymmetry breaking terms are allowed of the form:
+\begin{align}
+\mathcal{L}_\mathrm{soft} &= -\frac{1}{6} h^{ijk} \phi_i \phi_j \phi_k - \frac{1}{2} b^{ij} \phi_i \phi_j - \frac{1}{2}\left(m^2\right)_{j}	^{\;\;i} \phi^{*j}  \phi_i - \frac{1}{2} M^a\lambda_{a} \lambda_{a}\, + \mathrm{h.c.},\label{soft_par}
+\end{align}
+where $\phi$ denotes scalar components of chiral superfield and $\lambda$ are gauginos. RGEs for all soft supersymmetry breaking parameters are available to two loop oder and have been obtained in \cite{MartinVaughnSUSY}. 
+
+In the gauge sector, $R_\xi$ gauge fixing is assumed as well as the following invariants:
+\begin{align}
+C_2(R) \delta_{ab} &= T^A_{ac} T^A_{cb}\\
+S_2(R) \delta^{AB} &= T^A_{ab} T^B_{ba} \\
+\Lambda_{abcd} &= T^A_{ac} T^A_{bd} \,,
+\end{align} 
+where $T^A_{ab}$ represents a generator for the representation $R$ of the gauge group.
+\section{Defining a Model}
+\subsection{General Remarks}
+As mentioned before, SARGES does not implicitly calculate the algebra of gauge of flavour contractions, these have to be provided by the user by inputing the index contractions as functions. Since the mathematica kernel has considerable shortcomings resolving sums over more advanced contractions, these are simplified as far as possible beforehand. The code provides a solid set of simplification rules out of the box, which are automatically utilized, if index contractions are defined as pure functions using \texttt{KroneckerDelta}, which is natively provided by the Wolfram language. In fact however, there is no need to specify contractions at all, those can be undefined functions. It is furthermore possible to provide some simplification rules for those, as will be explained in a later chapter.
+\subsection{Initial setup and gauge sector}
+The initial step when writing a model file is to invoke the function $\mathtt{Reset[\;];}$ to initialize background variables. This command also clears the package and allows a fresh and redefinition of a model. This is particularly useful when accidentally adding fields or couplings twice. \\
+A second step is the to define the variable $\mathtt{NumberOfSubgroups}$, specifying the number of gauge subgroups. The default for this variable is set to 1, but it can be set to any non-negative integer, including zero. The value assigned to $\mathtt{NumberOfSubgroups}$ cannot be a symbol.
+\vspace{1em}
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+Reset[];
+NumberOfSubgroups=1;
+\end{lstlisting}
+\vspace{1em}
+In order to define gauge groups and their respective fields the function $\mathtt{Gauge[\dots]}$ must be invoked $\mathtt{NumberOfSubgroups}$ times. The syntax is:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+Gauge[Symbol, Algebra, Rank, {Charge/Representation1, ...}];
+\end{lstlisting}
+The last argument is a list of the charges (in case of $\mathrm{U}(1)$ subgroups) or representations of gauge bosons. The first charge/representation will be associated with the group first declared with $\mathtt{Gauge[\dots]}$, and so on. The dimension of this list must match $\mathtt{NumberOfSubgroups}$. SARGES is agnostic regarding anti-representations, only positive numbers are valid. However, charges, representations and rank of the subgroup may be declared as a variable. \newline Currently available algebras and ranks are $\mathrm{U}(1)$ , $\mathrm{SU}(N_U)$, and $\mathrm{SO}(N_O)$ with $N_U > 1$ and $N_O > 2$. Gauge fields are assumed to be in the adjoint representation of their own subgroup and singulets in the others. Kinetic mixing is not implemented. \newline Unknown Gauge groups are allowed, but their invariants can of course not be further resolved.
+\FloatBarrier
+\subsection{Chiral Superfields}
+Chiral superfield may be added to the theory via $\mathtt{ChiralSuperField}$.
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+ChiralSuperField[Symbol, Generations, {Charge/Representation1, ...}];
+\end{lstlisting}
+The same comments as for $\mathtt{Gauge[\dots]}$ apply here for the last argument, including the fact that the representations and charges may be defined as variables. The same is true for the number of generations.
+\FloatBarrier
+\subsection{Interaction terms}
+Interaction terms for the allowed superpotential parameters \ref{super_par} might be added using the commands:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+SuperYukawa[Symbol, Field1, Field2, Field3, {GContr1, ...}, FContr];
+SuperMass[Symbol, Field1, Field2, {GContr1, ...}, FContr];
+SuperTadpole[Symbol, Field, {GContr1, ...}, FContr];
+\end{lstlisting}
+Where the first arguments mark the symbol of the inserted couplings,followed by all superfields coupling to the vertex. The next argument is a list of contraction functions for each of the $\mathtt{NumberOfSubgroups}$ gauge couplings. These functions have to be defined to take one gauge index for each of the previously defined superfields as their arguments (in the order of definition). Gauge indices are expected to run from 1 to the dimension of the representation, in the case of a $U(1)$ gauge group, there is a dummy index assuming the value 1. The last argument is the contraction of flavour indices in the same manner as the gauge indices. It is useful to employ the pure function capability of the Wolfram language when defining the contractions. There is no need to symmetrize the vertices under permutation of their fields, as this will be done by the code.
+\newline
+Soft breaking terms may be defined via:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+SoftTrilinear[Symbol, Field1, Field2, Field3, {GContr1, ...}, FContr];
+SoftBilinear[Symbol, Field1, Field2, {GContr1, ...}, FContr];
+SoftScalarMass[Symbol, Field1, Field2, {GContr1, ...}, FContr];
+GauginoMass[Symbol, GaugeSymbol];
+\end{lstlisting}
+Here again, the first arguments are the symbols of the added vertices. In order to simplify the interface, the symbols of the superfields coupling to the vertex will have to be added next, eventhough only the scalar or fermionic components appear at the vertex. As before, a list of gauge contraction and the contraction of generation indices follows for the scalar vertices. Only the gaugino mass is more straightforward defined by the symbol and the associated gauge coupling. Tri- and bilinear coupling are automatically symmetrized. For the scalar mass, the conjugated field is assumed in first position. 
+\subsection{Vacuum expectation values}
+Vacuum expectation values (VEVs) may be added using:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+VEV[Symbol, Field, GenIdx, {GaugeIdx1, ...}, factor];
+\end{lstlisting}
+Where the first argument is the symbol for the VEV, the second the chiral superfield associated with the scalar acquiring the VEV, the third is the flavour index of the scalar acquiring the VEV, followed by a list of gauge indices of the component, as well as an optional additional factor for the VEV.
+\FloatBarrier
+\section{Output}
+\subsection{General Remarks}
+One of the design decisions of SARGES is that RGEs for parameters are not disentangled by default. Hence, beta functions for superpotential and soft-breaking parameters, which typically need the user to input a loop order as the last argument, also take 0, which outputs the tree-level value of the quantity, as it is written in the Lagrangian, modulo the fields coupling to it. This provides information what linear combination of parameters the tree-level diagram with specified external legs correspond to. This feature is by no mean just tedium outsourced to the user, but enables one to circumvent difficult disentanglements or computations, by giving the user the complete choice which diagrams to calculate. Furthermore, this provides means to check if all vertices allowed by the symmetries have been included in the model.
+\newline
+External indices will typically be entered as lists, one must keep in mind that even for $U(1)$ gauge groups, a dummy index of 1 needs to be provided. In order to simplify index contractions, SARGES will try to do a simplification based on some internal rules as well as user defined patterns within $\mathtt{subSimplifySum}$. If this is not enough, the remaining objects will be handed to the Mathematica kernel to solve the sum by conventional means. It is in the best interest of the user to avoid the latter, since this is slow and memory intensive. This is especially the case for index sums with non-numeric bounds. This may be partially mitigated by add assumptions about non-numeric variables to the global variable  $\mathtt{\$Assumptions}$, which is the usual way to do this in Mathematica. One must however take care since $\mathtt{\$Reset[]}$ wipes it. SARGES will add some basic information about every non-numeric specified, but the user is free to refine this information.
+\newline
+After interactions or field content have been changed, the function $\mathtt{ComputeInvariants[]}$ has to be run again in order to update the gauge invariant substitutions, which are listed in $\mathtt{subInvariants}$ or will be inserted by $\mathtt{SimplifyProduct}$.
+\subsection{Anomalous dimensions}
+The anomalous dimensions of the chiral superfields $\gamma^i_{\;\;j}$ can be calculated via:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+$\gamma$[Field1, Field2, {F1Gen, F1Gauge1, ...}, {F2Gen, F2Gauge1, ...}, loop];
+\end{lstlisting}
+Where the first two arguments are the symbols of the involved superfields, the next argument is a list of length $\mathtt{NumberOfSubgroups} + 1$, containing the respective flavour and gauge indices (in that order). The last argument specifies the loop level of the anomalous dimension - invoking it with $0$ will just return a delta in all indices. Due to the relation \ref{anomdim}, the anomalous dimension is a valuable quantity to determine the running of superpotential parameters - instead of computing the beta functions of each parameter directly, one may also just compute all relevant anomalous dimensions and add them together correctly - possibly avoiding doing the same computation multiple times. Anomalous dimensions are available to three-loop order.
+\subsection{Gauge couplings}
+The gauge beta function may be computed using:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+$\beta$[gauge, loop];
+\end{lstlisting}
+Here, the first argument is the gauge coupling to consider, and the second one the loop level. Specifying $0$ will just echo the gauge coupling. Beta functions are available to three-loop order.
+\subsection{Superpotential parameters}
+As mentioned before, superpotential parameters \ref{super_par} are determined by the anomalous dimensions, but the respective RGEs for $Y^{ijk},\,\mu^{ij},\,L^i$ can be directly determined by  
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+$\beta$[F1, F2, F3, {F1Gen, F1Gauge1, ...}, {...}, {...}, loop];
+$\beta$[F1, F2, {F1Gen, F1Gauge1, ...}, {...}, loop];
+$\beta$[F1, {F1Gen, F1Gauge1, ...}, loop];
+\end{lstlisting}
+The first arguments are the chiral superfields, followed by a $\mathtt{NumberOfSubgroups} + 1$ element list of flavour and gauge indices for each field. The last arguments denotes the loop order of the parameter - up to three-loop is currently implemented. Setting the loop order to zero will give the linear combination of couplings from the obtained from the tree-level diagram with the specified external legs. This information is vital to obtain the right normalization of beta functions and disentagle RGEs.
+\subsection{Soft breaking parameters}
+All supersymmetry breaking couplings are available to two-loop order. The couplings  $h^{ijk},\, b^{ij}, \left(m^2\right)_j^{\;\;i}$ from \ref{soft_par} may be computed via:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+Trilinear$\beta$[S1, S2, S3, {S1Gen, S1Gauge1, ...}, {...}, {...}, loop];
+Bilinear$\beta$[S1, S2, {S1Gen, S1Gauge1, ...}, {...}, loop];
+ScalarMass$\beta$[S1, S2, {S1Gen, S1Gauge1, ...}, {...}, loop];
+\end{lstlisting}
+Where the first arguments are the superfields whose scalar components couple to the vertices, followed by the $\mathtt{NumberOfSubgroups} + 1$ element list of flavour and gauge indices for each field. The last argument marks the loop order, and the same remark from the superpotential parameters regarding the the value $0$ applies here as well. Gaugino mass beta functions may be calculated via:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+GauginoMass$\beta$[gauge, loop];
+\end{lstlisting}
+Simply taking the associated gauge coupling and loop order as parameter. The value $0$ for the latter will just output the tree-level mass term. VEV RGEs may simply be computed via:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+$\beta$[Scalar, {GenIndex, GaugeIndex1, ...}, loop];
+\end{lstlisting}
+Taking the superfield which scalar component is developing the VEV, followed by the list of the $\mathtt{NumberOfSubgroups} + 1$ indices marking the generation and gauge indices of the component developing the VEV. As always, the last index is the loop level for the RGE, passing $0$ will print the VEV, associated with the field and indices - or zero if it wasn't defined.
+\section{Advanced Options}
+\subsection{Advanced Simplification}
+By default, SARGES resolves index contraction by explicitly summing over these. However, especially when dealing with indefinite bounds or non-numerical external indices, the Mathematica kernel runs into trouble resolving these sums, or fills up the memory be dragging a plethora of conditions with the solutions. One possibility to overcome is to append conditions for non-numerical bounds or indices to Mathematica standard assumption condition $\$\mathtt{Assumptions}$. \\ In favour of wasting system resources by performing nested sums, advanced pattern matching techniques are employed by ARGES to simplify any index sum before residing to actual summation. In fact, two versions of this algorithm exist. One to employ with every index sum calculated, which is deliberately kept lightweight to protect the performance of ARGES. The second one is accessible by the user through:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+SimplifyProduct[expression]
+\end{lstlisting}
+The following simplifications are implemented in both versions of the algorithms:
+\begin{itemize}
+\item the expression is expanded and factor dragged under the sum
+\item trivial summations $\sum_{i=1}^1$ are resolved
+\item summations like $\sum_{i=1}^{k} \mathtt{KroneckerDelta}[i,j]$ are resolved - here it is implicitly assumed that $j \leq k$; it is hence wise to formulate contraction rules using $\mathtt{KroneckerDelta}[...]$
+\item some simplifications for terms containing the $\mathtt{Generator}$ keyword are applied - refer to the next section for more details
+\item simplify consecutive operations of $\mathtt{conj}$, $\mathtt{transpose}$, $\mathtt{adj}$
+\item reorder and simplify Yukawa traces 
+\item employ user specified simplification rules
+\end{itemize}
+While the version accessible to $\mathtt{SimplifyProduct}$ additionally may:
+\begin{itemize}
+\item simplify expressions with the $\mathtt{Generator}$ keyword much further
+\item simplify $\Lambda_{abbc} = C_2 \,\delta_{ac}$
+\end{itemize}
+Indeed, one may add additional assumptions to the simplification rules by defining the variable $\mathtt{subSimplifySum}$. Any rules defined within those should assume that every $\mathtt{Sum}$ keyword is rebranded as $\mathtt{SimplifySum}$, an example could look like this:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+subSimplifySum = {
+   ...
+   SimplifySum[fac_ func[x_], Sum1___, {x_, 1, xmax_}, Sum2___] :> 
+      SimplifySum[ fac simplefunc, Sum1, Sum2],
+   ...
+}
+\end{lstlisting}
+\subsection{The $\mathtt{Generator}$ keyword}
+In order to handle adjoint representations better, ARGES allows to use the following structure
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+Generator[Args][a, i, j]
+\end{lstlisting}
+Which represents a generator of the gauge group $T^a_{ij}$ (note that here, indices do not run over other gauge groups, generations or particle types), where $\mathtt{Args}$ marks arbitrary argument which can be chosen by the user, however, the canonical way in ARGES is to choose $\mathtt{Generator}[\mathtt{FieldSymbol},\;\mathtt{GaugeSymbol}]$ or $\mathtt{Generator}[\mathtt{GaugeSymbol}]$ for the adjoint representation.
+The following relations are build into the simplification algorithm in ARGES:
+\begin{itemize}
+\item ${T^a_{ij}}^* = T^a_{ji}$
+\item $T^a_{ij} T^a_{jk} = C_2\, \delta_{ik}$
+\item $T^a_{ij} T^b_{ji} = T_2\, \delta^{ab}$
+\end{itemize}
+Where $T_2$ is easily translated into $S_2$ employing $\mathtt{subInvariants}$. Furthermore, for $\mathtt{SimplifyProduct}$, the relation
+\begin{align*}
+T^a_{ij} T^b_{jk} T^a_{kl} = \left(C_2(R) - \dfrac{1}{2} C_2(G)\right) T^b_{il}
+\end{align*}
+is also included.
+\newpage
+\section{Example: MSSM with $N_f$ generation and $N_c$ colors}
+In this section, we will implement an example, using the MSSM with $\mathtt{Nc}$ colors and $\mathtt{Nf}$ generations, while only retaining couplings for the first generation.
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+(* MSSM with Nc colors and Nf generations *)
+Needs["SARGES`"]
+
+(* Reset SARGES every time reading in this file *)
+Reset[];
+
+(* Declare number of gauge groups first *)
+NumberOfSubgroups = 3;
+
+(* Specify gauge groups, no GUT normalization *)
+Gauge[gy, U, 1, {0, 1, 1}];
+Gauge[g, SU, 2, {0, 3, 1}];
+Gauge[gs, SU, Nc, {0, 1, Nc^2 - 1}];
+
+
+(* Chiral Superfields *)
+ChiralSuperField[Q, Nf, {+1/6, 2, Nc}];
+ChiralSuperField[L, Nf, {-1/2, 2, 1}];
+ChiralSuperField[D, Nf, {+1/3, 1, Nc}];
+ChiralSuperField[U, Nf, {-2/3, 1, Nc}];
+ChiralSuperField[E, Nf, {+1, 1, 1}];
+ChiralSuperField[Hu, 1, {+1/2, 2, 1}];
+ChiralSuperField[Hd, 1, {-1/2, 2, 1}];
+
+(* Superpotential *)
+SuperMass[$\mu$, Hu, Hd, {1&, KroneckerDelta[#1,#2]&, 1&}, 1&];
+SuperYukawa[
+   yt, Hu, Q, U, { 1&, KroneckerDelta[#1,#2]&, KroneckerDelta[#2,#3]& }, 
+   KroneckerDelta[#2, 1] KroneckerDelta[#3, 1]&
+];
+SuperYukawa[
+   yb, Hd, Q, D, {1&, KroneckerDelta[#1,#2]&, KroneckerDelta[#2,#3]&}, 
+   KroneckerDelta[#2, 1] KroneckerDelta[#3, 1]&
+];
+SuperYukawa[
+   y$\tau$, Hd, L, E, {1&, KroneckerDelta[#1,#2]&, 1&},
+   KroneckerDelta[#2, 1] KroneckerDelta[#3, 1]&
+];
+
+
+(* Gaugino Masses *)
+GauginoMass[MassB, gy];
+GauginoMass[MassWB, g];
+GauginoMass[MassG, gs];
+
+(* Bi- and trilinear couplings *)
+SoftBilinear[B$\mu$, Hu, Hd, {1&, KroneckerDelta[#1,#2]&, 1&}, 1&];
+SoftTrilinear[
+   Tt, Hu, Q, U, {1&, KroneckerDelta[#1,#2]&, KroneckerDelta[#2,#3]&},
+   KroneckerDelta[#2, 1] KroneckerDelta[#3, 1]&
+];
+SoftTrilinear[
+   Tb, Hd, Q, D, {1&, KroneckerDelta[#1,#2]&, KroneckerDelta[#2,#3]&},
+   KroneckerDelta[#2, 1] KroneckerDelta[#3, 1]&
+];
+SoftTrilinear[
+   T$\tau$, Hd, L, E, {1&, KroneckerDelta[#1,#2]&, 1&}, 
+   KroneckerDelta[#2, 1] KroneckerDelta[#3, 1]&
+];
+
+(* Sfermion masses *)
+SoftScalarMass[mHu2, Hu, Hu, {1&, KroneckerDelta[#1,#2]&, 1&}, 1&];
+SoftScalarMass[mHd2, Hd, Hd, {1&, KroneckerDelta[#1,#2]&, 1&}, 1&];
+SoftScalarMass[
+   mq2, Q, Q, {1&, KroneckerDelta[#1,#2]&, KroneckerDelta[#1,#2]&}, 
+   KroneckerDelta[#1, 1] KroneckerDelta[#2, 1]&
+];
+SoftScalarMass[ml2, L, L, {1&, KroneckerDelta[#1,#2]&, 1&}, 
+   KroneckerDelta[#1, 1] KroneckerDelta[#2, 1]&
+];
+SoftScalarMass[mu2, U, U, {1&, 1&, KroneckerDelta[#1,#2]&}, 
+   KroneckerDelta[#1, 1] KroneckerDelta[#2, 1]&
+];
+SoftScalarMass[md2, D, D, {1&, 1&, KroneckerDelta[#1,#2]&}, 
+   KroneckerDelta[#1, 1] KroneckerDelta[#2, 1]&
+];
+SoftScalarMass[
+   me2, E, E, {1&, 1&, 1&}, 
+   KroneckerDelta[#1, 1] KroneckerDelta[#2, 1]&
+];
+
+(* VEVs *)
+VEV[vu, Hu, 1, {1, 2, 1}];
+VEV[vd, Hd, 1, {1, 1, 1}];
+
+(* Compute gauge invariants *)
+ComputeInvariants[];
+\end{lstlisting}
+By running this script - or entering it interactively - we may are able to compute a variety of RGEs now:
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+        (* gauge beta functions *)
+In[1]:= (4 Pi)^2  $\beta$[gs, 1] //. subInvariants // Expand
+Out[1]= -3*gs^3*Nc + 2*gs^3*Nf
+
+In[2]:= (4 Pi)^4  $\beta$[gs, 2] //. subInvariants // Expand
+Out[2]= -6*gs^5*Nc^2 + 3*g^2*gs^3*Nf + (11*gs^3*gy^2*Nf)/9 - 
+        (4*gs^5*Nf)/Nc + 8*gs^5*Nc*Nf - 4*gs^3*yb*conj[yb] - 
+         4*gs^3*yt*conj[yt]
+        
+In[3]:= (4 Pi)^6  $\beta$[gs, 3] //. subInvariants // Expand
+Out[3]= -21*gs^7*Nc^3 + 18*g^4*gs^3*Nf - 18*gs^7*Nf - 
+        (g^2*gs^3*gy^2*Nf)/3 - (217*gs^3*gy^4*Nf)/81 - 
+        (4*gs^7*Nf)/Nc^2 + (6*g^2*gs^5*Nf)/Nc + 
+        (22*gs^5*gy^2*Nf)/(9*Nc) + 42*gs^7*Nc^2*Nf - 
+        (9*g^4*gs^3*Nf^2)/4 - (11*gs^3*gy^4*Nf^2)/4 + 
+        (12*gs^7*Nf^2)/Nc - (9*g^4*gs^3*Nc*Nf^2)/4 - 
+        16*gs^7*Nc*Nf^2 - (121*gs^3*gy^4*Nc*Nf^2)/108 - 
+        12*g^2*gs^3*yb*conj[yb] - (32*gs^3*gy^2*yb*conj[yb])/
+        9 + (4*gs^5*yb*conj[yb])/Nc - 
+        12*gs^5*Nc*yb*conj[yb] + 12*gs^3*yb^2*conj[yb]^2 + 
+        6*gs^3*Nc*yb^2*conj[yb]^2 - 12*g^2*gs^3*yt*conj[yt] - 
+        (44*gs^3*gy^2*yt*conj[yt])/9 + (4*gs^5*yt*conj[yt])/
+        Nc - 12*gs^5*Nc*yt*conj[yt] + 8*gs^3*yb*yt*conj[yb]*
+        conj[yt] + 12*gs^3*yt^2*conj[yt]^2 + 
+        6*gs^3*Nc*yt^2*conj[yt]^2 + 6*gs^3*yb*y$\tau$*conj[yb]*
+        conj[y$\tau$]]
+        
+        (* Gaugino Mass *)
+In[4]:= (4 Pi)^4  GauginoMass$\beta$[gy, 2] //. subInvariants // Expand
+Out[4]= (gy^2*(486*g^2*MassB + 324*gy^2*MassB + 
+        486*g^2*MassWB + 243*g^2*MassB*Nf - 
+        198*gs^2*MassB*Nf + 1458*gy^2*MassB*Nf - 
+        198*gs^2*MassG*Nf + 243*g^2*MassWB*Nf + 
+        27*g^2*MassB*Nc*Nf + 274*gy^2*MassB*Nc*Nf + 
+        27*g^2*MassWB*Nc*Nf + 198*gs^2*MassB*Nc^2*Nf + 
+        198*gs^2*MassG*Nc^2*Nf + 252*Nc*(Tb - MassB*yb)*
+        conj[yb] + 468*Nc*(Tt - MassB*yt)*conj[yt] + 
+        972*T$\tau$*conj[y$\tau$] - 972*MassB*y$\tau$*conj[y$\tau$]))/81
+        
+        (* VEV *)
+In[5]:= (4 Pi)^4  $\beta$[vu, 2] //. subInvariants // Expand
+Out[5]= (3*g^4*vu)/2 - (3*g^2*gy^2*vu)/4 - (3*gy^4*vu)/8 - 
+        (3*g^4*Nf*vu)/8 - (3*gy^4*Nf*vu)/8 - 
+        (3*g^4*Nc*Nf*vu)/8 - (11*gy^4*Nc*Nf*vu)/72 + 
+        (13*g^4*vu*$\xi$)/8 - (3*g^2*gy^2*vu*$\xi$)/4 - 
+        (gy^4*vu*$\xi$)/8 + (3*g^2*gy^2*vu*$\xi$^2)/4 + 
+        (gy^4*vu*$\xi$^2)/8 + 2*gs^2*vu*yt*conj[yt] - 
+        (4*gy^2*Nc*vu*yt*conj[yt])/9 - 2*gs^2*Nc^2*vu*yt*
+        conj[yt] - (3*g^2*Nc*vu*yt*$\xi$*conj[yt])/2 - 
+        (gy^2*Nc*vu*yt*$\xi$*conj[yt])/2 + 
+        Nc*vu*yb*yt*conj[yb]*conj[yt] + 
+        3*Nc*vu*yt^2*conj[yt]^2
+        
+        (* check top coupling *)
+In[6]:= $\beta$[Hu, Q, U, {1, 1, 1 , 1}, {1, 1, 1 , 1}, {1, 1, 1 , 1}, 0]
+Out[6]= yt
+
+In[7]:= (4 Pi)^2 $\beta$[Hu, Q, U, {1, 1, 1, 1}, {1, 1, 1, 1}, 
+        {1, 1, 1, 1}, 1] //. subInvariants // Simplify
+Out[7]= -3*g^2*yt - (13*gy^2*yt)/9 + (2*gs^2*yt)/Nc - 
+        2*gs^2*Nc*yt + yb*yt*conj[yb] + (3 + Nc)*yt^2*conj[yt]
+        
+        (* check stop trilinear coupling *)
+In[8]:=  Trilinear$\beta$[Hu, Q, U, {1, 1, 1, 1}, {1, 1, 1, 1}, 
+        {1, 1, 1, 1}, 0]
+Out[8]= Tt
+
+In[9]:= (4 Pi)^2 Trilinear$\beta$[Hu, Q, U, {1, 1, 1, 1}, {1, 1, 1, 1}, 
+        {1, 1, 1, 1}, 1] //. subInvariants // Simplify
+Out[9]= -3*g^2*Tt - (13*gy^2*Tt)/9 + (2*gs^2*Tt)/Nc - 
+        2*gs^2*Nc*Tt + (26*gy^2*MassB*yt)/9 + 
+        6*g^2*MassWB*yt - (4*gs^2*MassG*yt)/Nc + 
+        4*gs^2*MassG*Nc*yt + (Tt*yb + 2*Tb*yt)*conj[yb] + 
+        3*(3 + Nc)*Tt*yt*conj[yt]
+
+\end{lstlisting}
+\newpage
+\printbibliography
+\end{document}
