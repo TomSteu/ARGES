@@ -2847,12 +2847,14 @@ BeginPackage["ARGES`"];
 				];
 				sum
 			],
+			Y2S[pa_, pb_] :> 0 /; (pa[[1]] > Length[RealScalarList] || pb[[1]] > Length[RealScalarList]),
 			Y2S[pa_, pb_] :> 1/2 (
 				SolveTrace2[adj[Yuk[pa[[1]]]], Yuk[pb[[1]]], Prepend[Function[{x}, {pa[[3+x]], pb[[3+x]]}]/@Range[NumberOfSubgroups], {pa[[2]], pa[[3]], pb[[2]], pb[[3]]}]] + 
 				SolveTrace2[adj[Yuk[pb[[1]]]], Yuk[pa[[1]]], Prepend[Function[{x}, {pb[[3+x]], pa[[3+x]]}]/@Range[NumberOfSubgroups], {pb[[2]], pb[[3]], pa[[2]], pa[[3]]}]]
 			),
 			\[CapitalLambda]2S[pa_, pb_] :> Block[
 				{ss1, ss2, ss3, assHold, sum, x, x2},
+				If[pa[[1]] > Length[RealScalarList] || pb[[1]] > Length[RealScalarList], Return[0];];
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = Sum[
@@ -2886,6 +2888,7 @@ BeginPackage["ARGES`"];
 			],
 			H2S[pa_, pb_] :> Block[
 				{ss,x,x2,sum,assHold},
+				If[pa[[1]] > Length[RealScalarList] || pb[[1]] > Length[RealScalarList], Return[0];];
 				assHold = $Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = 1/2 Sum[
@@ -2913,6 +2916,7 @@ BeginPackage["ARGES`"];
 			],
 			Hbar2S[pa_, pb_] :> Block[
 				{ss,x,x2,sum,assHold},
+				If[pa[[1]] > Length[RealScalarList] || pb[[1]] > Length[RealScalarList], Return[0];];
 				assHold = $Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = 1/2 Sum[
@@ -2940,6 +2944,7 @@ BeginPackage["ARGES`"];
 			],
 			Y2FS[pa_, pb_] :> Block[
 				{ff,fHold,x,ii},
+				If[pa[[1]] > Length[RealScalarList] || pb[[1]] > Length[RealScalarList], Return[0];];
 				For[ff=1, ff<=Length[WeylFermionList], ff++,
 					fHold[ff] = 1/2 (
 						SolveTrace3[Delt[ff], Yuk[pa[[1]]], adj[Yuk[pb[[1]]]], Prepend[Function[{x}, {1, pa[[x+3]], pb[[x+3]]}]/@Range[NumberOfSubgroups], {1, 1, pa[[2]], pa[[3]], pb[[2]], pb[[3]]}]] + 
@@ -2950,6 +2955,7 @@ BeginPackage["ARGES`"];
 			],
 			Y2FSY[pa_, pi_, pj_, la_, li_, lj_] :> Block[
 				{ff,fHold,x,ii,ss,assHold},
+				If[pa[[1]] > Length[RealScalarList], Return[0];];
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)]/@Range[NumberOfSubgroups+2];
 				For[ff=1, ff<=Length[WeylFermionList], ff++,
