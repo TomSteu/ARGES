@@ -4123,7 +4123,7 @@ BeginPackage["ARGES`"];
 			SimplifySum[Generator[A___][a_, i_, j_] Generator[A___][b_, j_, i_], SS1___, {i_, 1, ii_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[T2[A] KroneckerDelta[a, b], SS1, SS2, SS3],
 			SimplifySum[A_] :> A,
 			SimplifySum[] :> 0
-		};
+		} // Dispatch;
 		
 		(* like subSum, but with more advanced simplifications to be utilized in SimplifyProduct *)
 		subSum2 := {
