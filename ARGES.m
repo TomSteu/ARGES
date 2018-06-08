@@ -2685,7 +2685,7 @@ BeginPackage["ARGES`"];
 			\[CapitalLambda]Y[pa_, pb_, pc_, pd_] :> Block[
 				{ss1, assHold, sum, x},
 				assHold=$Assumptions;
-				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0);
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = Sum[
 					ContractSum@@Join[
 						{
