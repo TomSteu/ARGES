@@ -1479,8 +1479,8 @@ BeginPackage["ARGES`"];
 				H[Join[{pd}, ld], Join[{pb}, lb], Join[{pc}, lc], Join[{pa}, la]] + 
 				H[Join[{pd}, ld], Join[{pc}, lc], Join[{pb}, lb], Join[{pa}, la]]
 			)//.subScalarInvariants//.{tr[adj[a_], b_, adj[c_], d_]:>tr[b, adj[c], d, adj[a]]};
-			beta = beta + 24 \[CapitalLambda]Y[Join[{pa}, la], Join[{pb}, lb], Join[{pc}, lc], Join[{pd}, ld]]//.subScalarInvariants//.{tr[adj[a_], b_]:>tr[b, adj[a]]};
-			beta = beta - 3*24 Sum[Sqr[ListGauge[[ii,1]]]\[CapitalLambda]S[ii][Join[{pa}, la], Join[{pb}, lb], Join[{pc}, lc], Join[{pd}, ld]], {ii, 1, NumberOfSubgroups}]//.subScalarInvariants;
+			beta += 24 \[CapitalLambda]Y[Join[{pa}, la], Join[{pb}, lb], Join[{pc}, lc], Join[{pd}, ld]]//.subScalarInvariants//.{tr[adj[a_], b_]:>tr[b, adj[a]]};
+			beta += - 3*24 Sum[Sqr[ListGauge[[ii,1]]]\[CapitalLambda]S[ii][Join[{pa}, la], Join[{pb}, lb], Join[{pc}, lc], Join[{pd}, ld]], {ii, 1, NumberOfSubgroups}]//.subScalarInvariants;
 			beta += 3 Sum[Sqr[ListGauge[[ii,1]]] Sqr[ListGauge[[ii2,1]]] (
 				As[ii, ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 
 				As[ii, ii2][Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] + 
@@ -2682,13 +2682,50 @@ BeginPackage["ARGES`"];
 					{pa[[2]], pa[[3]], pb[[2]], pb[[3]], pc[[2]], pc[[3]], pd[[2]], pd[[3]]}
 				]
 			],
-			\[CapitalLambda]Y[pa_, pb_, pc_, pd_] :> ReleaseHold[
-				BetaQuartic[pa[[1]], pb[[1]], pc[[1]], pd[[1]], pa[[2;;]], pb[[2;;]], pc[[2;;]], pd[[2;;]], 0] Hold[
-					If[pa[[1]] > Length[RealScalarList], 0, SolveTrace2[Yuk[pa[[1]]], adj[Yuk[pa[[1]]]], Prepend[Function[{x}, {pa[[3+x]], pa[[3+x]]}]/@Range[NumberOfSubgroups], {pa[[2]], pa[[3]], pa[[2]], pa[[3]]}]]] + 
-					If[pb[[1]] > Length[RealScalarList], 0, SolveTrace2[Yuk[pb[[1]]], adj[Yuk[pb[[1]]]], Prepend[Function[{x}, {pb[[3+x]], pb[[3+x]]}]/@Range[NumberOfSubgroups], {pb[[2]], pb[[3]], pb[[2]], pb[[3]]}]]] + 
-					If[pc[[1]] > Length[RealScalarList], 0, SolveTrace2[Yuk[pc[[1]]], adj[Yuk[pc[[1]]]], Prepend[Function[{x}, {pc[[3+x]], pc[[3+x]]}]/@Range[NumberOfSubgroups], {pc[[2]], pc[[3]], pc[[2]], pc[[3]]}]]] + 
-					If[pd[[1]] > Length[RealScalarList], 0, SolveTrace2[Yuk[pd[[1]]], adj[Yuk[pd[[1]]]], Prepend[Function[{x}, {pd[[3+x]], pd[[3+x]]}]/@Range[NumberOfSubgroups], {pd[[2]], pd[[3]], pd[[2]], pd[[3]]}]]]
-				]
+			\[CapitalLambda]Y[pa_, pb_, pc_, pd_] :> Block[
+				{ss1, assHold, sum, x},
+				assHold=$Assumptions;
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0);
+				sum = Sum[
+					ContractSum@@Join[
+						{
+							ReleaseHold[
+								 Hold[
+									If[pa[[1]] > Length[RealScalarList], 0, 
+										1/2 (
+											SolveTrace2[Yuk[pa[[1]]], adj[Yuk[ss1[0]]], Prepend[Function[{x}, {pa[[3+x]], ss1[2+x]}]/@Range[NumberOfSubgroups], {pa[[2]], pa[[3]], ss1[1], ss1[2]}]] +
+											SolveTrace2[Yuk[ss1[0]], adj[Yuk[pa[[1]]]], Prepend[Function[{x}, {ss1[2+x], pa[[3+x]]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], pa[[2]], pa[[3]]}]]
+										) BetaQuartic[ss1[0], pb[[1]], pc[[1]], pd[[1]], ss1/@Range[NumberOfSubgroups+2], pb[[2;;]], pc[[2;;]], pd[[2;;]], 0]
+									] + 
+									If[pb[[1]] > Length[RealScalarList], 0, 
+										1/2 (
+											SolveTrace2[Yuk[pb[[1]]], adj[Yuk[ss1[0]]], Prepend[Function[{x}, {pb[[3+x]], ss1[2+x]}]/@Range[NumberOfSubgroups], {pb[[2]], pb[[3]], ss1[1], ss1[2]}]] +
+											SolveTrace2[Yuk[ss1[0]], adj[Yuk[pb[[1]]]], Prepend[Function[{x}, {ss1[2+x], pb[[3+x]]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], pb[[2]], pb[[3]]}]]
+										) BetaQuartic[pa[[1]], ss1[0], pc[[1]], pd[[1]], pa[[2;;]], ss1/@Range[NumberOfSubgroups+2], pc[[2;;]], pd[[2;;]], 0]
+									] + 
+									If[pc[[1]] > Length[RealScalarList], 0, 
+										1/2 (
+											SolveTrace2[Yuk[pc[[1]]], adj[Yuk[ss1[0]]], Prepend[Function[{x}, {pc[[3+x]], ss1[2+x]}]/@Range[NumberOfSubgroups], {pc[[2]], pc[[3]], ss1[1], ss1[2]}]] +
+											SolveTrace2[Yuk[ss1[0]], adj[Yuk[pc[[1]]]], Prepend[Function[{x}, {ss1[2+x], pc[[3+x]]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], pc[[2]], pc[[3]]}]]
+										) BetaQuartic[pa[[1]], pb[[1]], ss1[0], pd[[1]], pa[[2;;]], pb[[2;;]], ss1/@Range[NumberOfSubgroups+2], pd[[2;;]], 0]
+									] + 
+									If[pd[[1]] > Length[RealScalarList], 0, 
+										1/2 (
+											SolveTrace2[Yuk[pd[[1]]], adj[Yuk[ss1[0]]], Prepend[Function[{x}, {pd[[3+x]], ss1[2+x]}]/@Range[NumberOfSubgroups], {pd[[2]], pd[[3]], ss1[1], ss1[2]}]] +
+											SolveTrace2[Yuk[ss1[0]], adj[Yuk[pd[[1]]]], Prepend[Function[{x}, {ss1[2+x], pd[[3+x]]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], pd[[2]], pd[[3]]}]]
+										) BetaQuartic[pa[[1]], pb[[1]], pc[[1]], ss1[0], pa[[2;;]], pb[[2;;]], pc[[2;;]], ss1/@Range[NumberOfSubgroups+2], 0]
+									]
+								]
+							],
+							{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
+							{ss1[2], 1, RealScalarList[[ss1[0],2,2]]}
+						},
+						Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups]
+					],
+					{ss1[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions = assHold;
+				sum
 			],
 			\[CapitalLambda]S[gaug_][pa_, pb_, pc_, pd_] :> ReleaseHold[
 				BetaQuartic[pa[[1]], pb[[1]], pc[[1]], pd[[1]], pa[[2;;]], pb[[2;;]], pc[[2;;]], pd[[2;;]], 0] Hold[
