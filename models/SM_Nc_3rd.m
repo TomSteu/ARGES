@@ -25,20 +25,20 @@ ComplexScalar[H, {1, 1}, {+1/2, 2, 1}];
 VEV[v, Re[H], {1, 1}, {1, 2, 1}, 1];
 
 (* Yukawa sector - third generations only *)
-YukawaY[ yb, H, adj[Q], D, 
+Yukawa[ yb, H, adj[Q], D, 
  {1 &, KroneckerDelta[#1, #2] &, KroneckerDelta[#2, #3] &}, 
  (KroneckerDelta[#3, 3] KroneckerDelta[#4, 3])& ];
  
-YukawaY[ ytau, H, adj[L], E, 
+Yukawa[ ytau, H, adj[L], E, 
  {1 &, KroneckerDelta[#1, #2] &, 1 &}, 
  (KroneckerDelta[#3, 3] KroneckerDelta[#4, 3])& ];
  
-YukawaY[ yt, adj[H], adj[Q], U, 
+Yukawa[ yt, adj[H], adj[Q], U, 
  {1 &, Eps[#1, #2] &, KroneckerDelta[#2, #3] &},
  (KroneckerDelta[#3, 3] KroneckerDelta[#4, 3])& ];
 
 (* Quartic coupling ~ -1/2 lamda |phi|^4 *)
-Quartic\[Lambda]abcd[\[Lambda], adj[H], H, adj[H], H, 
+ScalarQuartic[\[Lambda], adj[H], H, adj[H], H, 
  {1&, (KroneckerDelta[#1, #2] KroneckerDelta[#3, #4])&, 1&}, 
  (KroneckerDelta[#2, #3] KroneckerDelta[#1, #4] 
   KroneckerDelta[#5, #8] KroneckerDelta[#6, #7])/2 & ];

@@ -97,19 +97,19 @@ Internally, all complex scalars are expanded into real components, using the dec
 \subsection{Yukawa interactions}
 Two possibilities exist to define Yukawa interactions. One is the classical approach as a matrix in the fermionic generation indices, the syntax looks like this:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
-YukawaYaij[Symbol, Scalar, Ferm1, Ferm2, {Contraction1, ...}, Factor];
+YukawaMat[Symbol, Scalar, Ferm1, Ferm2, {Contraction1, ...}, Factor];
 \end{lstlisting}
 The arguments two to four are the symbols of the fields involved. The Scalar entered may be real (or the real/imaginary part of complex field - using $\mathtt{Re[...]}$/$\mathtt{Im[...]}$) or complex. The hermitian conjugate of a complex field may be used as well, utilizing $\mathtt{adj[...]}$. The latter applies both to the fermions and scalars. The last argument is a prefactor which might be complex, but its usage is optional, and the default value 1. The fifth arguments is to define the contraction between the gauge indices of the fields involved for this term. This list has $\mathtt{NumberOfSubgroups}$ elements and contains functions with three arguments, where which correspond to the gauge indices of the scalar, first and second fermion, strictly in this order. The hermitian conjugate of this Yukawa term is added automatically, no further prefactor or symmetrization will be employed. There is no contraction for scalar generations for these terms, but traces and products in the fermionic indices are denoted as $\mathtt{tr[...]}$ and $\mathtt{prod[...][i,j]}$ respectively.\newline 
 Furthermore, Yukawa couplings may be defined as scalars:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
-YukawaY[Sym, Scalar, Ferm1, Ferm2, {Contr1, ...}, GenerationContr];
+Yukawa[Sym, Scalar, Ferm1, Ferm2, {Contr1, ...}, GenerationContr];
 \end{lstlisting}
 Which is the same thing with exception of the now mandatory last argument, which is a now a function with four arguments, and defines the contraction between the first and second generation index of the scalar, and the generation indices of the first and second fermion, strictly in that order. Again, the hermitian conjugate is added without further symmetry factors. Any Yukawa coupling is generally considered complex.
 \FloatBarrier
 \subsection{Scalar quartic interactions}
 Scalar quartics may be defined via:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
-Quartic$\lambda$abcd[Sym, Sc1, Sc2, Sc3, Sc4, {Contr1, ...}, GenerationContr];
+ScalarQuartic[Sym, Sc1, Sc2, Sc3, Sc4, {Contr1, ...}, GenerationContr];
 \end{lstlisting}
 Where arguments two to five are symbols of the scalars involved. Again, real and complex scalars may be entered. It may be denoted that for complex fields, prefactors of the real composite fields are added automatically. The sixth element is a list of gauge index contractions, taking four arguments reflecting the four scalar fields. The generation contraction on the last position is a function of eight arguments, where the first two are for the two generation indices of the first scalar field and so on. \newline No implicit factor 4! is added, so each symmetry factor needs to be included in the last argument. However, for calculational purposes, the quartics are completely symmetrized under permutation of the scalar fields, and additional factors are added to preserve the norm. The final prefactor may be checked using the routine to output beta function, as it is explained in the next chapter.
 \FloatBarrier
@@ -123,26 +123,26 @@ Where the first two arguments specify the symbols of the VEV and the scalar fiel
 \subsection{Scalar cubic interactions}
 Cubic terms involving scalars may be added in a similar fashion using:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
-CubicHabc[Symbol, Sc1, Sc2, Sc3, GaugeContractions, GenContraction];
+ScalarCubic[Symbol, Sc1, Sc2, Sc3, GaugeContractions, GenContraction];
 \end{lstlisting}
 Here again, complex or real scalars are accepted as input. Gauge contractions are functions of three arguments, which are the gauge indices of the involved fields, while the generation contraction accepts six arguments, two subsequently as the generation indices of one scalar. Internally, cubics and scalar masses are obtained by introducing one and two dummy fields into the quartic RGEs. Hence, those parameters inherit its property be symmetrized but not to have symmetry factors in the Lagrangian on its own. Fermion masses are obtained in a similar fashion from Yukawa interactions. Hence, the RGE subsystem of these superrenormalizable parameters decouples from the one of renormalizable parameters.
 \subsection{Scalar Mass}
 Scalar masses may be added using:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
-ScalarMassMab[Symbol, Sc1, Sc2, GaugeContractions, GenContraction];
+ScalarMass[Symbol, Sc1, Sc2, GaugeContractions, GenContraction];
 \end{lstlisting}
 All remarks on scalar quartics and cubics apply in this context as well. Including the fact that there is no build-in symmetry factor when having a mass term diagonal in the scalar eigenstates. These need to be added manually.
 \subsection{Fermion Mass}
 Fermion masses are obtained from introducing a dummy scalar field into a Yukawa interaction, and hence share its symmetry factors. Furthermore, there are two versions as well, representing Fermion mass matrices and single masses:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
-FermionMassMij[Symbol, Ferm1, Ferm2, {Contraction1, ...}, Factor];
-FermionMassM[Symbol, Ferm1, Ferm2, {Contr1, ...}, GenerationContr];
+FermionMassMat[Symbol, Ferm1, Ferm2, {Contraction1, ...}, Factor];
+FermionMass[Symbol, Ferm1, Ferm2, {Contr1, ...}, GenerationContr];
 \end{lstlisting}
 Most comments from the Yukawa section still apply, however, gauge and generation contractions only expect two arguments, which are the Fermion indices.
 \subsection{Scalar linear interactions}
 For scalars with linear interactions at tree level, these may be added using a notation similar to scalar quartic, cubic and mass interactions:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
-ScalarLinearJa[Symbol, Scalar, GaugeContractions, GenContraction];
+ScalarLinear[Symbol, Scalar, GaugeContractions, GenContraction];
 \end{lstlisting}
 Here, gauge contractions only take one argument, and Generation contraction two - which corresponds to the indices of the involved scalar.
 \newpage
@@ -285,20 +285,20 @@ ComplexScalar[H, {1, 1}, {+1/2, 2, 1}];
 VEV[v, Re[H], {1, 1}, {1, 2, 1}, 1];
 
 (* Yukawa sector - third generations only *)
-YukawaY[ yb, H, adj[Q], D, 
+Yukawa[ yb, H, adj[Q], D, 
  {1 &, KroneckerDelta[#1, #2] &, KroneckerDelta[#2, #3] &}, 
  (KroneckerDelta[#3, 3] KroneckerDelta[#4, 3])& ];
  
-YukawaY[ ytau, H, adj[L], E, 
+Yukawa[ ytau, H, adj[L], E, 
  {1 &, KroneckerDelta[#1, #2] &, 1 &}, 
  (KroneckerDelta[#3, 3] KroneckerDelta[#4, 3])& ];
  
-YukawaY[ yt, adj[H], adj[Q], U, 
+Yukawa[ yt, adj[H], adj[Q], U, 
  {1 &, Eps[#1, #2] &, KroneckerDelta[#2, #3] &},
  (KroneckerDelta[#3, 3] KroneckerDelta[#4, 3])& ];
 
 (* Quartic coupling ~ -1/2 lamda |phi|^4 *)
-Quartic\[Lambda]abcd[\[Lambda], adj[H], H, adj[H], H, 
+ScalarQuartic[\[Lambda], adj[H], H, adj[H], H, 
  {1&, (KroneckerDelta[#1, #2] KroneckerDelta[#3, #4])&, 1&}, 
  (KroneckerDelta[#2, #3] KroneckerDelta[#1, #4] 
   KroneckerDelta[#5, #8] KroneckerDelta[#6, #7])/2 & ];

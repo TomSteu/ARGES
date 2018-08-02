@@ -1028,7 +1028,7 @@ Cell[BoxData[
          RowBox[{"+", "1"}], "/", "2"}], ",", "2", ",", "1"}], "}"}]}], "]"}],
      ";"}], "\n", 
    RowBox[{
-    RowBox[{"YukawaYaij", "[", 
+    RowBox[{"YukawaMat", "[", 
      RowBox[{"Yd", ",", "H", ",", 
       RowBox[{"adj", "[", "Q", "]"}], ",", "D", ",", 
       RowBox[{"{", 
@@ -1042,7 +1042,7 @@ Cell[BoxData[
           RowBox[{"#2", ",", "#3"}], "]"}], "&"}]}], "}"}]}], "]"}], ";"}], 
    "\n", 
    RowBox[{
-    RowBox[{"YukawaYaij", "[", 
+    RowBox[{"YukawaMat", "[", 
      RowBox[{"Ye", ",", "H", ",", 
       RowBox[{"adj", "[", "L", "]"}], ",", "E", ",", 
       RowBox[{"{", 
@@ -1053,7 +1053,7 @@ Cell[BoxData[
           RowBox[{"#1", ",", "#2"}], "]"}], "&"}], ",", 
         RowBox[{"1", "&"}]}], "}"}]}], "]"}], ";"}], "\n", 
    RowBox[{
-    RowBox[{"YukawaYaij", "[", 
+    RowBox[{"YukawaMat", "[", 
      RowBox[{"Yu", ",", 
       RowBox[{"adj", "[", "H", "]"}], ",", 
       RowBox[{"adj", "[", "Q", "]"}], ",", "U", ",", 
@@ -1068,7 +1068,7 @@ Cell[BoxData[
           RowBox[{"#2", ",", "#3"}], "]"}], "&"}]}], "}"}]}], "]"}], ";"}], 
    "\[IndentingNewLine]", 
    RowBox[{
-    RowBox[{"Quartic\[Lambda]abcd", "[", 
+    RowBox[{"ScalarQuartic", "[", 
      RowBox[{"\[Lambda]", ",", 
       RowBox[{"adj", "[", "H", "]"}], ",", "H", ",", 
       RowBox[{"adj", "[", "H", "]"}], ",", "H", ",", 
@@ -1107,7 +1107,7 @@ Cell[BoxData[
        RowBox[{"1", ",", "2", ",", "1"}], "}"}], ",", "1"}], "]"}], ";"}], 
    "\n", 
    RowBox[{
-    RowBox[{"ScalarMassMab", "[", 
+    RowBox[{"ScalarMass", "[", 
      RowBox[{"\[Mu]2", ",", 
       RowBox[{"adj", "[", "H", "]"}], ",", "H", ",", 
       RowBox[{"{", 

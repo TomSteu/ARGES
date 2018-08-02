@@ -77,7 +77,7 @@ Cell[BoxData[
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"YukawaY", "[", 
+  RowBox[{"Yukawa", "[", 
    RowBox[{"y", ",", "H", ",", 
     RowBox[{"adj", "[", "QL", "]"}], ",", "QR", ",", 
     RowBox[{"{", 
@@ -97,7 +97,7 @@ Cell[BoxData[""], "Input",ExpressionUUID->"d8656952-15fd-4f24-9cb7-e57d3d31b577"
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"Quartic\[Lambda]abcd", "[", 
+  RowBox[{"ScalarQuartic", "[", 
    RowBox[{"v", ",", 
     RowBox[{"adj", "[", "H", "]"}], ",", "H", ",", 
     RowBox[{"adj", "[", "H", "]"}], ",", "H", ",", 
@@ -118,7 +118,7 @@ Cell[BoxData[
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"Quartic\[Lambda]abcd", "[", 
+  RowBox[{"ScalarQuartic", "[", 
    RowBox[{"u", ",", 
     RowBox[{"adj", "[", "H", "]"}], ",", "H", ",", 
     RowBox[{"adj", "[", "H", "]"}], ",", "H", ",", 
@@ -140,7 +140,7 @@ Cell[BoxData[
 Cell[BoxData[
  RowBox[{
   RowBox[{
-   RowBox[{"ScalarMassMab", "[", 
+   RowBox[{"ScalarMass", "[", 
     RowBox[{"mA2", ",", " ", 
      RowBox[{"adj", "[", "H", "]"}], ",", " ", "H", ",", " ", 
      RowBox[{"{", 
@@ -155,7 +155,7 @@ Cell[BoxData[
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"ScalarMassMab", "[", 
+  RowBox[{"ScalarMass", "[", 
    RowBox[{"mS2", ",", " ", "H", ",", " ", "H", ",", " ", 
     RowBox[{"{", 
      RowBox[{"1", "&"}], "}"}], ",", 
@@ -170,7 +170,7 @@ Cell[BoxData[
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"ScalarMassMab", "[", 
+  RowBox[{"ScalarMass", "[", 
    RowBox[{"mS2", ",", " ", 
     RowBox[{"adj", "[", "H", "]"}], ",", " ", 
     RowBox[{"adj", "[", "H", "]"}], ",", " ", 
@@ -192,7 +192,7 @@ a0622d1357f2"],
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"FermionMassM", "[", 
+  RowBox[{"FermionMass", "[", 
    RowBox[{"mQ", ",", " ", 
     RowBox[{"adj", "[", "QL", "]"}], ",", "QR", ",", 
     RowBox[{"{", 
@@ -1628,7 +1628,7 @@ Cell[BoxData[
 
 Cell[CellGroupData[{
 
-Cell["Quartic RGEs", "Section",ExpressionUUID->"95e9485e-ab48-4bae-992a-67495f6ec24c"],
+Cell["ScalarQuarticion",ExpressionUUID->"95e9485e-ab48-4bae-992a-67495f6ec24c"],
 
 Cell[BoxData[
  RowBox[{
