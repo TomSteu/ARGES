@@ -49,6 +49,7 @@ BeginPackage["ARGES`"];
 	CheckQuartic::usage = "Checks if scalar quartic term is generated at loop level";
 	CheckCubic::usage = "Checks if scalar cubic term is generated at loop level";
 	CheckScalarMass::usage = "Checks if scalar mass term is generated at loop level";
+	numericSums::usage = "if index contractions should not be simplified before performing sum";
 
 
 	Sqr[x_] := x*x;
@@ -76,6 +77,7 @@ BeginPackage["ARGES`"];
 			QuartMat = {{{{0}}}};
 			subSimplifySum = {};
 			$Assumptions = Element[KroneckerDelta[___], Reals];
+			numericSums = False;
 		];
 
 		(* Interfaces to define the theory *)
@@ -4293,15 +4295,18 @@ BeginPackage["ARGES`"];
 			SimplifySum[] :> 0
 		};
 
-
-		ContractSum[A_, B___] := Block[
+		ContractSum[A_] := A;
+		ContractSum[A_, B__] := Block[
 			{res},
+			If[numericSums === True, Return[Refine[Sum[Expand[A], B]]]; ];
 			res = SimplifySum[Expand[A],B]//.subSum;
 			Return[Refine[res/.SimplifySum -> Sum]];
 		];
 
-		ContractSum2[A_, B___] := Block[
+		ContractSum2[A_] := A;
+		ContractSum2[A_, B__] := Block[
 			{res},
+			If[numericSums === True, Return[Refine[Sum[Expand[A], B]]]; ];
 			res = SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum];
 			Return[Refine[res/.SimplifySum -> Sum]];
 		];
