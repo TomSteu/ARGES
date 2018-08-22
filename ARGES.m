@@ -4295,7 +4295,7 @@ BeginPackage["ARGES`"];
 			SimplifySum[] :> 0
 		};
 
-		ContractSum[A_] := Refine[A/.SimplifySum -> Sum];
+		ContractSum[A_] := Refine[A //.Join[subSum,subSimplifySum] /.SimplifySum -> Sum];
 		ContractSum[A_, B__] := Block[
 			{res},
 			If[numericSums === True, Return[Refine[Sum[Expand[A], B]]]; ];
@@ -4303,7 +4303,7 @@ BeginPackage["ARGES`"];
 			Return[Refine[res/.SimplifySum -> Sum]];
 		];
 
-		ContractSum2[A_] := Refine[A/.SimplifySum -> Sum];
+		ContractSum2[A_] := Refine[A //.Join[subSum2,subSimplifySum] /.SimplifySum -> Sum];
 		ContractSum2[A_, B__] := Block[
 			{res},
 			If[numericSums === True, Return[Refine[Sum[Expand[A], B]]]; ];
