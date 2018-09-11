@@ -39,6 +39,7 @@ BeginPackage["ARGES`"];
 	U::usage = "Unitary Group";
 	SU::usage = "Special Unitary Group";
 	SO::usage = "Special Orthogonal Group";
+	Sp::usage = "Special Symplectic Group";
 	\[CapitalLambda]::usage = "Product of Generators";
 	\[Xi]::usage = "Gauge fixing constant";
 	Generator::usage = "Gauge Generator";
@@ -2428,6 +2429,11 @@ BeginPackage["ARGES`"];
 							subInvariants = Append[subInvariants, d[ListGauge[[i,1]]]->ListGauge[[i,4,i]]];
 							subInvariants = Append[subInvariants, C2[ListGauge[[i,1]]]->(2 ListGauge[[i,3]] - 4)];
 						];
+						(* Adjoint Rep in Sp(2N)*)
+						If[ListGauge[[i,2]] === Sp && ListGauge[[i,4,i]]===1/2 ListGauge[[i,3]](ListGauge[[i,3]]+1),
+							subInvariants = Append[subInvariants, d[ListGauge[[i,1]]]->ListGauge[[i,4,i]]];
+							subInvariants = Append[subInvariants, C2[ListGauge[[i,1]]]->(1/2 ListGauge[[i,3]] + 1)];
+						];
 					];
 				];
 				(* Fermion Invariants *)
@@ -2488,6 +2494,24 @@ BeginPackage["ARGES`"];
 								If[WeylFermionList[[f,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] - 1) + 1,
 									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 2(ListGauge[[i,3]] + 2) FMultiplicity[f]/WeylFermionList[[f,3,i]]];
 									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]->ListGauge[[i,3]](ListGauge[[i,3]] - 1)(ListGauge[[i,3]] - 2)/(1/2 ListGauge[[i,3]] (ListGauge[[i,3]] - 1) + 1)];
+								];
+							];
+						];
+						(* SP(2N) subgroup *)
+						If[ListGauge[[i,2]] === Sp,
+							If[WeylFermionList[[f,3,i]] === 1,
+								subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 0];
+								subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 0];
+								Continue[];,
+								(* Fundamental Representation *)
+								If[WeylFermionList[[f,3,i]] === ListGauge[[i,3]],
+									subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/4 (ListGauge[[i,3]] + 1)];
+									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 FMultiplicity[f]/WeylFermionList[[f,3,i]]];
+								];
+								(* Adjoint Representation *)
+								If[WeylFermionList[[f,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] + 1),
+									subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] + 1)];
+									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] + 1) FMultiplicity[f]/WeylFermionList[[f,3,i]]];
 								];
 							];
 						];
@@ -2556,6 +2580,24 @@ BeginPackage["ARGES`"];
 								If[RealScalarList[[s,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] - 1) + 1,
 									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 2(ListGauge[[i,3]] + 2) SMultiplicity[s]/RealScalarList[[s,3,i]]];
 									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]->ListGauge[[i,3]](ListGauge[[i,3]] - 1)(ListGauge[[i,3]] - 2)/(1/2 ListGauge[[i,3]] (ListGauge[[i,3]] - 1) + 1)];
+								];
+							];
+						];
+						(* Sp(2N) subgroup *)
+						If[ListGauge[[i,2]] === Sp,
+							If[RealScalarList[[s,3,i]] === 1,
+								subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 0];
+								subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 0];
+								Continue[];,
+								(* Fundamental Representation *)
+								If[RealScalarList[[s,3,i]] === ListGauge[[i,3]],
+									subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/4 (ListGauge[[i,3]] + 1)];
+									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2 SMultiplicity[s]/RealScalarList[[s,3,i]]];
+								];
+								(* Adjoint Representation *)
+								If[RealScalarList[[s,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] + 1),
+									subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] + 1)];
+									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] + 1) SMultiplicity[s]/RealScalarList[[s,3,i]]];
 								];
 							];
 						];
