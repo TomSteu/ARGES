@@ -59,7 +59,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 
-	Begin["ARGESp`"];
+	(* Begin["ARGESp`"]; *)
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -477,7 +477,7 @@ BeginPackage["ARGES`"];
 				Message[Scalar::UnknownParticle];,
 				If[Dimensions[gauge][[1]] != NumberOfSubgroups,
 					Message[Quartic::ContractionError];,
-					ListQuartic = Append[ListQuartic, {sym, posA[[1,1]], posB[[1,1]], Length[RealScalarList]+1, Length[RealScalarList]+1, gauge, fak}];
+					ListQuartic = Append[ListQuartic, {sym, posA[[1,1]], posB[[1,1]], Length[RealScalarList]+1, Length[RealScalarList]+1, gauge, 2*fak}];
 					permList = PermList[List[#1,#2,#3,#4]];
 					permListPos[perm_, pos_] := {posA[[1,1]], posB[[1,1]], Length[RealScalarList]+1, Length[RealScalarList]+1}[[Position[permList[[perm]], permList[[1,pos]]][[1,1]]]];
 					For[ii=1, ii<= 24, ii++,
@@ -807,7 +807,7 @@ BeginPackage["ARGES`"];
 			If[BosonIndexOut[pos1[[1,1]], SList1] || BosonIndexOut[pos2[[1,1]], SList2],
 				Return[0];
 			];
-			Return[BetaQuartic[pos1[[1,1]], pos2[[1,1]], Length[RealScalarList]+1, Length[RealScalarList]+1, SList1, SList2, Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], loop]//SimplifyProduct];
+			Return[1/2 BetaQuartic[pos1[[1,1]], pos2[[1,1]], Length[RealScalarList]+1, Length[RealScalarList]+1, SList1, SList2, Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], loop]//SimplifyProduct];
 		]/;(Dimensions[SList1][[1]] == NumberOfSubgroups+2 && Dimensions[SList2][[1]] == NumberOfSubgroups+2);
 
 		(* Scalar Linear interaction *)
@@ -4379,5 +4379,5 @@ BeginPackage["ARGES`"];
 		Fermion::UnknownParticle = "Undefined Fermion field";
 
 		Reset[];
-	End[];
+	 End[]; 
 EndPackage[];
