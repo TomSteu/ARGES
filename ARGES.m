@@ -59,7 +59,7 @@ BeginPackage["ARGES`"];
 	NumberOfSubgroups = 1;
 
 
-	(* Begin["ARGESp`"]; *)
+	Begin["ARGESp`"];
 		Reset[] := Module[
 			{},
 			ListGauge = {};
@@ -477,14 +477,14 @@ BeginPackage["ARGES`"];
 				Message[Scalar::UnknownParticle];,
 				If[Dimensions[gauge][[1]] != NumberOfSubgroups,
 					Message[Quartic::ContractionError];,
-					ListQuartic = Append[ListQuartic, {sym, posA[[1,1]], posB[[1,1]], Length[RealScalarList]+1, Length[RealScalarList]+1, gauge, 2*fak}];
+					ListQuartic = Append[ListQuartic, {sym, posA[[1,1]], posB[[1,1]], Length[RealScalarList]+1, Length[RealScalarList]+1, gauge, fak}];
 					permList = PermList[List[#1,#2,#3,#4]];
 					permListPos[perm_, pos_] := {posA[[1,1]], posB[[1,1]], Length[RealScalarList]+1, Length[RealScalarList]+1}[[Position[permList[[perm]], permList[[1,pos]]][[1,1]]]];
 					For[ii=1, ii<= 24, ii++,
 						AppendSymQuartic[
 							sym, permListPos[ii,1], permListPos[ii,2], permListPos[ii,3], permListPos[ii,4],
 							Function[{x2}, x2&]/@(Function[{x}, x@@permList[[ii]]]/@gauge),
-							Evaluate[2/24 fak@@Flatten[permList[[ii]] /. {#1 -> perm1, #2 -> perm2, #3 -> perm3, #4 -> perm4} //. {perm1 -> {#1, #2}, perm2 -> {#3, #4}, perm3 -> {#5, #6}, perm4 -> {#7,#8}}]]&
+							Evaluate[1/24 fak@@Flatten[permList[[ii]] /. {#1 -> perm1, #2 -> perm2, #3 -> perm3, #4 -> perm4} //. {perm1 -> {#1, #2}, perm2 -> {#3, #4}, perm3 -> {#5, #6}, perm4 -> {#7,#8}}]]&
 						];
 					];
 					(* remove entries with coefficient zero *)
@@ -4379,5 +4379,5 @@ BeginPackage["ARGES`"];
 		Fermion::UnknownParticle = "Undefined Fermion field";
 
 		Reset[];
-	 End[]; 
+	End[]; 
 EndPackage[];
