@@ -3716,12 +3716,12 @@ BeginPackage["ARGES`"];
 			(** At least one is a dummy field *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(a[[1]] > Length[RealScalarList] || b[[1]] > Length[RealScalarList] || c[[1]] > Length[RealScalarList] || d[[1]] > Length[RealScalarList]),
 			(** Different Scalar Fields *)
-			\[CapitalLambda][a_, b_, c_, d_] :> (0)/;(
+			\[CapitalLambda][_][a_, b_, c_, d_] :> (0)/;(
 				(Length[RealScalarList[[a[[1]],1]]] =!= Length[RealScalarList[[c[[1]],1]]]) ||
 				(Length[RealScalarList[[a[[1]],1]]] === 0 && a[[1]] != c[[1]]) ||
 				(Length[RealScalarList[[a[[1]],1]]] === 1 && RealScalarList[[a[[1]],1]][[1]] != RealScalarList[[c[[1]],1]][[1]])
 			),
-			\[CapitalLambda][a_, b_, c_, d_] :> (0)/;(
+			\[CapitalLambda][_][a_, b_, c_, d_] :> (0)/;(
 				(Length[RealScalarList[[b[[1]],1]]] =!= Length[RealScalarList[[d[[1]],1]]]) ||
 				(Length[RealScalarList[[b[[1]],1]]] === 0 && b[[1]] != d[[1]]) ||
 				(Length[RealScalarList[[b[[1]],1]]] === 1 && RealScalarList[[b[[1]],1]][[1]] != RealScalarList[[d[[1]],1]][[1]])
@@ -3857,13 +3857,13 @@ BeginPackage["ARGES`"];
 			\[CapitalLambda][gaug_][a_,b_, c_, d_] :>(\[CapitalLambda][ListGauge[[gaug,1]], AdjWeylFermionList[[a[[1]],1]], AdjWeylFermionList[[b[[1]],1]], AdjWeylFermionList[[c[[1]],1]], AdjWeylFermionList[[d[[1]],1]]][a[[2+gaug]], b[[2+gaug]], c[[2+gaug]], d[[2+gaug]]] TensorDelta[a[[2;;1+gaug]], c[[2;;1+gaug]]] TensorDelta[b[[2;;1+gaug]], d[[2;;1+gaug]]] TensorDelta[a[[3+gaug;;]], c[[3+gaug;;]]] TensorDelta[b[[3+gaug;;]], d[[3+gaug;;]]])
 		};
 
-		sub\[CapitalLambda]SF := {
+		(*sub\[CapitalLambda]SF := {
 			(** At least one is a dummy field *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(a[[1]] > Length[RealScalarList] || c[[1]] > Length[RealScalarList]),
 			(** Fermion Fields are different Weyl Fermions *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(AdjWeylFermionList[[b[[1]], 2]] != AdjWeylFermionList[[d[[1]], 2]]),
 			(** Scalar Fields are different *)
-			\[CapitalLambda][a_, b_, c_, d_] :> (0)/;(
+			\[CapitalLambda][_][a_, b_, c_, d_] :> (0)/;(
 				(Length[RealScalarList[[a[[1]],1]]] =!= Length[RealScalarList[[c[[1]],1]]]) ||
 				(Length[RealScalarList[[a[[1]],1]]] === 0 && a[[1]] != c[[1]]) ||
 				(Length[RealScalarList[[a[[1]],1]]] === 1 && RealScalarList[[a[[1]],1]][[1]] != RealScalarList[[c[[1]],1]][[1]])
@@ -3933,6 +3933,88 @@ BeginPackage["ARGES`"];
 			)/;(ListGauge[[gaug, 3]] === 1),
 			(** unknown gauge group*)
 			\[CapitalLambda][gaug_][a_,b_, c_, d_] :>(\[CapitalLambda][ListGauge[[gaug,1]], RealScalarList[[a[[1]],1]], AdjWeylFermionList[[b[[1]],1]], RealScalarList[[c[[1]],1]], AdjWeylFermionList[[d[[1]],1]]][a[[3+gaug]], b[[3+gaug]], c[[3+gaug]], d[[3+gaug]]] TensorDelta[a[[2;;2+gaug]], c[[2;;2+gaug]]] TensorDelta[b[[2;;2+gaug]], d[[2;;2+gaug]]] TensorDelta[a[[4+gaug;;]], c[[4+gaug;;]]]  TensorDelta[b[[4+gaug;;]], d[[4+gaug;;]]])
+		};*)
+
+
+
+		sub\[CapitalLambda]SF := {
+			(** At least one is a dummy field *)
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(a[[1]] > Length[RealScalarList] || c[[1]] > Length[RealScalarList]),
+			(** Fermion Fields are different Weyl Fermions *)
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(AdjWeylFermionList[[b[[1]], 2]] != AdjWeylFermionList[[d[[1]], 2]]),
+			(** Scalar Fields are different *)
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(
+				(Length[RealScalarList[[a[[1]],1]]] =!= Length[RealScalarList[[c[[1]],1]]]) ||
+				(Length[RealScalarList[[a[[1]],1]]] === 0 && a[[1]] != c[[1]]) ||
+				(Length[RealScalarList[[a[[1]],1]]] === 1 && RealScalarList[[a[[1]],1]][[1]] != RealScalarList[[c[[1]],1]][[1]])
+			),
+			(** At least one is gauge singlet *)
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(ListGauge[[gaug,3]] =!= 1 && (RealScalarList[[a[[1]],3,gaug]] == 1 || WeylFermionList[[AdjWeylFermionList[[b[[1]], 2]], 3, gaug]] == 1 || RealScalarList[[c[[1]],3,gaug]] == 1 || WeylFermionList[[AdjWeylFermionList[[d[[1]], 2]], 3, gaug]] == 1)),
+			(** Gauge Multiplicities do not match *)
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;((RealScalarList[[a[[1]],3,gaug]] =!= RealScalarList[[c[[1]],3,gaug]]) || (WeylFermionList[[AdjWeylFermionList[[b[[1]], 2]], 3, gaug]] =!= WeylFermionList[[AdjWeylFermionList[[d[[1]], 2]], 3, gaug]])),
+			(** SU(N) -- all in fundamental representation *)
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (
+				If[
+					(a[[1]] == c[[1]])
+					,
+					1/4 (KroneckerDelta[a[[gaug+3]],d[[gaug+3]]] KroneckerDelta[b[[gaug+3]],c[[gaug+3]]]  - KroneckerDelta[a[[gaug+3]],b[[gaug+3]]] KroneckerDelta[c[[gaug+3]],d[[gaug+3]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+3][[2;;]], Delete[d,gaug+3][[2;;]]]
+					,
+					0
+				] + If[
+						(RealScalarList[[a[[1]], 1]][[1]] === RealScalarList[[c[[1]], 1]][[1]] &&
+						RealScalarList[[a[[1]], 1]][[0]] =!= RealScalarList[[c[[1]], 1]][[0]] &&
+						RealScalarList[[a[[1]], 1]][[0]] === Re && RealScalarList[[c[[1]], 1]][[0]] === Im),
+						1/4 ( KroneckerDelta[a[[gaug+3]],d[[gaug+3]]] KroneckerDelta[b[[gaug+3]],c[[gaug+3]]] +  KroneckerDelta[a[[gaug+3]],b[[gaug+3]]] KroneckerDelta[c[[gaug+3]],d[[gaug+3]]] - 2/ListGauge[[gaug,3]] KroneckerDelta[a[[gaug+3]],c[[gaug+3]]] KroneckerDelta[b[[gaug+3]],d[[gaug+3]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+3][[3;;]], Delete[d,gaug+3][[3;;]]] Eps[b[[2]], d[[2]]]
+						 ,
+						0
+					] + If[
+							(RealScalarList[[a[[1]], 1]][[1]] === RealScalarList[[c[[1]], 1]][[1]] &&
+							RealScalarList[[a[[1]], 1]][[0]] =!= RealScalarList[[c[[1]], 1]][[0]] &&
+							RealScalarList[[a[[1]], 1]][[0]] === Im && RealScalarList[[c[[1]], 1]][[0]] === Re),
+							-1/4 ( KroneckerDelta[a[[gaug+3]],d[[gaug+3]]] KroneckerDelta[b[[gaug+3]],c[[gaug+3]]] + KroneckerDelta[a[[gaug+3]],b[[gaug+3]]] KroneckerDelta[c[[gaug+3]],d[[gaug+3]]] - 2/ListGauge[[gaug,3]] KroneckerDelta[a[[gaug+3]],c[[gaug+3]]] KroneckerDelta[b[[gaug+3]],d[[gaug+3]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+3][[3;;]], Delete[d,gaug+3][[3;;]]] Eps[b[[2]], d[[2]]]
+							,
+							0
+						]
+			)/;(
+				ListGauge[[gaug,2]] === SU &&
+				RealScalarList[[a[[1]], 3, gaug]] == ListGauge[[gaug,3]] &&
+				WeylFermionList[[AdjWeylFermionList[[b[[1]], 2]], 3, gaug]] == ListGauge[[gaug,3]] &&
+				RealScalarList[[c[[1]], 3, gaug]] == ListGauge[[gaug,3]] &&
+				WeylFermionList[[AdjWeylFermionList[[d[[1]], 2]], 3, gaug]] == ListGauge[[gaug,3]]
+			),
+			(** SO(N) -- all in fundamental representation *)
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (\[CapitalLambda][gaug][a, d, c, b])/;(
+				ListGauge[[gaug,2]] === SO &&
+				RealScalarList[[a[[1]], 3, gaug]] == ListGauge[[gaug,3]] &&
+				WeylFermionList[[AdjWeylFermionList[[b[[1]], 2]], 3, gaug]] == ListGauge[[gaug,3]] &&
+				RealScalarList[[c[[1]], 3, gaug]] == ListGauge[[gaug,3]] &&
+				WeylFermionList[[AdjWeylFermionList[[d[[1]], 2]], 3, gaug]] == ListGauge[[gaug,3]] &&
+				b[[1]] == AdjWeylFermionList[[b[[1]], 4]] && AdjWeylFermionList[[d[[1]], 3]] == b[[1]]
+			),
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (
+				(KroneckerDelta[a[[gaug+3]],d[[gaug+2]]] KroneckerDelta[b[[gaug+2]],c[[gaug+3]]] - KroneckerDelta[a[[gaug+3]],b[[gaug+2]]] KroneckerDelta[c[[gaug+3]],d[[gaug+2]]]) TensorDelta[Delete[a,gaug+3], Delete[c,gaug+3]] TensorDelta[Delete[b,gaug+2][[2;;]], Delete[d,gaug+2][[2;;]]] KroneckerDelta[AdjWeylFermionList[[b[[1]], 3]], d[[1]]]
+			)/;(
+				ListGauge[[gaug,2]] === SO &&
+				RealScalarList[[a[[1]], 3, gaug]] == ListGauge[[gaug,3]] &&
+				WeylFermionList[[AdjWeylFermionList[[b[[1]], 2]], 3, gaug]] == ListGauge[[gaug,3]] &&
+				RealScalarList[[c[[1]], 3, gaug]] == ListGauge[[gaug,3]] &&
+				WeylFermionList[[AdjWeylFermionList[[d[[1]], 2]], 3, gaug]] == ListGauge[[gaug,3]]
+			),
+			(** U(1) *)
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :>(
+				(
+					RealScalarList[[a[[1]],3,gaug]] WeylFermionList[[AdjWeylFermionList[[b[[1]], 2]], 3, gaug]]
+					ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[c[[1]],1]]] KroneckerDelta[AdjWeylFermionList[[b[[1]], 3]], d[[1]]]
+					(
+						If[RealScalarList[[a[[1]],1]][[0]] === Re &&  RealScalarList[[c[[1]],1]][[0]] === Im, +1 ,
+							If[RealScalarList[[a[[1]],1]][[0]] === Im &&  RealScalarList[[c[[1]],1]][[0]] === Re, -1 , 0]]
+					) (
+						If[AdjWeylFermionList[[b[[1]], 4]] === b[[1]], 1, -1] 
+					) TensorDelta[a[[2;;]],c[[2;;]]] TensorDelta[b[[2;;]],d[[2;;]]] 
+				)
+			)/;(ListGauge[[gaug, 3]] === 1),
+			(** unknown gauge group*)
+			\[CapitalLambda][gaug_][a_,b_, c_, d_] :>(\[CapitalLambda][ListGauge[[gaug,1]], RealScalarList[[a[[1]],1]], AdjWeylFermionList[[b[[1]],1]], RealScalarList[[c[[1]],1]], AdjWeylFermionList[[d[[1]],1]]][a[[3+gaug]], b[[2+gaug]], c[[3+gaug]], d[[2+gaug]]] TensorDelta[a[[2;;2+gaug]], c[[2;;2+gaug]]] TensorDelta[b[[2;;1+gaug]], d[[2;;1+gaug]]] TensorDelta[a[[4+gaug;;]], c[[4+gaug;;]]]  TensorDelta[b[[3+gaug;;]], d[[3+gaug;;]]])
 		};
 
 
