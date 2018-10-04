@@ -3510,7 +3510,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			BY[gauge_, gauge2_][a_, b_, c_, d_] :> Block[
+			(*BY[gauge_, gauge2_][a_, b_, c_, d_] :> Block[
 				{gg, ff, ff1, ff2, ff3, ff4, ff1Part, ff2Part, ff3Part, ff4Part, y2, y3},
 				Sum[
 					(ReleaseHold[tr[Yuk[c[[1]]][AdjWeylFermionList[[ff1[0],3]], ff4[0]], adj[Yuk[d[[1]]]][AdjWeylFermionList[[ff4[0],3]], ff1[0]]]//. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
@@ -3563,8 +3563,8 @@ BeginPackage["ARGES`"];
 					{ff1[0], 1, Length[AdjWeylFermionList]},
 					{ff4[0], 1, Length[AdjWeylFermionList]}
 				]
-			],
-			BbarY[gauge_, gauge2_][a_, b_, c_, d_] :> Block[
+			],*)
+			(*BbarY[gauge_, gauge2_][a_, b_, c_, d_] :> Block[
 				{ffA, ffB, gg, ff1, ff2, ff3, ff4, y2, y4},
 				Sum[
 					ReleaseHold[tr[Yuk[c[[1]]][AdjWeylFermionList[[ff1[0],3]], ff3[0]], adj[Yuk[d[[1]]]][AdjWeylFermionList[[ff3[0],3]], ff1[0]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
@@ -3593,6 +3593,86 @@ BeginPackage["ARGES`"];
 					{ff2Part, 1, 2},
 					{ff3Part, 1, 2},
 					{ff4Part, 1, 2},
+					{ff1[0], 1, Length[AdjWeylFermionList]},
+					{ff3[0], 1, Length[AdjWeylFermionList]}
+				]
+			],*)
+			BY[gauge_, gauge2_][a_, b_, c_, d_] :> Block[
+				{gg, ff, ff1, ff2, ff3, ff4, y2, y3},
+				Sum[
+					(ReleaseHold[tr[Yuk[c[[1]]][AdjWeylFermionList[[ff1[0],3]], ff4[0]], adj[Yuk[d[[1]]]][AdjWeylFermionList[[ff4[0],3]], ff1[0]]]//. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
+						tr[y2_, y3_]:>(
+							Sum[
+								ContractSum@@Join[
+									{
+										GetGenTrace[{y2, y3}, {{c[[2]], c[[3]]}, {d[[2]], d[[3]]}}] Times@@(Function[{x2}, y2[[1+x2,1]][c[[3+x2]], ff3[x2], ff4[x2]] y3[[1+x2,1]][d[[3+x2]], ff4[x2], ff1[x2]]]/@Range[NumberOfSubgroups]) Refine[(
+											\[CapitalLambda][gauge][a, Join[{ff1[0], 1}, ff2/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{AdjWeylFermionList[[ff1[0],3]], 1}, ff1/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{ff1[0], 1}, ff3/@Range[NumberOfSubgroups]], b, Join[{AdjWeylFermionList[[ff1[0],3]], 1}, ff2/@Range[NumberOfSubgroups]]] +
+											\[CapitalLambda][gauge2][a, Join[{ff1[0], 1}, ff3/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{AdjWeylFermionList[[ff1[0],3]], 1}, ff2/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{ff1[0], 1}, ff2/@Range[NumberOfSubgroups]], b, Join[{AdjWeylFermionList[[ff1[0],3]], 1}, ff1/@Range[NumberOfSubgroups]]]
+										)//.sub\[CapitalLambda]SF],
+										{gg[1], RealScalarList[[gg[0], 2, 1]]},
+										{gg[2], RealScalarList[[gg[0], 2, 2]]}
+									},
+									Function[{x}, {gg[x+2], 1, SMultiplicity[gg[0],x]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff1[x], 1, FMultiplicity[AdjWeylFermionList[[ff1[0], 2]],x]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff2[x], 1, FMultiplicity[AdjWeylFermionList[[ff1[0], 2]],x]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff3[x], 1, FMultiplicity[AdjWeylFermionList[[ff1[0], 2]],x]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff4[x], 1, FMultiplicity[AdjWeylFermionList[[ff4[0], 2]],x]}]/@Range[NumberOfSubgroups]
+								],
+								{gg[0], 1, Length[RealScalarList]}
+							]
+						)
+					}) +
+					(ReleaseHold[tr[adj[Yuk[d[[1]]]][AdjWeylFermionList[[ff1[0],3]], ff4[0]], Yuk[c[[1]]][AdjWeylFermionList[[ff4[0],3]], ff1[0]]]//. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
+						tr[y2_, y3_]:>(
+							Sum[
+								ContractSum@@Join[
+									{
+										GetGenTrace[{y2, y3}, {{d[[2]], d[[3]]}, {c[[2]], c[[3]]}}]*Times@@(Function[{x2}, y2[[1+x2,1]][d[[3+x2]], ff3[x2], ff4[x2]] y3[[1+x2,1]][c[[3+x2]], ff4[x2], ff1[x2]]]/@Range[NumberOfSubgroups]) Refine[(
+											\[CapitalLambda][gauge][a, Join[{AdjWeylFermionList[[ff1[0],3]], 1}, ff1/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff1[0], 1}, ff2/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{AdjWeylFermionList[[ff1[0],3]], 1}, ff2/@Range[NumberOfSubgroups]], b, Join[{ff1[0], 1}, ff3/@Range[NumberOfSubgroups]]] +
+											\[CapitalLambda][gauge2][a, Join[{AdjWeylFermionList[[ff1[0],3]], 1}, ff2/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff1[0], 1}, ff3/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{AdjWeylFermionList[[ff1[0],3]], 1}, ff1/@Range[NumberOfSubgroups]], b, Join[{ff1[0], 1}, ff2/@Range[NumberOfSubgroups]]]
+										)//.sub\[CapitalLambda]SF],
+										{gg[1], RealScalarList[[gg[0], 2, 1]]},
+										{gg[2], RealScalarList[[gg[0], 2, 2]]}
+									},
+									Function[{x}, {gg[x+2], 1, SMultiplicity[gg[0], x]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff1[x], 1, FMultiplicity[AdjWeylFermionList[[ff1[0], 2]],x]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff2[x], 1, FMultiplicity[AdjWeylFermionList[[ff1[0], 2]],x]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff3[x], 1, FMultiplicity[AdjWeylFermionList[[ff1[0], 2]],x]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff4[x], 1, FMultiplicity[AdjWeylFermionList[[ff4[0], 2]],x]}]/@Range[NumberOfSubgroups]
+								],
+								{gg[0], 1, Length[RealScalarList]}
+							]
+						)
+					}),
+					{ff1[0], 1, Length[AdjWeylFermionList]},
+					{ff4[0], 1, Length[AdjWeylFermionList]}
+				]
+			],
+			BbarY[gauge_, gauge2_][a_, b_, c_, d_] :> Block[
+				{ffA, ffB, gg, y2, y4},
+				Sum[
+					ReleaseHold[tr[Yuk[c[[1]]][AdjWeylFermionList[[ff1[0],3]], ff3[0]], adj[Yuk[d[[1]]]][AdjWeylFermionList[[ff3[0],3]], ff1[0]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
+						tr[y2_, y4_] :> (
+							Sum[
+								ContractSum@@Join[
+									{
+										GetGenTrace[{ y2, y4}, {{c[[2]], c[[3]]}, {d[[2]], d[[3]]}}]*Times@@(Function[{x2}, y2[[1+x2,1]][c[[3+x2]], ff2[x2], ff3[x2]] y4[[1+x2,1]][d[[3+x2]], ff4[x2], ff1[x2]]]/@Range[NumberOfSubgroups]) Refine[(
+											\[CapitalLambda][gauge][a, Join[{ff1[0], 1}, ff2/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{AdjWeylFermionList[[ff1[0],3]], 1}, ff1/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge2][gg/@Range[0,NumberOfSubgroups+2], Join[{AdjWeylFermionList[[ff3[0],3]], 1}, ff3/@Range[NumberOfSubgroups]], b, Join[{ff3[0], 1}, ff4/@Range[NumberOfSubgroups]]] +
+											\[CapitalLambda][gauge2][a, Join[{AdjWeylFermionList[[ff3[0],3]], 1}, ff3/@Range[NumberOfSubgroups]], gg/@Range[0,NumberOfSubgroups+2], Join[{ff3[0], 1}, ff4/@Range[NumberOfSubgroups]]] \[CapitalLambda][gauge][gg/@Range[0,NumberOfSubgroups+2], Join[{ff1[0], 1}, ff2/@Range[NumberOfSubgroups]], b, Join[{AdjWeylFermionList[[ff1[0],3]], 1}, ff1/@Range[NumberOfSubgroups]]]
+										)//.sub\[CapitalLambda]SF],
+										{gg[1], RealScalarList[[gg[0], 2, 1]]},
+										{gg[2], RealScalarList[[gg[0], 2, 2]]}
+									},
+									Function[{x}, {gg[x+2], 1, SMultiplicity[gg[0], x]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff1[x], 1, FMultiplicity[AdjWeylFermionList[[ff1[0], 2]],x]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff2[x], 1, FMultiplicity[AdjWeylFermionList[[ff1[0], 2]],x]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff3[x], 1, FMultiplicity[AdjWeylFermionList[[ff3[0], 2]],x]}]/@Range[NumberOfSubgroups],
+									Function[{x}, {ff4[x], 1, FMultiplicity[AdjWeylFermionList[[ff3[0], 2]],x]}]/@Range[NumberOfSubgroups]
+								],
+								{gg[0], 1, Length[RealScalarList]}
+							]
+						)
+					},
 					{ff1[0], 1, Length[AdjWeylFermionList]},
 					{ff3[0], 1, Length[AdjWeylFermionList]}
 				]
@@ -3953,28 +4033,38 @@ BeginPackage["ARGES`"];
 			(** Gauge Multiplicities do not match *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;((RealScalarList[[a[[1]],3,gaug]] =!= RealScalarList[[c[[1]],3,gaug]]) || (WeylFermionList[[AdjWeylFermionList[[b[[1]], 2]], 3, gaug]] =!= WeylFermionList[[AdjWeylFermionList[[d[[1]], 2]], 3, gaug]])),
 			(** SU(N) -- all in fundamental representation *)
+			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> ( \[CapitalLambda][gaug][a, d, c, b] ) /;(
+				ListGauge[[gaug,2]] === SU &&
+				RealScalarList[[a[[1]], 3, gaug]] == ListGauge[[gaug,3]] &&
+				WeylFermionList[[AdjWeylFermionList[[b[[1]], 2]], 3, gaug]] == ListGauge[[gaug,3]] &&
+				RealScalarList[[c[[1]], 3, gaug]] == ListGauge[[gaug,3]] &&
+				WeylFermionList[[AdjWeylFermionList[[d[[1]], 2]], 3, gaug]] == ListGauge[[gaug,3]] &&
+				AdjWeylFermionList[[b[[1]], 4]] == b[[1]] && AdjWeylFermionList[[b[[1]], 3]] == d[[1]]
+			),
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (
 				If[
 					(a[[1]] == c[[1]])
 					,
-					1/4 (KroneckerDelta[a[[gaug+3]],d[[gaug+3]]] KroneckerDelta[b[[gaug+3]],c[[gaug+3]]]  - KroneckerDelta[a[[gaug+3]],b[[gaug+3]]] KroneckerDelta[c[[gaug+3]],d[[gaug+3]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+3][[2;;]], Delete[d,gaug+3][[2;;]]]
+					1/4 (KroneckerDelta[a[[gaug+3]],d[[gaug+2]]] KroneckerDelta[b[[gaug+2]],c[[gaug+3]]]  - KroneckerDelta[a[[gaug+3]],b[[gaug+2]]] KroneckerDelta[c[[gaug+3]],d[[gaug+2]]])
 					,
 					0
 				] + If[
 						(RealScalarList[[a[[1]], 1]][[1]] === RealScalarList[[c[[1]], 1]][[1]] &&
 						RealScalarList[[a[[1]], 1]][[0]] =!= RealScalarList[[c[[1]], 1]][[0]] &&
 						RealScalarList[[a[[1]], 1]][[0]] === Re && RealScalarList[[c[[1]], 1]][[0]] === Im),
-						1/4 ( KroneckerDelta[a[[gaug+3]],d[[gaug+3]]] KroneckerDelta[b[[gaug+3]],c[[gaug+3]]] +  KroneckerDelta[a[[gaug+3]],b[[gaug+3]]] KroneckerDelta[c[[gaug+3]],d[[gaug+3]]] - 2/ListGauge[[gaug,3]] KroneckerDelta[a[[gaug+3]],c[[gaug+3]]] KroneckerDelta[b[[gaug+3]],d[[gaug+3]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+3][[3;;]], Delete[d,gaug+3][[3;;]]] Eps[b[[2]], d[[2]]]
+						 - I/4 ( KroneckerDelta[a[[gaug+3]],d[[gaug+2]]] KroneckerDelta[b[[gaug+2]],c[[gaug+3]]] +  KroneckerDelta[a[[gaug+3]],b[[gaug+2]]] KroneckerDelta[c[[gaug+3]],d[[gaug+2]]] - 2/ListGauge[[gaug,3]] KroneckerDelta[a[[gaug+3]],c[[gaug+3]]] KroneckerDelta[b[[gaug+2]],d[[gaug+2]]]) 
 						 ,
 						0
 					] + If[
 							(RealScalarList[[a[[1]], 1]][[1]] === RealScalarList[[c[[1]], 1]][[1]] &&
 							RealScalarList[[a[[1]], 1]][[0]] =!= RealScalarList[[c[[1]], 1]][[0]] &&
 							RealScalarList[[a[[1]], 1]][[0]] === Im && RealScalarList[[c[[1]], 1]][[0]] === Re),
-							-1/4 ( KroneckerDelta[a[[gaug+3]],d[[gaug+3]]] KroneckerDelta[b[[gaug+3]],c[[gaug+3]]] + KroneckerDelta[a[[gaug+3]],b[[gaug+3]]] KroneckerDelta[c[[gaug+3]],d[[gaug+3]]] - 2/ListGauge[[gaug,3]] KroneckerDelta[a[[gaug+3]],c[[gaug+3]]] KroneckerDelta[b[[gaug+3]],d[[gaug+3]]]) TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+3][[3;;]], Delete[d,gaug+3][[3;;]]] Eps[b[[2]], d[[2]]]
+							  I/4 ( KroneckerDelta[a[[gaug+3]],d[[gaug+2]]] KroneckerDelta[b[[gaug+2]],c[[gaug+3]]] + KroneckerDelta[a[[gaug+3]],b[[gaug+2]]] KroneckerDelta[c[[gaug+3]],d[[gaug+2]]] - 2/ListGauge[[gaug,3]] KroneckerDelta[a[[gaug+3]],c[[gaug+3]]] KroneckerDelta[b[[gaug+2]],d[[gaug+2]]]) 
 							,
 							0
 						]
+			) (
+				 TensorDelta[Delete[a,gaug+3][[2;;]], Delete[c,gaug+3][[2;;]]] TensorDelta[Delete[b,gaug+2][[2;;]], Delete[d,gaug+2][[2;;]]] KroneckerDelta[b[[1]], AdjWeylFermionList[[d[[1]], 3]]]
 			)/;(
 				ListGauge[[gaug,2]] === SU &&
 				RealScalarList[[a[[1]], 3, gaug]] == ListGauge[[gaug,3]] &&
@@ -4007,9 +4097,9 @@ BeginPackage["ARGES`"];
 					ComplexDelta[RealScalarList[[a[[1]],1]], RealScalarList[[c[[1]],1]]] KroneckerDelta[AdjWeylFermionList[[b[[1]], 3]], d[[1]]]
 					(
 						If[RealScalarList[[a[[1]],1]][[0]] === Re &&  RealScalarList[[c[[1]],1]][[0]] === Im, +1 ,
-							If[RealScalarList[[a[[1]],1]][[0]] === Im &&  RealScalarList[[c[[1]],1]][[0]] === Re, -1 , 0]]
+							If[RealScalarList[[a[[1]],1]][[0]] === Im &&  RealScalarList[[c[[1]],1]][[0]] === Re, -1, 0]]
 					) (
-						If[AdjWeylFermionList[[b[[1]], 4]] === b[[1]], 1, -1] 
+						If[AdjWeylFermionList[[b[[1]], 4]] === b[[1]], -I , I] 
 					) TensorDelta[a[[2;;]],c[[2;;]]] TensorDelta[b[[2;;]],d[[2;;]]] 
 				)
 			)/;(ListGauge[[gaug, 3]] === 1),
