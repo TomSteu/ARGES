@@ -4060,7 +4060,7 @@ BeginPackage["ARGES`"];
 		(* optimized functions for Yukawa traces and products *)
 		SolveTrace2[Y1_, Y2_, SIdx_] := Block[
 			{sumInd1,sumInd2},
-			ReleaseHold[SolveTrace[Y1,Y2]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
+			ReleaseHold[SolveTrace[Y1,Y2]]//.subYuk2 /.{
 				tr[y1_, y2_]:>Times@@Join[
 					{
 						Refine[
@@ -4078,7 +4078,7 @@ BeginPackage["ARGES`"];
 
 		SolveTrace3[Y1_, Y2_, Y3_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3]]//.subYuk2 /.{
 				tr[y1_, y2_, y3_]:>Times@@Join[
 					{
 						Refine[
@@ -4097,7 +4097,7 @@ BeginPackage["ARGES`"];
 
 		SolveTrace4[Y1_, Y2_, Y3_, Y4_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3, sumInd4},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4]]//.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_]:>Times@@Join[
 					{
 						Refine[
@@ -4117,7 +4117,7 @@ BeginPackage["ARGES`"];
 
 		SolveTrace5[Y1_, Y2_, Y3_, Y4_, Y5_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3, sumInd4, sumInd5},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5]]//.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_, y5_]:>Times@@Join[
 					{
 						Refine[
@@ -4138,7 +4138,7 @@ BeginPackage["ARGES`"];
 
 		SolveTrace6[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3, sumInd4, sumInd5, sumInd6},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5,Y6]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5,Y6]]//.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_, y5_, y6_]:>Times@@Join[
 					{
 						Refine[
@@ -4160,7 +4160,7 @@ BeginPackage["ARGES`"];
 
 		SolveProd2[Y1_, Y2_, li_, lj_, SIdx_] := Block[
 			{sumInd1},
-			ReleaseHold[SolveProd[Y1, Y2, li[[1]], lj[[1]]]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
+			ReleaseHold[SolveProd[Y1, Y2, li[[1]], lj[[1]]]]//.subYuk2 /.{
 				prod[y1_, y2_]:>Times@@Join[
 					{
 						Refine[
@@ -4179,7 +4179,7 @@ BeginPackage["ARGES`"];
 
 		SolveProd3[Y1_, Y2_, Y3_, li_, lj_, SIdx_] := Block[
 			{sumInd1, sumInd2},
-			ReleaseHold[SolveProd[Y1, Y2, Y3, li[[1]], lj[[1]]]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
+			ReleaseHold[SolveProd[Y1, Y2, Y3, li[[1]], lj[[1]]]]//.subYuk2 /.{
 				prod[y1_, y2_, y3_]:>Times@@Join[
 					{
 						Refine[
@@ -4199,7 +4199,7 @@ BeginPackage["ARGES`"];
 
 		SolveProd4[Y1_, Y2_, Y3_, Y4_, li_, lj_, SIdx_] := Block[
 			{sumInd1, sumInd2, sumInd3},
-			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, li[[1]], lj[[1]]]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
+			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, li[[1]], lj[[1]]]]//.subYuk2 /.{
 				prod[y1_, y2_, y3_, y4_]:>Times@@Join[
 					{
 						Refine[
@@ -4220,7 +4220,7 @@ BeginPackage["ARGES`"];
 
 		SolveProd5[Y1_, Y2_, Y3_, Y4_, Y5_, li_, lj_, SIdx_] := Block[
 			{sumInd1, sumInd2, sumInd3, sumInd4},
-			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, Y5, li[[1]], lj[[1]]]//. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
+			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, Y5, li[[1]], lj[[1]]]]//.subYuk2 /.{
 				prod[y1_, y2_, y3_, y4_, y5_]:>Times@@Join[
 					{
 						Refine[
@@ -4271,9 +4271,9 @@ BeginPackage["ARGES`"];
 
 		(* traces and products of fermion type indices *)
 		SolveProd[i1_, i2_] := KroneckerDelta[AdjWeylFermionList[[i1,3]], i2];
-		SolveProd[a_, i1_, i2_] := prod[a[i1,i2]];
-		SolveProd[a_,b___, i1_, i2_] := Sum[prod[a[i1, s], SolveProd[b, AdjWeylFermionList[[s,3]], i2]], {s, 1, Length[AdjWeylFermionList]}];
-		SolveTrace[a___] := Sum[tr[SolveProd[a, AdjWeylFermionList[[s,3]], s]], {s, 1, Length[AdjWeylFermionList]}];
+		SolveProd[a_, i1_, i2_] := prod[a[i1,i2]]  //. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd;
+		SolveProd[a_,b___, i1_, i2_] := Sum[ (prod[a[i1, s], SolveProdHold[b, AdjWeylFermionList[[s,3]], i2]] //. {adj[A_][ii1_, ii2_] :> adj[A[ii2, ii1]]} /.subYuk1 //.subProd /. SolveProdHold -> SolveProd), {s, 1, Length[AdjWeylFermionList]}];
+		SolveTrace[a___] := Sum[ (tr[SolveProd[a, AdjWeylFermionList[[s,3]], s]] //.subProd), {s, 1, Length[AdjWeylFermionList]}];
 
 		(* permutations *)
 		Perm[f_[a_,b_,c_,d_]]:= f[a,b,c,d] + f[a,b,d,c] + f[a,c,b,d] + f[a,c,d,b] + f[a,d,b,c] + f[a,d,c,b] + f[b,a,c,d] + f[b,a,d,c] + f[b,c,a,d] + f[b,c,d,a] + f[b,d,a,c] + f[b,d,c,a] + f[c,a,b,d] + f[c,a,d,b] + f[c,b,a,d] + f[c,b,d,a] + f[c,d,a,b] + f[c,d,b,a] + f[d,a,b,c] + f[d,a,c,b] + f[d,b,a,c] + f[d,b,c,a] + f[d,c,a,b] + f[d,c,b,a];
@@ -4408,5 +4408,5 @@ BeginPackage["ARGES`"];
 		Fermion::UnknownParticle = "Undefined Fermion field";
 
 		Reset[];
-	End[]; 
+	End[];
 EndPackage[];
