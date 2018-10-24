@@ -2675,7 +2675,7 @@ BeginPackage["ARGES`"];
 		ComplexDelta[a_, b_] := If[(MatchQ[a, Im[_]] || MatchQ[a, Re[_]]) && (MatchQ[b, Im[_]] || MatchQ[b, Re[_]]) && (a[[1]] === b[[1]]), 1, 0 ];
 
 		(* Matrix multiplication and traces for Yukawas *)
-		subProd := {
+		subProd := Dispatch[{
 			prod[a___, b_ + c_, d___]:>(prod[a, b, d] + prod[a, c, d]),
 			prod[][ii1_,ii2_]:>KroneckerDelta[ii1,ii2],
 			prod[]:>1,
@@ -2700,15 +2700,15 @@ BeginPackage["ARGES`"];
 			adj[adj[a_]]:>a,
 			adj[a_+ b_] :> (adj[a] + adj[b]),
 			adj[0]->0
-		};
+		}];
 
 		(* replaces Yukawas and other Invariants in Fermion traces and products *)
-		subYuk1 := {
+		subYuk1 := Dispatch[{
 			adj[Yuk[a_][i1_, i2_]] :> AdjYukMat[[a, i2, i1]],
 			Yuk[a_][i1_, i2_] :> YukMat[[a, i1, i2]],
 			Delt[ii_][i1_,i2_] :> If[AdjWeylFermionList[[i1,2]] == ii && AdjWeylFermionList[[i1,2]] == ii && AdjWeylFermionList[[i1,3]] == i2, Delta[ii], 0]
-		};
-		subYuk2 := {
+		}];
+		subYuk2 := Dispatch[{
 			adj[transpose[yuk[pos_]]]:>Join[
 				{
 					{
@@ -2792,11 +2792,11 @@ BeginPackage["ARGES`"];
 				{{del[ii], Mat[1]&, 1, 1, WeylFermionList[[ii,2]], WeylFermionList[[ii,2]]}},
 				Function[{x}, {KroneckerDelta[#2,#3]&, 1, FMultiplicity[ii,x], FMultiplicity[ii,x]}]/@Range[NumberOfSubgroups]
 			]
-		};
+		}];
 
 		(* substitution rule for scalar sector *)
-		subQuart1 := {Quartic[a_, b_, c_, d_] :> QuartMat[[a,b,c,d]]};
-		subQuart2 := {
+		subQuart1 := Dispatch[{Quartic[a_, b_, c_, d_] :> QuartMat[[a,b,c,d]]}];
+		subQuart2 := Dispatch[{
 			Quart[q_] :> Join[
 				{
 					{
@@ -2812,11 +2812,11 @@ BeginPackage["ARGES`"];
 				},
 				Function[{x}, {ListQuarticSym[[q,6,x]], SMultiplicity[ListQuarticSym[[q,2]], x], SMultiplicity[ListQuarticSym[[q,3]], x], SMultiplicity[ListQuarticSym[[q,4]], x], SMultiplicity[ListQuarticSym[[q,5]], x]}]/@Range[NumberOfSubgroups]
 			]
-		};
+		}];
 
 
 
-		subScalarInvariants := {
+		subScalarInvariants := Dispatch[{
 			\[CapitalLambda]2[pa_, pb_, pc_, pd_] :> Block[
 				{ss1, ss2, assHold, sum, x, x2},
 				assHold=$Assumptions;
@@ -3723,13 +3723,13 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			]
-		};
+		}];
 
 		(* trivial thing the kernel should be aware of but isn't *)
 		subKron := {Sum[AA_ KroneckerDelta[aa_, 1], BB___, {aa_, 1, bb_}, CC__] :> Sum[AA /. aa -> 1, BB, CC]};
 
 		(* Contraction of two scalar generators, see for instance arXiv:hep-ph/0211440 eq. (117) for Scalars and Fermions*)
-		sub\[CapitalLambda]S := {
+		sub\[CapitalLambda]S := Dispatch[{
 			(** At least one is a dummy field *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(a[[1]] > Length[RealScalarList] || b[[1]] > Length[RealScalarList] || c[[1]] > Length[RealScalarList] || d[[1]] > Length[RealScalarList]),
 			(** Different Scalar Fields *)
@@ -3800,9 +3800,9 @@ BeginPackage["ARGES`"];
 			)/;(ListGauge[[gaug, 3]] === 1),
 			(** unknown gauge group*)
 			\[CapitalLambda][gaug_][a_,b_, c_, d_] :>(\[CapitalLambda][ListGauge[[gaug,1]], RealScalarList[[a[[1]],1]], RealScalarList[[b[[1]],1]], RealScalarList[[c[[1]],1]], RealScalarList[[d[[1]],1]]][a[[3+gaug]], b[[3+gaug]], c[[3+gaug]], d[[3+gaug]]] TensorDelta[a[[2;;2+gaug]], c[[2;;2+gaug]]] TensorDelta[b[[2;;2+gaug]], d[[2;;2+gaug]]] TensorDelta[a[[4+gaug;;]], c[[4+gaug;;]]] TensorDelta[b[[4+gaug;;]], d[[4+gaug;;]]])
-		};
+		}];
 
-		sub\[CapitalLambda]F := {
+		sub\[CapitalLambda]F := Dispatch[{
 			(** Generator between different particle types *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(
 				(AdjWeylFermionList[[a[[1]],2]] != AdjWeylFermionList[[c[[1]],2]]) || (AdjWeylFermionList[[b[[1]],2]] != AdjWeylFermionList[[d[[1]],2]])
@@ -3872,9 +3872,9 @@ BeginPackage["ARGES`"];
 			)/;(ListGauge[[gaug, 3]] === 1),
 			(** unknown gauge group*)
 			\[CapitalLambda][gaug_][a_,b_, c_, d_] :>(\[CapitalLambda][ListGauge[[gaug,1]], AdjWeylFermionList[[a[[1]],1]], AdjWeylFermionList[[b[[1]],1]], AdjWeylFermionList[[c[[1]],1]], AdjWeylFermionList[[d[[1]],1]]][a[[2+gaug]], b[[2+gaug]], c[[2+gaug]], d[[2+gaug]]] TensorDelta[a[[2;;1+gaug]], c[[2;;1+gaug]]] TensorDelta[b[[2;;1+gaug]], d[[2;;1+gaug]]] TensorDelta[a[[3+gaug;;]], c[[3+gaug;;]]] TensorDelta[b[[3+gaug;;]], d[[3+gaug;;]]])
-		};
+		}];
 
-		sub\[CapitalLambda]SF := {
+		sub\[CapitalLambda]SF := Dispatch[{
 			(** At least one is a dummy field *)
 			\[CapitalLambda][gaug_][a_, b_, c_, d_] :> (0)/;(a[[1]] > Length[RealScalarList] || c[[1]] > Length[RealScalarList]),
 			(** Fermion Fields are different Weyl Fermions *)
@@ -3962,7 +3962,7 @@ BeginPackage["ARGES`"];
 			)/;(ListGauge[[gaug, 3]] === 1),
 			(** unknown gauge group*)
 			\[CapitalLambda][gaug_][a_,b_, c_, d_] :>(\[CapitalLambda][ListGauge[[gaug,1]], RealScalarList[[a[[1]],1]], AdjWeylFermionList[[b[[1]],1]], RealScalarList[[c[[1]],1]], AdjWeylFermionList[[d[[1]],1]]][a[[3+gaug]], b[[2+gaug]], c[[3+gaug]], d[[2+gaug]]] TensorDelta[a[[2;;2+gaug]], c[[2;;2+gaug]]] TensorDelta[b[[2;;1+gaug]], d[[2;;1+gaug]]] TensorDelta[a[[4+gaug;;]], c[[4+gaug;;]]]  TensorDelta[b[[3+gaug;;]], d[[3+gaug;;]]])
-		};
+		}];
 
 
 
@@ -4060,7 +4060,7 @@ BeginPackage["ARGES`"];
 		(* optimized functions for Yukawa traces and products *)
 		SolveTrace2[Y1_, Y2_, SIdx_] := Block[
 			{sumInd1,sumInd2},
-			ReleaseHold[SolveTrace[Y1,Y2]]//.subYuk2 /.{
+			ReleaseHold[SolveTrace[Y1,Y2]]//.subProd //.subYuk2 /.{
 				tr[y1_, y2_]:>Times@@Join[
 					{
 						Refine[
@@ -4078,7 +4078,7 @@ BeginPackage["ARGES`"];
 
 		SolveTrace3[Y1_, Y2_, Y3_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3]]//.subYuk2 /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3]]//.subProd //.subYuk2 /.{
 				tr[y1_, y2_, y3_]:>Times@@Join[
 					{
 						Refine[
@@ -4097,7 +4097,7 @@ BeginPackage["ARGES`"];
 
 		SolveTrace4[Y1_, Y2_, Y3_, Y4_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3, sumInd4},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4]]//.subYuk2 /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4]]//.subProd //.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_]:>Times@@Join[
 					{
 						Refine[
@@ -4117,7 +4117,7 @@ BeginPackage["ARGES`"];
 
 		SolveTrace5[Y1_, Y2_, Y3_, Y4_, Y5_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3, sumInd4, sumInd5},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5]]//.subYuk2 /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5]]//.subProd //.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_, y5_]:>Times@@Join[
 					{
 						Refine[
@@ -4138,7 +4138,7 @@ BeginPackage["ARGES`"];
 
 		SolveTrace6[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, SIdx_] := Block[
 			{sumInd1,sumInd2,sumInd3, sumInd4, sumInd5, sumInd6},
-			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5,Y6]]//.subYuk2 /.{
+			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5,Y6]]//.subProd //.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_, y5_, y6_]:>Times@@Join[
 					{
 						Refine[
@@ -4160,7 +4160,7 @@ BeginPackage["ARGES`"];
 
 		SolveProd2[Y1_, Y2_, li_, lj_, SIdx_] := Block[
 			{sumInd1},
-			ReleaseHold[SolveProd[Y1, Y2, li[[1]], lj[[1]]]]//.subYuk2 /.{
+			ReleaseHold[SolveProd[Y1, Y2, li[[1]], lj[[1]]]]//.subProd //.subYuk2 /.{
 				prod[y1_, y2_]:>Times@@Join[
 					{
 						Refine[
@@ -4179,7 +4179,7 @@ BeginPackage["ARGES`"];
 
 		SolveProd3[Y1_, Y2_, Y3_, li_, lj_, SIdx_] := Block[
 			{sumInd1, sumInd2},
-			ReleaseHold[SolveProd[Y1, Y2, Y3, li[[1]], lj[[1]]]]//.subYuk2 /.{
+			ReleaseHold[SolveProd[Y1, Y2, Y3, li[[1]], lj[[1]]]]//.subProd //.subYuk2 /.{
 				prod[y1_, y2_, y3_]:>Times@@Join[
 					{
 						Refine[
@@ -4199,7 +4199,7 @@ BeginPackage["ARGES`"];
 
 		SolveProd4[Y1_, Y2_, Y3_, Y4_, li_, lj_, SIdx_] := Block[
 			{sumInd1, sumInd2, sumInd3},
-			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, li[[1]], lj[[1]]]]//.subYuk2 /.{
+			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, li[[1]], lj[[1]]]]//.subProd //.subYuk2 /.{
 				prod[y1_, y2_, y3_, y4_]:>Times@@Join[
 					{
 						Refine[
@@ -4220,7 +4220,7 @@ BeginPackage["ARGES`"];
 
 		SolveProd5[Y1_, Y2_, Y3_, Y4_, Y5_, li_, lj_, SIdx_] := Block[
 			{sumInd1, sumInd2, sumInd3, sumInd4},
-			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, Y5, li[[1]], lj[[1]]]]//.subYuk2 /.{
+			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, Y5, li[[1]], lj[[1]]]]//.subProd //.subYuk2 /.{
 				prod[y1_, y2_, y3_, y4_, y5_]:>Times@@Join[
 					{
 						Refine[
