@@ -3200,30 +3200,32 @@ BeginPackage["ARGES`"];
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss4[x],Integers]&&(ss4[x]>0)]/@Range[NumberOfSubgroups+2];
 				sum = Sum[
-					ContractSum@@Join[
-						{
-							SolveSProd3[
-								Quartic[pa[[1]], pb[[1]], ss1[0], ss2[0]],
-								Quartic[pc[[1]], ss1[0], ss3[0], ss4[0]],
-								Quartic[pd[[1]], ss2[0], ss3[0], ss4[0]],
-								Prepend[
-									Function[{x2}, {pa[[3+x2]], pb[[3+x2]], ss1[2+x2], ss2[2+x2], pc[[3+x2]], ss1[2+x2], ss3[2+x2], ss4[2+x2], pd[[3+x2]], ss2[2+x2], ss3[2+x2], ss4[2+x2]}]/@Range[NumberOfSubgroups],
-									{pa[[2]], pa[[3]], pb[[2]], pb[[3]], ss1[1], ss1[2], ss2[1], ss2[2], pc[[2]], pc[[3]], ss1[1], ss1[2], ss3[1], ss3[2], ss4[1], ss4[2], pd[[2]], pd[[3]], ss2[1], ss2[2], ss3[1], ss3[2], ss4[1], ss4[2]}
-								]
-							],
-							{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
-							{ss1[2], 1, RealScalarList[[ss1[0],2,2]]},
-							{ss2[1], 1, RealScalarList[[ss2[0],2,1]]},
-							{ss2[2], 1, RealScalarList[[ss2[0],2,2]]},
-							{ss3[1], 1, RealScalarList[[ss3[0],2,1]]},
-							{ss3[2], 1, RealScalarList[[ss3[0],2,2]]},
-							{ss4[1], 1, RealScalarList[[ss4[0],2,1]]},
-							{ss4[2], 1, RealScalarList[[ss4[0],2,2]]}
-						},
-						Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-						Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-						Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-						Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
+					ApplyDistribute[
+						Function[contr, ContractSum@@Join[
+							{
+								contr,
+								{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
+								{ss1[2], 1, RealScalarList[[ss1[0],2,2]]},
+								{ss2[1], 1, RealScalarList[[ss2[0],2,1]]},
+								{ss2[2], 1, RealScalarList[[ss2[0],2,2]]},
+								{ss3[1], 1, RealScalarList[[ss3[0],2,1]]},
+								{ss3[2], 1, RealScalarList[[ss3[0],2,2]]},
+								{ss4[1], 1, RealScalarList[[ss4[0],2,1]]},
+								{ss4[2], 1, RealScalarList[[ss4[0],2,2]]}
+							},
+							Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
+						]], SolveSProd3[
+							Quartic[pa[[1]], pb[[1]], ss1[0], ss2[0]],
+							Quartic[pc[[1]], ss1[0], ss3[0], ss4[0]],
+							Quartic[pd[[1]], ss2[0], ss3[0], ss4[0]],
+							Prepend[
+								Function[{x2}, {pa[[3+x2]], pb[[3+x2]], ss1[2+x2], ss2[2+x2], pc[[3+x2]], ss1[2+x2], ss3[2+x2], ss4[2+x2], pd[[3+x2]], ss2[2+x2], ss3[2+x2], ss4[2+x2]}]/@Range[NumberOfSubgroups],
+								{pa[[2]], pa[[3]], pb[[2]], pb[[3]], ss1[1], ss1[2], ss2[1], ss2[2], pc[[2]], pc[[3]], ss1[1], ss1[2], ss3[1], ss3[2], ss4[1], ss4[2], pd[[2]], pd[[3]], ss2[1], ss2[2], ss3[1], ss3[2], ss4[1], ss4[2]}
+							]
+						]
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -4392,6 +4394,14 @@ BeginPackage["ARGES`"];
 				{FF1___, Factorize[0, A_], FF2__} :> {FF1, FF2}
 			}
 		);
+
+		ApplyDistribute[func_, unexp_] := Block[
+			{exp = Expand[unexp]},
+			If[exp[[0]] === Plus, 
+				func /@ exp,
+				func[exp]
+			]
+		];
 
 		(* Error Messages *)
 		Gauge::RepMismatch = "Representation list does not match number of subgroups";
