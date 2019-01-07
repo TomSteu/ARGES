@@ -1581,14 +1581,18 @@ BeginPackage["ARGES`"];
 				If[pd > Length[RealScalarList], 0,  \[CapitalLambda]Y[Join[{pd}, ld], Join[{pa}, la], Join[{pb}, lb], Join[{pc}, lc]]]
 			) //.subScalarInvariants//.{tr[adj[a_], b_]:>tr[b, adj[a]]};
 			beta += - 3*24 Sum[Sqr[ListGauge[[ii,1]]]\[CapitalLambda]S[ii][Join[{pa}, la], Join[{pb}, lb], Join[{pc}, lc], Join[{pd}, ld]], {ii, 1, NumberOfSubgroups}]//.subScalarInvariants;
-			beta += 3 Sum[Sqr[ListGauge[[ii,1]]] Sqr[ListGauge[[ii2,1]]] (
-				As[ii, ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-				As[ii, ii2][Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
-				As[ii, ii2][Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
-				As[ii, ii2][Prepend[lb, pb], Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd]] +
-				As[ii, ii2][Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
-				As[ii, ii2][Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]]
-			), {ii, 1, NumberOfSubgroups}, {ii2, 1, NumberOfSubgroups}]//.subScalarInvariants;
+			beta += If[
+				pa <= Length[RealScalarList] && pb <= Length[RealScalarList] && pc <= Length[RealScalarList] && pd <= Length[RealScalarList] && !SGaugeSinglet[pa] && !SGaugeSinglet[pb] && !SGaugeSinglet[pc] && !SGaugeSinglet[pd]
+				,
+				3 Sum[Sqr[ListGauge[[ii,1]]] Sqr[ListGauge[[ii2,1]]] (
+					As[ii, ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					As[ii, ii2][Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+					As[ii, ii2][Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+					As[ii, ii2][Prepend[lb, pb], Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd]] +
+					As[ii, ii2][Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+					As[ii, ii2][Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]]
+				), {ii, 1, NumberOfSubgroups}, {ii2, 1, NumberOfSubgroups}]//.subScalarInvariants
+			];
 			Return[beta/(24 Sqr[4\[Pi]])];
 		];
 
@@ -3998,7 +4002,7 @@ BeginPackage["ARGES`"];
 		SMultiplicity[s_] := If[s<=Length[RealScalarList], RealScalarList[[s,2,1]] RealScalarList[[s,2,2]] Times@@(Function[{x},If[ListGauge[[x,3]]===1, 1, RealScalarList[[s,3,x]]]]/@Range[NumberOfSubgroups]), 1];
 		FMultiplicity[f_, g_] := If[ListGauge[[g,3]]===1, 1, WeylFermionList[[f,3,g]]];
 		SMultiplicity[s_, g_] := If[s<=Length[RealScalarList], If[ListGauge[[g,3]]===1, 1, RealScalarList[[s,3,g]]], 1];
-
+		SGaugeSinglet[s_] := And@@(If[ListGauge[[#, 3]]===1, RealScalarList[[s, 3, #]] === 0, RealScalarList[[s, 3, #]] === 1]& /@ Range[NumberOfSubgroups]);
 		(* Generation contraction for Yukawa products and traces *)
 		GetGenProd[symList_, sVarList_, i_, j_] := Module[
 			{split, sumInd1, sumInd2},
