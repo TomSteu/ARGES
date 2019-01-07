@@ -1591,7 +1591,8 @@ BeginPackage["ARGES`"];
 					As[ii, ii2][Prepend[lb, pb], Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd]] +
 					As[ii, ii2][Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
 					As[ii, ii2][Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]]
-				), {ii, 1, NumberOfSubgroups}, {ii2, 1, NumberOfSubgroups}]//.subScalarInvariants
+				), {ii, 1, NumberOfSubgroups}, {ii2, 1, NumberOfSubgroups}]//.subScalarInvariants,
+				0
 			];
 			Return[beta/(24 Sqr[4\[Pi]])];
 		];
@@ -1783,28 +1784,32 @@ BeginPackage["ARGES`"];
 				{ii, 1, NumberOfSubgroups},
 				{ii2, 1, NumberOfSubgroups}
 			];
-			beta += Sum[
-				(
-					As[ii, ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					As[ii, ii2][Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
-					As[ii, ii2][Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
-					As[ii, ii2][Prepend[lb, pb], Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd]] +
-					As[ii, ii2][Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
-					As[ii, ii2][Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]]
-				)(
-					Sqr[ListGauge[[ii2,1]]] Power[ListGauge[[ii,1]],4] (
-						161/6 C2[ListGauge[[ii,1]]] -
-						16/3 Sum[S2[WeylFermionList[[ff,1]], ListGauge[[ii,1]]], {ff, 1, Length[WeylFermionList]}] -
-						7/3 Sum[S2[RealScalarList[[ss1[0],1]], ListGauge[[ii,1]]], {ss1[0], 1, Length[RealScalarList]}]
-					) - 15/2 Sum[Sqr[ListGauge[[ii,1]] ListGauge[[ii2,1]] ListGauge[[ii3,1]]](
-						If[pa > Length[RealScalarList], 0, C2[RealScalarList[[pa,1]], ListGauge[[ii3,1]]]] +
-						If[pb > Length[RealScalarList], 0, C2[RealScalarList[[pb,1]], ListGauge[[ii3,1]]]] +
-						If[pc > Length[RealScalarList], 0, C2[RealScalarList[[pc,1]], ListGauge[[ii3,1]]]] +
-						If[pd > Length[RealScalarList], 0, C2[RealScalarList[[pd,1]], ListGauge[[ii3,1]]]]
-					), {ii3, 1, NumberOfSubgroups}]
-				)//.subScalarInvariants,
-				{ii, 1, NumberOfSubgroups},
-				{ii2, 1, NumberOfSubgroups}
+			beta += If[
+				pa <= Length[RealScalarList] && pb <= Length[RealScalarList] && pc <= Length[RealScalarList] && pd <= Length[RealScalarList] && !SGaugeSinglet[pa] && !SGaugeSinglet[pb] && !SGaugeSinglet[pc] && !SGaugeSinglet[pd],
+				Sum[
+					(
+						As[ii, ii2][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+						As[ii, ii2][Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+						As[ii, ii2][Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+						As[ii, ii2][Prepend[lb, pb], Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd]] +
+						As[ii, ii2][Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+						As[ii, ii2][Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]]
+					)(
+						Sqr[ListGauge[[ii2,1]]] Power[ListGauge[[ii,1]],4] (
+							161/6 C2[ListGauge[[ii,1]]] -
+							16/3 Sum[S2[WeylFermionList[[ff,1]], ListGauge[[ii,1]]], {ff, 1, Length[WeylFermionList]}] -
+							7/3 Sum[S2[RealScalarList[[ss1[0],1]], ListGauge[[ii,1]]], {ss1[0], 1, Length[RealScalarList]}]
+						) - 15/2 Sum[Sqr[ListGauge[[ii,1]] ListGauge[[ii2,1]] ListGauge[[ii3,1]]](
+							If[pa > Length[RealScalarList], 0, C2[RealScalarList[[pa,1]], ListGauge[[ii3,1]]]] +
+							If[pb > Length[RealScalarList], 0, C2[RealScalarList[[pb,1]], ListGauge[[ii3,1]]]] +
+							If[pc > Length[RealScalarList], 0, C2[RealScalarList[[pc,1]], ListGauge[[ii3,1]]]] +
+							If[pd > Length[RealScalarList], 0, C2[RealScalarList[[pd,1]], ListGauge[[ii3,1]]]]
+						), {ii3, 1, NumberOfSubgroups}]
+					)//.subScalarInvariants,
+					{ii, 1, NumberOfSubgroups},
+					{ii2, 1, NumberOfSubgroups}
+				],
+				0
 			];
 			beta += 54 Sum[ Power[ListGauge[[ii,1]], 6] (
 			Ag[ii][Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
