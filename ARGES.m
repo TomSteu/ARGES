@@ -50,7 +50,6 @@ BeginPackage["ARGES`"];
 	CheckQuartic::usage = "Checks if scalar quartic term is generated at loop level";
 	CheckCubic::usage = "Checks if scalar cubic term is generated at loop level";
 	CheckScalarMass::usage = "Checks if scalar mass term is generated at loop level";
-	numericSums::usage = "if index contractions should not be simplified before performing sum";
 
 
 	Sqr[x_] := x*x;
@@ -78,7 +77,6 @@ BeginPackage["ARGES`"];
 			QuartMat = {{{{0}}}};
 			subSimplifySum = {};
 			$Assumptions = Element[KroneckerDelta[___], Reals];
-			numericSums = False;
 		];
 
 		(* Interfaces to define the theory *)
@@ -4403,19 +4401,18 @@ BeginPackage["ARGES`"];
 		};
 
 		ContractSum[A_] := Refine[A //.Join[subSum,subSimplifySum] /.SimplifySum -> Sum];
-		ContractSum[A_, B__] := Block[
-			{res},
-			If[numericSums === True, Return[Refine[Sum[Expand[A], B]]]; ];
-			res = SimplifySum[Expand[A],B]//.Join[subSum,subSimplifySum];
-			Return[Refine[res/.SimplifySum -> Sum]];
+		ContractSum[A_, B__] := Refine[
+			(
+				SimplifySum[Expand[A],B]//.Join[subSum,subSimplifySum]
+			)/.SimplifySum -> Sum
 		];
 
+
 		ContractSum2[A_] := Refine[A //.Join[subSum2,subSimplifySum] /.SimplifySum -> Sum];
-		ContractSum2[A_, B__] := Block[
-			{res},
-			If[numericSums === True, Return[Refine[Sum[Expand[A], B]]]; ];
-			res = SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum];
-			Return[Refine[res/.SimplifySum -> Sum]];
+		ContractSum2[A_, B__] := Refine[
+			(
+				SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum]
+			)/.SimplifySum -> Sum
 		];
 
 		ExtractIndexStructure[exp_, pamlist_] := (
