@@ -1046,16 +1046,21 @@ BeginPackage["ARGES`"];
 			] Power[\[Alpha][ListGauge[[pos,1]]], 2]/Power[4 \[Pi], 2];
 			beta -= 5/2 SimplifyProduct[Sum[Y6[RealScalarList[[s,1]], ListGauge[[pos,1]], ListGauge[[pos2, 1]]] \[Alpha][ListGauge[[pos2,1]]], {s, 1, Length[RealScalarList]}, {pos2, 1, NumberOfSubgroups}]] Power[\[Alpha][ListGauge[[pos,1]]], 2] /Power[4 \[Pi], 2];
 			beta -= 1/(2 d[ListGauge[[pos,1]]] Power[4 \[Pi], 2]) SimplifyProduct[Sum[
-				ContractSum@@Join[
-					{
-						SolveTrace4[Delt[f], adj[Yuk[s]], Delt[f2], Yuk[s], Prepend[
-							Function[{x}, {SIdx[2+x], SIdx[2+x], SIdx[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
-							{SIdx[1], SIdx[2], SIdx[1], SIdx[2], SIdx[1], SIdx[2], SIdx[1], SIdx[2]}
-						]],
-						{SIdx[1], 1, RealScalarList[[s, 2, 1]]},
-						{SIdx[2], 1, RealScalarList[[s, 2, 1]]}
-					},
-					Function[{x}, {SIdx[2+x], 1, SMultiplicity[s, x]}]/@Range[NumberOfSubgroups]
+				ApplyDistribute[
+					Function[contr,
+						ContractSum@@Join[
+							{
+								contr,
+								{SIdx[1], 1, RealScalarList[[s, 2, 1]]},
+								{SIdx[2], 1, RealScalarList[[s, 2, 1]]}
+							},
+							Function[{x}, {SIdx[2+x], 1, SMultiplicity[s, x]}]/@Range[NumberOfSubgroups]
+						]
+					],
+					SolveTrace4[Delt[f], adj[Yuk[s]], Delt[f2], Yuk[s], Prepend[
+						Function[{x}, {SIdx[2+x], SIdx[2+x], SIdx[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
+						{SIdx[1], SIdx[2], SIdx[1], SIdx[2], SIdx[1], SIdx[2], SIdx[1], SIdx[2]}
+					]]
 				] Sum[
 					1/2 (
 						C2[WeylFermionList[[f,1]], ListGauge[[pos,1]]] C2[WeylFermionList[[f2,1]], ListGauge[[pos2,1]]] 
@@ -1066,105 +1071,123 @@ BeginPackage["ARGES`"];
 				{s, 1, Length[RealScalarList]}, {f, 1, Length[WeylFermionList]}, {f2, 1, Length[WeylFermionList]}
 			] Power[\[Alpha][ListGauge[[pos,1]]], 2]];
 			beta -= 6 SimplifyProduct[Sum[
-				ContractSum@@Join[
-					{
-						(
-							 -1/6 SolveTrace4[Yuk[s2], adj[Yuk[s2]], Yuk[s], adj[Yuk[s]], Prepend[
-								Function[{x}, {SIdx2[2+x], SIdx2[2+x], SIdx[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
-								{SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2], SIdx[1], SIdx[2]}
-							]] + 1/6 SolveTrace4[Yuk[s2], adj[Yuk[s]], Yuk[s2], adj[Yuk[s]], Prepend[
-								Function[{x}, {SIdx2[2+x], SIdx[2+x], SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
-								{SIdx2[1], SIdx2[2], SIdx[1], SIdx[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
-							]]  + 1/6 SolveTrace4[Yuk[s], adj[Yuk[s2]], Yuk[s], adj[Yuk[s2]], Prepend[
-								Function[{x}, {SIdx[2+x], SIdx2[2+x], SIdx[2+x], SIdx2[2+x]}]/@Range[NumberOfSubgroups],
-								{SIdx[1], SIdx[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2], SIdx2[1], SIdx2[2]}
-							]]
-						) (C2[RealScalarList[[s,1]], ListGauge[[pos,1]]]),
-						{SIdx[1], 1, RealScalarList[[s, 2, 1]]},
-						{SIdx[2], 1, RealScalarList[[s, 2, 2]]},
-						{SIdx2[1], 1, RealScalarList[[s2, 2, 1]]},
-						{SIdx2[2], 1, RealScalarList[[s2, 2, 2]]}
-					},
-					Function[{x}, {SIdx[2+x], 1, SMultiplicity[s, x]}]/@Range[NumberOfSubgroups],
-					Function[{x}, {SIdx2[2+x], 1, SMultiplicity[s2, x]}]/@Range[NumberOfSubgroups]
+				ApplyDistribute[
+					Function[contr,
+						ContractSum@@Join[
+							{
+								contr,
+								{SIdx[1], 1, RealScalarList[[s, 2, 1]]},
+								{SIdx[2], 1, RealScalarList[[s, 2, 2]]},
+								{SIdx2[1], 1, RealScalarList[[s2, 2, 1]]},
+								{SIdx2[2], 1, RealScalarList[[s2, 2, 2]]}
+							},
+							Function[{x}, {SIdx[2+x], 1, SMultiplicity[s, x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {SIdx2[2+x], 1, SMultiplicity[s2, x]}]/@Range[NumberOfSubgroups]
+						]
+					], (
+						 -1/6 SolveTrace4[Yuk[s2], adj[Yuk[s2]], Yuk[s], adj[Yuk[s]], Prepend[
+							Function[{x}, {SIdx2[2+x], SIdx2[2+x], SIdx[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
+							{SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2], SIdx[1], SIdx[2]}
+						]] + 1/6 SolveTrace4[Yuk[s2], adj[Yuk[s]], Yuk[s2], adj[Yuk[s]], Prepend[
+							Function[{x}, {SIdx2[2+x], SIdx[2+x], SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
+							{SIdx2[1], SIdx2[2], SIdx[1], SIdx[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
+						]]  + 1/6 SolveTrace4[Yuk[s], adj[Yuk[s2]], Yuk[s], adj[Yuk[s2]], Prepend[
+							Function[{x}, {SIdx[2+x], SIdx2[2+x], SIdx[2+x], SIdx2[2+x]}]/@Range[NumberOfSubgroups],
+							{SIdx[1], SIdx[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2], SIdx2[1], SIdx2[2]}
+						]]
+					) (C2[RealScalarList[[s,1]], ListGauge[[pos,1]]])
 				],
 				{s, 1, Length[RealScalarList]}, {s2, 1, Length[RealScalarList]}
 			] Power[\[Alpha][ListGauge[[pos,1]]], 2]]/(d[ListGauge[[pos,1]]] Power[4 \[Pi], 4]);
 			beta -= 6 SimplifyProduct[Sum[
-				ContractSum@@Join[
-					{
-						(
-							 -1/24 SolveTrace5[Delt[f], Yuk[s2], adj[Yuk[s2]], Yuk[s], adj[Yuk[s]], Prepend[
-								Function[{x}, {SIdx2[2+x], SIdx2[2+x], SIdx2[2+x], SIdx[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
-								{SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2], SIdx[1], SIdx[2]}
-							]] - 1/2 SolveTrace5[Delt[f], Yuk[s2], adj[Yuk[s]], Yuk[s2], adj[Yuk[s]], Prepend[
-								Function[{x}, {SIdx2[2+x], SIdx2[2+x], SIdx[2+x], SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
-								{SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
-							]] - 1/8 SolveTrace5[Delt[f], adj[Yuk[s]], Yuk[s2], adj[Yuk[s2]], Yuk[s], Prepend[
-								Function[{x}, {SIdx[2+x], SIdx[2+x], SIdx2[2+x], SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
-								{SIdx[1], SIdx[2], SIdx[1], SIdx[2], SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
-							]]
-
-						) (C2[WeylFermionList[[f,1]], ListGauge[[pos, 1]]]),
-						{SIdx[1], 1, RealScalarList[[s, 2, 1]]},
-						{SIdx[2], 1, RealScalarList[[s, 2, 2]]},
-						{SIdx2[1], 1, RealScalarList[[s2, 2, 1]]},
-						{SIdx2[2], 1, RealScalarList[[s2, 2, 2]]}
-					},
-					Function[{x}, {SIdx[2+x], 1, SMultiplicity[s, x]}]/@Range[NumberOfSubgroups],
-					Function[{x}, {SIdx2[2+x], 1, SMultiplicity[s2, x]}]/@Range[NumberOfSubgroups]
+				ApplyDistribute[
+					Function[contr,
+						ContractSum@@Join[
+							{
+								contr,
+								{SIdx[1], 1, RealScalarList[[s, 2, 1]]},
+								{SIdx[2], 1, RealScalarList[[s, 2, 2]]},
+								{SIdx2[1], 1, RealScalarList[[s2, 2, 1]]},
+								{SIdx2[2], 1, RealScalarList[[s2, 2, 2]]}
+							},
+							Function[{x}, {SIdx[2+x], 1, SMultiplicity[s, x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {SIdx2[2+x], 1, SMultiplicity[s2, x]}]/@Range[NumberOfSubgroups]
+						]
+					],
+					(
+						 -1/24 SolveTrace5[Delt[f], Yuk[s2], adj[Yuk[s2]], Yuk[s], adj[Yuk[s]], Prepend[
+							Function[{x}, {SIdx2[2+x], SIdx2[2+x], SIdx2[2+x], SIdx[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
+							{SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2], SIdx[1], SIdx[2]}
+						]] - 1/2 SolveTrace5[Delt[f], Yuk[s2], adj[Yuk[s]], Yuk[s2], adj[Yuk[s]], Prepend[
+							Function[{x}, {SIdx2[2+x], SIdx2[2+x], SIdx[2+x], SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
+							{SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
+						]] - 1/8 SolveTrace5[Delt[f], adj[Yuk[s]], Yuk[s2], adj[Yuk[s2]], Yuk[s], Prepend[
+							Function[{x}, {SIdx[2+x], SIdx[2+x], SIdx2[2+x], SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
+							{SIdx[1], SIdx[2], SIdx[1], SIdx[2], SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
+						]]
+					) (C2[WeylFermionList[[f,1]], ListGauge[[pos, 1]]])
 				],
 				{s, 1, Length[RealScalarList]}, {s2, 1, Length[RealScalarList]}, {f, 1, Length[WeylFermionList]}
 			] Power[\[Alpha][ListGauge[[pos,1]]], 2]]/(d[ListGauge[[pos,1]]] Power[4 \[Pi], 4]);
 			beta += 7/(4 d[ListGauge[[pos,1]]] Power[4 \[Pi], 4]) SimplifyProduct[Sum[
-				ContractSum@@Join[
-					{
-						SolveTrace2[Yuk[s], adj[Yuk[s2]], Prepend[
-							Function[{x}, {SIdx[2+x], SIdx2[2+x]}]/@Range[NumberOfSubgroups],
-							{SIdx[1], SIdx[2], SIdx2[1], SIdx2[2]}
-						]](
-							SolveTrace3[Delt[f], adj[Yuk[s2]], Yuk[s], Prepend[
-							Function[{x}, {SIdx2[2+x], SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
-							{SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
-							]] +
-							SolveTrace3[Delt[f], Yuk[s2], adj[Yuk[s]], Prepend[
-							Function[{x}, {SIdx2[2+x], SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
-							{SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
-							]]
-						)  C2[WeylFermionList[[f,1]], ListGauge[[pos,1]]],
-						{SIdx[1], 1, RealScalarList[[s, 2, 1]]},
-						{SIdx[2], 1, RealScalarList[[s, 2, 2]]},
-						{SIdx2[1], 1, RealScalarList[[s2, 2, 1]]},
-						{SIdx2[2], 1, RealScalarList[[s2, 2, 2]]}
-					},
-					Function[{x}, {SIdx[2+x], 1, SMultiplicity[s, x]}]/@Range[NumberOfSubgroups],
-					Function[{x}, {SIdx2[2+x], 1, SMultiplicity[s2, x]}]/@Range[NumberOfSubgroups]
+				ApplyDistribute[
+					Function[contr,
+						ContractSum@@Join[
+							{
+								contr,
+								{SIdx[1], 1, RealScalarList[[s, 2, 1]]},
+								{SIdx[2], 1, RealScalarList[[s, 2, 2]]},
+								{SIdx2[1], 1, RealScalarList[[s2, 2, 1]]},
+								{SIdx2[2], 1, RealScalarList[[s2, 2, 2]]}
+							},
+							Function[{x}, {SIdx[2+x], 1, SMultiplicity[s, x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {SIdx2[2+x], 1, SMultiplicity[s2, x]}]/@Range[NumberOfSubgroups]
+						]
+					],
+					SolveTrace2[Yuk[s], adj[Yuk[s2]], Prepend[
+						Function[{x}, {SIdx[2+x], SIdx2[2+x]}]/@Range[NumberOfSubgroups],
+						{SIdx[1], SIdx[2], SIdx2[1], SIdx2[2]}
+					]](
+						SolveTrace3[Delt[f], adj[Yuk[s2]], Yuk[s], Prepend[
+						Function[{x}, {SIdx2[2+x], SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
+						{SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
+						]] +
+						SolveTrace3[Delt[f], Yuk[s2], adj[Yuk[s]], Prepend[
+						Function[{x}, {SIdx2[2+x], SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
+						{SIdx2[1], SIdx2[2], SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
+						]]
+					)  C2[WeylFermionList[[f,1]], ListGauge[[pos,1]]]
 				],
 				{s, 1, Length[RealScalarList]}, {s2, 1, Length[RealScalarList]}, {f, 1, Length[WeylFermionList]}
 			] Power[\[Alpha][ListGauge[[pos,1]]], 2]];
 			beta += -1/(4 d[ListGauge[[pos,1]]] Power[4 \[Pi], 4]) SimplifyProduct[Sum[
-				ContractSum@@Join[
-					{
-						SolveTrace2[Yuk[s], adj[Yuk[s2]], Prepend[
-							Function[{x}, {SIdx[2+x], SIdx2[2+x]}]/@Range[NumberOfSubgroups],
-							{SIdx[1], SIdx[2], SIdx2[1], SIdx2[2]}
-						]](
-							SolveTrace2[Yuk[s2], adj[Yuk[s]], Prepend[
+				ApplyDistribute[
+					Function[contr,
+						ContractSum@@Join[
+							{
+								contr,
+								{SIdx[1], 1, RealScalarList[[s, 2, 1]]},
+								{SIdx[2], 1, RealScalarList[[s, 2, 2]]},
+								{SIdx2[1], 1, RealScalarList[[s2, 2, 1]]},
+								{SIdx2[2], 1, RealScalarList[[s2, 2, 2]]}
+							},
+							Function[{x}, {SIdx[2+x], 1, SMultiplicity[s, x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {SIdx2[2+x], 1, SMultiplicity[s2, x]}]/@Range[NumberOfSubgroups]
+						]
+					],
+					SolveTrace2[Yuk[s], adj[Yuk[s2]], Prepend[
+						Function[{x}, {SIdx[2+x], SIdx2[2+x]}]/@Range[NumberOfSubgroups],
+						{SIdx[1], SIdx[2], SIdx2[1], SIdx2[2]}
+					]](
+						SolveTrace2[Yuk[s2], adj[Yuk[s]], Prepend[
 							Function[{x}, {SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
 							{SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
-							]] +
-							SolveTrace2[adj[Yuk[s2]], Yuk[s], Prepend[
+						]] +
+						SolveTrace2[adj[Yuk[s2]], Yuk[s], Prepend[
 							Function[{x}, {SIdx2[2+x], SIdx[2+x]}]/@Range[NumberOfSubgroups],
 							{SIdx2[1], SIdx2[2], SIdx[1], SIdx[2]}
-							]]
-						) C2[RealScalarList[[s,1]], ListGauge[[pos,1]]],
-						{SIdx[1], 1, RealScalarList[[s, 2, 1]]},
-						{SIdx[2], 1, RealScalarList[[s, 2, 2]]},
-						{SIdx2[1], 1, RealScalarList[[s2, 2, 1]]},
-						{SIdx2[2], 1, RealScalarList[[s2, 2, 2]]}
-					},
-					Function[{x}, {SIdx[2+x], 1, SMultiplicity[s, x]}]/@Range[NumberOfSubgroups],
-					Function[{x}, {SIdx2[2+x], 1, SMultiplicity[s2, x]}]/@Range[NumberOfSubgroups]
+						]]
+					) C2[RealScalarList[[s,1]], ListGauge[[pos,1]]]
 				],
 				{s, 1, Length[RealScalarList]}, {s2, 1, Length[RealScalarList]}
 			] Power[\[Alpha][ListGauge[[pos,1]]], 2]];
@@ -1286,106 +1309,143 @@ BeginPackage["ARGES`"];
 			$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss[x],Integers]&&(ss[x]>0)]/@Range[NumberOfSubgroups+2];
 			beta = 0;
 			beta += 2 Sum[
-				ContractSum@@Join[
-					{
-						SolveProd5[Yuk[ss1[0]], adj[Yuk[ss2[0]]], Yuk[pa], adj[Yuk[ss1[0]]], Yuk[ss2[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss1[2+x2], ss2[2+x2], la[[2+x2]], ss1[2+x2], ss2[2+x2]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], ss2[1], ss2[2], la[[1]], la[[2]], ss1[1], ss1[2], ss2[1], ss2[2]}]],
-						{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
-						{ss1[2], 1, RealScalarList[[ss1[0],2,2]]},
-						{ss2[1], 1, RealScalarList[[ss2[0],2,1]]},
-						{ss2[2], 1, RealScalarList[[ss2[0],2,2]]}
-					},
-					Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-					Function[{x}, {ss2[2+x], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+				ApplyDistribute[
+					Function[contr,
+						ContractSum@@Join[
+							{
+								contr,
+								{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
+								{ss1[2], 1, RealScalarList[[ss1[0],2,2]]},
+								{ss2[1], 1, RealScalarList[[ss2[0],2,1]]},
+								{ss2[2], 1, RealScalarList[[ss2[0],2,2]]}
+							},
+							Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {ss2[2+x], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+						]
+					],
+					SolveProd5[Yuk[ss1[0]], adj[Yuk[ss2[0]]], Yuk[pa], adj[Yuk[ss1[0]]], Yuk[ss2[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss1[2+x2], ss2[2+x2], la[[2+x2]], ss1[2+x2], ss2[2+x2]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], ss2[1], ss2[2], la[[1]], la[[2]], ss1[1], ss1[2], ss2[1], ss2[2]}]]
 				],
 				{ss1[0], 1, Length[RealScalarList]},
 				{ss2[0], 1, Length[RealScalarList]}
 			];
 			beta -= 2 Sum[
-				ContractSum@@Join[
-					{
-						SolveProd5[Yuk[ss1[0]], adj[Yuk[ss2[0]]], Yuk[pa], adj[Yuk[ss2[0]]], Yuk[ss1[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss1[2+x2], ss2[2+x2], la[[2+x2]], ss2[2+x2], ss1[2+x2]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], ss2[1], ss2[2], la[[1]], la[[2]], ss2[1], ss2[2], ss1[1], ss1[2]}]],
-						{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
-						{ss1[2], 1, RealScalarList[[ss1[0],2,2]]},
-						{ss2[1], 1, RealScalarList[[ss2[0],2,1]]},
-						{ss2[2], 1, RealScalarList[[ss2[0],2,2]]}
-					},
-					Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-					Function[{x}, {ss2[2+x], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+				ApplyDistribute[
+					Function[contr,
+						ContractSum@@Join[
+							{
+								contr,
+								{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
+								{ss1[2], 1, RealScalarList[[ss1[0],2,2]]},
+								{ss2[1], 1, RealScalarList[[ss2[0],2,1]]},
+								{ss2[2], 1, RealScalarList[[ss2[0],2,2]]}
+							},
+							Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {ss2[2+x], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+						]
+					],
+					SolveProd5[Yuk[ss1[0]], adj[Yuk[ss2[0]]], Yuk[pa], adj[Yuk[ss2[0]]], Yuk[ss1[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss1[2+x2], ss2[2+x2], la[[2+x2]], ss2[2+x2], ss1[2+x2]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], ss2[1], ss2[2], la[[1]], la[[2]], ss2[1], ss2[2], ss1[1], ss1[2]}]]
 				],
 				{ss1[0], 1, Length[RealScalarList]},
 				{ss2[0], 1, Length[RealScalarList]}
 			];
 			beta -= Sum[
-				ContractSum@@Join[
-					{
-						SolveProd5[Yuk[ss1[0]], adj[Yuk[ss2[0]]], Yuk[ss2[0]], adj[Yuk[pa]], Yuk[ss1[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss1[2+x2], ss2[2+x2], ss2[2+x2], la[[2+x2]], ss1[2+x2]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], ss2[1], ss2[2], ss2[1], ss2[2], la[[1]], la[[2]], ss1[1], ss1[2]}]],
-						{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
-						{ss1[2], 1, RealScalarList[[ss1[0],2,2]]},
-						{ss2[1], 1, RealScalarList[[ss2[0],2,1]]},
-						{ss2[2], 1, RealScalarList[[ss2[0],2,2]]}
-					},
-					Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-					Function[{x}, {ss2[2+x], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+				ApplyDistribute[
+					Function[contr,
+						ContractSum@@Join[
+							{
+								contr,
+								{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
+								{ss1[2], 1, RealScalarList[[ss1[0],2,2]]},
+								{ss2[1], 1, RealScalarList[[ss2[0],2,1]]},
+								{ss2[2], 1, RealScalarList[[ss2[0],2,2]]}
+							},
+							Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {ss2[2+x], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+						]
+					],
+					SolveProd5[Yuk[ss1[0]], adj[Yuk[ss2[0]]], Yuk[ss2[0]], adj[Yuk[pa]], Yuk[ss1[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss1[2+x2], ss2[2+x2], ss2[2+x2], la[[2+x2]], ss1[2+x2]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], ss2[1], ss2[2], ss2[1], ss2[2], la[[1]], la[[2]], ss1[1], ss1[2]}]]
 				],
 				{ss1[0], 1, Length[RealScalarList]},
 				{ss2[0], 1, Length[RealScalarList]}
 			];
 			beta -= Sum[
-				ContractSum@@Join[
-					{
-						SolveProd5[Yuk[ss1[0]], adj[Yuk[pa]], Yuk[ss2[0]], adj[Yuk[ss2[0]]], Yuk[ss1[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss1[2+x2], la[[2+x2]], ss2[2+x2], ss2[2+x2], ss1[2+x2]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], la[[1]], la[[2]], ss2[1], ss2[2], ss2[1], ss2[2], ss1[1], ss1[2]}]],
-						{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
-						{ss1[2], 1, RealScalarList[[ss1[0],2,2]]},
-						{ss2[1], 1, RealScalarList[[ss2[0],2,1]]},
-						{ss2[2], 1, RealScalarList[[ss2[0],2,2]]}
-					},
-					Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-					Function[{x}, {ss2[2+x], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+				ApplyDistribute[
+					Function[contr,
+						ContractSum@@Join[
+							{
+								contr,
+								{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
+								{ss1[2], 1, RealScalarList[[ss1[0],2,2]]},
+								{ss2[1], 1, RealScalarList[[ss2[0],2,1]]},
+								{ss2[2], 1, RealScalarList[[ss2[0],2,2]]}
+							},
+							Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {ss2[2+x], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+						]
+					],
+					SolveProd5[Yuk[ss1[0]], adj[Yuk[pa]], Yuk[ss2[0]], adj[Yuk[ss2[0]]], Yuk[ss1[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss1[2+x2], la[[2+x2]], ss2[2+x2], ss2[2+x2], ss1[2+x2]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], la[[1]], la[[2]], ss2[1], ss2[2], ss2[1], ss2[2], ss1[1], ss1[2]}]]
 				],
 				{ss1[0], 1, Length[RealScalarList]},
 				{ss2[0], 1, Length[RealScalarList]}
 			];
 			beta -= 1/8 Sum[
-				ContractSum@@Join[
-					{
-						SolveProd5[Yuk[ss1[0]], adj[Yuk[ss2[0]]], Yuk[ss2[0]], adj[Yuk[ss1[0]]], Yuk[pa], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss1[2+x2], ss2[2+x2], ss2[2+x2], ss1[2+x2], la[[2+x2]]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], ss2[1], ss2[2], ss2[1], ss2[2], ss1[1], ss1[2], la[[1]], la[[2]]}]],
-						{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
-						{ss1[2], 1, RealScalarList[[ss1[0],2,2]]},
-						{ss2[1], 1, RealScalarList[[ss2[0],2,1]]},
-						{ss2[2], 1, RealScalarList[[ss2[0],2,2]]}
-					},
-					Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-					Function[{x}, {ss2[2+x], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+				ApplyDistribute[
+					Function[contr,
+						ContractSum@@Join[
+							{
+								contr,
+								{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
+								{ss1[2], 1, RealScalarList[[ss1[0],2,2]]},
+								{ss2[1], 1, RealScalarList[[ss2[0],2,1]]},
+								{ss2[2], 1, RealScalarList[[ss2[0],2,2]]}
+							},
+							Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {ss2[2+x], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+						]
+					],
+					SolveProd5[Yuk[ss1[0]], adj[Yuk[ss2[0]]], Yuk[ss2[0]], adj[Yuk[ss1[0]]], Yuk[pa], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss1[2+x2], ss2[2+x2], ss2[2+x2], ss1[2+x2], la[[2+x2]]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], ss2[1], ss2[2], ss2[1], ss2[2], ss1[1], ss1[2], la[[1]], la[[2]]}]]
 				],
 				{ss1[0], 1, Length[RealScalarList]},
 				{ss2[0], 1, Length[RealScalarList]}
 			];
 			beta -= 1/8 Sum[
-				ContractSum@@Join[
-					{
-						SolveProd5[Yuk[pa], adj[Yuk[ss1[0]]], Yuk[ss2[0]], adj[Yuk[ss2[0]]], Yuk[ss1[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {la[[2+x2]], ss1[2+x2], ss2[2+x2], ss2[2+x2], ss1[2+x2]}]/@Range[NumberOfSubgroups], {la[[1]], la[[2]], ss1[1], ss1[2], ss2[1], ss2[2], ss2[1], ss2[2], ss1[1], ss1[2]}]],
-						{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
-						{ss1[2], 1, RealScalarList[[ss1[0],2,2]]},
-						{ss2[1], 1, RealScalarList[[ss2[0],2,1]]},
-						{ss2[2], 1, RealScalarList[[ss2[0],2,2]]}
-					},
-					Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-					Function[{x}, {ss2[2+x], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+				ApplyDistribute[
+					Function[contr,
+						ContractSum@@Join[
+							{
+								contr,
+								{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
+								{ss1[2], 1, RealScalarList[[ss1[0],2,2]]},
+								{ss2[1], 1, RealScalarList[[ss2[0],2,1]]},
+								{ss2[2], 1, RealScalarList[[ss2[0],2,2]]}
+							},
+							Function[{x}, {ss1[2+x], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {ss2[2+x], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+						]
+					],
+					SolveProd5[Yuk[pa], adj[Yuk[ss1[0]]], Yuk[ss2[0]], adj[Yuk[ss2[0]]], Yuk[ss1[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {la[[2+x2]], ss1[2+x2], ss2[2+x2], ss2[2+x2], ss1[2+x2]}]/@Range[NumberOfSubgroups], {la[[1]], la[[2]], ss1[1], ss1[2], ss2[1], ss2[2], ss2[1], ss2[2], ss1[1], ss1[2]}]]
 				],
 				{ss1[0], 1, Length[RealScalarList]},
 				{ss2[0], 1, Length[RealScalarList]}
 			];
-			beta -= 2 Sum[ContractSum@@Join[
-				{
-					(Y2S[Prepend[la, pa], ss1/@Range[0, NumberOfSubgroups+2]]//.subScalarInvariants) SolveProd3[Yuk[ss2[0]], adj[Yuk[ss1[0]]], Yuk[ss2[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss2[2+x2], ss1[2+x2], ss2[2+x2]}]/@Range[NumberOfSubgroups], {ss2[1], ss2[2], ss1[1], ss1[2], ss2[1], ss2[2]}]],
-					{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-					{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-					{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-					{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-				},
-				Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-				Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-			], {ss1[0], 1, Length[RealScalarList]}, {ss2[0], 1, Length[RealScalarList]}];
+			beta -= 2 Sum[
+				ApplyDistribute[
+					Function[contr,
+						ContractSum@@Join[
+							{
+								contr,
+								{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+								{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+								{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+								{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
+							},
+							Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+						]
+					],
+					(Y2S[Prepend[la, pa], ss1/@Range[0, NumberOfSubgroups+2]]//.subScalarInvariants) SolveProd3[Yuk[ss2[0]], adj[Yuk[ss1[0]]], Yuk[ss2[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss2[2+x2], ss1[2+x2], ss2[2+x2]}]/@Range[NumberOfSubgroups], {ss2[1], ss2[2], ss1[1], ss1[2], ss2[1], ss2[2]}]]
+				], 
+				{ss1[0], 1, Length[RealScalarList]}, {ss2[0], 1, Length[RealScalarList]}];
 			If[pa <= Length[RealScalarList],
 				beta -= Sum[ContractSum@@Join[
 					{
@@ -1396,34 +1456,50 @@ BeginPackage["ARGES`"];
 					Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups]
 				], {ss[0], 1, Length[RealScalarList]}];
 			];
-			beta -= 3/4 Sum[ContractSum@@Join[
-				{
-					(Y2S[ss/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]//.subScalarInvariants) (
+			beta -= 3/4 Sum[
+				ApplyDistribute[
+					Function[contr,
+						ContractSum@@Join[
+							{
+								contr,
+								{ss[1], 1, RealScalarList[[ss[0], 2,1]]},
+								{ss[2], 1, RealScalarList[[ss[0], 2,2]]},
+								{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+								{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
+							},
+							Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+						]
+					], (
+						Y2S[ss/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]//.subScalarInvariants) (
 						SolveProd3[Yuk[ss[0]], adj[Yuk[ss2[0]]], Yuk[pa], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss[2+x2], ss2[2+x2], la[[2+x2]]}]/@Range[NumberOfSubgroups], {ss[1], ss[2], ss2[1], ss2[2], la[[1]], la[[2]]}]] +
 						SolveProd3[Yuk[pa], adj[Yuk[ss[0]]], Yuk[ss2[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {la[[2+x2]], ss[2+x2], ss2[2+x2]}]/@Range[NumberOfSubgroups], {la[[1]], la[[2]], ss[1], ss[2], ss2[1], ss2[2]}]]
-					),
-					{ss[1], 1, RealScalarList[[ss[0], 2,1]]},
-					{ss[2], 1, RealScalarList[[ss[0], 2,2]]},
-					{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-					{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-				},
-				Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups],
-				Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-			], {ss[0], 1, Length[RealScalarList]}, {ss2[0], 1, Length[RealScalarList]}];
-			beta -= 2 Sum[ContractSum@@Join[
-				{
-					24 BetaQuartic[pa, ss[0], ss2[0], ss3[0], la, ss/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2],0] SolveProd3[Yuk[ss[0]], adj[Yuk[ss2[0]]], Yuk[ss3[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss[2+x2], ss2[2+x2], ss3[2+x2]}]/@Range[NumberOfSubgroups], {ss[1], ss[2], ss2[1], ss2[2], ss3[1], ss3[2]}]],
-					{ss[1], 1, RealScalarList[[ss[0], 2,1]]},
-					{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-					{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-					{ss[2], 1, RealScalarList[[ss[0], 2,2]]},
-					{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-					{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-				},
-				Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups],
-				Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-				Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-			], {ss[0], 1, Length[RealScalarList]}, {ss2[0], 1, Length[RealScalarList]}, {ss3[0], 1, Length[RealScalarList]}];
+					)
+				], 
+				{ss[0], 1, Length[RealScalarList]}, {ss2[0], 1, Length[RealScalarList]}
+			];
+			beta -= 2 Sum[
+				ApplyDistribute[
+					Function[contr,
+						ContractSum@@Join[
+							{
+								contr,
+								{ss[1], 1, RealScalarList[[ss[0], 2,1]]},
+								{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+								{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+								{ss[2], 1, RealScalarList[[ss[0], 2,2]]},
+								{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+								{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+							},
+							Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+							Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+						]
+					],
+					24 BetaQuartic[pa, ss[0], ss2[0], ss3[0], la, ss/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2],0] SolveProd3[Yuk[ss[0]], adj[Yuk[ss2[0]]], Yuk[ss3[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss[2+x2], ss2[2+x2], ss3[2+x2]}]/@Range[NumberOfSubgroups], {ss[1], ss[2], ss2[1], ss2[2], ss3[1], ss3[2]}]]
+				], 
+				{ss[0], 1, Length[RealScalarList]}, {ss2[0], 1, Length[RealScalarList]}, {ss3[0], 1, Length[RealScalarList]}
+			];
 			beta += Sum[
 				Sum[
 					Sqr[ListGauge[[ii,1]]](
@@ -1432,68 +1508,73 @@ BeginPackage["ARGES`"];
 						6 C2[RealScalarList[[ss[0], 1]], ListGauge[[ii,1]]] -
 						12 If[pa > Length[RealScalarList], 0, C2[RealScalarList[[pa,1]], ListGauge[[ii,1]]]]
 					), {ii, 1, NumberOfSubgroups}
-				] ContractSum@@Join[
+				] ApplyDistribute[Function[contr, ContractSum@@Join[
 					{
-						SolveProd3[
-							Yuk[ss[0]], adj[Yuk[pa]], Yuk[ss[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss[2+x2], la[[2+x2]], ss[2+x2]}]/@Range[NumberOfSubgroups], {ss[1], ss[2], la[[1]], la[[2]], ss[1], ss[2]}]
-						],
+						contr,
 						{ss[1], 1, RealScalarList[[ss[0],2,1]]},
 						{ss[2], 1, RealScalarList[[ss[0],2,2]]}
 					},
 					Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0],x]}]/@Range[NumberOfSubgroups]
-				] + Sum[
+				]], SolveProd3[
+					Yuk[ss[0]], adj[Yuk[pa]], Yuk[ss[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss[2+x2], la[[2+x2]], ss[2+x2]}]/@Range[NumberOfSubgroups], {ss[1], ss[2], la[[1]], la[[2]], ss[1], ss[2]}]
+				]] + Sum[
 					Sqr[ListGauge[[ii,1]]](
 						-7/4 C2[WeylFermionList[[AdjWeylFermionList[[pi,2]],1]], ListGauge[[ii,1]]] +
 						9/2 C2[RealScalarList[[ss[0],1]],ListGauge[[ii,1]]]
 					),
 					{ii, 1, NumberOfSubgroups}
-				] ContractSum@@Join[
+				] ApplyDistribute[Function[contr, ContractSum@@Join[
 					{
-						SolveProd3[
-							Yuk[ss[0]], adj[Yuk[ss[0]]], Yuk[pa], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss[2+x2], ss[2+x2], la[[2+x2]]}]/@Range[NumberOfSubgroups], {ss[1], ss[2], ss[1], ss[2], la[[1]], la[[2]]}]
-						],
+						contr,
 						{ss[1], 1, RealScalarList[[ss[0],2,1]]},
 						{ss[2], 1, RealScalarList[[ss[0],2,2]]}
 					},
 					Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0],x]}]/@Range[NumberOfSubgroups]
-				] + Sum[
+				]], SolveProd3[
+					Yuk[ss[0]], adj[Yuk[ss[0]]], Yuk[pa], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss[2+x2], ss[2+x2], la[[2+x2]]}]/@Range[NumberOfSubgroups], {ss[1], ss[2], ss[1], ss[2], la[[1]], la[[2]]}]
+				]] + Sum[
 					Sqr[ListGauge[[ii,1]]](
 						-7/4 C2[WeylFermionList[[AdjWeylFermionList[[pj,2]],1]], ListGauge[[ii,1]]] +
 						9/2 C2[RealScalarList[[ss[0],1]],ListGauge[[ii,1]]]
 					),
 					{ii, 1, NumberOfSubgroups}
-				] ContractSum@@Join[
+				] ApplyDistribute[Function[contr, ContractSum@@Join[
 					{
-						SolveProd3[
-							Yuk[pa], adj[Yuk[ss[0]]], Yuk[ss[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {la[[2+x2]], ss[2+x2], ss[2+x2]}]/@Range[NumberOfSubgroups], {la[[1]], la[[2]], ss[1], ss[2], ss[1], ss[2]}]
-						],
+						contr,
 						{ss[1], 1, RealScalarList[[ss[0],2,1]]},
 						{ss[2], 1, RealScalarList[[ss[0],2,2]]}
 					},
 					Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0],x]}]/@Range[NumberOfSubgroups]
-				],
+				]], SolveProd3[
+					Yuk[pa], adj[Yuk[ss[0]]], Yuk[ss[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {la[[2+x2]], ss[2+x2], ss[2+x2]}]/@Range[NumberOfSubgroups], {la[[1]], la[[2]], ss[1], ss[2], ss[1], ss[2]}]
+				]],
 				{ss[0], 1, Length[RealScalarList]}
 			];
 			For[ff=1, ff<=Length[WeylFermionList], ff++,
 				fHold[ff] = Sum[
-					ContractSum@@Join[
-						{
-							5 SolveProd4[
-								Yuk[ss[0]], Delt[ff], adj[Yuk[pa]], Yuk[ss[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss[2+x2], ss[2+x2], la[[2+x2]], ss[2+x2]}]/@Range[NumberOfSubgroups], {ss[1], ss[2], ss[1], ss[2], la[[1]], la[[2]], ss[1], ss[2]}]
-							] +
-							5 SolveProd4[
-								Yuk[ss[0]], adj[Yuk[pa]], Delt[ff], Yuk[ss[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss[2+x2], la[[2+x2]], ss[2+x2], ss[2+x2]}]/@Range[NumberOfSubgroups], {ss[1], ss[2], la[[1]], la[[2]],  ss[1], ss[2], ss[1], ss[2]}]
-							] -
-							1/4 SolveProd4[
-								Yuk[ss[0]], Delt[ff], adj[Yuk[ss[0]]], Yuk[pa], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss[2+x2], ss[2+x2], ss[2+x2], la[[2+x2]]}]/@Range[NumberOfSubgroups], {ss[1], ss[2], ss[1], ss[2], ss[1], ss[2], la[[1]], la[[2]]}]
-							] -
-							1/4 SolveProd4[
-								Yuk[pa], adj[Yuk[ss[0]]], Delt[ff], Yuk[ss[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {la[[2+x2]], ss[2+x2], ss[2+x2], ss[2+x2]}]/@Range[NumberOfSubgroups], {la[[1]], la[[2]], ss[1], ss[2], ss[1], ss[2], ss[1], ss[2]}]
-							],
-							{ss[1], 1, RealScalarList[[ss[0],2,1]]},
-							{ss[2], 1, RealScalarList[[ss[0],2,2]]}
-						},
-						Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0],x]}]/@Range[NumberOfSubgroups]
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss[1], 1, RealScalarList[[ss[0],2,1]]},
+									{ss[2], 1, RealScalarList[[ss[0],2,2]]}
+								},
+								Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0],x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						5 SolveProd4[
+							Yuk[ss[0]], Delt[ff], adj[Yuk[pa]], Yuk[ss[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss[2+x2], ss[2+x2], la[[2+x2]], ss[2+x2]}]/@Range[NumberOfSubgroups], {ss[1], ss[2], ss[1], ss[2], la[[1]], la[[2]], ss[1], ss[2]}]
+						] +
+						5 SolveProd4[
+							Yuk[ss[0]], adj[Yuk[pa]], Delt[ff], Yuk[ss[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss[2+x2], la[[2+x2]], ss[2+x2], ss[2+x2]}]/@Range[NumberOfSubgroups], {ss[1], ss[2], la[[1]], la[[2]],  ss[1], ss[2], ss[1], ss[2]}]
+						] -
+						1/4 SolveProd4[
+							Yuk[ss[0]], Delt[ff], adj[Yuk[ss[0]]], Yuk[pa], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {ss[2+x2], ss[2+x2], ss[2+x2], la[[2+x2]]}]/@Range[NumberOfSubgroups], {ss[1], ss[2], ss[1], ss[2], ss[1], ss[2], la[[1]], la[[2]]}]
+						] -
+						1/4 SolveProd4[
+							Yuk[pa], adj[Yuk[ss[0]]], Delt[ff], Yuk[ss[0]], Prepend[li,pi], Prepend[lj,pj], Prepend[Function[{x2}, {la[[2+x2]], ss[2+x2], ss[2+x2], ss[2+x2]}]/@Range[NumberOfSubgroups], {la[[1]], la[[2]], ss[1], ss[2], ss[1], ss[2], ss[1], ss[2]}]
+						]
 					],
 					{ss[0], 1, Length[RealScalarList]}
 				];
