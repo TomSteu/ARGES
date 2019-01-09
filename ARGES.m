@@ -1447,14 +1447,8 @@ BeginPackage["ARGES`"];
 				], 
 				{ss1[0], 1, Length[RealScalarList]}, {ss2[0], 1, Length[RealScalarList]}];
 			If[pa <= Length[RealScalarList],
-				beta -= Sum[ContractSum@@Join[
-					{
-						(( Hbar2S[Prepend[la, pa], ss/@Range[0, NumberOfSubgroups+2]] + 3/2 H2S[Prepend[la, pa], ss/@Range[0, NumberOfSubgroups+2]])//.subScalarInvariants) BetaYukawa[ss[0], pi, pj, ss/@Range[NumberOfSubgroups+2], li, lj, 0],
-						{ss[1], 1, RealScalarList[[ss[0], 2,1]]},
-						{ss[2], 1, RealScalarList[[ss[0], 2,2]]}
-					},
-					Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups]
-				], {ss[0], 1, Length[RealScalarList]}];
+				beta -= Hbar2SY[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]]//.subScalarInvariants;
+				beta -= 3/2 H2SY[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]]//.subScalarInvariants;
 				beta += 1/2 \[CapitalLambda]2SY[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]]//.subScalarInvariants;
 			];
 			beta -= 3/4 Sum[
@@ -3187,6 +3181,41 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
+			H2SY[pa_, pi_, pj_] :> Block[
+				{ss,ss2,x,x2,sum,assHold},
+				assHold = $Assumptions;
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)]/@Range[NumberOfSubgroups+2];
+				sum = 1/2 Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss[1], 1, RealScalarList[[ss[0], 2, 1]]},
+									{ss[2], 1, RealScalarList[[ss[0], 2, 2]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2, 1]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2, 2]]}
+								},
+								Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						], (
+							SolveTrace4[
+								Yuk[pa[[1]]], adj[Yuk[ss2[0]]], Yuk[ss[0]], adj[Yuk[ss[0]]],
+								Prepend[Function[{x2}, {pa[[3+x2]], ss2[x2+2], ss[x2+2], ss[x2+2]}]/@Range[NumberOfSubgroups], {pa[[2]], pa[[3]], ss2[1], ss2[2], ss[1], ss[2], ss[1], ss[2]}]
+							] +
+							SolveTrace4[
+								Yuk[ss2[0]], adj[Yuk[pa[[1]]]], Yuk[ss[0]], adj[Yuk[ss[0]]],
+								Prepend[Function[{x2}, {ss2[2+x2], pa[[x2+3]], ss[x2+2], ss[x2+2]}]/@Range[NumberOfSubgroups], {ss2[1],ss2[2], pa[[2]], pa[[3]], ss[1], ss[2], ss[1], ss[2]}]
+							]
+						) BetaYukawa[ss2[0], pi[[1]], pj[[1]], ss2/@Range[1, NumberOfSubgroups+2], pi[[2;;]], pj[[2;;]], 0]
+					],
+					{ss[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]}
+				]/.subKron;
+				$Assumptions=assHold;
+				sum
+			],
 			Hbar2S[pa_List, pb_List] :> 0 /; (pa[[1]] > Length[RealScalarList] || pb[[1]] > Length[RealScalarList]),
 			Hbar2S[pa_, pb_] :> Block[
 				{ss,x,x2,sum,assHold},
@@ -3212,9 +3241,10 @@ BeginPackage["ARGES`"];
 								adj[Yuk[pa[[1]]]], Yuk[ss[0]], adj[Yuk[pb[[1]]]], Yuk[ss[0]],
 								Prepend[Function[{x2}, {pa[[3+x2]], ss[x2+2], pb[[x2+3]], ss[x2+2]}]/@Range[NumberOfSubgroups], {pa[[2]], pa[[3]], ss[1], ss[2], pb[[2]], pb[[3]], ss[1], ss[2]}]
 							]
-						)
+						) BetaYukawa[ss2[0], pi[[1]], pj[[1]], ss2/@Range[1, NumberOfSubgroups+2], pi[[2;;]], pj[[2;;]], 0]
 					],
-					{ss[0], 1, Length[RealScalarList]}
+					{ss[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]}
 				]/.subKron;
 				$Assumptions=assHold;
 				sum
@@ -3247,6 +3277,41 @@ BeginPackage["ARGES`"];
 								Prepend[Function[{x2}, {pa[[3+x2]], ss[x2+2], ss2[x2+2], ss[x2+2]}]/@Range[NumberOfSubgroups], {pa[[2]], pa[[3]], ss[1], ss[2], ss2[1], ss2[2], ss[1], ss[2]}]
 							]
 						) BetaQuartic[ss2[0], pb[[1]], pc[[1]], pd[[1]], ss2/@Range[NumberOfSubgroups+2], pb[[2;;]], pc[[2;;]], pd[[2;;]], 0]
+					],
+					{ss[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]}
+				]/.subKron;
+				$Assumptions=assHold;
+				sum
+			],
+			Hbar2SY[pa_, pi_, pj_] :> Block[
+				{ss,ss2,x,x2,sum,assHold},
+				assHold = $Assumptions;
+				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)]/@Range[NumberOfSubgroups+2];
+				sum = 1/2 Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss[1], 1, RealScalarList[[ss[0], 2, 1]]},
+									{ss[2], 1, RealScalarList[[ss[0], 2, 2]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2, 1]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2, 2]]}
+								},
+								Function[{x}, {ss[x+2], 1, SMultiplicity[ss[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						], (
+							SolveTrace4[
+								Yuk[pa[[1]]], adj[Yuk[ss[0]]], Yuk[ss2[0]], adj[Yuk[ss[0]]],
+								Prepend[Function[{x2}, {pa[[3+x2]], ss[x2+2], ss2[x2+2], ss[x2+2]}]/@Range[NumberOfSubgroups], {pa[[2]], pa[[3]], ss[1], ss[2], ss2[1], ss2[2], ss[1], ss[2]}]
+										] +
+							SolveTrace4[
+								adj[Yuk[pa[[1]]]], Yuk[ss[0]], adj[Yuk[ss2[0]]], Yuk[ss[0]],
+								Prepend[Function[{x2}, {pa[[3+x2]], ss[x2+2], ss2[x2+2], ss[x2+2]}]/@Range[NumberOfSubgroups], {pa[[2]], pa[[3]], ss[1], ss[2], ss2[1], ss2[2], ss[1], ss[2]}]
+							]
+						) BetaYukawa[ss2[0], pi[[1]], pj[[1]], ss2/@Range[1, NumberOfSubgroups+2], pi[[2;;]], pj[[2;;]], 0]
 					],
 					{ss[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]}
