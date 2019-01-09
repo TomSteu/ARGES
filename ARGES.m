@@ -3024,7 +3024,7 @@ BeginPackage["ARGES`"];
 								{pa[[2]], pa[[3]], ss1[1], ss1[2], ss2[1], ss2[2], ss3[1], ss3[2], pb[[2]], pb[[3]], ss1[1], ss1[2], ss2[1], ss2[2], ss3[1], ss3[2]}
 							]
 						]
-					]
+					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
 					{ss3[0], 1, Length[RealScalarList]}
@@ -3241,10 +3241,9 @@ BeginPackage["ARGES`"];
 								adj[Yuk[pa[[1]]]], Yuk[ss[0]], adj[Yuk[pb[[1]]]], Yuk[ss[0]],
 								Prepend[Function[{x2}, {pa[[3+x2]], ss[x2+2], pb[[x2+3]], ss[x2+2]}]/@Range[NumberOfSubgroups], {pa[[2]], pa[[3]], ss[1], ss[2], pb[[2]], pb[[3]], ss[1], ss[2]}]
 							]
-						) BetaYukawa[ss2[0], pi[[1]], pj[[1]], ss2/@Range[1, NumberOfSubgroups+2], pi[[2;;]], pj[[2;;]], 0]
+						)
 					],
-					{ss[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
+					{ss[0], 1, Length[RealScalarList]}
 				]/.subKron;
 				$Assumptions=assHold;
 				sum
