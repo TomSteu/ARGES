@@ -2980,9 +2980,9 @@ BeginPackage["ARGES`"];
 						sum += ContractSum@@Join[
 							{\[CapitalLambda][gaug1][a, c, ind1L, ind2L] \[CapitalLambda][gaug2][ind1L, ind2L, b, d] + \[CapitalLambda][gaug1][a, ind1L, ind2L, d] \[CapitalLambda][gaug2][ind1L, b, c, ind2L],
 							{ind1[1], 1, RealScalarList[[ind1[0], 2,1]]},
-							{ind2[1], 1, RealScalarList[[ind1[0], 2,1]]},
+							{ind2[1], 1, RealScalarList[[ind2[0], 2,1]]},
 							{ind1[2], 1, RealScalarList[[ind1[0], 2,2]]},
-							{ind2[2], 1, RealScalarList[[ind1[0], 2,2]]}},
+							{ind2[2], 1, RealScalarList[[ind2[0], 2,2]]}},
 							Function[{x}, {ind1[x+2], 1, SMultiplicity[ind1[0], x]}]/@Range[NumberOfSubgroups],
 							Function[{x}, {ind2[x+2], 1, SMultiplicity[ind2[0], x]}]/@Range[NumberOfSubgroups]
 						]//.sub\[CapitalLambda]S;
