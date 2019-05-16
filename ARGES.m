@@ -50,6 +50,7 @@ BeginPackage["ARGES`"];
 	CheckQuartic::usage = "Checks if scalar quartic term is generated at loop level";
 	CheckCubic::usage = "Checks if scalar cubic term is generated at loop level";
 	CheckScalarMass::usage = "Checks if scalar mass term is generated at loop level";
+	DisableNativeSums::usage = "Uses SimplifySum instead of Sum";
 
 
 	Sqr[x_] := x*x;
@@ -4665,6 +4666,34 @@ BeginPackage["ARGES`"];
 		ContractSum2[A_, B__] := Refine[
 			(SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum])/.SimplifySum -> Sum
 		];
+
+		DisableNativeSums[] := (
+			ContractSum[A_] := Refine[A //.Join[subSum,subSimplifySum] //. {
+					SimplifySum[c_, ss1___, {p_, 1, q_}, ss2___ ] :> SimplifySum[q c, ss1, ss2] /; !MemberQ[c, p, Infinity],
+					SimplifySum[c_] :> c,
+					SimplifySum[] :> 0 
+				}
+			];
+			ContractSum[A_, B__] := Refine[
+				(SimplifySum[Expand[A],B]//.Join[subSum,subSimplifySum]//. {
+					SimplifySum[c_, ss1___, {p_, 1, q_}, ss2___ ] :> SimplifySum[q c, ss1, ss2] /; !MemberQ[c, p, Infinity],
+					SimplifySum[c_] :> c,
+					SimplifySum[] :> 0 
+				})
+			];
+			ContractSum2[A_] := Refine[A //.Join[subSum2,subSimplifySum]//. {
+					SimplifySum[c_, ss1___, {p_, 1, q_}, ss2___ ] :> SimplifySum[q c, ss1, ss2] /; !MemberQ[c, p, Infinity],
+					SimplifySum[c_] :> c,
+					SimplifySum[] :> 0 
+				}];
+			ContractSum2[A_, B__] := Refine[
+				(SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum])//. {
+					SimplifySum[c_, ss1___, {p_, 1, q_}, ss2___ ] :> SimplifySum[q c, ss1, ss2] /; !MemberQ[c, p, Infinity],
+					SimplifySum[c_] :> c,
+					SimplifySum[] :> 0 
+				}
+			];
+		);
 
 		ExtractIndexStructure[exp_, pamlist_] := (
 			(Factorize[1, #]& /@Flatten[{Expand[exp]/.Plus->List}])//.{

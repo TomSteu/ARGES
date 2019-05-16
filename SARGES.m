@@ -39,6 +39,7 @@ BeginPackage["SARGES`"];
 	Generator::usage = "Gauge Generator";
 	subSimplifySum::usage = "Rules for advanced Simplification";
 	SimplifySum::usage = "Label for advanced Simplification, to be used only within subSimplifySum";
+	DisableNativeSums::usage = "Uses SimplifySum instead of Sum";
 
 	
 	Sqr[x_] := x*x;
@@ -2854,6 +2855,30 @@ BeginPackage["SARGES`"];
 			res = SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum];
 			Return[Refine[res/.SimplifySum -> Sum]];
 		];
+
+
+		DisableNativeSums[] := (
+			ContractSum[A_, B___] := Block[
+				{res},
+				res = SimplifySum[Expand[A],B]//.subSum//. {
+					SimplifySum[c_, ss1___, {p_, 1, q_}, ss2___ ] :> SimplifySum[q c, ss1, ss2] /; !MemberQ[c, p, Infinity],
+					SimplifySum[c_] :> c,
+					SimplifySum[] :> 0 
+				};
+				Return[Refine[res/.SimplifySum -> Sum]];
+			];
+		
+			ContractSum2[A_, B___] := Block[
+				{res},
+				res = SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum]//. {
+					SimplifySum[c_, ss1___, {p_, 1, q_}, ss2___ ] :> SimplifySum[q c, ss1, ss2] /; !MemberQ[c, p, Infinity],
+					SimplifySum[c_] :> c,
+					SimplifySum[] :> 0 
+				};
+				Return[Refine[res/.SimplifySum -> Sum]];
+			];
+		);
+
 		
 		(* Error Messages *)
 		Gauge::RepMismatch = "Representation list does not match number of subgroups";
