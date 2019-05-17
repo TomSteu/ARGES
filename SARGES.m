@@ -2507,11 +2507,6 @@ BeginPackage["SARGES`"];
 									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 2(ListGauge[[i,3]] + 2) SMultiplicity[f]/ChiralSuperFieldList[[f,3,i]]];
 									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]->ListGauge[[i,3]](ListGauge[[i,3]] - 1)(ListGauge[[i,3]] + 2)/(1/2 ListGauge[[i,3]] (ListGauge[[i,3]] + 1) - 1)];
 								];
-								(* Anitsymmetric Representation *)
-								If[ChiralSuperFieldList[[f,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] - 1) + 1,
-									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 2(ListGauge[[i,3]] + 2) SMultiplicity[f]/ChiralSuperFieldList[[f,3,i]]];
-									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]->ListGauge[[i,3]](ListGauge[[i,3]] - 1)(ListGauge[[i,3]] - 2)/(1/2 ListGauge[[i,3]] (ListGauge[[i,3]] - 1) + 1)];
-								];
 							];
 						];
 						(* U(1) subgroup *)
