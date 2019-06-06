@@ -64,6 +64,7 @@ BeginPackage["SARGES`"];
 			nonNumerics = {};
 			subSimplifySum = {};
 			$Assumptions = Element[KroneckerDelta[___], Reals];
+			DisableNativeSums[False];
 		];
 
 		(* Interfaces to define the theory *)
@@ -2770,6 +2771,7 @@ BeginPackage["SARGES`"];
 			SimplifySum[A_ KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
 			SimplifySum[KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[1 , SS1, SS2],
 			Power[KroneckerDelta[A___], a_] :> KroneckerDelta[A],
+			SimplifySum[c_, ss1___, {p_, 1, q_}, ss2___ ] :> SimplifySum[q c, ss1, ss2] /; !MemberQ[{c, ss1, ss2}, p, Infinity],
 			Conjugate[Generator[A___][a_, i_, j_]] :> Generator[A][a, j, i],
 			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {a_, 1, aa_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C C2[A] KroneckerDelta[i, k], SS1, SS2, SS3], 
 			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {j_, 1, jj_}, SS2___, {a_, 1, aa_}, SS3___] :> SimplifySum[C C2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
@@ -2795,6 +2797,7 @@ BeginPackage["SARGES`"];
 			SimplifySum[A_ KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
 			SimplifySum[KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[1 , SS1, SS2],
 			Power[KroneckerDelta[A___], a_] :> KroneckerDelta[A],
+			SimplifySum[c_, ss1___, {p_, 1, q_}, ss2___ ] :> SimplifySum[q c, ss1, ss2] /; !MemberQ[{c, ss1, ss2}, p, Infinity],
 			Conjugate[Generator[A___][a_, i_, j_]] :> Generator[A][a, j, i],
 			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {a_, 1, aa_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C C2[A] KroneckerDelta[i, k], SS1, SS2, SS3], 
 			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {j_, 1, jj_}, SS2___, {a_, 1, aa_}, SS3___] :> SimplifySum[C C2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
@@ -2839,20 +2842,11 @@ BeginPackage["SARGES`"];
 		};
 		
 		
-		ContractSum[A_, B___] := Block[
-			{res},
-			res = SimplifySum[Expand[A],B]//.subSum;
-			Return[Refine[res/.SimplifySum -> Sum]];
-		];
-		
-		ContractSum2[A_, B___] := Block[
-			{res},
-			res = SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum];
-			Return[Refine[res/.SimplifySum -> Sum]];
-		];
 
 
-		DisableNativeSums[] := (
+
+		DisableNativeSums[disable_:True] := If[
+			disable,
 			ContractSum[A_, B___] := Block[
 				{res},
 				res = SimplifySum[Expand[A],B]//.subSum//. {
@@ -2862,7 +2856,6 @@ BeginPackage["SARGES`"];
 				};
 				Return[Refine[res/.SimplifySum -> Sum]];
 			];
-		
 			ContractSum2[A_, B___] := Block[
 				{res},
 				res = SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum]//. {
@@ -2871,8 +2864,19 @@ BeginPackage["SARGES`"];
 					SimplifySum[] :> 0 
 				};
 				Return[Refine[res/.SimplifySum -> Sum]];
+			];,
+
+			ContractSum[A_, B___] := Block[
+				{res},
+				res = SimplifySum[Expand[A],B]//.subSum;
+				Return[Refine[res/.SimplifySum -> Sum]];
+			];			
+			ContractSum2[A_, B___] := Block[
+				{res},
+				res = SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum];
+				Return[Refine[res/.SimplifySum -> Sum]];
 			];
-		);
+		];
 
 		
 		(* Error Messages *)

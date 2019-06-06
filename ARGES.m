@@ -78,6 +78,7 @@ BeginPackage["ARGES`"];
 			QuartMat = {{{{0}}}};
 			subSimplifySum = {};
 			$Assumptions = Element[KroneckerDelta[___], Reals];
+			DisableNativeSums[False];
 		];
 
 		(* Interfaces to define the theory *)
@@ -3797,8 +3798,8 @@ BeginPackage["ARGES`"];
 										ContractSum@@Join[
 											{
 												contr,
-												{gg[1], RealScalarList[[gg[0], 2, 1]]},
-												{gg[2], RealScalarList[[gg[0], 2, 2]]}
+												{gg[1], 1, RealScalarList[[gg[0], 2, 1]]},
+												{gg[2], 1, RealScalarList[[gg[0], 2, 2]]}
 											},
 											Function[{x}, {gg[x+2], 1, SMultiplicity[gg[0],x]}]/@Range[NumberOfSubgroups],
 											Function[{x}, {ff1[x], 1, FMultiplicity[AdjWeylFermionList[[ff1[0], 2]],x]}]/@Range[NumberOfSubgroups],
@@ -3824,8 +3825,8 @@ BeginPackage["ARGES`"];
 										ContractSum@@Join[
 											{
 												contr,
-												{gg[1], RealScalarList[[gg[0], 2, 1]]},
-												{gg[2], RealScalarList[[gg[0], 2, 2]]}
+												{gg[1], 1, RealScalarList[[gg[0], 2, 1]]},
+												{gg[2], 1, RealScalarList[[gg[0], 2, 2]]}
 											},
 											Function[{x}, {gg[x+2], 1, SMultiplicity[gg[0], x]}]/@Range[NumberOfSubgroups],
 											Function[{x}, {ff1[x], 1, FMultiplicity[AdjWeylFermionList[[ff1[0], 2]],x]}]/@Range[NumberOfSubgroups],
@@ -3858,8 +3859,8 @@ BeginPackage["ARGES`"];
 										ContractSum@@Join[
 											{
 												contr,
-												{gg[1], RealScalarList[[gg[0], 2, 1]]},
-												{gg[2], RealScalarList[[gg[0], 2, 2]]}
+												{gg[1], 1, RealScalarList[[gg[0], 2, 1]]},
+												{gg[2], 1, RealScalarList[[gg[0], 2, 2]]}
 											},
 											Function[{x}, {gg[x+2], 1, SMultiplicity[gg[0], x]}]/@Range[NumberOfSubgroups],
 											Function[{x}, {ff1[x], 1, FMultiplicity[AdjWeylFermionList[[ff1[0], 2]],x]}]/@Range[NumberOfSubgroups],
@@ -4578,6 +4579,7 @@ BeginPackage["ARGES`"];
 			SimplifySum[A_ KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
 			SimplifySum[KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[1 , SS1, SS2],
 			Power[KroneckerDelta[A___], a_] :> KroneckerDelta[A],
+			SimplifySum[c_, ss1___, {p_, 1, q_}, ss2___ ] :> SimplifySum[q c, ss1, ss2] /; !MemberQ[{c, ss1, ss2}, p, Infinity],
 			Conjugate[Generator[A___][a_, i_, j_]] :> Generator[A][a, j, i],
 			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {a_, 1, aa_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C C2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
 			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {j_, 1, jj_}, SS2___, {a_, 1, aa_}, SS3___] :> SimplifySum[C C2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
@@ -4603,6 +4605,7 @@ BeginPackage["ARGES`"];
 			SimplifySum[A_ KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[A //. aa->bb , SS1, SS2],
 			SimplifySum[KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[1 , SS1, SS2],
 			Power[KroneckerDelta[A___], a_] :> KroneckerDelta[A],
+			SimplifySum[c_, ss1___, {p_, 1, q_}, ss2___ ] :> SimplifySum[q c, ss1, ss2] /; !MemberQ[{c, ss1, ss2}, p, Infinity],
 			Conjugate[Generator[A___][a_, i_, j_]] :> Generator[A][a, j, i],
 			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {a_, 1, aa_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C C2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
 			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {j_, 1, jj_}, SS2___, {a_, 1, aa_}, SS3___] :> SimplifySum[C C2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
@@ -4646,44 +4649,22 @@ BeginPackage["ARGES`"];
 			SimplifySum[] :> 0
 		};
 
-		ContractSum[A_] := Refine[A //.Join[subSum,subSimplifySum] /.SimplifySum -> Sum];
-		ContractSum[A_, B__] := Refine[
-			(SimplifySum[Expand[A],B]//.Join[subSum,subSimplifySum])/.SimplifySum -> Sum
-		];
-
-
-		ContractSum2[A_] := Refine[A //.Join[subSum2,subSimplifySum] /.SimplifySum -> Sum];
-		ContractSum2[A_, B__] := Refine[
-			(SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum])/.SimplifySum -> Sum
-		];
-
-		DisableNativeSums[] := (
-			ContractSum[A_] := Refine[A //.Join[subSum,subSimplifySum] //. {
-					SimplifySum[c_, ss1___, {p_, 1, q_}, ss2___ ] :> SimplifySum[q c, ss1, ss2] /; !MemberQ[c, p, Infinity],
-					SimplifySum[c_] :> c,
-					SimplifySum[] :> 0 
-				}
-			];
+		DisableNativeSums[disable_:True] := If[
+			disable,
+			ContractSum[A_] := Refine[A //.Join[subSum,subSimplifySum]];
 			ContractSum[A_, B__] := Refine[
-				(SimplifySum[Expand[A],B]//.Join[subSum,subSimplifySum]//. {
-					SimplifySum[c_, ss1___, {p_, 1, q_}, ss2___ ] :> SimplifySum[q c, ss1, ss2] /; !MemberQ[c, p, Infinity],
-					SimplifySum[c_] :> c,
-					SimplifySum[] :> 0 
-				})
+				SimplifySum[Expand[A],B]//.Join[subSum,subSimplifySum]];
+			ContractSum2[A_] := Refine[A //.Join[subSum2,subSimplifySum]];
+			ContractSum2[A_, B__] := Refine[SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum]];,
+			ContractSum[A_] := Refine[A //.Join[subSum,subSimplifySum] /.SimplifySum -> Sum];
+			ContractSum[A_, B__] := Refine[
+				(SimplifySum[Expand[A],B]//.Join[subSum,subSimplifySum])/.SimplifySum -> Sum
 			];
-			ContractSum2[A_] := Refine[A //.Join[subSum2,subSimplifySum]//. {
-					SimplifySum[c_, ss1___, {p_, 1, q_}, ss2___ ] :> SimplifySum[q c, ss1, ss2] /; !MemberQ[c, p, Infinity],
-					SimplifySum[c_] :> c,
-					SimplifySum[] :> 0 
-				}];
+			ContractSum2[A_] := Refine[A //.Join[subSum2,subSimplifySum] /.SimplifySum -> Sum];
 			ContractSum2[A_, B__] := Refine[
-				(SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum])//. {
-					SimplifySum[c_, ss1___, {p_, 1, q_}, ss2___ ] :> SimplifySum[q c, ss1, ss2] /; !MemberQ[c, p, Infinity],
-					SimplifySum[c_] :> c,
-					SimplifySum[] :> 0 
-				}
+				(SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum])/.SimplifySum -> Sum
 			];
-		);
+		];
 
 		ExtractIndexStructure[exp_, pamlist_] := (
 			(Factorize[1, #]& /@Flatten[{Expand[exp]/.Plus->List}])//.{
