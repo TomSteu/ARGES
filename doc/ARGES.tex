@@ -1,9 +1,9 @@
 \documentclass{scrartcl}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{xcolor}
 \usepackage{listings}
-\usepackage[backend=biber,style=numeric-comp, sorting=none]{biblatex}
 \usepackage{hyperref}
 \usepackage{placeins}
 \lstset{
@@ -11,9 +11,8 @@
   columns=fullflexible,
 }
 \definecolor{light-gray}{gray}{0.95}
-\addbibresource{ref.bib}
 \title{ARGES: \\ Advanced Renormalization Group Equation Simplifier \\ User Manual}
-\date{2017}
+\date{2019}
 \author{Tom Steudtner}
 \begin{document}
 \begin{titlepage}
@@ -25,7 +24,7 @@
 \newpage
 \section{Motivation - Why ARGES?}
 Arges is the name of a cyclops in the greek mythology, which was exiled by the Titans but freed by Zeus to forge lightning bolts for his battle against his former masters. \newline
-In this tradition as a useful tool, ARGES - Advanced Renormalization Group Equation Simplifier is a framework to calculate perturbative renormalization group equations for renormalizable quantum field theories, using \cite{LuoWangXiao,MV1,MV2,MV3,vev1,vev2,gauge3L,gauge3L2,OsbornJack,OsbornJack2,OsbornJack3,Decoding}. Of course, other tools exist which offer an intersection of the same core features, most famously SARAH \cite{SARAH,SARAH4} and PyR@TE \cite{pyrate,pyrate2}. However, this piece of software tries to adress some of their limitations and adopts their resolution as its guiding features:
+In this tradition as a useful tool, ARGES - Advanced Renormalization Group Equation Simplifier is a framework to calculate perturbative renormalization group equations for renormalizable quantum field theories, using \cite{LuoWangXiao,MV1,MV2,MV3,vev1,vev2,gauge3L,gauge3L2,OsbornJack,OsbornJack2,OsbornJack3,Decoding,s4,poole}. Of course, other tools exist which offer an intersection of the same core features, most famously SARAH \cite{SARAH,SARAH4} and PyR@TE \cite{pyrate,pyrate2}. However, this piece of software tries to adress some of their limitations and adopts their resolution as its guiding features:
 \begin{itemize}
 \item it is possible to define particle numbers, representations and gauge group ranks as variables, even at all at once
 \item gauge groups may be defined as totally unknown altogether
@@ -75,6 +74,8 @@ NumberOfSubgroups=1;
 In order to define gauge groups and their respective fields the function $\mathtt{Gauge[\dots]}$ must be invoked $\mathtt{NumberOfSubgroups}$ times. The syntax is:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 Gauge[Symbol, Algebra, Rank, {Charge/Representation1, ...}];
+Gauge[Symbol, Group[Rank], {Charge/Representation1, ...}];
+Gauge[Symbol, Group, {Charge/Representation1, ...}];
 \end{lstlisting}
 The last argument is a list of the charges (in case of $\mathrm{U}(1)$ subgroups) or representations of gauge bosons. The first charge/representation will be associated with the group first declared with $\mathtt{Gauge[\dots]}$, and so on. The dimension of this list must match $\mathtt{NumberOfSubgroups}$. ARGES is agnostic regarding conjugate representations, only positive numbers are valid. However, charges, representations and rank of the subgroup may be declared as a variable. \newline Currently available algebras and ranks are $\mathrm{U}(1)$ , $\mathrm{SU}(N_U)$, and $\mathrm{SO}(N_O)$ with $N_U > 1$ and $N_O > 2$. Gauge fields are assumed to be in the adjoint representation of their own subgroup and singulets in the others. Kinetic mixing is not implemented. \newline Unknown Gauge groups are allowed, but their invariants can of course not be further resolved.
 \FloatBarrier
@@ -237,6 +238,11 @@ subSimplifySum = {
    ...
 }
 \end{lstlisting}
+The overall use of \texttt{Sum} can be circumvented completely by calling
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+DisableNativeSums[True];
+\end{lstlisting}
+which limits ARGES capabilities to the evaluation of \texttt{SimplifySum}, and never converts them into \texttt{Sum}. This should be sufficient in all realistic use cases, while providing a significant speed-up for some more complicated contractions. 
 \subsection{The $\mathtt{Generator}$ keyword}
 In order to handle adjoint representations better, ARGES allows to use the following structure
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
@@ -420,5 +426,6 @@ Out[12]= (449 g^6)/8 - (145 g^4 gy^2)/24 - (383 g^2 gy^4)/24 -
          
 \end{lstlisting}
 \newpage
-\printbibliography
+\bibliographystyle{unsrt}
+\bibliography{ref}
 \end{document}

@@ -1,9 +1,9 @@
 \documentclass{scrartcl}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{xcolor}
 \usepackage{listings}
-\usepackage[backend=biber,style=numeric-comp, sorting=none]{biblatex}
 \usepackage{hyperref}
 \usepackage{placeins}
 \lstset{
@@ -11,9 +11,8 @@
   columns=fullflexible,
 }
 \definecolor{light-gray}{gray}{0.95}
-\addbibresource{ref.bib}
 \title{SARGES: \\ Supersymmetric Advanced Renormalization Group Equation Simplifier -- \\ User Manual}
-\date{2018}
+\date{2019}
 \author{Tom Steudtner}
 \begin{document}
 \begin{titlepage}
@@ -73,6 +72,8 @@ NumberOfSubgroups=1;
 In order to define gauge groups and their respective fields the function $\mathtt{Gauge[\dots]}$ must be invoked $\mathtt{NumberOfSubgroups}$ times. The syntax is:
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
 Gauge[Symbol, Algebra, Rank, {Charge/Representation1, ...}];
+Gauge[Symbol, Group[Rank], {Charge/Representation1, ...}];
+Gauge[Symbol, Group, {Charge/Representation1, ...}];
 \end{lstlisting}
 The last argument is a list of the charges (in case of $\mathrm{U}(1)$ subgroups) or representations of gauge bosons. The first charge/representation will be associated with the group first declared with $\mathtt{Gauge[\dots]}$, and so on. The dimension of this list must match $\mathtt{NumberOfSubgroups}$. SARGES is agnostic regarding anti-representations, only positive numbers are valid. However, charges, representations and rank of the subgroup may be declared as a variable. \newline Currently available algebras and ranks are $\mathrm{U}(1)$ , $\mathrm{SU}(N_U)$, and $\mathrm{SO}(N_O)$ with $N_U > 1$ and $N_O > 2$. Gauge fields are assumed to be in the adjoint representation of their own subgroup and singulets in the others. Kinetic mixing is not implemented. \newline Unknown Gauge groups are allowed, but their invariants can of course not be further resolved.
 \FloatBarrier
@@ -180,6 +181,11 @@ subSimplifySum = {
    ...
 }
 \end{lstlisting}
+The overall use of \texttt{Sum} can be circumvented completely by calling
+\begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
+DisableNativeSums[True];
+\end{lstlisting}
+which limits ARGES capabilities to the evaluation of \texttt{SimplifySum}, and never converts them into \texttt{Sum}. This should be sufficient in all realistic use cases, while providing a significant speed-up for some more complicated contractions. 
 \subsection{The $\mathtt{Generator}$ keyword}
 In order to handle adjoint representations better, ARGES allows to use the following structure
 \begin{lstlisting}[language=mathematica,mathescape,columns=flexible,backgroundcolor=\color{light-gray}]
@@ -368,5 +374,6 @@ Out[9]= -3*g^2*Tt - (13*gy^2*Tt)/9 + (2*gs^2*Tt)/Nc -
 
 \end{lstlisting}
 \newpage
-\printbibliography
+\bibliographystyle{unsrt}
+\bibliography{ref}
 \end{document}
