@@ -87,7 +87,7 @@ BeginPackage["SARGES`"];
 			ListGauge = Append[ListGauge, {sym, group, n, reps}];
 		];
 		Gauge[sym_, group_[n_], reps_List] := Gauge[sym, group, n, reps];
-		Gauge[sym_, group_, reps_List] := Gauge[sym, group, d[sym], reps];
+		Gauge[sym_, group_, reps_List] := Gauge[sym, group, d[group], reps];
 
 		ChiralSuperField[sym_, Nflavor_, gauge_List] := Block[
 			{},

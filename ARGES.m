@@ -102,7 +102,7 @@ BeginPackage["ARGES`"];
 		];
 
 		Gauge[sym_, group_[n_], reps_List] := Gauge[sym, group, n, reps];
-		Gauge[sym_, group_, reps_List] := Gauge[sym, group, d[sym], reps];
+		Gauge[sym_, group_, reps_List] := Gauge[sym, group, d[group], reps];
 
 		GetGauge[part_, gauge_] := Module[
 			{posP, posG},
