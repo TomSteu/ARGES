@@ -1057,7 +1057,7 @@ BeginPackage["ARGES`"];
 							{
 								contr,
 								{SIdx[1], 1, RealScalarList[[s, 2, 1]]},
-								{SIdx[2], 1, RealScalarList[[s, 2, 1]]}
+								{SIdx[2], 1, RealScalarList[[s, 2, 2]]}
 							},
 							Function[{x}, {SIdx[2+x], 1, SMultiplicity[s, x]}]/@Range[NumberOfSubgroups]
 						]
