@@ -2452,7 +2452,7 @@ BeginPackage["SARGES`"];
 						(* Adjoint Rep in SO(N)*)
 						If[ListGauge[[i,2]] === SO && ListGauge[[i,4,i]]===1/2 ListGauge[[i,3]](ListGauge[[i,3]]-1),
 							subInvariants = Append[subInvariants, d[ListGauge[[i,1]]]->ListGauge[[i,4,i]]];
-							subInvariants = Append[subInvariants, C2[ListGauge[[i,1]]]->(2 ListGauge[[i,3]] - 4)];
+							subInvariants = Append[subInvariants, C2[ListGauge[[i,1]]]->1/2 (ListGauge[[i,3]] - 2)];
 						];
 					];
 				];
@@ -2497,18 +2497,18 @@ BeginPackage["SARGES`"];
 								Continue[];,
 								(* Fundamental Representation *)
 								If[ChiralSuperFieldList[[f,3,i]] === ListGauge[[i,3]],
-									subInvariants = Append[subInvariants, C2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] - 1)];
-									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 2 SMultiplicity[f]/ChiralSuperFieldList[[f,3,i]]];
+									subInvariants = Append[subInvariants, C2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 1/4 (ListGauge[[i,3]] - 1)];
+									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 1/2 SMultiplicity[f]/ChiralSuperFieldList[[f,3,i]]];
 								];
 								(* Adjoint Representation *)
 								If[ChiralSuperFieldList[[f,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] - 1),
-									subInvariants = Append[subInvariants, C2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> (2 ListGauge[[i,3]] - 4)];
-									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> (2 ListGauge[[i,3]] - 4) SMultiplicity[f]/ChiralSuperFieldList[[f,3,i]]];
+									subInvariants = Append[subInvariants, C2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 1/2 (ListGauge[[i,3]] - 2)];
+									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 1/2 (ListGauge[[i,3]] - 2) SMultiplicity[f]/ChiralSuperFieldList[[f,3,i]]];
 								];
 								(* Symmetric Representation *)
 								If[ChiralSuperFieldList[[f,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] + 1) - 1,
-									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 2(ListGauge[[i,3]] + 2) SMultiplicity[f]/ChiralSuperFieldList[[f,3,i]]];
-									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]->ListGauge[[i,3]](ListGauge[[i,3]] - 1)(ListGauge[[i,3]] + 2)/(1/2 ListGauge[[i,3]] (ListGauge[[i,3]] + 1) - 1)];
+									subInvariants = Append[subInvariants, C2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 1/2 (ListGauge[[i,3]] )];
+									subInvariants = Append[subInvariants, S2[ChiralSuperFieldList[[f,1]], ListGauge[[i,1]]]-> 1/2 (ListGauge[[i,3]] + 2) SMultiplicity[f]/ChiralSuperFieldList[[f,3,i]]];
 								];
 							];
 						];
@@ -2729,7 +2729,7 @@ BeginPackage["SARGES`"];
 		(*  SU(N) all fields in fundamental representation *)
 		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := 1/2 ( KroneckerDelta[a, d] KroneckerDelta[b, c]  - 1/ListGauge[[g, 3]] KroneckerDelta[a, c] KroneckerDelta[b, d]) /; (ListGauge[[g, 2]] === SU && ListGauge[[g, 3]] === ChiralSuperFieldList[[pa, 3, g]] && ListGauge[[g, 3]] === ChiralSuperFieldList[[pb, 3, g]]);
 		(*  SO(N) all fields in fundamental representation *)
-		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := ( KroneckerDelta[a, d] KroneckerDelta[b, c]  - KroneckerDelta[a, b] KroneckerDelta[c, d]) /; (ListGauge[[g, 2]] === SO && ListGauge[[g, 3]] === ChiralSuperFieldList[[pa, 3, g]] && ListGauge[[g, 3]] === ChiralSuperFieldList[[pb, 3, g]]);
+		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := 1/4 ( KroneckerDelta[a, d] KroneckerDelta[b, c]  - KroneckerDelta[a, b] KroneckerDelta[c, d]) /; (ListGauge[[g, 2]] === SO && ListGauge[[g, 3]] === ChiralSuperFieldList[[pa, 3, g]] && ListGauge[[g, 3]] === ChiralSuperFieldList[[pb, 3, g]]);
 		(*  U(1) subgroup *)
 		\[CapitalLambda][g_][pa_, pb_, pa_, pb_][a_, b_, c_, d_] := KroneckerDelta[a, c] KroneckerDelta[b, d] ChiralSuperFieldList[[pa, 3, g]] ChiralSuperFieldList[[pb, 3, g]] /; (ListGauge[[g, 2]] === U && ListGauge[[g, 3]] === 1 );
 		(*  unknown case *)
