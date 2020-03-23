@@ -876,10 +876,10 @@ BeginPackage["ARGES`"];
 				Return[\[Gamma][SType1, Re[SType2], SList1, SList2, loop]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType1)&)],
-				Return[\[Gamma][Re[SType1], SType2, Join[{SList1[[2]], SList1[[1]]},SList1[3;;]], SList2, loop]];
+				Return[\[Gamma][SType1/.adj->Re, SType2, Join[{SList1[[2]], SList1[[1]]},SList1[[3;;]]], SList2, loop]];
 			];
 			If[MemberQ[adj/@ComplexScalarList, _?((# === SType2)&)],
-				Return[\[Gamma][SType1, Re[SType2], SList1, Join[{SList2[[2]], SList2[[1]]},SList2[3;;]], loop]];
+				Return[\[Gamma][SType1, SType2/.adj->Re, SList1, Join[{SList2[[2]], SList2[[1]]},SList2[[3;;]]], loop]];
 			];
 			pos1  = ListPosition[RealScalarList,_List?(#[[1]] == SType1 &)];
 			pos2  = ListPosition[RealScalarList,_List?(#[[1]] == SType2 &)];
