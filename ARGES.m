@@ -17,14 +17,8 @@ BeginPackage["ARGES`"];
 	\[Gamma]::usage = "Anomalous dimensions for scalar or fermion fields";
 	ComputeInvariants::usage = "Calculates known invariants for beta functions, saves them as rules in subInvariants";
 	subInvariants::usage = "containts replacement rules for beta function invariants, use ComputeInvariants[] to calculate";
-	GetGauge::usage = "Returns representation / charge for particle";
 	SimplifyProduct::usage = "Simplifies tr[___] and prod[___] expressions";
-	F::usage = "fermionic";
-	S::usage = "scalar";
-	Y::usage = "Yukawa";
 	d::usage= "Dimension of Representation";
-	gen::usage = "Generation Index";
-	gauge::usage = "Gauge Index";
 	C2::usage = "Casimir Invariant";
 	S2::usage = "Dynkin Index with full multiplicity";
 	T2::usage = "Dynkin Index without full multiplicity";
@@ -41,21 +35,12 @@ BeginPackage["ARGES`"];
 	SO::usage = "Special Orthogonal Group";
 	Sp::usage = "Special Symplectic Group";
 	\[CapitalLambda]::usage = "Product of Generators";
-	\[Xi]::usage = "Gauge fixing constant";
+	\[Xi]::usage = "Gauge fixing parameter";
 	Generator::usage = "Gauge Generator";
 	subSimplifySum::usage = "Rules for advanced Simplification";
 	SimplifySum::usage = "Label for advanced Simplification, to be used only within subSimplifySum";
-	CheckYukawa::usage = "Checks if Yukawa interactions are generated at loop level";
-	CheckFermionMass::usage = "Checks if Fermion mass term is generated at loop level";
-	CheckQuartic::usage = "Checks if scalar quartic term is generated at loop level";
-	CheckCubic::usage = "Checks if scalar cubic term is generated at loop level";
-	CheckScalarMass::usage = "Checks if scalar mass term is generated at loop level";
 	DisableNativeSums::usage = "Uses SimplifySum instead of Sum";
 
-
-	Sqr[x_] := x*x;
-	Eps[a_Integer, b_Integer] := (KroneckerDelta[a,1] KroneckerDelta[b,2] - KroneckerDelta[a,2] KroneckerDelta[b,1]);
-	subAlpha = {\[Alpha][g_] :> Sqr[g/(4 \[Pi])]};
 	NumberOfSubgroups = 1;
 
 
@@ -81,6 +66,10 @@ BeginPackage["ARGES`"];
 			DisableNativeSums[False];
 		];
 
+		Sqr[x_] := x*x;
+		Eps[a_Integer, b_Integer] := (KroneckerDelta[a,1] KroneckerDelta[b,2] - KroneckerDelta[a,2] KroneckerDelta[b,1]);
+		subAlpha = {\[Alpha][g_] :> Sqr[g/(4 \[Pi])]};
+
 		(* Interfaces to define the theory *)
 		Gauge[sym_, group_, n_, reps_List] := Module[
 			{},
@@ -103,26 +92,6 @@ BeginPackage["ARGES`"];
 
 		Gauge[sym_, group_[n_], reps_List] := Gauge[sym, group, n, reps];
 		Gauge[sym_, group_, reps_List] := Gauge[sym, group, d[group], reps];
-
-		GetGauge[part_, gauge_] := Module[
-			{posP, posG},
-			posG = ListPosition[ListGauge,_List?(#[[1]] == gauge &)];
-			If[posG == {}, Return[0];];
-			posG = posG[[1,1]];
-			posP = ListPosition[ComplexScalarList, part];
-			If[posP != {},
-				posP = ListPosition[RealScalarList,_List?(#[[1]] == Re[part] &)];,
-				posP = ListPosition[RealScalarList,_List?(#[[1]] == part &)];
-			];
-			If[posP != 0,
-				Return[RealScalarList[[posP[[1,1]], 3, posG]]];
-			];
-			posP = ListPosition[AdjWeylFermionList,_List?(#[[1]] == part &)];
-			If[posP != 0,
-				Return[WeylFermionList[[AdjWeylFermionList[[posP[[1,1]],2]], 3, posG]]];
-			];
-			Return[0];
-		];
 
 		SimplifyProduct[term_] := (ContractSum2[term //. subProd //.{
 			conj[conj[a_]] :> a,
@@ -2081,439 +2050,6 @@ BeginPackage["ARGES`"];
 			gamma += 5 (Y2FS[Prepend[la,pa], Prepend[lb,pb]] //. subScalarInvariants)//SimplifyProduct;
 			Return[gamma/Power[4 \[Pi], 4]];
 		];
-
-		(* Checks if there are couplings missing  allowed by symmeties *)
-
-		CheckYukawa[loop_, func_:(#&)] := Block[
-			{treeL,loopL,f1,f2,s,res,assHold,i,pos},
-			assHold = $Assumptions;
-			$Assumptions = $Assumptions && And@@((Element[#,Integers]&&(#>=1))/@Join[{gen[S,1], gen[S,2], gen[F,1], gen[F,2]}, Flatten[{gauge[S,#], gauge[F,1,#], gauge[F,2,#]}& /@ Range[NumberOfSubgroups]]]);
-			res = {};
-			For[f1=1, f1<=Length[AdjWeylFermionList], f1++,
-				For[f2=1, f2<=f1, f2++,
-					For[s=1, s<=Length[RealScalarList], s++,
-						treeL = ExtractIndexStructure[
-							func[\[Beta][
-								RealScalarList[[s,1]],
-								AdjWeylFermionList[[f1,1]],
-								AdjWeylFermionList[[f2,1]],
-								Join[
-									{
-										If[RealScalarList[[s,2,1]] === 1, 1, gen[S,1]],
-										If[RealScalarList[[s,2,2]] === 1, 1, gen[S,2]]
-									},
-									(If[SMultiplicity[s,#] === 1, 1, gauge[S,#]])&/@Range[NumberOfSubgroups]
-								],
-								Join[
-									{ If[WeylFermionList[[AdjWeylFermionList[[f1,2]],2]] === 1, 1, gen[F,1]] },
-									(If[FMultiplicity[AdjWeylFermionList[[f1,2]],#] === 1, 1, gauge[F,1,#]])&/@Range[NumberOfSubgroups]
-								],
-								Join[
-									{ If[WeylFermionList[[AdjWeylFermionList[[f2,2]],2]] === 1, 1, gen[F,2]] },
-									(If[FMultiplicity[AdjWeylFermionList[[f2,2]],#] === 1, 1, gauge[F,2,#]])&/@Range[NumberOfSubgroups]
-								],
-								0
-							]],
-							Join[{gen[S,1], gen[S,2], gen[F,1], gen[F,2]}, Flatten[{gauge[S,#], gauge[F,1,#], gauge[F,2,#]}& /@ Range[NumberOfSubgroups]]]
-						]/.{Factorize->List};
-						loopL = ExtractIndexStructure[
-							func[\[Beta][
-								RealScalarList[[s,1]],
-								AdjWeylFermionList[[f1,1]],
-								AdjWeylFermionList[[f2,1]],
-								Join[
-									{
-										If[RealScalarList[[s,2,1]] === 1, 1, gen[S,1]],
-										If[RealScalarList[[s,2,2]] === 1, 1, gen[S,2]]
-									},
-									(If[SMultiplicity[s,#] === 1, 1, gauge[S,#]])&/@Range[NumberOfSubgroups]
-								],
-								Join[
-									{ If[WeylFermionList[[AdjWeylFermionList[[f1,2]],2]] === 1, 1, gen[F,1]] },
-									(If[FMultiplicity[AdjWeylFermionList[[f1,2]],#] === 1, 1, gauge[F,1,#]])&/@Range[NumberOfSubgroups]
-								],
-								Join[
-									{ If[WeylFermionList[[AdjWeylFermionList[[f2,2]],2]] === 1, 1, gen[F,2]] },
-									(If[FMultiplicity[AdjWeylFermionList[[f2,2]],#] === 1, 1, gauge[F,2,#]])&/@Range[NumberOfSubgroups]
-								],
-								loop
-							]],
-							Join[{gen[S,1], gen[S,2], gen[F,1], gen[F,2]}, Flatten[{gauge[S,#], gauge[F,1,#], gauge[F,2,#]}& /@ Range[NumberOfSubgroups]]]
-						]/.{Factorize->List};
-						For[i=1, i<=Length[treeL], i++,
-							pos=Flatten[Position[res, {RealScalarList[[s,1]], AdjWeylFermionList[[f1,1]], AdjWeylFermionList[[f2,1]], treeL[[i,2]], _, _}]];
-							If[pos==={},
-								res = Append[res, {RealScalarList[[s,1]], AdjWeylFermionList[[f1,1]], AdjWeylFermionList[[f2,1]], treeL[[i,2]], treeL[[i,1]], 0}];,
-								res[[pos[[1]], 5]] += treeL[[i,1]];
-							];
-						];
-						For[i=1, i<=Length[loopL], i++,
-							pos=Flatten[Position[res, {RealScalarList[[s,1]], AdjWeylFermionList[[f1,1]], AdjWeylFermionList[[f2,1]], loopL[[i,2]], _, _}]];
-							If[pos==={},
-								res = Append[res, {RealScalarList[[s,1]], AdjWeylFermionList[[f1,1]], AdjWeylFermionList[[f2,1]], loopL[[i,2]], 0, loopL[[i,1]]}];,
-								res[[pos[[1]], 6]] += loopL[[i,1]];
-							];
-						];
-					];
-				];
-			];
-			$Assumptions = assHold;
-			Return[res//.{FF1___, {_, _, _, _, 0, 0}, FF2___ } :> {FF1,FF2}];
-		];
-
-		CheckFermionMass[loop_, func_:(#&)] := Block[
-			{treeL,loopL,f1,f2,res,assHold,i,pos},
-			assHold = $Assumptions;
-			$Assumptions = $Assumptions && And@@((Element[#,Integers]&&(#>=1))/@Join[{gen[F,1], gen[F,2]}, Flatten[{gauge[F,1,#], gauge[F,2,#]}& /@ Range[NumberOfSubgroups]]]);
-			res = {};
-			For[f1=1, f1<=Length[AdjWeylFermionList], f1++,
-				For[f2=1, f2<=f1, f2++,
-					treeL = ExtractIndexStructure[
-						func[\[Beta][
-							AdjWeylFermionList[[f1,1]],
-							AdjWeylFermionList[[f2,1]],
-							Join[
-								{ If[WeylFermionList[[AdjWeylFermionList[[f1,2]],2]] === 1, 1, gen[F,1]] },
-								(If[FMultiplicity[AdjWeylFermionList[[f1,2]],#] === 1, 1, gauge[F,1,#]])&/@Range[NumberOfSubgroups]
-							],
-							Join[
-								{ If[WeylFermionList[[AdjWeylFermionList[[f2,2]],2]] === 1, 1, gen[F,2]] },
-								(If[FMultiplicity[AdjWeylFermionList[[f2,2]],#] === 1, 1, gauge[F,2,#]])&/@Range[NumberOfSubgroups]
-							],
-							0
-						]],
-						Join[{gen[F,1], gen[F,2]}, Flatten[{gauge[F,1,#], gauge[F,2,#]}& /@ Range[NumberOfSubgroups]]]
-					]/.{Factorize->List};
-					loopL = ExtractIndexStructure[
-						func[\[Beta][
-							AdjWeylFermionList[[f1,1]],
-							AdjWeylFermionList[[f2,1]],
-							Join[
-								{ If[WeylFermionList[[AdjWeylFermionList[[f1,2]],2]] === 1, 1, gen[F,1]] },
-								(If[FMultiplicity[AdjWeylFermionList[[f1,2]],#] === 1, 1, gauge[F,1,#]])&/@Range[NumberOfSubgroups]
-							],
-							Join[
-								{ If[WeylFermionList[[AdjWeylFermionList[[f2,2]],2]] === 1, 1, gen[F,2]] },
-								(If[FMultiplicity[AdjWeylFermionList[[f2,2]],#] === 1, 1, gauge[F,2,#]])&/@Range[NumberOfSubgroups]
-							],
-							loop
-						]],
-						Join[{gen[F,1], gen[F,2]}, Flatten[{gauge[F,1,#], gauge[F,2,#]}& /@ Range[NumberOfSubgroups]]]
-					]/.{Factorize->List};
-					For[i=1, i<=Length[treeL], i++,
-						pos=Flatten[Position[res, {AdjWeylFermionList[[f1,1]], AdjWeylFermionList[[f2,1]], treeL[[i,2]], _, _}]];
-						If[pos==={},
-							res = Append[res, {AdjWeylFermionList[[f1,1]], AdjWeylFermionList[[f2,1]], treeL[[i,2]], treeL[[i,1]], 0}];,
-							res[[pos[[1]], 4]] += treeL[[i,1]];
-						];
-					];
-					For[i=1, i<=Length[loopL], i++,
-						pos=Flatten[Position[res, {AdjWeylFermionList[[f1,1]], AdjWeylFermionList[[f2,1]], loopL[[i,2]], _, _}]];
-						If[pos==={},
-							res = Append[res, {AdjWeylFermionList[[f1,1]], AdjWeylFermionList[[f2,1]], loopL[[i,2]], 0, loopL[[i,1]]}];,
-							res[[pos[[1]], 5]] += loopL[[i,1]];
-						];
-					];
-				];
-			];
-			$Assumptions = assHold;
-			Return[res//.{FF1___, { ___, 0, 0}, FF2___ } :> {FF1,FF2}];
-		];
-
-		CheckQuartic[loop_, func_:(#&)] := Block[
-			{treeL, loopL, s1, s2, s3, s4, assHold, i, pos},
-			assHold = $Assumptions;
-			$Assumptions = $Assumptions && And@@((Element[#,Integers]&&(#>=1))/@Join[
-				{gen[S,1,1], gen[S,1,2], gen[S,2,1], gen[S,2,2], gen[S,3,1], gen[S,3,2], gen[S,4,1], gen[S,4,2]},
-				Flatten[{gauge[S,1,#], gauge[S,2,#], gauge[S,3,#], gauge[S,4,#]}& /@ Range[NumberOfSubgroups]]
-			]);
-			res = {};
-			For[s1=1, s1<=Length[RealScalarList], s1++,
-				For[s2=1, s2<=s1, s2++,
-					For[s3=1, s3<=s2, s3++,
-						For[s4=1, s4<=s3, s4++,
-							treeL = ExtractIndexStructure[
-								func[\[Beta][
-									RealScalarList[[s1,1]],
-									RealScalarList[[s2,1]],
-									RealScalarList[[s3,1]],
-									RealScalarList[[s4,1]],
-									Join[
-										{
-											If[RealScalarList[[s1,2,1]] === 1, 1, gen[S,1,1]],
-											If[RealScalarList[[s1,2,2]] === 1, 1, gen[S,1,2]]
-										},
-										(If[SMultiplicity[s1,#] === 1, 1, gauge[S,1,#]])&/@Range[NumberOfSubgroups]
-									],
-									Join[
-										{
-											If[RealScalarList[[s2,2,1]] === 1, 1, gen[S,2,1]],
-											If[RealScalarList[[s2,2,2]] === 1, 1, gen[S,2,2]]
-										},
-										(If[SMultiplicity[s2,#] === 1, 1, gauge[S,2,#]])&/@Range[NumberOfSubgroups]
-									],
-									Join[
-										{
-											If[RealScalarList[[s3,2,1]] === 1, 1, gen[S,3,1]],
-											If[RealScalarList[[s3,2,2]] === 1, 1, gen[S,3,2]]
-										},
-										(If[SMultiplicity[s3,#] === 1, 1, gauge[S,3,#]])&/@Range[NumberOfSubgroups]
-									],
-									Join[
-										{
-											If[RealScalarList[[s4,2,1]] === 1, 1, gen[S,4,1]],
-											If[RealScalarList[[s4,2,2]] === 1, 1, gen[S,4,2]]
-										},
-										(If[SMultiplicity[s4,#] === 1, 1, gauge[S,4,#]])&/@Range[NumberOfSubgroups]
-									],
-									0
-								]],
-								Flatten[Join[
-									{gen[S,1,1], gen[S,1,2], gen[S,2,1], gen[S,2,2], gen[S,3,1], gen[S,3,2], gen[S,4,1], gen[S,4,2]},
-									{gauge[S,1,#], gauge[S,2,#], gauge[S,3,#], gauge[S,4,#]} /@ Range[NumberOfSubgroups]
-								]]
-							]/.{Factorize->List};
-							loopL = ExtractIndexStructure[
-								func[\[Beta][
-									RealScalarList[[s1,1]],
-									RealScalarList[[s2,1]],
-									RealScalarList[[s3,1]],
-									RealScalarList[[s4,1]],
-									Join[
-										{
-											If[RealScalarList[[s1,2,1]] === 1, 1, gen[S,1,1]],
-											If[RealScalarList[[s1,2,2]] === 1, 1, gen[S,1,2]]
-										},
-										(If[SMultiplicity[s1,#] === 1, 1, gauge[S,1,#]])&/@Range[NumberOfSubgroups]
-									],
-									Join[
-										{
-											If[RealScalarList[[s2,2,1]] === 1, 1, gen[S,2,1]],
-											If[RealScalarList[[s2,2,2]] === 1, 1, gen[S,2,2]]
-										},
-										(If[SMultiplicity[s2,#] === 1, 1, gauge[S,2,#]])&/@Range[NumberOfSubgroups]
-									],
-									Join[
-										{
-											If[RealScalarList[[s3,2,1]] === 1, 1, gen[S,3,1]],
-											If[RealScalarList[[s3,2,2]] === 1, 1, gen[S,3,2]]
-										},
-										(If[SMultiplicity[s3,#] === 1, 1, gauge[S,3,#]])&/@Range[NumberOfSubgroups]
-									],
-									Join[
-										{
-											If[RealScalarList[[s4,2,1]] === 1, 1, gen[S,4,1]],
-											If[RealScalarList[[s4,2,2]] === 1, 1, gen[S,4,2]]
-										},
-										(If[SMultiplicity[s4,#] === 1, 1, gauge[S,4,#]])&/@Range[NumberOfSubgroups]
-									],
-									loop
-								]],
-								Flatten[Join[
-									{gen[S,1,1], gen[S,1,2], gen[S,2,1], gen[S,2,2], gen[S,3,1], gen[S,3,2], gen[S,4,1], gen[S,4,2]},
-									{gauge[S,1,#], gauge[S,2,#], gauge[S,3,#], gauge[S,4,#]} /@ Range[NumberOfSubgroups]
-								]]
-							]/.{Factorize->List};
-							For[i=1, i<=Length[treeL], i++,
-								pos=Flatten[Position[res, {RealScalarList[[s1,1]], RealScalarList[[s2,1]], RealScalarList[[s3,1]], RealScalarList[[s4,1]], treeL[[i,2]], _, _}]];
-								If[pos==={},
-									res = Append[res, {RealScalarList[[s1,1]], RealScalarList[[s2,1]], RealScalarList[[s3,1]], RealScalarList[[s4,1]], treeL[[i,2]], treeL[[i,1]], 0}];,
-									res[[pos[[1]], 6]] += treeL[[i,1]];
-								];
-							];
-							For[i=1, i<=Length[loopL], i++,
-								pos=Flatten[Position[res, {RealScalarList[[s1,1]], RealScalarList[[s2,1]], RealScalarList[[s3,1]], RealScalarList[[s4,1]], loopL[[i,2]], _, _}]];
-								If[pos==={},
-									res = Append[res, {RealScalarList[[s1,1]], RealScalarList[[s2,1]], RealScalarList[[s3,1]], RealScalarList[[s4,1]], loopL[[i,2]], 0, loopL[[i,1]]}];,
-									res[[pos[[1]], 7]] += loopL[[i,1]];
-								];
-							];
-						];
-					];
-				];
-			];
-			$Assumptions = assHold;
-			Return[res//.{FF1___, { ___, 0, 0}, FF2___ } :> {FF1,FF2}];
-		];
-
-		CheckCubic[loop_, func_:(#&)] := Block[
-			{treeL, loopL, s1, s2, s3, assHold, i, pos},
-			assHold = $Assumptions;
-			$Assumptions = $Assumptions && And@@((Element[#,Integers]&&(#>=1))/@Join[
-				{gen[S,1,1], gen[S,1,2], gen[S,2,1], gen[S,2,2], gen[S,3,1], gen[S,3,2]},
-				Flatten[{gauge[S,1,#], gauge[S,2,#], gauge[S,3,#]}& /@ Range[NumberOfSubgroups]]
-			]);
-			res = {};
-			For[s1=1, s1<=Length[RealScalarList], s1++,
-				For[s2=1, s2<=s1, s2++,
-					For[s3=1, s3<=s2, s3++,
-						treeL = ExtractIndexStructure[
-							func[\[Beta][
-								RealScalarList[[s1,1]],
-								RealScalarList[[s2,1]],
-								RealScalarList[[s3,1]],
-								Join[
-									{
-										If[RealScalarList[[s1,2,1]] === 1, 1, gen[S,1,1]],
-										If[RealScalarList[[s1,2,2]] === 1, 1, gen[S,1,2]]
-									},
-									(If[SMultiplicity[s1,#] === 1, 1, gauge[S,1,#]])&/@Range[NumberOfSubgroups]
-								],
-								Join[
-									{
-										If[RealScalarList[[s2,2,1]] === 1, 1, gen[S,2,1]],
-										If[RealScalarList[[s2,2,2]] === 1, 1, gen[S,2,2]]
-									},
-									(If[SMultiplicity[s2,#] === 1, 1, gauge[S,2,#]])&/@Range[NumberOfSubgroups]
-								],
-								Join[
-									{
-										If[RealScalarList[[s3,2,1]] === 1, 1, gen[S,3,1]],
-										If[RealScalarList[[s3,2,2]] === 1, 1, gen[S,3,2]]
-									},
-									(If[SMultiplicity[s3,#] === 1, 1, gauge[S,3,#]])&/@Range[NumberOfSubgroups]
-								],
-								0
-							]],
-							Flatten[Join[
-								{gen[S,1,1], gen[S,1,2], gen[S,2,1], gen[S,2,2], gen[S,3,1], gen[S,3,2]},
-								{gauge[S,1,#], gauge[S,2,#], gauge[S,3,#]} /@ Range[NumberOfSubgroups]
-							]]
-						]/.{Factorize->List};
-						loopL = ExtractIndexStructure[
-							func[\[Beta][
-								RealScalarList[[s1,1]],
-								RealScalarList[[s2,1]],
-								RealScalarList[[s3,1]],
-								Join[
-									{
-										If[RealScalarList[[s1,2,1]] === 1, 1, gen[S,1,1]],
-										If[RealScalarList[[s1,2,2]] === 1, 1, gen[S,1,2]]
-									},
-									(If[SMultiplicity[s1,#] === 1, 1, gauge[S,1,#]])&/@Range[NumberOfSubgroups]
-								],
-								Join[
-									{
-										If[RealScalarList[[s2,2,1]] === 1, 1, gen[S,2,1]],
-										If[RealScalarList[[s2,2,2]] === 1, 1, gen[S,2,2]]
-									},
-									(If[SMultiplicity[s2,#] === 1, 1, gauge[S,2,#]])&/@Range[NumberOfSubgroups]
-								],
-								Join[
-									{
-										If[RealScalarList[[s3,2,1]] === 1, 1, gen[S,3,1]],
-										If[RealScalarList[[s3,2,2]] === 1, 1, gen[S,3,2]]
-									},
-									(If[SMultiplicity[s3,#] === 1, 1, gauge[S,3,#]])&/@Range[NumberOfSubgroups]
-								],
-								loop
-							]],
-							Flatten[Join[
-								{gen[S,1,1], gen[S,1,2], gen[S,2,1], gen[S,2,2], gen[S,3,1], gen[S,3,2]},
-								{gauge[S,1,#], gauge[S,2,#], gauge[S,3,#]} /@ Range[NumberOfSubgroups]
-							]]
-						]/.{Factorize->List};
-						For[i=1, i<=Length[treeL], i++,
-							pos=Flatten[Position[res, {RealScalarList[[s1,1]], RealScalarList[[s2,1]], RealScalarList[[s3,1]], treeL[[i,2]], _, _}]];
-							If[pos==={},
-								res = Append[res, {RealScalarList[[s1,1]], RealScalarList[[s2,1]], RealScalarList[[s3,1]], treeL[[i,2]], treeL[[i,1]], 0}];,
-								res[[pos[[1]], 5]] += treeL[[i,1]];
-							];
-						];
-						For[i=1, i<=Length[loopL], i++,
-							pos=Flatten[Position[res, {RealScalarList[[s1,1]], RealScalarList[[s2,1]], RealScalarList[[s3,1]], loopL[[i,2]], _, _}]];
-							If[pos==={},
-								res = Append[res, {RealScalarList[[s1,1]], RealScalarList[[s2,1]], RealScalarList[[s3,1]], loopL[[i,2]], 0, loopL[[i,1]]}];,
-								res[[pos[[1]], 6]] += loopL[[i,1]];
-							];
-						];
-					];
-				];
-			];
-			$Assumptions = assHold;
-			Return[res//.{FF1___, { ___, 0, 0}, FF2___ } :> {FF1,FF2}];
-		];
-
-	CheckScalarMass[loop_, func_:(#&)] := Block[
-			{treeL, loopL, s1, s2, assHold, i, pos},
-			assHold = $Assumptions;
-			$Assumptions = $Assumptions && And@@((Element[#,Integers]&&(#>=1))/@Join[
-				{gen[S,1,1], gen[S,1,2], gen[S,2,1], gen[S,2,2]},
-				Flatten[{gauge[S,1,#], gauge[S,2,#]}& /@ Range[NumberOfSubgroups]]
-			]);
-			res = {};
-			For[s1=1, s1<=Length[RealScalarList], s1++,
-				For[s2=1, s2<=s1, s2++,
-					treeL = ExtractIndexStructure[
-						func[\[Beta][
-							RealScalarList[[s1,1]],
-							RealScalarList[[s2,1]],
-							Join[
-								{
-									If[RealScalarList[[s1,2,1]] === 1, 1, gen[S,1,1]],
-									If[RealScalarList[[s1,2,2]] === 1, 1, gen[S,1,2]]
-								},
-								(If[SMultiplicity[s1,#] === 1, 1, gauge[S,1,#]])&/@Range[NumberOfSubgroups]
-							],
-							Join[
-								{
-									If[RealScalarList[[s2,2,1]] === 1, 1, gen[S,2,1]],
-									If[RealScalarList[[s2,2,2]] === 1, 1, gen[S,2,2]]
-								},
-								(If[SMultiplicity[s2,#] === 1, 1, gauge[S,2,#]])&/@Range[NumberOfSubgroups]
-							],
-							0
-						]],
-						Flatten[Join[
-							{gen[S,1,1], gen[S,1,2], gen[S,2,1], gen[S,2,2]},
-							{gauge[S,1,#], gauge[S,2,#]} /@ Range[NumberOfSubgroups]
-						]]
-					]/.{Factorize->List};
-					loopL = ExtractIndexStructure[
-						func[\[Beta][
-							RealScalarList[[s1,1]],
-							RealScalarList[[s2,1]],
-							Join[
-								{
-									If[RealScalarList[[s1,2,1]] === 1, 1, gen[S,1,1]],
-									If[RealScalarList[[s1,2,2]] === 1, 1, gen[S,1,2]]
-								},
-								(If[SMultiplicity[s1,#] === 1, 1, gauge[S,1,#]])&/@Range[NumberOfSubgroups]
-							],
-							Join[
-								{
-									If[RealScalarList[[s2,2,1]] === 1, 1, gen[S,2,1]],
-									If[RealScalarList[[s2,2,2]] === 1, 1, gen[S,2,2]]
-								},
-								(If[SMultiplicity[s2,#] === 1, 1, gauge[S,2,#]])&/@Range[NumberOfSubgroups]
-							],
-							loop
-						]],
-						Flatten[Join[
-							{gen[S,1,1], gen[S,1,2], gen[S,2,1], gen[S,2,2]},
-							{gauge[S,1,#], gauge[S,2,#]} /@ Range[NumberOfSubgroups]
-						]]
-					]/.{Factorize->List};
-					For[i=1, i<=Length[treeL], i++,
-						pos=Flatten[Position[res, {RealScalarList[[s1,1]], RealScalarList[[s2,1]], treeL[[i,2]], _, _}]];
-						If[pos==={},
-							res = Append[res, {RealScalarList[[s1,1]], RealScalarList[[s2,1]], treeL[[i,2]], treeL[[i,1]], 0}];,
-							res[[pos[[1]], 4]] += treeL[[i,1]];
-						];
-					];
-					For[i=1, i<=Length[loopL], i++,
-						pos=Flatten[Position[res, {RealScalarList[[s1,1]], RealScalarList[[s2,1]], loopL[[i,2]], _, _}]];
-						If[pos==={},
-							res = Append[res, {RealScalarList[[s1,1]], RealScalarList[[s2,1]], loopL[[i,2]], 0, loopL[[i,1]]}];,
-							res[[pos[[1]], 5]] += loopL[[i,1]];
-						];
-					];
-				];
-			];
-			$Assumptions = assHold;
-			Return[res//.{FF1___, { ___, 0, 0}, FF2___ } :> {FF1,FF2}];
-		];
-
 
 		(* Definition of Invariants *)
 		ComputeInvariants[] := Module[
@@ -4652,17 +4188,6 @@ BeginPackage["ARGES`"];
 				(SimplifySum[Expand[A],B]//.Join[subSum2,subSimplifySum])/.SimplifySum -> Sum
 			];
 		];
-
-		ExtractIndexStructure[exp_, pamlist_] := (
-			(Factorize[1, #]& /@Flatten[{Expand[exp]/.Plus->List}])//.{
-				Factorize[A_, B_ C_] :> Factorize[A B, C] /; (And @@ (FreeQ[B, #, Infinity] & /@ pamlist)),
-				Factorize[A_, B_ ] :> Factorize[A B, 1] /; (And @@ (FreeQ[B, #, Infinity] & /@ pamlist))
-			} //. {
-				{FF1___, Factorize[A_, B_], FF2___, Factorize[C_, B_], FF3___} :> {FF1, Factorize[A + C, B], FF2, FF3},
-				{FF1__, Factorize[0, A_], FF2___} :> {FF1, FF2},
-				{FF1___, Factorize[0, A_], FF2__} :> {FF1, FF2}
-			}
-		);
 
 		ApplyDistribute[func_, unexp_] := Block[
 			{exp = Expand[unexp]},
