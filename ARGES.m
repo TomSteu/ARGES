@@ -26,8 +26,8 @@ BeginPackage["ARGES`"];
 	gen::usage = "Generation Index";
 	gauge::usage = "Gauge Index";
 	C2::usage = "Casimir Invariant";
-	S2::usage = "Dynkin Index";
-	T2::usage = "Dynkin Index without Trace all particles";
+	S2::usage = "Dynkin Index with full multiplicity";
+	T2::usage = "Dynkin Index without full multiplicity";
 	Y2::usage = "Yukawa Invariant";
 	Y4::usage = "Yukawa Invariant";
 	Y6::usage = "Yukawa Invariant";
@@ -2552,86 +2552,75 @@ BeginPackage["ARGES`"];
 				If[WeylFermionList != {},
 					For[f=1, f<=Length[WeylFermionList], f++,
 						subInvariants = Append[subInvariants, d[WeylFermionList[[f,1]], ListGauge[[i,1]]]->FMultiplicity[f,i]];
-						subInvariants = Append[subInvariants, T2[WeylFermionList[[f,1]], ListGauge[[i,1]]]->FMultiplicity[f,i]/FMultiplicity[f] S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]];
+						subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]->FMultiplicity[f]/FMultiplicity[f,i] T2[WeylFermionList[[f,1]], ListGauge[[i,1]]]];
+						(* U(1) subgroup *)
+						If[ListGauge[[i,2]] === U && ListGauge[[i,3]] === 1,
+							subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]->Sqr[WeylFermionList[[f,3,i]]]];
+							subInvariants = Append[subInvariants, T2[WeylFermionList[[f,1]], ListGauge[[i,1]]]->Sqr[WeylFermionList[[f,3,i]]]];,
+							(* Singlet of any other group *)
+							If[FMultiplicity[f,i] === 1, 
+								subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]->0];
+								subInvariants = Append[subInvariants, T2[WeylFermionList[[f,1]], ListGauge[[i,1]]]->0];
+								Continue[];
+							];
+						];
 						(* SU(N) subgroup *)
 						If[ListGauge[[i,2]] === SU,
-							If[WeylFermionList[[f,3,i]] === 1,
-								subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 0];
-								subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 0];
-								Continue[];,
-								(* Fundamental Representation *)
-								If[WeylFermionList[[f,3,i]] === ListGauge[[i,3]],
-									subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 (Sqr[WeylFermionList[[f,3,i]]]-1)/WeylFermionList[[f,3,i]]];
-									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 FMultiplicity[f]/WeylFermionList[[f,3,i]]];
-								];
-								(* Adjoint Representation *)
-								If[WeylFermionList[[f,3,i]] === Sqr[ListGauge[[i,3]]] - 1,
-									subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> ListGauge[[i,3]]];
-									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> FMultiplicity[f]/WeylFermionList[[f,3,i]] ListGauge[[i,3]]];
-								];
-								(* Symmetric Representation *)
-								If[WeylFermionList[[f,3,i]] === 1/2 ListGauge[[i,3]] (ListGauge[[i,3]] + 1),
-									subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] + 2)(ListGauge[[i,3]] - 1)/ListGauge[[i,3]]];
-									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> FMultiplicity[f]/WeylFermionList[[f,3,i]] (1/2 ListGauge[[i,3]] + 1)];
-								];
-								(* Anitsymmetric Representation *)
-								If[WeylFermionList[[f,3,i]] === 1/2 ListGauge[[i,3]] (ListGauge[[i,3]] - 1),
-									subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] - 2)(ListGauge[[i,3]] + 1)/ListGauge[[i,3]]];
-									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> FMultiplicity[f]/WeylFermionList[[f,3,i]] (1/2 ListGauge[[i,3]] - 1)];
-								];
+							(* Fundamental Representation *)
+							If[WeylFermionList[[f,3,i]] === ListGauge[[i,3]],
+								subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 (Sqr[WeylFermionList[[f,3,i]]]-1)/WeylFermionList[[f,3,i]]];
+								subInvariants = Append[subInvariants, T2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2];
+							];
+							(* Adjoint Representation *)
+							If[WeylFermionList[[f,3,i]] === Sqr[ListGauge[[i,3]]] - 1,
+								subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> ListGauge[[i,3]]];
+								subInvariants = Append[subInvariants, T2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> ListGauge[[i,3]]];
+							];
+							(* Symmetric Representation *)								If[WeylFermionList[[f,3,i]] === 1/2 ListGauge[[i,3]] (ListGauge[[i,3]] + 1),
+								subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] + 2)(ListGauge[[i,3]] - 1)/ListGauge[[i,3]]];
+								subInvariants = Append[subInvariants, T2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] + 1)];
+							];
+							(* Anitsymmetric Representation *)
+							If[WeylFermionList[[f,3,i]] === 1/2 ListGauge[[i,3]] (ListGauge[[i,3]] - 1),
+								subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] - 2)(ListGauge[[i,3]] + 1)/ListGauge[[i,3]]];
+								subInvariants = Append[subInvariants, T2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] - 1)];
 							];
 						];
 						(* SO(N) subgroup *)
 						If[ListGauge[[i,2]] === SO,
-							If[WeylFermionList[[f,3,i]] === 1,
-								subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 0];
-								subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 0];
-								Continue[];,
-								(* Fundamental Representation *)
-								If[WeylFermionList[[f,3,i]] === ListGauge[[i,3]],
-									subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/4 (ListGauge[[i,3]] - 1)];
-									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 FMultiplicity[f]/WeylFermionList[[f,3,i]]];
-								];
-								(* Adjoint Representation *)
-								If[WeylFermionList[[f,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] - 1),
-									subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 ( ListGauge[[i,3]] - 2)];
-									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 (ListGauge[[i,3]] - 2) FMultiplicity[f]/WeylFermionList[[f,3,i]]];
-								];
-								(* Symmetric Representation *)
-								If[WeylFermionList[[f,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] + 1) - 1,
-									subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 ( ListGauge[[i,3]])];
-									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 (ListGauge[[i,3]] + 2) FMultiplicity[f]/WeylFermionList[[f,3,i]]];
-
-								];
+							(* Fundamental Representation *)
+							If[WeylFermionList[[f,3,i]] === ListGauge[[i,3]],
+								subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/4 (ListGauge[[i,3]] - 1)];
+								subInvariants = Append[subInvariants, T2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2];
+							];
+							(* Adjoint Representation *)
+							If[WeylFermionList[[f,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] - 1),
+								subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 ( ListGauge[[i,3]] - 2)];
+								subInvariants = Append[subInvariants, T2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 (ListGauge[[i,3]] - 2)];
+							];
+							(* Symmetric Representation *)
+							If[WeylFermionList[[f,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] + 1) - 1,
+								subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 ( ListGauge[[i,3]])];
+								subInvariants = Append[subInvariants, T2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 (ListGauge[[i,3]] + 2)];
 							];
 						];
 						(* SP(2N) subgroup *)
 						If[ListGauge[[i,2]] === Sp,
-							If[WeylFermionList[[f,3,i]] === 1,
-								subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 0];
-								subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 0];
-								Continue[];,
-								(* Fundamental Representation *)
-								If[WeylFermionList[[f,3,i]] === ListGauge[[i,3]],
-									subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/4 (ListGauge[[i,3]] + 1)];
-									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 FMultiplicity[f]/WeylFermionList[[f,3,i]]];
-								];
-								(* Antisymmetric Representation *)
-								If[WeylFermionList[[f,3,i]] === 1/2 (ListGauge[[i,3]] - 2)(ListGauge[[i,3]] + 1) ,
-									subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 ListGauge[[i,3]] ];
-									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] - 1) FMultiplicity[f]/WeylFermionList[[f,3,i]]];
-								];
-								(* Adjoint Representation *)
-								If[WeylFermionList[[f,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] + 1),
-									subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] + 1)];
-									subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] + 1) FMultiplicity[f]/WeylFermionList[[f,3,i]]];
-								];
+							(* Fundamental Representation *)
+							If[WeylFermionList[[f,3,i]] === ListGauge[[i,3]],
+								subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/4 (ListGauge[[i,3]] + 1)];
+								subInvariants = Append[subInvariants, T2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2];
 							];
-						];
-						(* U(1) subgroup *)
-						If[ListGauge[[i,2]] === U && ListGauge[[i,3]] === 1,
-							subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]->Sqr[WeylFermionList[[f,3,i]]]];
-							subInvariants = Append[subInvariants, S2[WeylFermionList[[f,1]], ListGauge[[i,1]]]->Sqr[WeylFermionList[[f,3,i]]] FMultiplicity[f]];
+							(* Antisymmetric Representation *)
+							If[WeylFermionList[[f,3,i]] === 1/2 (ListGauge[[i,3]] - 2)(ListGauge[[i,3]] + 1) ,
+								subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> 1/2 ListGauge[[i,3]] ];
+								subInvariants = Append[subInvariants, T2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] - 1)];
+							];
+							(* Adjoint Representation *)
+							If[WeylFermionList[[f,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] + 1),
+								subInvariants = Append[subInvariants, C2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] + 1)];
+								subInvariants = Append[subInvariants, T2[WeylFermionList[[f,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] + 1)];
+							];
 						];
 					];
 				];
@@ -2639,85 +2628,76 @@ BeginPackage["ARGES`"];
 				If[RealScalarList != {},
 					For[s=1, s<=Length[RealScalarList], s++,
 						subInvariants = Append[subInvariants, d[RealScalarList[[s,1]], ListGauge[[i,1]]]->SMultiplicity[s,i]];
-						subInvariants = Append[subInvariants, T2[RealScalarList[[s,1]], ListGauge[[i,1]]]->SMultiplicity[s,i]/SMultiplicity[s] S2[RealScalarList[[s,1]], ListGauge[[i,1]]]];
+						subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]->SMultiplicity[s]/SMultiplicity[s,i] T2[RealScalarList[[s,1]], ListGauge[[i,1]]]];
+						(* U(1) subgroup *)
+						If[ListGauge[[i,2]] === U && ListGauge[[i,3]] === 1,
+							subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]->Sqr[RealScalarList[[s,3,i]]]];
+							subInvariants = Append[subInvariants, T2[RealScalarList[[s,1]], ListGauge[[i,1]]]->Sqr[RealScalarList[[s,3,i]]]];,
+							(* Singlet of any other group *)
+							If[SMultiplicity[s,i] === 1,
+								subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]->0];
+								subInvariants = Append[subInvariants, T2[RealScalarList[[s,1]], ListGauge[[i,1]]]->0];
+								Continue[];
+							];
+						];
 						(* SU(N) subgroup *)
 						If[ListGauge[[i,2]] === SU,
-							If[RealScalarList[[s,3,i]] === 1,
-								subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 0];
-								subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 0];
-								Continue[];,
-								(* Fundamental Representation *)
-								If[RealScalarList[[s,3,i]] === ListGauge[[i,3]],
-									subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2 (Sqr[RealScalarList[[s,3,i]]]-1)/RealScalarList[[s,3,i]]];
-									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2 SMultiplicity[s]/RealScalarList[[s,3,i]]];
-								];
-								(* Adjoint Representation *)
-								If[RealScalarList[[s,3,i]] === Sqr[ListGauge[[i,3]]] - 1,
-									subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> ListGauge[[i,3]]];
-									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> SMultiplicity[s]/RealScalarList[[s,3,i]] ListGauge[[i,3]]];
-								];
-								(* Symmetric Representation *)
-								If[RealScalarList[[s,3,i]] === 1/2 ListGauge[[i,3]] (ListGauge[[i,3]] + 1),
-									subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] + 2)(ListGauge[[i,3]] - 1)/ListGauge[[i,3]]];
-									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> SMultiplicity[s]/RealScalarList[[s,3,i]] (1/2 ListGauge[[i,3]] + 1)];
-								];
-								(* Antisymmetric Representation *)
-								If[RealScalarList[[s,3,i]] === 1/2 ListGauge[[i,3]] (ListGauge[[i,3]] - 1),
-									subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] - 2)(ListGauge[[i,3]] + 1)/ListGauge[[i,3]]];
-									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> SMultiplicity[s]/RealScalarList[[s,3,i]] (1/2 ListGauge[[i,3]] - 1)];
-								];
+							(* Fundamental Representation *)
+							If[RealScalarList[[s,3,i]] === ListGauge[[i,3]],
+								subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2 (Sqr[RealScalarList[[s,3,i]]]-1)/RealScalarList[[s,3,i]]];
+								subInvariants = Append[subInvariants, T2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2];
+							];
+							(* Adjoint Representation *)
+							If[RealScalarList[[s,3,i]] === Sqr[ListGauge[[i,3]]] - 1,
+								subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> ListGauge[[i,3]]];
+								subInvariants = Append[subInvariants, T2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> ListGauge[[i,3]]];
+							];
+							(* Symmetric Representation *)
+							If[RealScalarList[[s,3,i]] === 1/2 ListGauge[[i,3]] (ListGauge[[i,3]] + 1),
+								subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] + 2)(ListGauge[[i,3]] - 1)/ListGauge[[i,3]]];
+								subInvariants = Append[subInvariants, T2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] + 1)];
+							];
+							(* Antisymmetric Representation *)
+							If[RealScalarList[[s,3,i]] === 1/2 ListGauge[[i,3]] (ListGauge[[i,3]] - 1),
+								subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (ListGauge[[i,3]] - 2)(ListGauge[[i,3]] + 1)/ListGauge[[i,3]]];
+								subInvariants = Append[subInvariants, T2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] - 1)];
 							];
 						];
 						(* SO(N) subgroup *)
 						If[ListGauge[[i,2]] === SO,
-							If[RealScalarList[[s,3,i]] === 1,
-								subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 0];
-								subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 0];
-								Continue[];,
-								(* Fundamental Representation *)
-								If[RealScalarList[[s,3,i]] === ListGauge[[i,3]],
-									subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/4 (ListGauge[[i,3]] - 1)];
-									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2 SMultiplicity[s]/RealScalarList[[s,3,i]]];
-								];
-								(* Adjoint Representation *)
-								If[RealScalarList[[s,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] - 1),
-									subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2 (ListGauge[[i,3]] - 2)];
-									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2 (ListGauge[[i,3]] - 2) SMultiplicity[s]/RealScalarList[[s,3,i]]];
-								];
-								(* Symmetric Representation *)
-								If[RealScalarList[[s,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] + 1) - 1,
-									subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2 ListGauge[[i,3]]];
-									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2 (ListGauge[[i,3]] + 2) SMultiplicity[s]/RealScalarList[[s,3,i]]];
-								];
+							(* Fundamental Representation *)
+							If[RealScalarList[[s,3,i]] === ListGauge[[i,3]],
+								subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/4 (ListGauge[[i,3]] - 1)];
+								subInvariants = Append[subInvariants, T2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2];
+							];
+							(* Adjoint Representation *)
+							If[RealScalarList[[s,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] - 1),
+								subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2 (ListGauge[[i,3]] - 2)];
+								subInvariants = Append[subInvariants, T2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2 (ListGauge[[i,3]] - 2)];
+							];
+							(* Symmetric Representation *)
+							If[RealScalarList[[s,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] + 1) - 1,
+								subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2 ListGauge[[i,3]]];
+								subInvariants = Append[subInvariants, T2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2 (ListGauge[[i,3]] + 2)];
 							];
 						];
 						(* Sp(2N) subgroup *)
 						If[ListGauge[[i,2]] === Sp,
-							If[RealScalarList[[s,3,i]] === 1,
-								subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 0];
-								subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 0];
-								Continue[];,
-								(* Fundamental Representation *)
-								If[RealScalarList[[s,3,i]] === ListGauge[[i,3]],
-									subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/4 (ListGauge[[i,3]] + 1)];
-									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2 SMultiplicity[s]/RealScalarList[[s,3,i]]];
-								];
-								(* Adjoint Representation *)
-								If[RealScalarList[[s,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] + 1),
-									subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] + 1)];
-									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] + 1) SMultiplicity[s]/RealScalarList[[s,3,i]]];
-								];
-								(* Antisymmetric Representation *)
-								If[RealScalarList[[s,3,i]] === 1/2 (ListGauge[[i,3]]-2)(ListGauge[[i,3]] + 1),
-									subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]])];
-									subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] - 1) SMultiplicity[s]/RealScalarList[[s,3,i]]];
-								];
+							(* Fundamental Representation *)
+							If[RealScalarList[[s,3,i]] === ListGauge[[i,3]],
+								subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/4 (ListGauge[[i,3]] + 1)];
+								subInvariants = Append[subInvariants, T2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> 1/2];
 							];
-						];
-						(* U(1) subgroup *)
-						If[ListGauge[[i,2]] === U && ListGauge[[i,3]] === 1,
-							subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]->Sqr[RealScalarList[[s,3,i]]]];
-							subInvariants = Append[subInvariants, S2[RealScalarList[[s,1]], ListGauge[[i,1]]]->Sqr[RealScalarList[[s,3,i]]] SMultiplicity[s]];
+							(* Adjoint Representation *)
+							If[RealScalarList[[s,3,i]] === 1/2 ListGauge[[i,3]](ListGauge[[i,3]] + 1),
+								subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] + 1)];
+								subInvariants = Append[subInvariants, T2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] + 1)];
+							];
+							(* Antisymmetric Representation *)
+							If[RealScalarList[[s,3,i]] === 1/2 (ListGauge[[i,3]]-2)(ListGauge[[i,3]] + 1),
+								subInvariants = Append[subInvariants, C2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]])];
+								subInvariants = Append[subInvariants, T2[RealScalarList[[s,1]], ListGauge[[i,1]]]-> (1/2 ListGauge[[i,3]] - 1)];
+							];
 						];
 					];
 				];
