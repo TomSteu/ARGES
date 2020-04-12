@@ -40,6 +40,7 @@ BeginPackage["ARGES`"];
 	subSimplifySum::usage = "Rules for advanced Simplification";
 	SimplifySum::usage = "Label for advanced Simplification, to be used only within subSimplifySum";
 	DisableNativeSums::usage = "Uses SimplifySum instead of Sum";
+	Eps::usage = "Levi-Civita symbol in two dimensions";
 
 	NumberOfSubgroups = 1;
 
