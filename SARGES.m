@@ -2529,6 +2529,7 @@ BeginPackage["SARGES`"];
 					SolveSuperProd[{Delta[f], STriLin, conj[Yuk]}, (Evaluate[TensorDelta[{#1, #2, #3, #4}, {#5, #8, #6, #7}]])&, 8, {}]
 				)];
 			];
+			subInvariants = subInvariants /. {Rule[a_, b_] :> Rule[a, b //. subInvariants]};
 		];
 		
 		(* Kronecker delta for arbitray list of arguments*)
@@ -2774,13 +2775,6 @@ BeginPackage["SARGES`"];
 			SimplifySum[KroneckerDelta[bb_, aa_], SS1___, {aa_, 1, cc_}, SS2___] :> SimplifySum[1 , SS1, SS2],
 			Power[KroneckerDelta[A___], a_] :> KroneckerDelta[A],
 			SimplifySum[c_, ss1___, {p_, 1, q_}, ss2___ ] :> SimplifySum[q c, ss1, ss2] /; !MemberQ[{c, ss1, ss2}, p, Infinity],
-			Conjugate[Generator[A___][a_, i_, j_]] :> Generator[A][a, j, i],
-			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {a_, 1, aa_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C C2[A] KroneckerDelta[i, k], SS1, SS2, SS3], 
-			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {j_, 1, jj_}, SS2___, {a_, 1, aa_}, SS3___] :> SimplifySum[C C2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
-			SimplifySum[Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {a_, 1, aa_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C2[A] KroneckerDelta[i, k], SS1, SS2, SS3], 
-			SimplifySum[Generator[A___][a_, i_, j_] Generator[A___][a_, j_, k_], SS1___, {j_, 1, jj_}, SS2___, {a_, 1, aa_}, SS3___] :> SimplifySum[C2[A] KroneckerDelta[i, k], SS1, SS2, SS3],
-			SimplifySum[C_ Generator[A___][a_, i_, j_] Generator[A___][b_, j_, i_], SS1___, {i_, 1, ii_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[C T2[A]KroneckerDelta[a, b], SS1, SS2, SS3],
-			SimplifySum[Generator[A___][a_, i_, j_] Generator[A___][b_, j_, i_], SS1___, {i_, 1, ii_}, SS2___, {j_, 1, jj_}, SS3___] :> SimplifySum[T2[A] KroneckerDelta[a, b], SS1, SS2, SS3],
 			SimplifySum[A_] :> A,
 			SimplifySum[] :> 0
 		};

@@ -2271,6 +2271,7 @@ BeginPackage["ARGES`"];
 					];
 				];
 			];
+			subInvariants = subInvariants /. {Rule[a_, b_] :> Rule[a, b //. subInvariants]};
 			$Assumptions=assHold;
 		];
 
