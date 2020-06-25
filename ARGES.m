@@ -803,6 +803,11 @@ BeginPackage["ARGES`"];
 			Return[BetaQuartic[pos1[[1,1]], Length[RealScalarList]+1, Length[RealScalarList]+1, Length[RealScalarList]+1, SList1, Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], loop]//SimplifyProduct];
 		]/;(Dimensions[SList1][[1]] == NumberOfSubgroups+2);
 
+		(* Scalar Linear interaction *)
+		VakuumEnergy[loop_] := (
+			BetaQuartic[Length[RealScalarList]+1, Length[RealScalarList]+1, Length[RealScalarList]+1, Length[RealScalarList]+1, Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], Function[{x}, 1]/@Range[NumberOfSubgroups+2], loop]//SimplifyProduct
+		);
+
 		(* Fermion Mass *)
 		\[Beta][FType1_, FType2_, FList1_List, FList2_List, loop_ ] := Module[
 			{posF1, posF2},
@@ -1874,36 +1879,39 @@ BeginPackage["ARGES`"];
 		BetaQuartic[pa_, pb_, pc_, pd_, la_, lb_, lc_, ld_, 3] := Module[
 			{beta},
 			beta = 0;
-			beta += (
+			beta += 24^4 (
 				If[pa > Length[RealScalarList], 0, \[Kappa]1 K1L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + \[Kappa]2 K2L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]] +
 				If[pb > Length[RealScalarList], 0, \[Kappa]1 K1L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] + \[Kappa]2 K2L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]]] +
 				If[pc > Length[RealScalarList], 0, \[Kappa]1 K1L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] + \[Kappa]2 K2L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]] +
 				If[pd > Length[RealScalarList], 0, \[Kappa]1 K1L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] + \[Kappa]2 K2L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]]] 
 			)//.subScalarInvariants;
-			beta += \[Tau]1 (
+			beta += 24^4 \[Tau]1 (
 				T3L1[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]
 				) //. subScalarInvariants;
-			beta += \[Tau]2 (
+			beta += 24^4 \[Tau]2 (
 				T3L2[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				T3L2[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
 				T3L2[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
-				T3L2[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] 
+				T3L2[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				T3L2[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] + 
+				T3L2[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]]
 				) //. subScalarInvariants;
-			beta += \[Tau]3 (
+			beta += 24^4 \[Tau]3 (
 				T3L3[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
 				T3L3[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
 				T3L3[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] 
 				) //. subScalarInvariants;
-			beta += \[Tau]4 (
+			beta += 24^4 \[Tau]4 (
 				T3L4[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
 				T3L4[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
 				T3L4[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] 
 				) //. subScalarInvariants;
-			beta += \[Tau]5 (
+			beta += 24^4 \[Tau]5 (
 				T3L5[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
 				T3L5[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
 				T3L5[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] 
 				) //. subScalarInvariants;
-			beta += \[Tau]6 (
+			beta += 24^4 \[Tau]6 (
 				T3L6[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
 				T3L6[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
 				T3L6[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
@@ -1911,7 +1919,7 @@ BeginPackage["ARGES`"];
 				T3L6[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
 				T3L6[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
 				) //. subScalarInvariants;
-			beta += \[Tau]7 (
+			beta += 24^4 \[Tau]7 (
 				T3L7[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
 				T3L7[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
 				T3L7[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
@@ -1919,7 +1927,7 @@ BeginPackage["ARGES`"];
 				T3L7[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
 				T3L7[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
 				) //. subScalarInvariants;
-			beta += \[Tau]8 (
+			beta += 24^4 \[Tau]8 (
 				T3L8[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
 				T3L8[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
 				T3L8[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
@@ -1933,7 +1941,7 @@ BeginPackage["ARGES`"];
 				T3L8[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
 				T3L8[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
 				) //. subScalarInvariants;
-			Return[beta/(Power[4 \[Pi], 6])];
+			Return[beta/(24 Power[4 \[Pi], 6])];
 		]
 
 		BetaVEV[va_, 0] := va;
@@ -2120,8 +2128,8 @@ BeginPackage["ARGES`"];
 		SGamma[pa_, pb_, la_, lb_, 3] := Module[
 			{gamma},
 			gamma = 0;
-			gamma += \[Kappa]1 K1[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
-			gamma += \[Kappa]2 K2[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			gamma += 24^3 \[Kappa]1 K1[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			gamma += 24^3 \[Kappa]2 K2[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
 			Return[gamma/Power[4 \[Pi], 6]];
 		]; 
 
