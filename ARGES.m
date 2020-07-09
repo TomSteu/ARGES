@@ -2119,6 +2119,16 @@ BeginPackage["ARGES`"];
 			Return[gamma/Power[4 \[Pi], 6]];
 		]; 
 
+		SGamma[pa_, pb_, la_, lb_, 4] := Module[
+			{gamma},
+			gamma = 0;
+			gamma += 24^4 kappa3 K3[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			gamma += 24^4 kappa4 K4[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			gamma += 24^4 kappa5 K5[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			gamma += 24^4 kappa6 K6[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			Return[gamma/Power[4 \[Pi], 8]];
+		];
+
 		(* Definition of Invariants *)
 		ComputeInvariants[] := Module[
 			{i, f, s, sIdx, Y4Hold, assHold},
@@ -3962,6 +3972,214 @@ BeginPackage["ARGES`"];
 					{ss4[0], 1, Length[RealScalarList]},
 					{ss5[0], 1, Length[RealScalarList]},
 					{ss6[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			K3[aa_, bb_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
+							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] * 
+							BetaQuartic[ss4[0], ss5[0], ss6[0], ss7[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
+							BetaQuartic[bb[[1]], ss1[0], ss6[0], ss7[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0]
+						)
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			K4[aa_, bb_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
+							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
+							BetaQuartic[ss4[0], ss5[0], ss6[0], ss7[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
+							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0]
+						)
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			K5[aa_, bb_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
+							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] * 
+							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
+							BetaQuartic[bb[[1]], ss1[0], ss4[0], ss7[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0]
+						)
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			K6[aa_, bb_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
+							BetaQuartic[ss1[0], ss2[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] * 
+							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
+							BetaQuartic[bb[[1]], ss4[0], ss6[0], ss7[0], bb[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0]
+						)
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]}
 				];
 				$Assumptions=assHold;
 				sum
