@@ -1,5 +1,5 @@
 BeginPackage["ARGES`"];
-	$VersionARGES = "0.1.0"
+	$VersionARGES = "0.1.1"
 	Gauge::usage = "Specify gauge subgroup";
 	WeylFermion::usage = "Add Weyl fermion";
 	RealScalar::usage = "Add real scalar";
@@ -4855,7 +4855,7 @@ BeginPackage["ARGES`"];
 							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
 							BetaQuartic[ss2[0], ss3[0], ss4[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
 							BetaQuartic[cc[[1]], ss5[0], ss7[0], ss8[0], cc[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss6[0], ss7[0], ss8[0], cc[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							BetaQuartic[dd[[1]], ss6[0], ss7[0], ss8[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
