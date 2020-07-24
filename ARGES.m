@@ -1,4 +1,5 @@
 BeginPackage["ARGES`"];
+	$VersionARGES = "0.1.0"
 	Gauge::usage = "Specify gauge subgroup";
 	WeylFermion::usage = "Add Weyl fermion";
 	RealScalar::usage = "Add real scalar";
