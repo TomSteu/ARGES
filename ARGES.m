@@ -1599,7 +1599,7 @@ BeginPackage["ARGES`"];
 			Return[beta/Power[4\[Pi], 4]];
 		];
 
-		Lam[a_, b_, c_, d_] := BetaQuartic[a[[1]], b[[1]], c[[1]], d[[2]], a[[2;;]], b[[2;;]], c[[2;;]], d[[2;;]], 0];
+		Lam[a_, b_, c_, d_] := BetaQuartic[a[[1]], b[[1]], c[[1]], d[[1]], a[[2;;]], b[[2;;]], c[[2;;]], d[[2;;]], 0];
 
 		BetaQuartic[a_, b_, c_, d_, la_, lb_, lc_, ld_, 0] := Module[
 			{q},
@@ -3273,6 +3273,257 @@ BeginPackage["ARGES`"];
 				D108[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
 				D108[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
 			) //. subScalarInvariants;
+			beta += 24^5 (cd[109]) (
+				D108[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				D108[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				D108[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				D108[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				D108[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				D108[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24^5 (cd[110]) (
+				D110[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				D110[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				D110[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				D110[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				D110[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				D110[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24^5 (cd[111]) (
+				D111[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				D111[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				D111[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				D111[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				D111[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				D111[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				D111[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				D111[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+				D111[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				D111[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] +
+				D111[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				D111[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
+			) //. subScalarInvariants;
+			beta += 24^5 (cd[112]) (
+				D112[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] + 
+				D112[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				D112[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24^5 (cd[113]) (
+				D113[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				D113[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				D113[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				D113[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				D113[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				D113[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24^5 (cd[114]) (
+				D114[Prepend[la,pa],Prepend[lb,pb],Prepend[lc,pc],Prepend[ld,pd]]+
+				D114[Prepend[la,pa],Prepend[lb,pb],Prepend[ld,pd],Prepend[lc,pc]]+
+				D114[Prepend[la,pa],Prepend[lc,pc],Prepend[lb,pb],Prepend[ld,pd]]+
+				D114[Prepend[la,pa],Prepend[lc,pc],Prepend[ld,pd],Prepend[lb,pb]]+
+				D114[Prepend[la,pa],Prepend[ld,pd],Prepend[lb,pb],Prepend[lc,pc]]+
+				D114[Prepend[la,pa],Prepend[ld,pd],Prepend[lc,pc],Prepend[lb,pb]]+
+				D114[Prepend[lb,pb],Prepend[la,pa],Prepend[lc,pc],Prepend[ld,pd]]+
+				D114[Prepend[lb,pb],Prepend[la,pa],Prepend[ld,pd],Prepend[lc,pc]]+
+				D114[Prepend[lb,pb],Prepend[lc,pc],Prepend[la,pa],Prepend[ld,pd]]+
+				D114[Prepend[lb,pb],Prepend[lc,pc],Prepend[ld,pd],Prepend[la,pa]]+
+				D114[Prepend[lb,pb],Prepend[ld,pd],Prepend[la,pa],Prepend[lc,pc]]+
+				D114[Prepend[lb,pb],Prepend[ld,pd],Prepend[lc,pc],Prepend[la,pa]]+
+				D114[Prepend[lc,pc],Prepend[la,pa],Prepend[lb,pb],Prepend[ld,pd]]+
+				D114[Prepend[lc,pc],Prepend[la,pa],Prepend[ld,pd],Prepend[lb,pb]]+
+				D114[Prepend[lc,pc],Prepend[lb,pb],Prepend[la,pa],Prepend[ld,pd]]+
+				D114[Prepend[lc,pc],Prepend[lb,pb],Prepend[ld,pd],Prepend[la,pa]]+
+				D114[Prepend[lc,pc],Prepend[ld,pd],Prepend[la,pa],Prepend[lb,pb]]+
+				D114[Prepend[lc,pc],Prepend[ld,pd],Prepend[lb,pb],Prepend[la,pa]]+
+				D114[Prepend[ld,pd],Prepend[la,pa],Prepend[lb,pb],Prepend[lc,pc]]+
+				D114[Prepend[ld,pd],Prepend[la,pa],Prepend[lc,pc],Prepend[lb,pb]]+
+				D114[Prepend[ld,pd],Prepend[lb,pb],Prepend[la,pa],Prepend[lc,pc]]+
+				D114[Prepend[ld,pd],Prepend[lb,pb],Prepend[lc,pc],Prepend[la,pa]]+
+				D114[Prepend[ld,pd],Prepend[lc,pc],Prepend[la,pa],Prepend[lb,pb]]+
+				D114[Prepend[ld,pd],Prepend[lc,pc],Prepend[lb,pb],Prepend[la,pa]]
+			) //. subScalarInvariants;
+			beta += 24^5 (cd[115]) (
+				D115[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				D115[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				D115[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				D115[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				D115[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				D115[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				D115[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				D115[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+				D115[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				D115[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] +
+				D115[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				D115[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
+			) //. subScalarInvariants;
+			beta += 24^5 (cd[116]) (
+				D116[Prepend[la,pa],Prepend[lb,pb],Prepend[lc,pc],Prepend[ld,pd]]+
+				D116[Prepend[la,pa],Prepend[lb,pb],Prepend[ld,pd],Prepend[lc,pc]]+
+				D116[Prepend[la,pa],Prepend[lc,pc],Prepend[lb,pb],Prepend[ld,pd]]+
+				D116[Prepend[la,pa],Prepend[lc,pc],Prepend[ld,pd],Prepend[lb,pb]]+
+				D116[Prepend[la,pa],Prepend[ld,pd],Prepend[lb,pb],Prepend[lc,pc]]+
+				D116[Prepend[la,pa],Prepend[ld,pd],Prepend[lc,pc],Prepend[lb,pb]]+
+				D116[Prepend[lb,pb],Prepend[la,pa],Prepend[lc,pc],Prepend[ld,pd]]+
+				D116[Prepend[lb,pb],Prepend[la,pa],Prepend[ld,pd],Prepend[lc,pc]]+
+				D116[Prepend[lb,pb],Prepend[lc,pc],Prepend[la,pa],Prepend[ld,pd]]+
+				D116[Prepend[lb,pb],Prepend[lc,pc],Prepend[ld,pd],Prepend[la,pa]]+
+				D116[Prepend[lb,pb],Prepend[ld,pd],Prepend[la,pa],Prepend[lc,pc]]+
+				D116[Prepend[lb,pb],Prepend[ld,pd],Prepend[lc,pc],Prepend[la,pa]]+
+				D116[Prepend[lc,pc],Prepend[la,pa],Prepend[lb,pb],Prepend[ld,pd]]+
+				D116[Prepend[lc,pc],Prepend[la,pa],Prepend[ld,pd],Prepend[lb,pb]]+
+				D116[Prepend[lc,pc],Prepend[lb,pb],Prepend[la,pa],Prepend[ld,pd]]+
+				D116[Prepend[lc,pc],Prepend[lb,pb],Prepend[ld,pd],Prepend[la,pa]]+
+				D116[Prepend[lc,pc],Prepend[ld,pd],Prepend[la,pa],Prepend[lb,pb]]+
+				D116[Prepend[lc,pc],Prepend[ld,pd],Prepend[lb,pb],Prepend[la,pa]]+
+				D116[Prepend[ld,pd],Prepend[la,pa],Prepend[lb,pb],Prepend[lc,pc]]+
+				D116[Prepend[ld,pd],Prepend[la,pa],Prepend[lc,pc],Prepend[lb,pb]]+
+				D116[Prepend[ld,pd],Prepend[lb,pb],Prepend[la,pa],Prepend[lc,pc]]+
+				D116[Prepend[ld,pd],Prepend[lb,pb],Prepend[lc,pc],Prepend[la,pa]]+
+				D116[Prepend[ld,pd],Prepend[lc,pc],Prepend[la,pa],Prepend[lb,pb]]+
+				D116[Prepend[ld,pd],Prepend[lc,pc],Prepend[lb,pb],Prepend[la,pa]]
+			) //. subScalarInvariants;
+			beta += 24^5 (cd[117]) (
+				D117[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				D117[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				D117[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				D117[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				D117[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				D117[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				D117[Prepend[lb, pb], Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd]] +
+				D117[Prepend[lb, pb], Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc]] +
+				D117[Prepend[lc, pc], Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd]] +
+				D117[Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb]] +
+				D117[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+				D117[Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24^5 (cd[118]) (
+				D118[Prepend[la,pa],Prepend[lb,pb],Prepend[lc,pc],Prepend[ld,pd]]+
+				D118[Prepend[la,pa],Prepend[lb,pb],Prepend[ld,pd],Prepend[lc,pc]]+
+				D118[Prepend[la,pa],Prepend[lc,pc],Prepend[lb,pb],Prepend[ld,pd]]+
+				D118[Prepend[la,pa],Prepend[lc,pc],Prepend[ld,pd],Prepend[lb,pb]]+
+				D118[Prepend[la,pa],Prepend[ld,pd],Prepend[lb,pb],Prepend[lc,pc]]+
+				D118[Prepend[la,pa],Prepend[ld,pd],Prepend[lc,pc],Prepend[lb,pb]]+
+				D118[Prepend[lb,pb],Prepend[la,pa],Prepend[lc,pc],Prepend[ld,pd]]+
+				D118[Prepend[lb,pb],Prepend[la,pa],Prepend[ld,pd],Prepend[lc,pc]]+
+				D118[Prepend[lb,pb],Prepend[lc,pc],Prepend[la,pa],Prepend[ld,pd]]+
+				D118[Prepend[lb,pb],Prepend[lc,pc],Prepend[ld,pd],Prepend[la,pa]]+
+				D118[Prepend[lb,pb],Prepend[ld,pd],Prepend[la,pa],Prepend[lc,pc]]+
+				D118[Prepend[lb,pb],Prepend[ld,pd],Prepend[lc,pc],Prepend[la,pa]]+
+				D118[Prepend[lc,pc],Prepend[la,pa],Prepend[lb,pb],Prepend[ld,pd]]+
+				D118[Prepend[lc,pc],Prepend[la,pa],Prepend[ld,pd],Prepend[lb,pb]]+
+				D118[Prepend[lc,pc],Prepend[lb,pb],Prepend[la,pa],Prepend[ld,pd]]+
+				D118[Prepend[lc,pc],Prepend[lb,pb],Prepend[ld,pd],Prepend[la,pa]]+
+				D118[Prepend[lc,pc],Prepend[ld,pd],Prepend[la,pa],Prepend[lb,pb]]+
+				D118[Prepend[lc,pc],Prepend[ld,pd],Prepend[lb,pb],Prepend[la,pa]]+
+				D118[Prepend[ld,pd],Prepend[la,pa],Prepend[lb,pb],Prepend[lc,pc]]+
+				D118[Prepend[ld,pd],Prepend[la,pa],Prepend[lc,pc],Prepend[lb,pb]]+
+				D118[Prepend[ld,pd],Prepend[lb,pb],Prepend[la,pa],Prepend[lc,pc]]+
+				D118[Prepend[ld,pd],Prepend[lb,pb],Prepend[lc,pc],Prepend[la,pa]]+
+				D118[Prepend[ld,pd],Prepend[lc,pc],Prepend[la,pa],Prepend[lb,pb]]+
+				D118[Prepend[ld,pd],Prepend[lc,pc],Prepend[lb,pb],Prepend[la,pa]]
+			) //. subScalarInvariants;
+			beta += 24^5 (cd[119]) (
+				D119[Prepend[la,pa],Prepend[lb,pb],Prepend[lc,pc],Prepend[ld,pd]]+
+				D119[Prepend[la,pa],Prepend[lb,pb],Prepend[ld,pd],Prepend[lc,pc]]+
+				D119[Prepend[la,pa],Prepend[lc,pc],Prepend[lb,pb],Prepend[ld,pd]]+
+				D119[Prepend[la,pa],Prepend[lc,pc],Prepend[ld,pd],Prepend[lb,pb]]+
+				D119[Prepend[la,pa],Prepend[ld,pd],Prepend[lb,pb],Prepend[lc,pc]]+
+				D119[Prepend[la,pa],Prepend[ld,pd],Prepend[lc,pc],Prepend[lb,pb]]+
+				D119[Prepend[lb,pb],Prepend[la,pa],Prepend[lc,pc],Prepend[ld,pd]]+
+				D119[Prepend[lb,pb],Prepend[la,pa],Prepend[ld,pd],Prepend[lc,pc]]+
+				D119[Prepend[lb,pb],Prepend[lc,pc],Prepend[la,pa],Prepend[ld,pd]]+
+				D119[Prepend[lb,pb],Prepend[lc,pc],Prepend[ld,pd],Prepend[la,pa]]+
+				D119[Prepend[lb,pb],Prepend[ld,pd],Prepend[la,pa],Prepend[lc,pc]]+
+				D119[Prepend[lb,pb],Prepend[ld,pd],Prepend[lc,pc],Prepend[la,pa]]+
+				D119[Prepend[lc,pc],Prepend[la,pa],Prepend[lb,pb],Prepend[ld,pd]]+
+				D119[Prepend[lc,pc],Prepend[la,pa],Prepend[ld,pd],Prepend[lb,pb]]+
+				D119[Prepend[lc,pc],Prepend[lb,pb],Prepend[la,pa],Prepend[ld,pd]]+
+				D119[Prepend[lc,pc],Prepend[lb,pb],Prepend[ld,pd],Prepend[la,pa]]+
+				D119[Prepend[lc,pc],Prepend[ld,pd],Prepend[la,pa],Prepend[lb,pb]]+
+				D119[Prepend[lc,pc],Prepend[ld,pd],Prepend[lb,pb],Prepend[la,pa]]+
+				D119[Prepend[ld,pd],Prepend[la,pa],Prepend[lb,pb],Prepend[lc,pc]]+
+				D119[Prepend[ld,pd],Prepend[la,pa],Prepend[lc,pc],Prepend[lb,pb]]+
+				D119[Prepend[ld,pd],Prepend[lb,pb],Prepend[la,pa],Prepend[lc,pc]]+
+				D119[Prepend[ld,pd],Prepend[lb,pb],Prepend[lc,pc],Prepend[la,pa]]+
+				D119[Prepend[ld,pd],Prepend[lc,pc],Prepend[la,pa],Prepend[lb,pb]]+
+				D119[Prepend[ld,pd],Prepend[lc,pc],Prepend[lb,pb],Prepend[la,pa]]
+			) //. subScalarInvariants;
+			beta += 24^5 (cd[120]) (
+				D120[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				D120[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				D120[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				D120[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				D120[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				D120[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24^5 (cd[121]) (
+				D121[Prepend[la,pa],Prepend[lb,pb],Prepend[lc,pc],Prepend[ld,pd]]+
+				D121[Prepend[la,pa],Prepend[lb,pb],Prepend[ld,pd],Prepend[lc,pc]]+
+				D121[Prepend[la,pa],Prepend[lc,pc],Prepend[lb,pb],Prepend[ld,pd]]+
+				D121[Prepend[la,pa],Prepend[lc,pc],Prepend[ld,pd],Prepend[lb,pb]]+
+				D121[Prepend[la,pa],Prepend[ld,pd],Prepend[lb,pb],Prepend[lc,pc]]+
+				D121[Prepend[la,pa],Prepend[ld,pd],Prepend[lc,pc],Prepend[lb,pb]]+
+				D121[Prepend[lb,pb],Prepend[la,pa],Prepend[lc,pc],Prepend[ld,pd]]+
+				D121[Prepend[lb,pb],Prepend[la,pa],Prepend[ld,pd],Prepend[lc,pc]]+
+				D121[Prepend[lb,pb],Prepend[lc,pc],Prepend[la,pa],Prepend[ld,pd]]+
+				D121[Prepend[lb,pb],Prepend[lc,pc],Prepend[ld,pd],Prepend[la,pa]]+
+				D121[Prepend[lb,pb],Prepend[ld,pd],Prepend[la,pa],Prepend[lc,pc]]+
+				D121[Prepend[lb,pb],Prepend[ld,pd],Prepend[lc,pc],Prepend[la,pa]]+
+				D121[Prepend[lc,pc],Prepend[la,pa],Prepend[lb,pb],Prepend[ld,pd]]+
+				D121[Prepend[lc,pc],Prepend[la,pa],Prepend[ld,pd],Prepend[lb,pb]]+
+				D121[Prepend[lc,pc],Prepend[lb,pb],Prepend[la,pa],Prepend[ld,pd]]+
+				D121[Prepend[lc,pc],Prepend[lb,pb],Prepend[ld,pd],Prepend[la,pa]]+
+				D121[Prepend[lc,pc],Prepend[ld,pd],Prepend[la,pa],Prepend[lb,pb]]+
+				D121[Prepend[lc,pc],Prepend[ld,pd],Prepend[lb,pb],Prepend[la,pa]]+
+				D121[Prepend[ld,pd],Prepend[la,pa],Prepend[lb,pb],Prepend[lc,pc]]+
+				D121[Prepend[ld,pd],Prepend[la,pa],Prepend[lc,pc],Prepend[lb,pb]]+
+				D121[Prepend[ld,pd],Prepend[lb,pb],Prepend[la,pa],Prepend[lc,pc]]+
+				D121[Prepend[ld,pd],Prepend[lb,pb],Prepend[lc,pc],Prepend[la,pa]]+
+				D121[Prepend[ld,pd],Prepend[lc,pc],Prepend[la,pa],Prepend[lb,pb]]+
+				D121[Prepend[ld,pd],Prepend[lc,pc],Prepend[lb,pb],Prepend[la,pa]]
+			) //. subScalarInvariants;
+			beta += 24^5 (cd[122]) (
+				D122[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				D122[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				D122[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				D122[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				D122[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				D122[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				D122[Prepend[lb, pb], Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd]] +
+				D122[Prepend[lb, pb], Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc]] +
+				D122[Prepend[lc, pc], Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd]] +
+				D122[Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb]] +
+				D122[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+				D122[Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24^5 (cd[123]) (
+				D123[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				D123[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				D123[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				D123[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				D123[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				D123[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				D123[Prepend[lb, pb], Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd]] +
+				D123[Prepend[lb, pb], Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc]] +
+				D123[Prepend[lc, pc], Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd]] +
+				D123[Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb]] +
+				D123[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+				D123[Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24^5 (cd[124]) (
+				D124[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				D124[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				D124[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				D124[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				D124[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				D124[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				D124[Prepend[lb, pb], Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd]] +
+				D124[Prepend[lb, pb], Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc]] +
+				D124[Prepend[lc, pc], Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd]] +
+				D124[Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb]] +
+				D124[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+				D124[Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb]]
+			) //. subScalarInvariants;
 
 			Return[beta/(24 Power[4 \[Pi], 8])];
 		];
@@ -3916,7 +4167,7 @@ BeginPackage["ARGES`"];
 							1/2 (
 								SolveTrace2[Yuk[pa[[1]]], adj[Yuk[ss1[0]]], Prepend[Function[{x}, {pa[[3+x]], ss1[2+x]}]/@Range[NumberOfSubgroups], {pa[[2]], pa[[3]], ss1[1], ss1[2]}]] +
 								SolveTrace2[Yuk[ss1[0]], adj[Yuk[pa[[1]]]], Prepend[Function[{x}, {ss1[2+x], pa[[3+x]]}]/@Range[NumberOfSubgroups], {ss1[1], ss1[2], pa[[2]], pa[[3]]}]]
-							) BetaQuartic[ss1[0], pb[[1]], pc[[1]], pd[[1]], ss1/@Range[NumberOfSubgroups+2], pb[[2;;]], pc[[2;;]], pd[[2;;]], 0],
+							) Lam[ss1/@Range[0,NumberOfSubgroups+2], pb, pc, pd],
 							{ss1[1], 1, RealScalarList[[ss1[0],2,1]]},
 							{ss1[2], 1, RealScalarList[[ss1[0],2,2]]}
 						},
@@ -3928,7 +4179,7 @@ BeginPackage["ARGES`"];
 				sum
 			],
 			\[CapitalLambda]S[gaug_][pa_, pb_, pc_, pd_] :> ReleaseHold[
-				BetaQuartic[pa[[1]], pb[[1]], pc[[1]], pd[[1]], pa[[2;;]], pb[[2;;]], pc[[2;;]], pd[[2;;]], 0] Hold[
+				Lam[pa, pb, pc, pd]  Hold[
 					If[pa[[1]] > Length[RealScalarList], 0, C2[RealScalarList[[pa[[1]],1]], ListGauge[[gaug,1]]]] +
 					If[pb[[1]] > Length[RealScalarList], 0, C2[RealScalarList[[pb[[1]],1]], ListGauge[[gaug,1]]]] +
 					If[pc[[1]] > Length[RealScalarList], 0, C2[RealScalarList[[pc[[1]],1]], ListGauge[[gaug,1]]]] +
@@ -4138,7 +4389,7 @@ BeginPackage["ARGES`"];
 								Yuk[ss2[0]], adj[Yuk[pa[[1]]]], Yuk[ss[0]], adj[Yuk[ss[0]]],
 								Prepend[Function[{x2}, {ss2[2+x2], pa[[x2+3]], ss[x2+2], ss[x2+2]}]/@Range[NumberOfSubgroups], {ss2[1], ss2[2], pa[[2]], pa[[3]], ss[1], ss[2], ss[1], ss[2]}]
 							]
-						) BetaQuartic[ss2[0], pb[[1]], pc[[1]], pd[[1]], ss2/@Range[NumberOfSubgroups+2], pb[[2;;]], pc[[2;;]], pd[[2;;]], 0]
+						) Lam[ss2/@Range[0,NumberOfSubgroups+2], pb, pc, pd] 
 					],
 					{ss[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]}
@@ -4240,7 +4491,7 @@ BeginPackage["ARGES`"];
 								adj[Yuk[pa[[1]]]], Yuk[ss[0]], adj[Yuk[ss2[0]]], Yuk[ss[0]],
 								Prepend[Function[{x2}, {pa[[3+x2]], ss[x2+2], ss2[x2+2], ss[x2+2]}]/@Range[NumberOfSubgroups], {pa[[2]], pa[[3]], ss[1], ss[2], ss2[1], ss2[2], ss[1], ss[2]}]
 							]
-						) BetaQuartic[ss2[0], pb[[1]], pc[[1]], pd[[1]], ss2/@Range[NumberOfSubgroups+2], pb[[2;;]], pc[[2;;]], pd[[2;;]], 0]
+						) Lam[ss2/@Range[0,NumberOfSubgroups+2], pb, pc, pd] 
 					],
 					{ss[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]}
@@ -4326,7 +4577,7 @@ BeginPackage["ARGES`"];
 					fHold[ff] = Refine[Sum[
 						1/2 ContractSum@@Join[
 							{
-								BetaQuartic[ss[0], pb[[1]], pc[[1]], pd[[1]],  ss/@Range[NumberOfSubgroups+2], pb[[2;;]], pc[[2;;]], pd[[2;;]], 0] (
+								Lam[ss/@Range[0,NumberOfSubgroups+2], pb, pc, pd] (
 									SolveTrace3[Delt[ff], Yuk[pa[[1]]], adj[Yuk[ss[0]]], Prepend[Function[{x}, {1, pa[[x+3]], ss[2+x]}]/@Range[NumberOfSubgroups], {1, 1, pa[[2]], pa[[3]], ss[1], ss[2]}]] +
 									SolveTrace3[Delt[ff], Yuk[ss[0]], adj[Yuk[pa[[1]]]], Prepend[Function[{x}, {1, ss[2+x], pa[[x+3]]}]/@Range[NumberOfSubgroups], {1, 1, ss[1], ss[2], pa[[2]], pa[[3]]}]]
 								),
@@ -4479,7 +4730,7 @@ BeginPackage["ARGES`"];
 								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
 							]
 						],
-						BetaQuartic[pa[[1]], pb[[1]], ss1[0], ss2[0], pa[[2;;]], pb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] (
+						Lam[pa, pb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  (
 							SolveTrace4[Yuk[pc[[1]]], adj[Yuk[ss1[0]]], Yuk[pd[[1]]], adj[Yuk[ss2[0]]], Prepend[Function[{x}, {pc[[3+x]], ss1[x+2], pd[[3+x]], ss2[2+x]}]/@Range[NumberOfSubgroups], {pc[[2]], pc[[3]], ss1[1], ss1[2], pd[[2]], pd[[3]], ss2[1], ss2[2]}]] +
 							SolveTrace4[adj[Yuk[pc[[1]]]], Yuk[ss1[0]], adj[Yuk[pd[[1]]]], Yuk[ss2[0]], Prepend[Function[{x}, {pc[[3+x]], ss1[x+2], pd[[3+x]], ss2[2+x]}]/@Range[NumberOfSubgroups], {pc[[2]], pc[[3]], ss1[1], ss1[2], pd[[2]], pd[[3]], ss2[1], ss2[2]}]]
 						)
@@ -4705,7 +4956,7 @@ BeginPackage["ARGES`"];
 								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
 							]
 						], 
-						BetaQuartic[a[[1]], b[[1]], ss1[0], ss2[0], a[[2;;]], b[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0](
+						Lam[a, b, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] (
 							\[CapitalLambda][gauge][ss1/@Range[0,NumberOfSubgroups+2], c, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]] \[CapitalLambda][gauge2][ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], d] +
 							\[CapitalLambda][gauge][ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], d] \[CapitalLambda][gauge2][ss3/@Range[0,NumberOfSubgroups+2], c, ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]] +
 							\[CapitalLambda][gauge][ss3/@Range[0,NumberOfSubgroups+2], c, ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]] \[CapitalLambda][gauge2][ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], d] +
@@ -4745,7 +4996,7 @@ BeginPackage["ARGES`"];
 								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
 							]
 						],
-						BetaQuartic[a[[1]], b[[1]], ss1[0], ss2[0], a[[2;;]], b[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0](
+						Lam[a, b, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] (
 							\[CapitalLambda][gauge][c, d, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]] \[CapitalLambda][gauge2][ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] +
 							\[CapitalLambda][gauge][c, ss4/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] \[CapitalLambda][gauge2][ss3/@Range[0,NumberOfSubgroups+2], d, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]] +
 							\[CapitalLambda][gauge][ss3/@Range[0,NumberOfSubgroups+2], d, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]] \[CapitalLambda][gauge2][c, ss4/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] +
@@ -4964,7 +5215,7 @@ BeginPackage["ARGES`"];
 								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups]
 							]
 						],
-						24 BetaQuartic[ss1[0], ss2[0], ss3[0], ss4[0], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] (
+						24 Lam[ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  (
 							\[CapitalLambda][ii][ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]] \[CapitalLambda][jj][ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]/2 + \[CapitalLambda][jj][ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]] \[CapitalLambda][ii][ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]/2 //. sub\[CapitalLambda]S)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -5004,7 +5255,7 @@ BeginPackage["ARGES`"];
 								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups]
 							]
 						],
-						BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] BetaQuartic[bb[[1]], ss1[0], ss4[0], ss5[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0]
+						Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -5045,7 +5296,7 @@ BeginPackage["ARGES`"];
 								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups]
 							]
 						],
-						BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] BetaQuartic[ss6[0], ss1[0], ss4[0], ss5[0],  ss6/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] BetaQuartic[ss6[0], bb[[1]], cc[[1]], dd[[1]], ss6/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+						Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  Lam[ss6/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  Lam[ss6/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -5088,10 +5339,10 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss1[0], ss4[0], ss5[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss2[0], ss4[0], ss6[0], cc[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss3[0], ss5[0], ss6[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -5135,10 +5386,10 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss5[0], ss6[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss4[0], ss5[0], ss6[0], dd[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -5182,10 +5433,10 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss5[0], ss3[0], ss4[0], ss1/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss2[0], ss6[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], cc[[1]], dd[[1]], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], cc[[2;;]], dd[[2;;]], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], cc, dd]
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -5229,10 +5480,10 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss5[0], ss6[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss6[0], cc[[1]], dd[[1]], ss2/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], cc[[2;;]], dd[[2;;]], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], cc, dd]
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -5276,10 +5527,10 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss2[0], ss5[0], ss6[0], dd[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss5[0], ss6[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -5323,10 +5574,10 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss4[0], ss5[0], ss6[0], dd[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -5374,10 +5625,10 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss4[0], ss5[0], ss6[0], ss7[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss6[0], ss7[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] 
 						)
 
 					],
@@ -5426,10 +5677,10 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss4[0], ss5[0], ss6[0], ss7[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]] 
 						)
 
 					],
@@ -5478,10 +5729,10 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss4[0], ss7[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] 
 						)
 
 					],
@@ -5530,10 +5781,10 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss1[0], ss2[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss4[0], ss6[0], ss7[0], bb[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] 
 						)
 
 					],
@@ -5585,11 +5836,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss4[0], ss5[0], ss6[0], ss7[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss8[0], ss1[0], ss6[0], ss7[0], ss8/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0]
-						) BetaQuartic[ss8[0], xx[[1]], yy[[1]], zz[[1]], ss8/@Range[NumberOfSubgroups+2], xx[[2;;]], yy[[2;;]], zz[[2;;]], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss8/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] 
+						) Lam[ss8/@Range[0,NumberOfSubgroups+2], xx, yy, zz] 
 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -5641,11 +5892,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss4[0], ss5[0], ss6[0], ss7[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss8[0], ss1[0], ss2[0], ss4[0], ss8/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0]
-						) BetaQuartic[ss8[0], xx[[1]], yy[[1]], zz[[1]], ss8/@Range[NumberOfSubgroups+2], xx[[2;;]], yy[[2;;]], zz[[2;;]], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss8/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]] 
+						) Lam[ss8/@Range[0,NumberOfSubgroups+2], xx, yy, zz] 
 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -5697,11 +5948,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss8[0], ss1[0], ss4[0], ss7[0], ss8/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0]
-						) BetaQuartic[ss8[0], xx[[1]], yy[[1]], zz[[1]], ss8/@Range[NumberOfSubgroups+2], xx[[2;;]], yy[[2;;]], zz[[2;;]], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss8/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] 
+						) Lam[ss8/@Range[0,NumberOfSubgroups+2], xx, yy, zz] 
 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -5753,11 +6004,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss1[0], ss2[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss8[0], ss4[0], ss6[0], ss7[0],  ss8/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0]
-						) BetaQuartic[ss8[0], xx[[1]], yy[[1]], zz[[1]], ss8/@Range[NumberOfSubgroups+2], xx[[2;;]], yy[[2;;]], zz[[2;;]], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss8/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] 
+						) Lam[ss8/@Range[0,NumberOfSubgroups+2], xx, yy, zz] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -5808,11 +6059,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss3[0], ss4[0], cc[[2;;]], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss5[0], ss7[0], ss8[0], ss1/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss6[0], ss7[0], ss8[0], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -5864,11 +6115,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss3[0], ss4[0], cc[[2;;]], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss7[0], ss8[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -5920,11 +6171,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss3[0], ss1[0], cc[[2;;]], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss7[0], ss8[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -5976,11 +6227,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss5[0], ss7[0], ss8[0], cc[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss6[0], ss7[0], ss8[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6032,11 +6283,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss2[0], ss3[0], ss5[0], dd[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss6[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6088,11 +6339,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss2[0], ss5[0], ss6[0], dd[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss7[0], ss8[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss6[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6144,11 +6395,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss2[0], ss5[0], ss6[0], dd[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss7[0], ss8[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6200,11 +6451,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss4[0], ss5[0], ss6[0], cc[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss6[0], ss7[0], ss8[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6256,11 +6507,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss4[0], ss5[0], ss6[0], cc[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss6[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss3[0], ss7[0], ss8[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6312,11 +6563,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss3[0], ss4[0], ss5[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss6[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6368,11 +6619,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss6[0], ss7[0], ss8[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss5[0], ss6[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss5[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6424,11 +6675,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss3[0], ss7[0], ss8[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6480,11 +6731,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss3[0], ss7[0], ss8[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss5[0], ss6[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss6[0], ss7[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6536,11 +6787,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss6[0], ss7[0], ss8[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6592,11 +6843,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss5[0], ss6[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss4[0], ss7[0], ss8[0], dd[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6648,11 +6899,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss4[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss1[0], ss3[0], ss5[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss2[0], ss3[0], ss6[0], cc[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss6[0], ss7[0], ss8[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6704,11 +6955,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss2[0], ss3[0], ss6[0], ss7[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss4[0], ss6[0], ss8[0], cc[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss5[0], ss7[0], ss8[0], dd[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6760,11 +7011,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss4[0], ss5[0], ss6[0], cc[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss6[0], ss7[0], ss8[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss7[0], ss8[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6816,11 +7067,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss5[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss2[0], ss3[0], ss6[0], bb[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss4[0], ss7[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss4[0], ss1[0], ss8[0], dd[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6875,11 +7126,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss6[0], ss7[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss8[0], ss9[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss1[0], ss8[0], ss9[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6935,11 +7186,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss5[0], ss6[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss7[0], ss8[0], ss9[0], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss9[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -6995,11 +7246,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss7[0], ss8[0], ss9[0], ss3/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss1[0], ss4[0], ss9[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -7055,11 +7306,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss6[0], ss7[0], ss8[0], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss7[0], ss8[0], ss9[0], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss1[0], ss4[0], ss9[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -7115,11 +7366,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss4[0], ss6[0], ss9[0], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss7[0], ss8[0], ss9[0], bb[[2;;]], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -7175,11 +7426,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss4[0], ss5[0], ss6[0], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss6[0], ss9[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss7[0], ss8[0], ss9[0], bb[[2;;]], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -7235,11 +7486,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss8[0], ss9[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss1[0], ss4[0], ss9[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -7295,11 +7546,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss6[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss9[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss1[0], ss8[0], ss9[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -7355,11 +7606,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss4[0], ss6[0], ss7[0], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss8[0], ss9[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss5[0], ss8[0], ss9[0], bb[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -7415,11 +7666,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss6[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss7[0], ss8[0], ss9[0], ss1/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss5[0], ss6[0], ss9[0], bb[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -7475,11 +7726,11 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss4[0], ss5[0], ss7[0], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss6[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss9[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[bb[[1]], ss7[0], ss8[0], ss9[0], bb[[2;;]], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[bb, ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -7496,7 +7747,7 @@ BeginPackage["ARGES`"];
 				sum
 			],
 			L1l[aa_, bb_, cc_, dd_] :> Block[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, ss10, sum, assHold},
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
 					ApplyDistribute[
@@ -7538,12 +7789,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss6[0], ss7[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss8[0], ss9[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss10[0], ss1[0], ss8[0], ss9[0], ss10/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -7602,12 +7853,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss5[0], ss6[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss7[0], ss8[0], ss9[0], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss10[0], ss1[0], ss2[0], ss9[0], ss10/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -7666,12 +7917,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss7[0], ss8[0], ss9[0], ss3/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss10[0], ss1[0], ss4[0], ss9[0], ss10/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -7730,12 +7981,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss6[0], ss7[0], ss8[0], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss7[0], ss8[0], ss9[0], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss10[0], ss1[0], ss4[0], ss9[0], ss10/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -7794,12 +8045,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss4[0], ss6[0], ss9[0], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss10[0], ss7[0], ss8[0], ss9[0], ss10/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -7858,12 +8109,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss4[0], ss5[0], ss6[0], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss6[0], ss9[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss10[0], ss7[0], ss8[0], ss9[0], ss10/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -7922,12 +8173,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss8[0], ss9[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss10[0], ss1[0], ss4[0], ss9[0], ss10/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -7986,12 +8237,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[ss10[0], ss1[0], ss2[0], ss3[0], ss10/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss8[0], ss9[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[aa[[1]], ss1[0], ss4[0], ss9[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -8050,12 +8301,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss6[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss9[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss10[0], ss1[0], ss8[0], ss9[0], ss10/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -8114,12 +8365,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[ss10[0], ss1[0], ss2[0], ss3[0], ss10/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss6[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss9[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[aa[[1]], ss1[0], ss8[0], ss9[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -8178,12 +8429,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss4[0], ss6[0], ss7[0], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss8[0], ss9[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss10[0], ss5[0], ss8[0], ss9[0], ss10/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -8242,12 +8493,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[ss10[0], ss1[0], ss2[0], ss3[0], ss10/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss4[0], ss6[0], ss7[0], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss8[0], ss9[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[aa[[1]], ss5[0], ss8[0], ss9[0], aa[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[aa, ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -8306,12 +8557,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss6[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss7[0], ss8[0], ss9[0], ss1/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss10[0], ss5[0], ss6[0], ss9[0], ss10/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -8370,12 +8621,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[ss10[0], ss1[0], ss2[0], ss3[0], ss10/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss5[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss6[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss7[0], ss8[0], ss9[0], ss1/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[aa[[1]], ss5[0], ss6[0], ss9[0], aa[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[aa, ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -8434,12 +8685,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss4[0], ss5[0], ss7[0], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss6[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss9[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss10[0], ss7[0], ss8[0], ss9[0], ss10/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -8498,12 +8749,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[ss10[0], ss1[0], ss2[0], ss3[0], ss10/@Range[NumberOfSubgroups+2], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss4[0], ss5[0], ss7[0], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss6[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss9[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[aa[[1]], ss7[0], ss8[0], ss9[0], aa[[2;;]], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0]
-						) * BetaQuartic[ss10[0], bb[[1]], cc[[1]], dd[[1]], ss10/@Range[NumberOfSubgroups+2], bb[[2;;]], cc[[2;;]], dd[[2;;]], 0]
+							Lam[ss10/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[aa, ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] 
+						) * Lam[ss10/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -8562,12 +8813,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss1[0], ss3[0], cc[[2;;]], dd[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss7[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss7[0], ss8[0], ss9[0], ss3/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -8627,12 +8878,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss1[0], ss3[0], cc[[2;;]], dd[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss7[0], ss8[0], ss9[0], ss3/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss6[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -8692,12 +8943,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss1[0], ss3[0], cc[[2;;]], dd[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss7[0], ss8[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss7[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -8757,12 +9008,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss1[0], ss3[0], cc[[2;;]], dd[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss7[0], ss8[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -8822,12 +9073,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss1[0], ss3[0], cc[[2;;]], dd[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss5[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -8887,12 +9138,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss2[0], ss5[0], ss6[0], dd[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss7[0], ss8[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss7[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -8952,12 +9203,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss2[0], ss5[0], ss6[0], dd[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss7[0], ss8[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss6[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9017,12 +9268,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss3[0], ss5[0], ss6[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss6[0], ss7[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss8[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9082,12 +9333,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss3[0], ss5[0], ss6[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss6[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9147,12 +9398,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss3[0], ss5[0], ss6[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss8[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9212,12 +9463,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *							
-							BetaQuartic[dd[[1]], ss7[0], ss8[0], ss9[0], dd[[2;;]], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss6[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss8[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *							
+							Lam[dd, ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9277,12 +9528,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss3[0], ss5[0], ss6[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss7[0], ss8[0], ss9[0], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss5[0], ss7[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9342,12 +9593,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss5[0], ss6[0], ss7[0], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *							
-							BetaQuartic[dd[[1]], ss5[0], ss8[0], ss9[0], dd[[2;;]], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss6[0], ss8[0], ss10[0], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss7[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *							
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9407,12 +9658,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss3[0], ss5[0], ss6[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss5[0], ss6[0], ss7[0], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss8[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9472,12 +9723,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss3[0], ss5[0], ss6[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss7[0], ss8[0], ss9[0], ss2/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss7[0], ss8[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9537,12 +9788,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss5[0], ss6[0], ss10[0], dd[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss7[0], ss8[0], ss9[0], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss8[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9602,12 +9853,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss5[0], ss6[0], ss10[0], dd[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss7[0], ss8[0], ss9[0], ss2/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss8[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9667,12 +9918,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss2[0], ss5[0], ss6[0], dd[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss7[0], ss8[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss7[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9732,12 +9983,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss2[0], ss9[0], ss10[0], dd[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss5[0], ss6[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9797,12 +10048,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss2[0], ss5[0], ss6[0], dd[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss6[0], ss7[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss8[0], ss9[0], ss10[0], ss3/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9862,12 +10113,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss3[0], ss4[0], ss5[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss6[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9927,12 +10178,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss5[0], ss6[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss7[0], ss9[0], ss10[0], dd[[2;;]], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss8[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -9992,12 +10243,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss5[0], ss6[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss5[0], ss7[0], ss8[0], dd[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss8[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -10057,12 +10308,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss5[0], ss6[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss5[0], ss6[0], ss7[0], dd[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss8[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -10122,12 +10373,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss5[0], ss6[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss5[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss8[0], ss9[0], ss10[0], dd[[2;;]], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -10187,12 +10438,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss5[0], ss6[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss6[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss5[0], ss7[0], ss8[0], dd[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -10252,12 +10503,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss2[0], ss3[0], ss5[0], dd[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss6[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -10318,12 +10569,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss3[0], ss5[0], ss6[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss7[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -10384,12 +10635,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss5[0], ss7[0], ss8[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss7[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -10450,12 +10701,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss3[0], ss5[0], ss6[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -10516,12 +10767,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss5[0], ss6[0], ss7[0], dd[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss8[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -10582,12 +10833,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss8[0], ss9[0], ss10[0], dd[[2;;]], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss7[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -10648,12 +10899,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss3[0], ss5[0], ss6[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss7[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -10714,12 +10965,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss6[0], ss9[0], ss10[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -10779,12 +11030,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss1[0], ss3[0], ss4[0], cc[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss5[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss8[0], ss9[0], ss10[0], dd[[2;;]], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -10844,12 +11095,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss3[0], ss4[0], cc[[2;;]], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss5[0], ss6[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss7[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -10909,12 +11160,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss6[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss6[0], ss9[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss4[0], ss7[0], ss10[0], dd[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss8[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -10974,12 +11225,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss4[0], ss6[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss5[0], ss7[0], ss8[0], dd[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss8[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -11039,12 +11290,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss6[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss4[0], ss9[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss6[0], ss7[0], ss10[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss8[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -11104,12 +11355,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss3[0], ss4[0], cc[[2;;]], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss5[0], ss6[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -11169,12 +11420,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss6[0], ss7[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss6[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss8[0], ss9[0], ss10[0], dd[[2;;]], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -11234,12 +11485,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss3[0], ss4[0], cc[[2;;]], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss5[0], ss6[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss7[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss8[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -11299,12 +11550,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss4[0], ss6[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss6[0], ss7[0], ss8[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss7[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss8[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -11364,12 +11615,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss6[0], ss7[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss4[0], ss8[0], ss9[0], dd[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss6[0], ss7[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss8[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -11429,12 +11680,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss6[0], ss7[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss4[0], ss6[0], ss8[0], dd[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss7[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss8[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -11494,12 +11745,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss3[0], ss4[0], cc[[2;;]], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss5[0], ss6[0], ss7[0], ss1/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss8[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss8[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss7[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -11559,12 +11810,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss6[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss4[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss5[0], ss9[0], ss10[0], cc[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss8[0], ss9[0], ss10[0], dd[[2;;]], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss5/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -11624,12 +11875,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss4[0], ss6[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss5[0], ss6[0], ss7[0], dd[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss8[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -11689,12 +11940,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss3[0], ss4[0], cc[[2;;]], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss5[0], ss6[0], ss7[0], ss1/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss8[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss8[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -11754,12 +12005,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss6[0], ss7[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss4[0], ss6[0], ss7[0], dd[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss8[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss8[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -11819,12 +12070,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss3[0], ss4[0], cc[[2;;]], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss5[0], ss6[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss5[0], ss7[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -11884,12 +12135,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss6[0], ss7[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss4[0], ss9[0], ss10[0], dd[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss5[0], ss6[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -11949,12 +12200,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss6[0], ss7[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss6[0], ss8[0], ss9[0], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss5[0], ss8[0], ss10[0], cc[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss7[0], ss9[0], ss10[0], dd[[2;;]], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -12014,12 +12265,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss3[0], ss4[0], cc[[2;;]], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss5[0], ss6[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss8[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -12079,12 +12330,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss6[0], ss7[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss4[0], ss6[0], ss8[0], cc[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss8[0], ss9[0], ss10[0], dd[[2;;]], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss7[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -12145,12 +12396,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss3[0], ss4[0], cc[[2;;]], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss5[0], ss6[0], ss7[0], ss1/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss5[0], ss8[0], ss9[0], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss6[0], ss8[0], ss10[0], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss7[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -12210,12 +12461,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss4[0], ss6[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss5[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss8[0], ss9[0], ss10[0], dd[[2;;]], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -12275,12 +12526,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss6[0], ss7[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss4[0], ss6[0], ss8[0], dd[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss5[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -12340,12 +12591,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss3[0], ss4[0], cc[[2;;]], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss5[0], ss6[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss5[0], ss7[0], ss8[0], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss6[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -12405,12 +12656,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss4[0], ss5[0], ss6[0], cc[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss6[0], ss7[0], ss8[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -12470,12 +12721,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss3[0], ss4[0], cc[[2;;]], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss5[0], ss6[0], ss7[0], ss1/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss5[0], ss8[0], ss9[0], ss2/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss6[0], ss7[0], ss10[0], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss8[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -12535,12 +12786,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss5[0], ss6[0], ss7[0], cc[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss6[0], ss7[0], ss8[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss8[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss9[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -12600,12 +12851,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss5[0], ss7[0], cc[[2;;]], dd[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -12665,12 +12916,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss5[0], ss7[0], ss8[0], cc[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss6[0], ss9[0], ss10[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -12730,12 +12981,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss5[0], ss7[0], ss8[0], cc[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss8[0], ss9[0], ss10[0], dd[[2;;]], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -12795,12 +13046,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[ss5[0], ss7[0], ss8[0], ss9[0], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss8[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], dd[[1]], ss9[0], ss10[0], cc[[2;;]], dd[[2;;]], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, dd, ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 						)
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -12860,12 +13111,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], bb[[1]], ss1[0], ss2[0], aa[[2;;]], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss1[0], ss3[0], ss4[0], ss5[0], ss1/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss3[0], ss4[0], ss6[0], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss7[0], ss9[0], ss10[0], cc[[2;;]], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss8[0], ss9[0], ss10[0], dd[[2;;]], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -12927,12 +13178,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss4[0], ss5[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss2[0], ss6[0], ss7[0], cc[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss3[0], ss8[0], ss9[0], dd[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss6[0], ss8[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss7[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -12993,12 +13244,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss4[0], ss5[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss4[0], ss6[0], ss7[0], cc[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss2[0], ss6[0], ss8[0], dd[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss7[0], ss9[0], ss10[0], ss3/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss8[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -13059,12 +13310,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss4[0], ss5[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss2[0], ss4[0], ss6[0], cc[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss6[0], ss7[0], ss8[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss7[0], ss9[0], ss10[0], ss3/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss8[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -13125,12 +13376,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss4[0], ss5[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss2[0], ss6[0], ss7[0], cc[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss4[0], ss6[0], ss8[0], dd[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss9[0], ss10[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -13191,12 +13442,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss4[0], ss5[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss4[0], ss6[0], ss7[0], cc[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss6[0], ss8[0], ss9[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss7[0], ss8[0], ss10[0], ss2/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss9[0], ss10[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -13257,12 +13508,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss4[0], ss5[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss2[0], ss4[0], ss6[0], cc[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss3[0], ss5[0], ss7[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -13323,12 +13574,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss4[0], ss5[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss6[0], ss7[0], ss8[0], cc[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss6[0], ss9[0], ss10[0], dd[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss2[0], ss4[0], ss7[0], ss9[0], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss8[0], ss10[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -13389,12 +13640,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss5[0], ss6[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss4[0], ss7[0], ss8[0], dd[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss7[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -13455,12 +13706,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss5[0], ss6[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss5[0], ss7[0], ss8[0], dd[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss7[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss8[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -13521,12 +13772,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss5[0], ss6[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss4[0], ss7[0], ss8[0], dd[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss9[0], ss10[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -13587,12 +13838,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss4[0], ss5[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss2[0], ss3[0], ss6[0], cc[[2;;]], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss4[0], ss5[0], ss7[0], dd[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -13653,12 +13904,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss4[0], ss5[0], ss6[0], cc[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss7[0], ss9[0], ss10[0], dd[[2;;]], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss5[0], ss6[0], ss7[0], ss8[0], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss8[0], ss9[0], ss10[0], ss3/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -13719,12 +13970,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss5[0], ss6[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss4[0], ss5[0], ss7[0], dd[[2;;]], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -13785,12 +14036,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss5[0], ss6[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss5[0], ss7[0], ss8[0], dd[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss7[0], ss8[0], ss9[0], ss10[0], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss6[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -13851,12 +14102,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss3[0], ss5[0], ss6[0], cc[[2;;]], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss7[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[dd[[1]], ss7[0], ss9[0], ss10[0], dd[[2;;]], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss6[0], ss8[0], ss9[0], ss10[0], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -13917,12 +14168,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss8[0], ss9[0], ss10[0], ss4/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss5[0], ss6[0], ss8[0], cc[[2;;]], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss7[0], ss9[0], ss10[0], dd[[2;;]], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 							
 						)
@@ -13984,12 +14235,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss8[0], ss9[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss6[0], ss8[0], ss10[0], cc[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss7[0], ss9[0], ss10[0], dd[[2;;]], ss7/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 						)
 					],
@@ -14050,12 +14301,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss8[0], ss9[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss6[0], ss7[0], ss10[0], cc[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss8[0], ss9[0], ss10[0], dd[[2;;]], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 							
 						)
@@ -14117,12 +14368,12 @@ BeginPackage["ARGES`"];
 							]
 						],
 						(
-							BetaQuartic[aa[[1]], ss1[0], ss2[0], ss3[0], aa[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss3/@Range[NumberOfSubgroups+2], 0] * 
-							BetaQuartic[bb[[1]], ss1[0], ss2[0], ss4[0], bb[[2;;]], ss1/@Range[NumberOfSubgroups+2], ss2/@Range[NumberOfSubgroups+2], ss4/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss3[0], ss5[0], ss6[0], ss7[0], ss3/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[ss4[0], ss5[0], ss6[0], ss8[0], ss4/@Range[NumberOfSubgroups+2], ss5/@Range[NumberOfSubgroups+2], ss6/@Range[NumberOfSubgroups+2], ss8/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[cc[[1]], ss7[0], ss9[0], ss10[0], cc[[2;;]], ss6/@Range[NumberOfSubgroups+2], ss7/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0] *
-							BetaQuartic[dd[[1]], ss8[0], ss9[0], ss10[0], dd[[2;;]], ss8/@Range[NumberOfSubgroups+2], ss9/@Range[NumberOfSubgroups+2], ss10/@Range[NumberOfSubgroups+2], 0]
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] 
 							
 							
 						)
@@ -14141,8 +14392,991 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
+			D110[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
+									{ss9[1], 1, RealScalarList[[ss9[0], 2,1]]},
+									{ss10[1], 1, RealScalarList[[ss10[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
+									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]},
+									{ss9[2], 1, RealScalarList[[ss9[0], 2,2]]},
+									{ss10[2], 1, RealScalarList[[ss10[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss9[x+2], 1, SMultiplicity[ss9[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss10[x+2], 1, SMultiplicity[ss10[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] *
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]
+							
+							
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]},
+					{ss8[0], 1, Length[RealScalarList]},
+					{ss9[0], 1, Length[RealScalarList]},
+					{ss10[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			D111[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
+									{ss9[1], 1, RealScalarList[[ss9[0], 2,1]]},
+									{ss10[1], 1, RealScalarList[[ss10[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
+									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]},
+									{ss9[2], 1, RealScalarList[[ss9[0], 2,2]]},
+									{ss10[2], 1, RealScalarList[[ss10[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss9[x+2], 1, SMultiplicity[ss9[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss10[x+2], 1, SMultiplicity[ss10[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] *
+							Lam[dd, ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]
+							
+							
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]},
+					{ss8[0], 1, Length[RealScalarList]},
+					{ss9[0], 1, Length[RealScalarList]},
+					{ss10[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			D112[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
+									{ss9[1], 1, RealScalarList[[ss9[0], 2,1]]},
+									{ss10[1], 1, RealScalarList[[ss10[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
+									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]},
+									{ss9[2], 1, RealScalarList[[ss9[0], 2,2]]},
+									{ss10[2], 1, RealScalarList[[ss10[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss9[x+2], 1, SMultiplicity[ss9[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss10[x+2], 1, SMultiplicity[ss10[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] *
+							Lam[cc, ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]
 
+							
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]},
+					{ss8[0], 1, Length[RealScalarList]},
+					{ss9[0], 1, Length[RealScalarList]},
+					{ss10[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			D113[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
+									{ss9[1], 1, RealScalarList[[ss9[0], 2,1]]},
+									{ss10[1], 1, RealScalarList[[ss10[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
+									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]},
+									{ss9[2], 1, RealScalarList[[ss9[0], 2,2]]},
+									{ss10[2], 1, RealScalarList[[ss10[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss9[x+2], 1, SMultiplicity[ss9[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss10[x+2], 1, SMultiplicity[ss10[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] *
+							Lam[cc, ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[dd, ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]
 
+							
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]},
+					{ss8[0], 1, Length[RealScalarList]},
+					{ss9[0], 1, Length[RealScalarList]},
+					{ss10[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			D114[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
+									{ss9[1], 1, RealScalarList[[ss9[0], 2,1]]},
+									{ss10[1], 1, RealScalarList[[ss10[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
+									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]},
+									{ss9[2], 1, RealScalarList[[ss9[0], 2,2]]},
+									{ss10[2], 1, RealScalarList[[ss10[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss9[x+2], 1, SMultiplicity[ss9[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss10[x+2], 1, SMultiplicity[ss10[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[cc, ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] *
+							Lam[dd, ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]},
+					{ss8[0], 1, Length[RealScalarList]},
+					{ss9[0], 1, Length[RealScalarList]},
+					{ss10[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			D115[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
+									{ss9[1], 1, RealScalarList[[ss9[0], 2,1]]},
+									{ss10[1], 1, RealScalarList[[ss10[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
+									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]},
+									{ss9[2], 1, RealScalarList[[ss9[0], 2,2]]},
+									{ss10[2], 1, RealScalarList[[ss10[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss9[x+2], 1, SMultiplicity[ss9[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss10[x+2], 1, SMultiplicity[ss10[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[dd, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[aa, ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] *
+							Lam[bb, ss3/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]},
+					{ss8[0], 1, Length[RealScalarList]},
+					{ss9[0], 1, Length[RealScalarList]},
+					{ss10[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			D116[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
+									{ss9[1], 1, RealScalarList[[ss9[0], 2,1]]},
+									{ss10[1], 1, RealScalarList[[ss10[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
+									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]},
+									{ss9[2], 1, RealScalarList[[ss9[0], 2,2]]},
+									{ss10[2], 1, RealScalarList[[ss10[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss9[x+2], 1, SMultiplicity[ss9[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss10[x+2], 1, SMultiplicity[ss10[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]},
+					{ss8[0], 1, Length[RealScalarList]},
+					{ss9[0], 1, Length[RealScalarList]},
+					{ss10[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			D117[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
+									{ss9[1], 1, RealScalarList[[ss9[0], 2,1]]},
+									{ss10[1], 1, RealScalarList[[ss10[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
+									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]},
+									{ss9[2], 1, RealScalarList[[ss9[0], 2,2]]},
+									{ss10[2], 1, RealScalarList[[ss10[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss9[x+2], 1, SMultiplicity[ss9[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss10[x+2], 1, SMultiplicity[ss10[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] *
+							Lam[cc, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]},
+					{ss8[0], 1, Length[RealScalarList]},
+					{ss9[0], 1, Length[RealScalarList]},
+					{ss10[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			D118[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
+									{ss9[1], 1, RealScalarList[[ss9[0], 2,1]]},
+									{ss10[1], 1, RealScalarList[[ss10[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
+									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]},
+									{ss9[2], 1, RealScalarList[[ss9[0], 2,2]]},
+									{ss10[2], 1, RealScalarList[[ss10[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss9[x+2], 1, SMultiplicity[ss9[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss10[x+2], 1, SMultiplicity[ss10[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]},
+					{ss8[0], 1, Length[RealScalarList]},
+					{ss9[0], 1, Length[RealScalarList]},
+					{ss10[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			D119[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
+									{ss9[1], 1, RealScalarList[[ss9[0], 2,1]]},
+									{ss10[1], 1, RealScalarList[[ss10[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
+									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]},
+									{ss9[2], 1, RealScalarList[[ss9[0], 2,2]]},
+									{ss10[2], 1, RealScalarList[[ss10[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss9[x+2], 1, SMultiplicity[ss9[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss10[x+2], 1, SMultiplicity[ss10[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] *
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] *
+							Lam[ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]
+							
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]},
+					{ss8[0], 1, Length[RealScalarList]},
+					{ss9[0], 1, Length[RealScalarList]},
+					{ss10[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			D120[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
+									{ss9[1], 1, RealScalarList[[ss9[0], 2,1]]},
+									{ss10[1], 1, RealScalarList[[ss10[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
+									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]},
+									{ss9[2], 1, RealScalarList[[ss9[0], 2,2]]},
+									{ss10[2], 1, RealScalarList[[ss10[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss9[x+2], 1, SMultiplicity[ss9[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss10[x+2], 1, SMultiplicity[ss10[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] *
+							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2]] *
+							Lam[cc, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]},
+					{ss8[0], 1, Length[RealScalarList]},
+					{ss9[0], 1, Length[RealScalarList]},
+					{ss10[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			D121[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
+									{ss9[1], 1, RealScalarList[[ss9[0], 2,1]]},
+									{ss10[1], 1, RealScalarList[[ss10[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
+									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]},
+									{ss9[2], 1, RealScalarList[[ss9[0], 2,2]]},
+									{ss10[2], 1, RealScalarList[[ss10[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss9[x+2], 1, SMultiplicity[ss9[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss10[x+2], 1, SMultiplicity[ss10[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] *
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]
+							
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]},
+					{ss8[0], 1, Length[RealScalarList]},
+					{ss9[0], 1, Length[RealScalarList]},
+					{ss10[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			D122[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
+									{ss9[1], 1, RealScalarList[[ss9[0], 2,1]]},
+									{ss10[1], 1, RealScalarList[[ss10[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
+									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]},
+									{ss9[2], 1, RealScalarList[[ss9[0], 2,2]]},
+									{ss10[2], 1, RealScalarList[[ss10[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss9[x+2], 1, SMultiplicity[ss9[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss10[x+2], 1, SMultiplicity[ss10[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[cc, ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]},
+					{ss8[0], 1, Length[RealScalarList]},
+					{ss9[0], 1, Length[RealScalarList]},
+					{ss10[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			D123[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
+									{ss9[1], 1, RealScalarList[[ss9[0], 2,1]]},
+									{ss10[1], 1, RealScalarList[[ss10[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
+									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]},
+									{ss9[2], 1, RealScalarList[[ss9[0], 2,2]]},
+									{ss10[2], 1, RealScalarList[[ss10[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss9[x+2], 1, SMultiplicity[ss9[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss10[x+2], 1, SMultiplicity[ss10[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[cc, ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]},
+					{ss8[0], 1, Length[RealScalarList]},
+					{ss9[0], 1, Length[RealScalarList]},
+					{ss10[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			D124[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
+									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
+									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
+									{ss9[1], 1, RealScalarList[[ss9[0], 2,1]]},
+									{ss10[1], 1, RealScalarList[[ss10[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
+									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
+									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
+									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]},
+									{ss9[2], 1, RealScalarList[[ss9[0], 2,2]]},
+									{ss10[2], 1, RealScalarList[[ss10[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss9[x+2], 1, SMultiplicity[ss9[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss10[x+2], 1, SMultiplicity[ss10[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
+							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
+							Lam[ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]] *
+							Lam[dd, ss8/@Range[0,NumberOfSubgroups+2], ss9/@Range[0,NumberOfSubgroups+2], ss10/@Range[0,NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]},
+					{ss6[0], 1, Length[RealScalarList]},
+					{ss7[0], 1, Length[RealScalarList]},
+					{ss8[0], 1, Length[RealScalarList]},
+					{ss9[0], 1, Length[RealScalarList]},
+					{ss10[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			]
 		}];
 
 		(* trivial thing the kernel should be aware of but isn't *)
