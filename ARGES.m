@@ -1996,6 +1996,314 @@ BeginPackage["ARGES`"];
 				T3L8[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
 				T3L8[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
 				) //. subScalarInvariants;
+			beta += 24^3 g3L[15] (
+				Q3Y21[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q3Y21[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q3Y21[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q3Y21[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q3Y21[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q3Y21[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24^3 g3L[16] (
+				Q3Y22[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q3Y22[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				Q3Y22[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q3Y22[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				Q3Y22[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q3Y22[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				Q3Y22[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q3Y22[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+				Q3Y22[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q3Y22[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] +
+				Q3Y22[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				Q3Y22[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
+			) //. subScalarInvariants;
+			beta += 24^2 g3L[17] (
+				Q2Y41[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q2Y41[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q2Y41[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]]
+			) //. subScalarInvariants;
+			beta += 24^2 g3L[18] (
+				Q2Y42[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q2Y42[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q2Y42[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]]
+			) //. subScalarInvariants;
+			beta += 24^2 g3L[19] (
+				Q2Y43[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q2Y43[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q2Y43[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]]
+			) //. subScalarInvariants;
+			beta += 24^2 g3L[20] (
+				Q2Y44[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q2Y44[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q2Y44[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]]
+			) //. subScalarInvariants;
+			beta += 24^2 g3L[21] (
+				Q2Y45[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q2Y45[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q2Y45[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]]
+			) //. subScalarInvariants;
+			beta += 24^2 g3L[22] (
+				Q2Y46[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q2Y46[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q2Y46[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]]
+			) //. subScalarInvariants;
+			beta += 24^2 g3L[23] (
+				Q2Y47[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q2Y47[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				Q2Y47[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q2Y47[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				Q2Y47[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q2Y47[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				Q2Y47[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q2Y47[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+				Q2Y47[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q2Y47[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] +
+				Q2Y47[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				Q2Y47[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
+			) //. subScalarInvariants;
+			beta += 24^2 g3L[24] (
+				Q2Y48[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q2Y48[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				Q2Y48[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q2Y48[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				Q2Y48[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q2Y48[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				Q2Y48[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q2Y48[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+				Q2Y48[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q2Y48[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] +
+				Q2Y48[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				Q2Y48[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
+			) //. subScalarInvariants;
+			beta += 24^2 g3L[25] (
+				Q2Y49[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q2Y49[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				Q2Y49[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q2Y49[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				Q2Y49[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q2Y49[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				Q2Y49[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q2Y49[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+				Q2Y49[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q2Y49[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] +
+				Q2Y49[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				Q2Y49[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
+			) //. subScalarInvariants;
+			beta += 24^2 g3L[26] (
+				Q2Y410[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q2Y410[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				Q2Y410[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q2Y410[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				Q2Y410[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q2Y410[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				Q2Y410[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q2Y410[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+				Q2Y410[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q2Y410[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] +
+				Q2Y410[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				Q2Y410[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[27] (
+				Q1Y601[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y601[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y601[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y601[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y601[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y601[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[28] (
+				Q1Y602[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y602[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y602[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y602[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y602[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y602[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[29] (
+				Q1Y603[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y603[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y603[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y603[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y603[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y603[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[30] (
+				Q1Y604[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y604[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y604[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y604[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y604[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y604[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[31] (
+				Q1Y605[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y605[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				Q1Y605[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y605[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				Q1Y605[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y605[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				Q1Y605[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y605[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+				Q1Y605[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y605[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] +
+				Q1Y605[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				Q1Y605[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[32] (
+				Q1Y606[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y606[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				Q1Y606[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y606[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				Q1Y606[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y606[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				Q1Y606[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y606[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+				Q1Y606[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y606[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] +
+				Q1Y606[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				Q1Y606[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[33] (
+				Q1Y607[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y607[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				Q1Y607[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y607[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				Q1Y607[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y607[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				Q1Y607[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y607[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+				Q1Y607[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y607[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] +
+				Q1Y607[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				Q1Y607[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[34] (
+				Q1Y608[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y608[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				Q1Y608[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y608[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				Q1Y608[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y608[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				Q1Y608[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y608[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+				Q1Y608[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y608[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] +
+				Q1Y608[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				Q1Y608[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[35] (
+				Q1Y609[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y609[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y609[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y609[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y609[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y609[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[36] (
+				Q1Y610[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y610[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				Q1Y610[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y610[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				Q1Y610[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y610[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				Q1Y610[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y610[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+				Q1Y610[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y610[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] +
+				Q1Y610[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				Q1Y610[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[37] (
+				Q1Y611[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y611[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				Q1Y611[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y611[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				Q1Y611[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y611[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				Q1Y611[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y611[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+				Q1Y611[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y611[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] +
+				Q1Y611[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				Q1Y611[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[38] (
+				Q1Y612[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y612[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y612[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y612[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y612[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y612[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[39] (
+				Q1Y613[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y613[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
+				Q1Y613[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y613[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
+				Q1Y613[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y613[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
+				Q1Y613[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y613[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+				Q1Y613[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y613[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] +
+				Q1Y613[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				Q1Y613[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[40] (
+				Q1Y614[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y614[Prepend[lb, pb], Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y614[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y614[Prepend[lc, pc], Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y614[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y614[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y614[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y614[Prepend[lc, pc], Prepend[lb, pb], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y614[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y614[Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y614[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+				Q1Y614[Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa], Prepend[lb, pb]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[41] (
+				Q1Y615[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y615[Prepend[lb, pb], Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y615[Prepend[lc, pc], Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y615[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[42] (
+				Q1Y616[Prepend[la,pa],Prepend[lb,pb],Prepend[lc,pc],Prepend[ld,pd]]+
+				Q1Y616[Prepend[la,pa],Prepend[lb,pb],Prepend[ld,pd],Prepend[lc,pc]]+
+				Q1Y616[Prepend[la,pa],Prepend[lc,pc],Prepend[lb,pb],Prepend[ld,pd]]+
+				Q1Y616[Prepend[la,pa],Prepend[lc,pc],Prepend[ld,pd],Prepend[lb,pb]]+
+				Q1Y616[Prepend[la,pa],Prepend[ld,pd],Prepend[lb,pb],Prepend[lc,pc]]+
+				Q1Y616[Prepend[la,pa],Prepend[ld,pd],Prepend[lc,pc],Prepend[lb,pb]]+
+				Q1Y616[Prepend[lb,pb],Prepend[la,pa],Prepend[lc,pc],Prepend[ld,pd]]+
+				Q1Y616[Prepend[lb,pb],Prepend[la,pa],Prepend[ld,pd],Prepend[lc,pc]]+
+				Q1Y616[Prepend[lb,pb],Prepend[lc,pc],Prepend[la,pa],Prepend[ld,pd]]+
+				Q1Y616[Prepend[lb,pb],Prepend[lc,pc],Prepend[ld,pd],Prepend[la,pa]]+
+				Q1Y616[Prepend[lb,pb],Prepend[ld,pd],Prepend[la,pa],Prepend[lc,pc]]+
+				Q1Y616[Prepend[lb,pb],Prepend[ld,pd],Prepend[lc,pc],Prepend[la,pa]]+
+				Q1Y616[Prepend[lc,pc],Prepend[la,pa],Prepend[lb,pb],Prepend[ld,pd]]+
+				Q1Y616[Prepend[lc,pc],Prepend[la,pa],Prepend[ld,pd],Prepend[lb,pb]]+
+				Q1Y616[Prepend[lc,pc],Prepend[lb,pb],Prepend[la,pa],Prepend[ld,pd]]+
+				Q1Y616[Prepend[lc,pc],Prepend[lb,pb],Prepend[ld,pd],Prepend[la,pa]]+
+				Q1Y616[Prepend[lc,pc],Prepend[ld,pd],Prepend[la,pa],Prepend[lb,pb]]+
+				Q1Y616[Prepend[lc,pc],Prepend[ld,pd],Prepend[lb,pb],Prepend[la,pa]]+
+				Q1Y616[Prepend[ld,pd],Prepend[la,pa],Prepend[lb,pb],Prepend[lc,pc]]+
+				Q1Y616[Prepend[ld,pd],Prepend[la,pa],Prepend[lc,pc],Prepend[lb,pb]]+
+				Q1Y616[Prepend[ld,pd],Prepend[lb,pb],Prepend[la,pa],Prepend[lc,pc]]+
+				Q1Y616[Prepend[ld,pd],Prepend[lb,pb],Prepend[lc,pc],Prepend[la,pa]]+
+				Q1Y616[Prepend[ld,pd],Prepend[lc,pc],Prepend[la,pa],Prepend[lb,pb]]+
+				Q1Y616[Prepend[ld,pd],Prepend[lc,pc],Prepend[lb,pb],Prepend[la,pa]]
+			) //. subScalarInvariants;
+			beta += 24 g3L[43] (
+				Q1Y617[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Q1Y617[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Q1Y617[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
+				Q1Y617[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
+				Q1Y617[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
+				Q1Y617[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
+			) //. subScalarInvariants;
 			Return[beta/(24 Power[4 \[Pi], 6])];
 		];
 
@@ -6696,7 +7004,1083 @@ BeginPackage["ARGES`"];
 				];
 				$Assumptions=assHold;
 				sum
+			],
+			Q3Y21[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]}
+
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]+
+							YukTraceAdj[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
+						) * 
+						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] * 
+						Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]] *
+						Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]
+						
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q3Y22[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, ss5, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]}
+
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]+
+							YukTraceAdj[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]
+						) * 
+						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] * 
+						Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]] *
+						Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]
+						
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q2Y41[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]							
+						) * (
+							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
+						) * 
+						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
+						Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q2Y42[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]							
+						) * (
+							YukTrace[ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
+						) * 
+						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
+						Lam[cc, dd, ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q2Y43[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
+						) * 
+						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
+						Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q2Y44[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
+						) * 
+						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]] *
+						Lam[cc, dd, ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q2Y45[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
+						) * 
+						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
+						Lam[cc, dd, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q2Y46[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+						) * 
+						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
+						Lam[cc, dd, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q2Y47[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
+						) * 
+						Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]] *
+						Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q2Y48[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss4/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss4/@Range[0, NumberOfSubgroups+2]]
+						) * 
+						Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]] *
+						Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q2Y49[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
+						) * 
+						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
+						Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q2Y410[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, ss4, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
+						) * 
+						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
+						Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y601[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y602[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y603[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y604[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y605[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, dd,  ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, dd,  ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y606[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y607[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y608[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]]
+						) * (
+							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] + 
+							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] 
+						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y609[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2]]
+						) * (
+							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] + 
+							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] 
+						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y610[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, ss1/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, ss1/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y611[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y612[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss2/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss2/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y613[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y614[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[cc, bb, dd, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[cc, bb, dd, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y615[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[bb, ss1/@Range[0, NumberOfSubgroups+2], cc, ss2/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[bb, ss1/@Range[0, NumberOfSubgroups+2], cc, ss2/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y616[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[bb, cc, ss2/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[bb, cc, ss2/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Q1Y617[aa_, bb_, cc_, dd_] :> Block[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						(
+							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], cc, ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], cc, ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
 			]
+
+
+
+
 		}];
 
 		(* trivial thing the kernel should be aware of but isn't *)
