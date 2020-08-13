@@ -1,4 +1,5 @@
 BeginPackage["SARGES`"];
+	$VersionSARGES = "0.1.1"
 	Gauge::usage = "Specify gauge subgroup";
 	ChiralSuperField::usage = "Specify Chiral Superfield";
 	SuperYukawa::usage = "Add Superpotential Yukawa term";
@@ -813,7 +814,7 @@ BeginPackage["SARGES`"];
 				}
 			];
 			gamma += kappa/4 SolveSuperProd[
-				{Yuk, conj[Yuk], Yuk, conj[Yuk], Yuk, conj[Yuk]},
+				{Yuk, conj[Yuk], conj[Yuk], Yuk, Yuk, conj[Yuk]},
 				Evaluate[TensorDelta[{#2, #3, #5, #6, #8, #9, #10, #13}, {#4, #7, #11, #14, #12, #15, #16, #17}]]&,
 				18,
 				{
@@ -1179,7 +1180,7 @@ BeginPackage["SARGES`"];
 				}
 			];
 			gamma += kappa/4 SolveSuperProd[
-				{Yuk, conj[Yuk], Yuk, conj[Yuk], Yuk, conj[Yuk], Yuk},
+				{Yuk, conj[Yuk], conj[Yuk], Yuk, Yuk, conj[Yuk], Yuk},
 				Evaluate[TensorDelta[{#2, #3, #5, #6, #8, #9, #10, #13, #18}, {#4, #7, #11, #14, #12, #15, #16, #17, #19}]]&,
 				21,
 				{
@@ -1447,7 +1448,7 @@ BeginPackage["SARGES`"];
 				}
 			];
 			gamma += kappa/4 SolveSuperProd[
-				{Yuk, conj[Yuk], Yuk, conj[Yuk], Yuk, conj[Yuk], SMass},
+				{Yuk, conj[Yuk], conj[Yuk], Yuk, Yuk, conj[Yuk], SMass},
 				Evaluate[TensorDelta[{#2, #3, #5, #6, #8, #9, #10, #13, #18}, {#4, #7, #11, #14, #12, #15, #16, #17, #19}]]&,
 				20,
 				{
@@ -1699,7 +1700,7 @@ BeginPackage["SARGES`"];
 				}
 			];
 			gamma += kappa/4 SolveSuperProd[
-				{Yuk, conj[Yuk], Yuk, conj[Yuk], Yuk, conj[Yuk], STad},
+				{Yuk, conj[Yuk], conj[Yuk], Yuk, Yuk, conj[Yuk], STad},
 				Evaluate[TensorDelta[{#2, #3, #5, #6, #8, #9, #10, #13, #18}, {#4, #7, #11, #14, #12, #15, #16, #17, #19}]]&,
 				19,
 				{
