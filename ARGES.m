@@ -1,5 +1,5 @@
 BeginPackage["ARGES`"];
-	$VersionARGES = "0.2.0"
+	$VersionARGES = "0.2.1"
 	Gauge::usage = "Specify gauge subgroup";
 	WeylFermion::usage = "Add Weyl fermion";
 	RealScalar::usage = "Add real scalar";
@@ -1962,7 +1962,7 @@ BeginPackage["ARGES`"];
 					(1/3) K6L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
 
 				] + If[
-					pc > Length[RealScalarList], 0, 
+					pd > Length[RealScalarList], 0, 
 					(-5/64) K3L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] + 
 					(-5/96) K4L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] + 
 					(13/96) K5L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] + 
