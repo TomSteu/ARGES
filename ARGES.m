@@ -1,5 +1,5 @@
 BeginPackage["ARGES`"];
-	$VersionARGES = "0.2.1"
+	$VersionARGES = "0.2.2"
 	Gauge::usage = "Specify gauge subgroup";
 	WeylFermion::usage = "Add Weyl fermion";
 	RealScalar::usage = "Add real scalar";
@@ -4273,9 +4273,9 @@ BeginPackage["ARGES`"];
 								{
 									contr,
 									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
 									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss1[0], 2,2]]}
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
 								},
 								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
 								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
