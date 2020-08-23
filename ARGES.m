@@ -175,7 +175,7 @@ BeginPackage["ARGES`"];
 				{i2, 1, Length[AdjWeylFermionList]}
 			];
 			QuartMat = Table[
-				Block[
+				Module[
 					{aa, bb, cc, dd},
 					aa = If[a == Length[RealScalarList]+1, a-1,
 						If[a == Length[RealScalarList], a+1, a]
@@ -417,7 +417,7 @@ BeginPackage["ARGES`"];
 			Map[
 				Function[
 					x,
-					Block[
+					Module[
 						{
 							sym=x[[1]],
 							posA = ListPosition[RealScalarList,_List?(#[[1]] == x[[2]] &)],
@@ -3233,6 +3233,36 @@ BeginPackage["ARGES`"];
 			Return[gamma/Power[4 \[Pi], 4]];
 		];
 
+		FGamma[f1_, f2_, l1_, l2_, 3] := Module[
+			{gamma},
+			gamma = 0;
+			gamma += f3L[1] Y2Y2Y2[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[2] Y2Y41[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[3] Y2Y42[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[4] Y4Y21[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[5] Y4Y22[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += (f3L[6] Y4Y23a[Prepend[l1,f1], Prepend[l2,f2]] + f3L[7] Y4Y23b[Prepend[l1,f1], Prepend[l2,f2]])//. subYukawaInvariants;
+			gamma += f3L[8] Y601[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[9] Y602[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[10] Y603[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[11] Y604[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[12] Y605[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[13] Y606[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[14] Y607[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[15] Y608[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[16] Y609[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[17] Y610[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[18] Y611[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[19] Y612[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[20] Y613[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[21] Y614[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[22] Y615[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[23] Y4Q1[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[24] Y2Q2[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+
+			Return[gamma/Power[4 \[Pi], 6]];
+		];
+
 		(* Scalar anomalous dimensions *)
 		SGamma[pa_, pb_, la_, lb_, 0] := KroneckerDelta[pa, pb] TensorDelta[la, lb];
 
@@ -3667,7 +3697,7 @@ BeginPackage["ARGES`"];
 
 
 		subScalarInvariants := Dispatch[{
-			\[CapitalLambda]2[pa_, pb_, pc_, pd_] :> Block[
+			\[CapitalLambda]2[pa_, pb_, pc_, pd_] :> Module[
 				{ss1, ss2, assHold, sum, x, x2},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -3708,7 +3738,7 @@ BeginPackage["ARGES`"];
 					{pa[[2]], pa[[3]], pb[[2]], pb[[3]], pc[[2]], pc[[3]], pd[[2]], pd[[3]]}
 				]
 			],
-			\[CapitalLambda]Y[pa_, pb_, pc_, pd_] :> Block[
+			\[CapitalLambda]Y[pa_, pb_, pc_, pd_] :> Module[
 				{ss1, assHold, sum, x},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -3737,7 +3767,7 @@ BeginPackage["ARGES`"];
 					If[pd[[1]] > Length[RealScalarList], 0, C2[RealScalarList[[pd[[1]],1]], ListGauge[[gaug,1]]]]
 				]
 			],
-			As[gaug1_, gaug2_][a_, b_, c_, d_] :> Block[
+			As[gaug1_, gaug2_][a_, b_, c_, d_] :> Module[
 				{ind1, ind2, ind1L, ind2L, sum, x},
 				sum = 0;
 				ind1L = ind1/@Range[0,NumberOfSubgroups+2];
@@ -3763,7 +3793,7 @@ BeginPackage["ARGES`"];
 				SolveTrace2[adj[Yuk[pb[[1]]]], Yuk[pa[[1]]], Prepend[Function[{x}, {pb[[3+x]], pa[[3+x]]}]/@Range[NumberOfSubgroups], {pb[[2]], pb[[3]], pa[[2]], pa[[3]]}]]
 			),
 			\[CapitalLambda]2S[pa_List, pb_List] :> 0 /; (pa[[1]] > Length[RealScalarList] || pb[[1]] > Length[RealScalarList]),
-			\[CapitalLambda]2S[pa_, pb_] :> Block[
+			\[CapitalLambda]2S[pa_, pb_] :> Module[
 				{ss1, ss2, ss3, assHold, sum, x, x2},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -3799,7 +3829,7 @@ BeginPackage["ARGES`"];
 				$Assumptions = assHold;
 				Sqr[24]/6 sum
 			],
-			\[CapitalLambda]2SY[pa_, pi_, pj_] :> Block[
+			\[CapitalLambda]2SY[pa_, pi_, pj_] :> Module[
 				{ss1, ss2, ss3, ss4, assHold, sum, x, x2},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss4[x],Integers]&&(ss4[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -3839,7 +3869,7 @@ BeginPackage["ARGES`"];
 				$Assumptions = assHold;
 				Sqr[24]/6 sum
 			],
-			\[CapitalLambda]2S\[Lambda][pa_, pb_, pc_, pd_] :> Block[
+			\[CapitalLambda]2S\[Lambda][pa_, pb_, pc_, pd_] :> Module[
 				{ss1, ss2, ss3, ss4, assHold, sum, x, x2},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss4[x],Integers]&&(ss4[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -3882,7 +3912,7 @@ BeginPackage["ARGES`"];
 				sum
 			],
 			H2S[pa_List, pb_List] :> 0 /; (pa[[1]] > Length[RealScalarList] || pb[[1]] > Length[RealScalarList]),
-			H2S[pa_, pb_] :> Block[
+			H2S[pa_, pb_] :> Module[
 				{ss,x,x2,sum,assHold},
 				assHold = $Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -3913,7 +3943,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			H2S\[Lambda][pa_, pb_, pc_, pd_] :> Block[
+			H2S\[Lambda][pa_, pb_, pc_, pd_] :> Module[
 				{ss,ss2,x,x2,sum,assHold},
 				assHold = $Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -3948,7 +3978,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			H2SY[pa_, pi_, pj_] :> Block[
+			H2SY[pa_, pi_, pj_] :> Module[
 				{ss,ss2,x,x2,sum,assHold},
 				assHold = $Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -3984,7 +4014,7 @@ BeginPackage["ARGES`"];
 				sum
 			],
 			Hbar2S[pa_List, pb_List] :> 0 /; (pa[[1]] > Length[RealScalarList] || pb[[1]] > Length[RealScalarList]),
-			Hbar2S[pa_, pb_] :> Block[
+			Hbar2S[pa_, pb_] :> Module[
 				{ss,x,x2,sum,assHold},
 				assHold = $Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4015,7 +4045,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Hbar2S\[Lambda][pa_, pb_, pc_, pd_] :> Block[
+			Hbar2S\[Lambda][pa_, pb_, pc_, pd_] :> Module[
 				{ss,ss2,x,x2,sum,assHold},
 				assHold = $Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4050,7 +4080,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Hbar2SY[pa_, pi_, pj_] :> Block[
+			Hbar2SY[pa_, pi_, pj_] :> Module[
 				{ss,ss2,x,x2,sum,assHold},
 				assHold = $Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4086,7 +4116,7 @@ BeginPackage["ARGES`"];
 				sum
 			],
 			Y2FS[pa_List, pb_List] :> 0 /; (pa[[1]] > Length[RealScalarList] || pb[[1]] > Length[RealScalarList]),
-			Y2FS[pa_, pb_] :> Block[
+			Y2FS[pa_, pb_] :> Module[
 				{ff,fHold,x,ii},
 				For[ff=1, ff<=Length[WeylFermionList], ff++,
 					fHold[ff] = 1/2 (
@@ -4097,7 +4127,7 @@ BeginPackage["ARGES`"];
 				Sum[Sqr[ListGauge[[ii,1]]] C2[WeylFermionList[[ff,1]], ListGauge[[ii,1]]] fHold[ff] , {ff, 1, Length[WeylFermionList]}, {ii, 1, NumberOfSubgroups}]
 			],
 			Y2FSY[pa_, pi_, pj_, la_, li_, lj_] :> 0 /; (pa > Length[RealScalarList]),
-			Y2FSY[pa_, pi_, pj_, la_, li_, lj_] :> Block[
+			Y2FSY[pa_, pi_, pj_, la_, li_, lj_] :> Module[
 				{ff,fHold,x,ii,ss,assHold},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4120,7 +4150,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				Sum[Sqr[ListGauge[[ii,1]]] C2[WeylFermionList[[ff,1]], ListGauge[[ii,1]]] fHold[ff] , {ff, 1, Length[WeylFermionList]}, {ii, 1, NumberOfSubgroups}]
 			],
-			Y2FSL[pa_, pb_, pc_, pd_] :> Block[
+			Y2FSL[pa_, pb_, pc_, pd_] :> Module[
 				{ff,fHold,x,ii,ss,assHold},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss[x],Integers]&&(ss[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4143,7 +4173,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				Sum[Sqr[ListGauge[[ii,1]]] C2[WeylFermionList[[ff,1]], ListGauge[[ii,1]]] fHold[ff] , {ff, 1, Length[WeylFermionList]}, {ii, 1, NumberOfSubgroups}]
 			],
-			H2t[gauge_, pa_, pi_, pj_] :> Block[
+			H2t[gauge_, pa_, pi_, pj_] :> Module[
 				{sum, assHold,f1,f2},
 				assHold = $Assumptions;
 				$Assumptions=$Assumptions&&Element[scGenIdx,Integers]&&(scGenIdx>0)&&Element[scGenIdx2,Integers]&&(scGenIdx2>0)&&(And@@(Function[{x},Element[scGaugeIdx[x],Integers]&&(scGaugeIdx[x]>0)&&Element[ff1[x],Integers]&&(ff1[x]>0)&&Element[ff2[x],Integers]&&(ff2[x]>0)&&Element[ff3[x],Integers]&&(ff3[x]>0)&&Element[ff4[x],Integers]&&(ff4[x]>0)]/@Range[NumberOfSubgroups]));
@@ -4183,7 +4213,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			\[CapitalLambda]bar3[pa_, pb_, pc_, pd_] :> Block[
+			\[CapitalLambda]bar3[pa_, pb_, pc_, pd_] :> Module[
 				{ss1, ss2, ss3, ss4, assHold, sum, x, x2},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss4[x],Integers]&&(ss4[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4223,7 +4253,7 @@ BeginPackage["ARGES`"];
 				$Assumptions = assHold;
 				sum
 			],
-			\[CapitalLambda]bar2Y[pa_, pb_, pc_, pd_] :> Block[
+			\[CapitalLambda]bar2Y[pa_, pb_, pc_, pd_] :> Module[
 				{ss1, ss2, ss3, assHold, sum, x, x2, x3, x4},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4262,7 +4292,7 @@ BeginPackage["ARGES`"];
 				$Assumptions = assHold;
 				sum
 			],
-			Hbar\[Lambda][pa_, pb_, pc_, pd_] :> Block[
+			Hbar\[Lambda][pa_, pb_, pc_, pd_] :> Module[
 				{ss1, ss2, sum, assHold, x},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4292,7 +4322,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			HY[pa_, pb_, pc_, pd_] :> Block[
+			HY[pa_, pb_, pc_, pd_] :> Module[
 				{ss1, sum, assHold, x},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4321,7 +4351,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			HbarY[pa_, pb_, pc_, pd_] :> Block[
+			HbarY[pa_, pb_, pc_, pd_] :> Module[
 				{ss1, sum, assHold, x},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4356,7 +4386,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			H3[pa_, pb_, pc_, pd_] :> Block[
+			H3[pa_, pb_, pc_, pd_] :> Module[
 				{ss1, sum, assHold, x},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4385,7 +4415,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			\[CapitalLambda]bar2S[pa_, pb_, pc_, pd_] :> Block[
+			\[CapitalLambda]bar2S[pa_, pb_, pc_, pd_] :> Module[
 				{ss1, ss2, sum, assHold, x},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4417,7 +4447,7 @@ BeginPackage["ARGES`"];
 				$Assumptions = assHold;
 				sum
 			],
-			\[CapitalLambda]2g[gaug_][pa_, pb_, pc_, pd_] :> Block[
+			\[CapitalLambda]2g[gaug_][pa_, pb_, pc_, pd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold, x},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss4[x],Integers]&&(ss4[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4460,7 +4490,7 @@ BeginPackage["ARGES`"];
 				$Assumptions = assHold;
 				sum
 			],
-			HF[pa_, pb_, pc_, pd_] :>Block[
+			HF[pa_, pb_, pc_, pd_] :>Module[
 				{ff, x, ii},
 				Sum[
 					(
@@ -4482,7 +4512,7 @@ BeginPackage["ARGES`"];
 					{ff, 1, Length[WeylFermionList]}
 				]
 			]/.{tr[A___,C2[B___], C___]:>C2[B] tr[A,C]},
-			A\[Lambda][gauge_, gauge2_][a_, b_, c_, d_] :> Block[
+			A\[Lambda][gauge_, gauge2_][a_, b_, c_, d_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss4[x],Integers]&&(ss4[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4522,7 +4552,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Abar\[Lambda][gauge_, gauge2_][a_, b_, c_, d_] :> Block[
+			Abar\[Lambda][gauge_, gauge2_][a_, b_, c_, d_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss4[x],Integers]&&(ss4[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4562,7 +4592,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			BY[gauge_, gauge2_][a_, b_, c_, d_] :> Block[
+			BY[gauge_, gauge2_][a_, b_, c_, d_] :> Module[
 				{gg, ff, ff1, ff2, ff3, ff4, y2, y3},
 				Sum[
 					(ReleaseHold[tr[Yuk[c[[1]]][AdjWeylFermionList[[ff1[0],3]], ff4[0]], adj[Yuk[d[[1]]]][AdjWeylFermionList[[ff4[0],3]], ff1[0]]]//. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
@@ -4623,7 +4653,7 @@ BeginPackage["ARGES`"];
 					{ff4[0], 1, Length[AdjWeylFermionList]}
 				]
 			],
-			BbarY[gauge_, gauge2_][a_, b_, c_, d_] :> Block[
+			BbarY[gauge_, gauge2_][a_, b_, c_, d_] :> Module[
 				{ffA, ffB, gg, y2, y4},
 				Sum[
 					ReleaseHold[tr[Yuk[c[[1]]][AdjWeylFermionList[[ff1[0],3]], ff3[0]], adj[Yuk[d[[1]]]][AdjWeylFermionList[[ff3[0],3]], ff1[0]]] //. {adj[A_][i1_, i2_] :> adj[A[i2, i1]]} /.subYuk1 //.subProd]//.subYuk2 /.{
@@ -4657,7 +4687,7 @@ BeginPackage["ARGES`"];
 					{ff3[0], 1, Length[AdjWeylFermionList]}
 				]
 			],
-			Ag[gauge_][a_, b_, c_, d_] :> Block[
+			Ag[gauge_][a_, b_, c_, d_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss4[x],Integers]&&(ss4[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4694,7 +4724,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			\[CapitalLambda]G2[ii_] :> Block[
+			\[CapitalLambda]G2[ii_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss4[x],Integers]&&(ss4[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4735,7 +4765,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			\[Lambda]\[CapitalLambda]2[ii_, jj_] :> Block[
+			\[Lambda]\[CapitalLambda]2[ii_, jj_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
 				assHold=$Assumptions;
 				$Assumptions=$Assumptions&&And@@Function[{x}, Element[ss1[x],Integers]&&(ss1[x]>0)&&Element[ss2[x],Integers]&&(ss2[x]>0)&&Element[ss3[x],Integers]&&(ss3[x]>0)&&Element[ss4[x],Integers]&&(ss4[x]>0)]/@Range[NumberOfSubgroups+2];
@@ -4779,7 +4809,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			K1[aa_, bb_] :> Block[
+			K1[aa_, bb_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -4817,7 +4847,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			K1L[aa_, bb_, cc_, dd_] :> Block[
+			K1L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -4859,7 +4889,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			T3L1[aa_, bb_, cc_, dd_] :> Block[
+			T3L1[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -4906,7 +4936,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			T3L2[aa_, bb_, cc_, dd_] :> Block[
+			T3L2[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -4953,7 +4983,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			T3L4[aa_, bb_, cc_, dd_] :> Block[
+			T3L4[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5000,7 +5030,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			T3L5[aa_, bb_, cc_, dd_] :> Block[
+			T3L5[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5047,7 +5077,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			T3L6[aa_, bb_, cc_, dd_] :> Block[
+			T3L6[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5094,7 +5124,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			T3L8[aa_, bb_, cc_, dd_] :> Block[
+			T3L8[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5142,7 +5172,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			K3[aa_, bb_] :> Block[
+			K3[aa_, bb_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5194,7 +5224,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			K4[aa_, bb_] :> Block[
+			K4[aa_, bb_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5246,7 +5276,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			K5[aa_, bb_] :> Block[
+			K5[aa_, bb_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5298,7 +5328,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			K6[aa_, bb_] :> Block[
+			K6[aa_, bb_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5350,7 +5380,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			K3L[aa_, xx_, yy_, zz_] :> Block[
+			K3L[aa_, xx_, yy_, zz_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5406,7 +5436,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			K4L[aa_, xx_, yy_, zz_] :> Block[
+			K4L[aa_, xx_, yy_, zz_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5462,7 +5492,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			K5L[aa_, xx_, yy_, zz_] :> Block[
+			K5L[aa_, xx_, yy_, zz_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5518,7 +5548,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			K6L[aa_, xx_, yy_, zz_] :> Block[
+			K6L[aa_, xx_, yy_, zz_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5573,7 +5603,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4a[aa_, bb_, cc_, dd_] :> Block[
+			C4a[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5629,7 +5659,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4b[aa_, bb_, cc_, dd_] :> Block[
+			C4b[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5685,7 +5715,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4c[aa_, bb_, cc_, dd_] :> Block[
+			C4c[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5741,7 +5771,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4d[aa_, bb_, cc_, dd_] :> Block[
+			C4d[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5797,7 +5827,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4e[aa_, bb_, cc_, dd_] :> Block[
+			C4e[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5853,7 +5883,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4f[aa_, bb_, cc_, dd_] :> Block[
+			C4f[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5909,7 +5939,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4g[aa_, bb_, cc_, dd_] :> Block[
+			C4g[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -5965,7 +5995,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4h[aa_, bb_, cc_, dd_] :> Block[
+			C4h[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6021,7 +6051,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4i[aa_, bb_, cc_, dd_] :> Block[
+			C4i[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6077,7 +6107,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4j[aa_, bb_, cc_, dd_] :> Block[
+			C4j[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6133,7 +6163,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4k[aa_, bb_, cc_, dd_] :> Block[
+			C4k[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6189,7 +6219,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4l[aa_, bb_, cc_, dd_] :> Block[
+			C4l[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6245,7 +6275,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4m[aa_, bb_, cc_, dd_] :> Block[
+			C4m[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6301,7 +6331,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4n[aa_, bb_, cc_, dd_] :> Block[
+			C4n[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6357,7 +6387,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4o[aa_, bb_, cc_, dd_] :> Block[
+			C4o[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6413,7 +6443,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4p[aa_, bb_, cc_, dd_] :> Block[
+			C4p[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6469,7 +6499,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4q[aa_, bb_, cc_, dd_] :> Block[
+			C4q[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6525,7 +6555,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4r[aa_, bb_, cc_, dd_] :> Block[
+			C4r[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6581,7 +6611,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			C4s[aa_, bb_, cc_, dd_] :> Block[
+			C4s[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6637,7 +6667,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q2Y2[aa_, bb_] :> Block[
+			Q2Y2[aa_, bb_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6677,7 +6707,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y41[aa_, bb_] :> Block[
+			Q1Y41[aa_, bb_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6710,7 +6740,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y42[aa_, bb_] :> Block[
+			Q1Y42[aa_, bb_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6743,7 +6773,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y43[aa_, bb_] :> Block[
+			Q1Y43[aa_, bb_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6776,7 +6806,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y44[aa_, bb_] :> Block[
+			Q1Y44[aa_, bb_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6812,7 +6842,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y61[aa_, bb_] :> Block[
+			Y61[aa_, bb_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6841,7 +6871,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y62[aa_, bb_] :> Block[
+			Y62[aa_, bb_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6870,7 +6900,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y63[aa_, bb_] :> Block[
+			Y63[aa_, bb_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6899,7 +6929,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y64[aa_, bb_] :> Block[
+			Y64[aa_, bb_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6928,7 +6958,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y65[aa_, bb_] :> Block[
+			Y65[aa_, bb_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6957,7 +6987,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y66[aa_, bb_] :> Block[
+			Y66[aa_, bb_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -6989,7 +7019,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y67[aa_, bb_] :> Block[
+			Y67[aa_, bb_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7021,7 +7051,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y68[aa_, bb_] :> Block[
+			Y68[aa_, bb_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7050,7 +7080,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y69[aa_, bb_] :> Block[
+			Y69[aa_, bb_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7079,7 +7109,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y610[aa_, bb_] :> Block[
+			Y610[aa_, bb_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7108,7 +7138,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q2Y2L[aa_, bb_, cc_, dd_] :> Block[
+			Q2Y2L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7153,7 +7183,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y41L[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y41L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7192,7 +7222,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y41L2[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y41L2[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7231,7 +7261,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y42L[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y42L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7269,7 +7299,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y43L[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y43L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7307,7 +7337,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y44L[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y44L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7348,7 +7378,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y61L[aa_, bb_, cc_, dd_] :> Block[
+			Y61L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7383,7 +7413,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y62L[aa_, bb_, cc_, dd_] :> Block[
+			Y62L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7418,7 +7448,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y63L[aa_, bb_, cc_, dd_] :> Block[
+			Y63L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7453,7 +7483,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y64L[aa_, bb_, cc_, dd_] :> Block[
+			Y64L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7488,7 +7518,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y65L[aa_, bb_, cc_, dd_] :> Block[
+			Y65L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7523,7 +7553,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y65L2[aa_, bb_, cc_, dd_] :> Block[
+			Y65L2[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7558,7 +7588,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y66L[aa_, bb_, cc_, dd_] :> Block[
+			Y66L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7595,7 +7625,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y67L[aa_, bb_, cc_, dd_] :> Block[
+			Y67L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7632,7 +7662,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y68L[aa_, bb_, cc_, dd_] :> Block[
+			Y68L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7667,7 +7697,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y69L[aa_, bb_, cc_, dd_] :> Block[
+			Y69L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7702,7 +7732,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y610L[aa_, bb_, cc_, dd_] :> Block[
+			Y610L[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7737,7 +7767,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q3Y21[aa_, bb_, cc_, dd_] :> Block[
+			Q3Y21[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7783,7 +7813,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q3Y22[aa_, bb_, cc_, dd_] :> Block[
+			Q3Y22[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, ss5, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7829,7 +7859,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q2Y41[aa_, bb_, cc_, dd_] :> Block[
+			Q2Y41[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7871,7 +7901,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q2Y42[aa_, bb_, cc_, dd_] :> Block[
+			Q2Y42[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7913,7 +7943,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q2Y43[aa_, bb_, cc_, dd_] :> Block[
+			Q2Y43[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7952,7 +7982,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q2Y44[aa_, bb_, cc_, dd_] :> Block[
+			Q2Y44[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -7991,7 +8021,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q2Y45[aa_, bb_, cc_, dd_] :> Block[
+			Q2Y45[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8030,7 +8060,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q2Y46[aa_, bb_, cc_, dd_] :> Block[
+			Q2Y46[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8069,7 +8099,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q2Y47[aa_, bb_, cc_, dd_] :> Block[
+			Q2Y47[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8108,7 +8138,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q2Y48[aa_, bb_, cc_, dd_] :> Block[
+			Q2Y48[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8147,7 +8177,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q2Y49[aa_, bb_, cc_, dd_] :> Block[
+			Q2Y49[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8186,7 +8216,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q2Y410[aa_, bb_, cc_, dd_] :> Block[
+			Q2Y410[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, ss4, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8225,7 +8255,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y601[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y601[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8259,7 +8289,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y602[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y602[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8293,7 +8323,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y603[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y603[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8327,7 +8357,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y604[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y604[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8361,7 +8391,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y605[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y605[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8395,7 +8425,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y606[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y606[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8429,7 +8459,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y607[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y607[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8463,7 +8493,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y608[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y608[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8500,7 +8530,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y609[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y609[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8537,7 +8567,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y610[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y610[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8571,7 +8601,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y611[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y611[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8605,7 +8635,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y612[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y612[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8639,7 +8669,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y613[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y613[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8673,7 +8703,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y614[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y614[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8707,7 +8737,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y615[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y615[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8741,7 +8771,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y616[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y616[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8775,7 +8805,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Q1Y617[aa_, bb_, cc_, dd_] :> Block[
+			Q1Y617[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8809,7 +8839,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y4Y41[aa_, bb_, cc_, dd_] :> Block[
+			Y4Y41[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8842,7 +8872,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y4Y42[aa_, bb_, cc_, dd_] :> Block[
+			Y4Y42[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8875,7 +8905,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y4Y43[aa_, bb_, cc_, dd_] :> Block[
+			Y4Y43[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8908,7 +8938,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y6Y21[aa_, bb_, cc_, dd_] :> Block[
+			Y6Y21[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8941,7 +8971,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y6Y22[aa_, bb_, cc_, dd_] :> Block[
+			Y6Y22[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -8974,7 +9004,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y6Y23[aa_, bb_, cc_, dd_] :> Block[
+			Y6Y23[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9007,7 +9037,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y801[aa_, bb_, cc_, dd_] :> Block[
+			Y801[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9036,7 +9066,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y802[aa_, bb_, cc_, dd_] :> Block[
+			Y802[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9065,7 +9095,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y803[aa_, bb_, cc_, dd_] :> Block[
+			Y803[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9094,7 +9124,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y804[aa_, bb_, cc_, dd_] :> Block[
+			Y804[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9123,7 +9153,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y805[aa_, bb_, cc_, dd_] :> Block[
+			Y805[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9152,7 +9182,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y806[aa_, bb_, cc_, dd_] :> Block[
+			Y806[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9181,7 +9211,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y807[aa_, bb_, cc_, dd_] :> Block[
+			Y807[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9210,7 +9240,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y808[aa_, bb_, cc_, dd_] :> Block[
+			Y808[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9239,7 +9269,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y809[aa_, bb_, cc_, dd_] :> Block[
+			Y809[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9268,7 +9298,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y810[aa_, bb_, cc_, dd_] :> Block[
+			Y810[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9297,7 +9327,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y811[aa_, bb_, cc_, dd_] :> Block[
+			Y811[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9326,7 +9356,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y812[aa_, bb_, cc_, dd_] :> Block[
+			Y812[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9355,7 +9385,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y813[aa_, bb_, cc_, dd_] :> Block[
+			Y813[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9384,7 +9414,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y814[aa_, bb_, cc_, dd_] :> Block[
+			Y814[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9413,7 +9443,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y815[aa_, bb_, cc_, dd_] :> Block[
+			Y815[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9442,7 +9472,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y816[aa_, bb_, cc_, dd_] :> Block[
+			Y816[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9471,7 +9501,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y817[aa_, bb_, cc_, dd_] :> Block[
+			Y817[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9500,7 +9530,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y818[aa_, bb_, cc_, dd_] :> Block[
+			Y818[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9529,7 +9559,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y819[aa_, bb_, cc_, dd_] :> Block[
+			Y819[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9558,7 +9588,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y820[aa_, bb_, cc_, dd_] :> Block[
+			Y820[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9587,7 +9617,7 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y821[aa_, bb_, cc_, dd_] :> Block[
+			Y821[aa_, bb_, cc_, dd_] :> Module[
 				{ss1, ss2, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
@@ -9616,8 +9646,8 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			Y822[aa_, bb_, cc_, dd_] :> Block[
-				{ss1, ss2, sum, assHold},
+			Y822[aa_, bb_, cc_, dd_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
 				assHold=$Assumptions;
 				sum = Sum[
 					ApplyDistribute[
@@ -9627,20 +9657,894 @@ BeginPackage["ARGES`"];
 									contr,
 									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
 									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
 									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
 								},
 								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
 							]
 						],
 						(
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], aa, ss1/@Range[0, NumberOfSubgroups+2], cc, ss2/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], dd] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], aa, ss1/@Range[0, NumberOfSubgroups+2], cc, ss2/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], dd]
-						) 
+							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], cc, ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], cc, ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2]]
+						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
+
 					],
 					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			]
+		}];
+
+		subYukawaInvariants := Dispatch[{
+			Y2Y2Y2[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], {aa, bb}] * (
+							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+						) * (
+							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y2Y41[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], {aa, bb}] * (
+							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y2Y42[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], {aa, bb}] * (
+							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y4Y21[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], {aa, bb}] * (
+							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y4Y22[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], {aa, bb}] * (
+							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y4Y23a[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], {aa, bb}] * (
+							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y4Y23b[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], {aa, bb}] * (
+							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
+							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
+						)
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y601[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2],
+							ss1/@Range[0, NumberOfSubgroups+2],
+						{aa, bb}]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y602[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2],
+							ss1/@Range[0, NumberOfSubgroups+2],
+						{aa, bb}]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y603[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2],
+							ss1/@Range[0, NumberOfSubgroups+2],
+						{aa, bb}]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y604[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2], 
+							ss1/@Range[0, NumberOfSubgroups+2],
+							ss2/@Range[0, NumberOfSubgroups+2],
+						{aa, bb}]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y605[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss1/@Range[0, NumberOfSubgroups+2],
+							ss3/@Range[0, NumberOfSubgroups+2],
+						{aa, bb}]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y606[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2], 
+							ss1/@Range[0, NumberOfSubgroups+2],
+							ss3/@Range[0, NumberOfSubgroups+2],
+						{aa, bb}]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y607[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2], 
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2],
+							ss2/@Range[0, NumberOfSubgroups+2],
+						{aa, bb}]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y608[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2], 
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2],
+							ss3/@Range[0, NumberOfSubgroups+2],
+						{aa, bb}]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y609[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2],
+							ss3/@Range[0, NumberOfSubgroups+2],
+						{aa, bb}]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y610[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2],
+							ss2/@Range[0, NumberOfSubgroups+2],
+						{aa, bb}]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y611[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2],
+							ss3/@Range[0, NumberOfSubgroups+2],
+						{aa, bb}]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y612[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2],
+							ss3/@Range[0, NumberOfSubgroups+2],
+						{aa, bb}]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y613[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2],
+							ss2/@Range[0, NumberOfSubgroups+2],
+						{aa, bb}]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y614[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2],
+							ss3/@Range[0, NumberOfSubgroups+2],
+						{aa, bb}]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y615[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss1/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss2/@Range[0, NumberOfSubgroups+2], 
+							ss3/@Range[0, NumberOfSubgroups+2],
+							ss3/@Range[0, NumberOfSubgroups+2],
+						{aa, bb}]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y4Q1[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, ss4, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2], {aa, bb}] *
+						Lam[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]}
+				];
+				$Assumptions=assHold;
+				sum
+			],
+			Y2Q2[aa_, bb_] :> Module[
+				{ss1, ss2, ss3, ss4, ss5, sum, assHold},
+				assHold=$Assumptions;
+				sum = Sum[
+					ApplyDistribute[
+						Function[contr,
+							ContractSum@@Join[
+								{
+									contr,
+									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
+									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
+									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
+									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
+									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
+									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
+									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
+									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
+									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
+									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]}
+
+								},
+								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
+								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups]
+							]
+						],
+						YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], {aa, bb}] *
+						Lam[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2], ss5/@Range[0, NumberOfSubgroups+2]] *
+						Lam[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2], ss5/@Range[0, NumberOfSubgroups+2]]
+						
+					],
+					{ss1[0], 1, Length[RealScalarList]},
+					{ss2[0], 1, Length[RealScalarList]},
+					{ss3[0], 1, Length[RealScalarList]},
+					{ss4[0], 1, Length[RealScalarList]},
+					{ss5[0], 1, Length[RealScalarList]}
 				];
 				$Assumptions=assHold;
 				sum
@@ -9985,7 +10889,7 @@ BeginPackage["ARGES`"];
 				Function[x, {Y1[[3+x]], Y2[[3+x]]}]/@Range[NumberOfSubgroups], 
 				{Y1[[2]], Y1[[3]], Y2[[2]], Y2[[3]]}
 			]
-		];	
+		];
 
 
 		YukTraceAdj[Y1_, Y2_] := SolveTrace2[
@@ -10044,10 +10948,64 @@ BeginPackage["ARGES`"];
 			]
 		];
 
+		YukProd[Y1_, Y2_, {i1_ ,i2_}] := SolveProd2[
+			Yuk[Y1[[1]]], adj@Yuk[Y2[[1]]],
+			i1, i2,
+			Prepend[
+				Function[x, {Y1[[3+x]], Y2[[3+x]]}]/@Range[NumberOfSubgroups], 
+				{Y1[[2]], Y1[[3]], Y2[[2]], Y2[[3]]}
+			]
+		];
+
+		YukProd[Y1_, Y2_, Y3_, {i1_ ,i2_}] := SolveProd3[
+			Yuk[Y1[[1]]], adj@Yuk[Y2[[1]]], Yuk[Y3[[1]]],
+			i1, i2, 
+			Prepend[
+				Function[x, {Y1[[3+x]], Y2[[3+x]], Y3[[3+x]]}]/@Range[NumberOfSubgroups], 
+				{Y1[[2]], Y1[[3]], Y2[[2]], Y2[[3]], Y3[[2]], Y3[[3]]}
+			]
+		];
+
+		YukProd[Y1_, Y2_, Y3_, Y4_, {i1_ ,i2_}] := SolveProd4[
+			Yuk[Y1[[1]]], adj@Yuk[Y2[[1]]], Yuk[Y3[[1]]], adj@Yuk[Y4[[1]]],
+			i1, i2, 
+			Prepend[
+				Function[x, {Y1[[3+x]], Y2[[3+x]], Y3[[3+x]], Y4[[3+x]]}]/@Range[NumberOfSubgroups], 
+				{Y1[[2]], Y1[[3]], Y2[[2]], Y2[[3]], Y3[[2]], Y3[[3]], Y4[[2]], Y4[[3]]}
+			]
+		];
+
+		YukProd[Y1_, Y2_, Y3_, Y4_, Y5_, {i1_ ,i2_}] := SolveProd5[
+			Yuk[Y1[[1]]], adj@Yuk[Y2[[1]]], Yuk[Y3[[1]]], adj@Yuk[Y4[[1]]], Yuk[Y5[[1]]],
+			i1, i2, 
+			Prepend[
+				Function[x, {Y1[[3+x]], Y2[[3+x]], Y3[[3+x]], Y4[[3+x]], Y5[[3+x]]}]/@Range[NumberOfSubgroups], 
+				{Y1[[2]], Y1[[3]], Y2[[2]], Y2[[3]], Y3[[2]], Y3[[3]], Y4[[2]], Y4[[3]], Y5[[2]], Y5[[3]]}
+			]
+		];
+
+		YukProd[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, {i1_ ,i2_}] := SolveProd6[
+			Yuk[Y1[[1]]], adj@Yuk[Y2[[1]]], Yuk[Y3[[1]]], adj@Yuk[Y4[[1]]], Yuk[Y5[[1]]], adj@Yuk[Y6[[1]]],
+			i1, i2, 
+			Prepend[
+				Function[x, {Y1[[3+x]], Y2[[3+x]], Y3[[3+x]], Y4[[3+x]], Y5[[3+x]], Y6[[3+x]]}]/@Range[NumberOfSubgroups], 
+				{Y1[[2]], Y1[[3]], Y2[[2]], Y2[[3]], Y3[[2]], Y3[[3]], Y4[[2]], Y4[[3]], Y5[[2]], Y5[[3]], Y6[[2]], Y6[[3]]}
+			]
+		];
+
+		YukProd[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, Y7_, {i1_ ,i2_}] := SolveProd7[
+			Yuk[Y1[[1]]], adj@Yuk[Y2[[1]]], Yuk[Y3[[1]]], adj@Yuk[Y4[[1]]], Yuk[Y5[[1]]], adj@Yuk[Y6[[1]]], Yuk[Y7[[1]]],
+			i1, i2, 
+			Prepend[
+				Function[x, {Y1[[3+x]], Y2[[3+x]], Y3[[3+x]], Y4[[3+x]], Y5[[3+x]], Y6[[3+x]], Y7[[3+x]]}]/@Range[NumberOfSubgroups], 
+				{Y1[[2]], Y1[[3]], Y2[[2]], Y2[[3]], Y3[[2]], Y3[[3]], Y4[[2]], Y4[[3]], Y5[[2]], Y5[[3]], Y6[[2]], Y6[[3]], Y7[[2]], Y7[[3]]}
+			]
+		];
+
 
 
 		(* optimized functions for Yukawa traces and products *)
-		SolveTrace2[Y1_, Y2_, SIdx_] := Block[
+		SolveTrace2[Y1_, Y2_, SIdx_] := Module[
 			{sumInd1,sumInd2},
 			ReleaseHold[SolveTrace[Y1,Y2]]//.subProd //.subYuk2 /.{
 				tr[y1_, y2_]:>Times@@Join[
@@ -10065,7 +11023,7 @@ BeginPackage["ARGES`"];
 			}
 		];
 
-		SolveTrace3[Y1_, Y2_, Y3_, SIdx_] := Block[
+		SolveTrace3[Y1_, Y2_, Y3_, SIdx_] := Module[
 			{sumInd1,sumInd2,sumInd3},
 			ReleaseHold[SolveTrace[Y1,Y2,Y3]]//.subProd //.subYuk2 /.{
 				tr[y1_, y2_, y3_]:>Times@@Join[
@@ -10084,7 +11042,7 @@ BeginPackage["ARGES`"];
 			}
 		];
 
-		SolveTrace4[Y1_, Y2_, Y3_, Y4_, SIdx_] := Block[
+		SolveTrace4[Y1_, Y2_, Y3_, Y4_, SIdx_] := Module[
 			{sumInd1,sumInd2,sumInd3, sumInd4},
 			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4]]//.subProd //.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_]:>Times@@Join[
@@ -10104,7 +11062,7 @@ BeginPackage["ARGES`"];
 			}
 		];
 
-		SolveTrace5[Y1_, Y2_, Y3_, Y4_, Y5_, SIdx_] := Block[
+		SolveTrace5[Y1_, Y2_, Y3_, Y4_, Y5_, SIdx_] := Module[
 			{sumInd1,sumInd2,sumInd3, sumInd4, sumInd5},
 			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5]]//.subProd //.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_, y5_]:>Times@@Join[
@@ -10125,7 +11083,7 @@ BeginPackage["ARGES`"];
 			}
 		];
 
-		SolveTrace6[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, SIdx_] := Block[
+		SolveTrace6[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, SIdx_] := Module[
 			{sumInd1,sumInd2,sumInd3, sumInd4, sumInd5, sumInd6},
 			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5,Y6]]//.subProd //.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_, y5_, y6_]:>Times@@Join[
@@ -10147,7 +11105,7 @@ BeginPackage["ARGES`"];
 			}
 		];
 
-		SolveTrace8[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, Y7_, Y8_, SIdx_] := Block[
+		SolveTrace8[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, Y7_, Y8_, SIdx_] := Module[
 			{sumInd1,sumInd2,sumInd3, sumInd4, sumInd5, sumInd6, sumInd7, sumInd8},
 			ReleaseHold[SolveTrace[Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8]]//.subProd //.subYuk2 /.{
 				tr[y1_, y2_, y3_, y4_, y5_, y6_, y7_, y8_]:>Times@@Join[
@@ -10171,7 +11129,7 @@ BeginPackage["ARGES`"];
 			}
 		];
 
-		SolveProd2[Y1_, Y2_, li_, lj_, SIdx_] := Block[
+		SolveProd2[Y1_, Y2_, li_, lj_, SIdx_] := Module[
 			{sumInd1},
 			ReleaseHold[SolveProd[Y1, Y2, li[[1]], lj[[1]]]]//.subProd //.subYuk2 /.{
 				prod[y1_, y2_]:>Times@@Join[
@@ -10190,7 +11148,7 @@ BeginPackage["ARGES`"];
 			}
 		];
 
-		SolveProd3[Y1_, Y2_, Y3_, li_, lj_, SIdx_] := Block[
+		SolveProd3[Y1_, Y2_, Y3_, li_, lj_, SIdx_] := Module[
 			{sumInd1, sumInd2},
 			ReleaseHold[SolveProd[Y1, Y2, Y3, li[[1]], lj[[1]]]]//.subProd //.subYuk2 /.{
 				prod[y1_, y2_, y3_]:>Times@@Join[
@@ -10210,7 +11168,7 @@ BeginPackage["ARGES`"];
 			}
 		];
 
-		SolveProd4[Y1_, Y2_, Y3_, Y4_, li_, lj_, SIdx_] := Block[
+		SolveProd4[Y1_, Y2_, Y3_, Y4_, li_, lj_, SIdx_] := Module[
 			{sumInd1, sumInd2, sumInd3},
 			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, li[[1]], lj[[1]]]]//.subProd //.subYuk2 /.{
 				prod[y1_, y2_, y3_, y4_]:>Times@@Join[
@@ -10231,7 +11189,7 @@ BeginPackage["ARGES`"];
 			}
 		];
 
-		SolveProd5[Y1_, Y2_, Y3_, Y4_, Y5_, li_, lj_, SIdx_] := Block[
+		SolveProd5[Y1_, Y2_, Y3_, Y4_, Y5_, li_, lj_, SIdx_] := Module[
 			{sumInd1, sumInd2, sumInd3, sumInd4},
 			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, Y5, li[[1]], lj[[1]]]]//.subProd //.subYuk2 /.{
 				prod[y1_, y2_, y3_, y4_, y5_]:>Times@@Join[
@@ -10253,7 +11211,56 @@ BeginPackage["ARGES`"];
 			}
 		];
 
-		SolveSProd2[L1_, L2_, SIdx_] := Block[
+		SolveProd6[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, li_, lj_, SIdx_] := Module[
+			{sumInd1, sumInd2, sumInd3, sumInd4, sumInd5},
+			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, Y5, Y6, li[[1]], lj[[1]]]]//.subProd //.subYuk2 /.{
+				prod[y1_, y2_, y3_, y4_, y5_, y6_]:>Times@@Join[
+					{
+						Refine[
+							GetGenProd[{y1, y2, y3, y4, y5, y6}, {{SIdx[[1,1]],SIdx[[1,2]]}, {SIdx[[1,3]],SIdx[[1,4]]}, {SIdx[[1,5]],SIdx[[1,6]]}, {SIdx[[1,7]],SIdx[[1,8]]}, {SIdx[[1,9]], SIdx[[1,10]]}, {SIdx[[1,11]], SIdx[[1,12]]}}, li[[2]], lj[[2]]]//.subProd
+						]
+					},
+					(
+						Function[{x}, Refine[ContractSum[
+							y1[[x+1,1]][SIdx[[x+1,1]], li[[2+x]], sumInd1[x]] y2[[x+1,1]][SIdx[[x+1,2]], sumInd1[x], sumInd2[x]] y3[[x+1,1]][SIdx[[x+1,3]], sumInd2[x], sumInd3[x]] y4[[x+1,1]][SIdx[[x+1,4]], sumInd3[x], sumInd4[x]] y5[[x+1,1]][SIdx[[x+1,5]], sumInd4[x], sumInd5[x]] y6[[x+1,1]][SIdx[[x+1,6]], sumInd5[x], lj[[2+x]]],
+							{sumInd1[x], 1, y2[[x+1,3]]},
+							{sumInd2[x], 1, y2[[x+1,4]]},
+							{sumInd3[x], 1, y4[[x+1,3]]},
+							{sumInd4[x], 1, y4[[x+1,4]]},
+							{sumInd5[x], 1, y6[[x+1,3]]}
+						]]]/@Range[NumberOfSubgroups]
+					)
+				]
+			}
+		];
+
+		SolveProd7[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, Y7_, li_, lj_, SIdx_] := Module[
+			{sumInd1, sumInd2, sumInd3, sumInd4, sumInd5, sumInd6},
+			ReleaseHold[SolveProd[Y1, Y2, Y3, Y4, Y5, Y6, Y7, li[[1]], lj[[1]]]]//.subProd //.subYuk2 /.{
+				prod[y1_, y2_, y3_, y4_, y5_, y6_, y7_]:>Times@@Join[
+					{
+						Refine[
+							GetGenProd[{y1, y2, y3, y4, y5, y6, y7}, {{SIdx[[1,1]],SIdx[[1,2]]}, {SIdx[[1,3]],SIdx[[1,4]]}, {SIdx[[1,5]],SIdx[[1,6]]}, {SIdx[[1,7]],SIdx[[1,8]]}, {SIdx[[1,9]], SIdx[[1,10]]}, {SIdx[[1,11]], SIdx[[1,12]]}, {SIdx[[1,13]], SIdx[[1,14]]}}, li[[2]], lj[[2]]]//.subProd
+						]
+					},
+					(
+						Function[{x}, Refine[ContractSum[
+							y1[[x+1,1]][SIdx[[x+1,1]], li[[2+x]], sumInd1[x]] y2[[x+1,1]][SIdx[[x+1,2]], sumInd1[x], sumInd2[x]] y3[[x+1,1]][SIdx[[x+1,3]], sumInd2[x], sumInd3[x]] y4[[x+1,1]][SIdx[[x+1,4]], sumInd3[x], sumInd4[x]] y5[[x+1,1]][SIdx[[x+1,5]], sumInd4[x], sumInd5[x]] y6[[x+1,1]][SIdx[[x+1,6]], sumInd5[x], sumInd6[x]] y7[[x+1,1]][SIdx[[x+1,7]], sumInd6[x], lj[[2+x]]],
+							{sumInd1[x], 1, y2[[x+1,3]]},
+							{sumInd2[x], 1, y2[[x+1,4]]},
+							{sumInd3[x], 1, y4[[x+1,3]]},
+							{sumInd4[x], 1, y4[[x+1,4]]},
+							{sumInd5[x], 1, y6[[x+1,3]]},
+							{sumInd6[x], 1, y6[[x+1,4]]}
+						]]]/@Range[NumberOfSubgroups]
+					)
+				]
+			}
+		];
+
+
+
+		SolveSProd2[L1_, L2_, SIdx_] := Module[
 			{},
 			ReleaseHold[prod[L1, L2]/.subQuart1//.subProd]//.subQuart2/.{
 				prod[l1_, l2_] :> Times@@Join[
@@ -10267,7 +11274,7 @@ BeginPackage["ARGES`"];
 			}
 		];
 
-		SolveSProd3[L1_, L2_, L3_, SIdx_] := Block[
+		SolveSProd3[L1_, L2_, L3_, SIdx_] := Module[
 			{},
 			ReleaseHold[prod[L1, L2, L3]/.subQuart1//.subProd]//.subQuart2/.{
 				prod[l1_, l2_, l3_] :> Times@@Join[
@@ -10392,7 +11399,7 @@ BeginPackage["ARGES`"];
 		];
 
 		EnableParallel[False] := (
-			ApplyDistribute[func_, unexp_] := Block[
+			ApplyDistribute[func_, unexp_] := Module[
 				{exp = Expand[unexp]},
 				If[exp[[0]] === Plus, 
 					func /@ exp,
@@ -10402,7 +11409,7 @@ BeginPackage["ARGES`"];
 		);
 
 		EnableParallel[True] := (
-			ApplyDistribute[func_, unexp_] := Block[
+			ApplyDistribute[func_, unexp_] := Module[
 				{exp = Expand[unexp]},
 				If[exp[[0]] === Plus, 
 					ParallelMap[func, exp, DistributedContexts->Full],
