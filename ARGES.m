@@ -4889,7 +4889,11 @@ BeginPackage["ARGES`"];
 								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups]
 							]
 						],
-						Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]] 
+						QuarticProd[
+							Quartic[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]],  
+							Quartic[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]],  
+							Quartic[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]
+						]
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -4930,7 +4934,12 @@ BeginPackage["ARGES`"];
 								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups]
 							]
 						],
-						Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  Lam[ss6/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  Lam[ss6/@Range[0,NumberOfSubgroups+2], bb, cc, dd] 
+						QuarticProd[
+							Quartic[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]],
+							Quartic[ss6/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]],  
+							Quartic[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]],
+							Quartic[ss6/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
+						]
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -4972,7 +4981,11 @@ BeginPackage["ARGES`"];
 								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups]
 							]
 						],
-						Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  Lam[ss6/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  BetaYukawa[ss6[0], ii[[1]], jj[[1]], ss6/@Range[1,NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0] 
+						QuarticProd[
+							Quartic[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]],
+							Quartic[ss6/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]],
+							Quartic[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  
+						] * BetaYukawa[ss6[0], ii[[1]], jj[[1]], ss6/@Range[1,NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0] 
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -6791,8 +6804,10 @@ BeginPackage["ARGES`"];
 							YukTrace[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]] + 
 							YukTraceAdj[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
 						) * 
-						Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]] * 
-						Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]] 
+						QuarticProd[
+							Quartic[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]],  
+							Quartic[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
+						]
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -7265,9 +7280,11 @@ BeginPackage["ARGES`"];
 							YukTrace[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]+
 							YukTraceAdj[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
 						) * 
-						Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]] * 
-						Lam[ss5/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]] *
-						Lam[ss5/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
+						QuarticProd[
+							Quartic[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]],
+							Quartic[ss5/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]],
+							Quartic[ss5/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
+						]
 					],
 					{ss1[0], 1, Length[RealScalarList]},
 					{ss2[0], 1, Length[RealScalarList]},
@@ -7310,8 +7327,10 @@ BeginPackage["ARGES`"];
 							YukTrace[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]+
 							YukTraceAdj[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
 						) * 
-						Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]] * 
-						Lam[ss5/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]] *
+						QuarticProd[
+							Quartic[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]],
+							Quartic[ss5/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
+						] *
 						BetaYukawa[ss5[0], ii[[1]], jj[[1]], ss5/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
 					],
 					{ss1[0], 1, Length[RealScalarList]},
@@ -12788,6 +12807,59 @@ BeginPackage["ARGES`"];
 			]
 		];
 
+		QuarticProd[Quartic[a1_, b1_, c1_, d1_], Quartic[a2_, b2_, c2_, d2_]] := SolveSProd2[
+			Quartic[a1[[1]], b1[[1]], c1[[1]], d1[[1]]],
+			Quartic[a2[[1]], b2[[1]], c2[[1]], d2[[1]]],
+			Prepend[
+				Function[{x}, {
+					a1[[3+x]], b1[[3+x]], c1[[3+x]], d1[[3+x]], 
+					a2[[3+x]], b2[[3+x]], c2[[3+x]], d2[[3+x]]
+				}]/@Range[NumberOfSubgroups],
+				{
+					a1[[2]], a1[[3]], b1[[2]], b1[[3]], c1[[2]], c1[[3]], d1[[2]], d1[[3]],
+					a2[[2]], a2[[3]], b2[[2]], b2[[3]], c2[[2]], c2[[3]], d2[[2]], d2[[3]]
+				}
+			]
+		];
+
+		QuarticProd[Quartic[a1_, b1_, c1_, d1_], Quartic[a2_, b2_, c2_, d2_], Quartic[a3_, b3_, c3_, d3_]] := SolveSProd3[
+			Quartic[a1[[1]], b1[[1]], c1[[1]], d1[[1]]],
+			Quartic[a2[[1]], b2[[1]], c2[[1]], d2[[1]]],
+			Quartic[a3[[1]], b3[[1]], c3[[1]], d3[[1]]],
+			Prepend[
+				Function[{x}, {
+					a1[[3+x]], b1[[3+x]], c1[[3+x]], d1[[3+x]], 
+					a2[[3+x]], b2[[3+x]], c2[[3+x]], d2[[3+x]],
+					a3[[3+x]], b3[[3+x]], c3[[3+x]], d3[[3+x]]
+				}]/@Range[NumberOfSubgroups],
+				{
+					a1[[2]], a1[[3]], b1[[2]], b1[[3]], c1[[2]], c1[[3]], d1[[2]], d1[[3]],
+					a2[[2]], a2[[3]], b2[[2]], b2[[3]], c2[[2]], c2[[3]], d2[[2]], d2[[3]],
+					a3[[2]], a3[[3]], b3[[2]], b3[[3]], c3[[2]], c3[[3]], d3[[2]], d3[[3]]
+				}
+			]
+		];
+
+		QuarticProd[Quartic[a1_, b1_, c1_, d1_], Quartic[a2_, b2_, c2_, d2_], Quartic[a3_, b3_, c3_, d3_], Quartic[a4_, b4_, c4_, d4_]] := SolveSProd4[
+			Quartic[a1[[1]], b1[[1]], c1[[1]], d1[[1]]],
+			Quartic[a2[[1]], b2[[1]], c2[[1]], d2[[1]]],
+			Quartic[a3[[1]], b3[[1]], c3[[1]], d3[[1]]],
+			Quartic[a4[[1]], b4[[1]], c4[[1]], d4[[1]]],
+			Prepend[
+				Function[{x}, {
+					a1[[3+x]], b1[[3+x]], c1[[3+x]], d1[[3+x]], 
+					a2[[3+x]], b2[[3+x]], c2[[3+x]], d2[[3+x]],
+					a3[[3+x]], b3[[3+x]], c3[[3+x]], d3[[3+x]],
+					a4[[3+x]], b4[[3+x]], c4[[3+x]], d4[[3+x]]
+				}]/@Range[NumberOfSubgroups],
+				{
+					a1[[2]], a1[[3]], b1[[2]], b1[[3]], c1[[2]], c1[[3]], d1[[2]], d1[[3]],
+					a2[[2]], a2[[3]], b2[[2]], b2[[3]], c2[[2]], c2[[3]], d2[[2]], d2[[3]],
+					a3[[2]], a3[[3]], b3[[2]], b3[[3]], c3[[2]], c3[[3]], d3[[2]], d3[[3]],
+					a4[[2]], a4[[3]], b4[[2]], b4[[3]], c4[[2]], c4[[3]], d4[[2]], d4[[3]]
+				}
+			]
+		];
 
 
 		(* optimized functions for Yukawa traces and products *)
@@ -13069,6 +13141,20 @@ BeginPackage["ARGES`"];
 					},
 					Function[{x},
 						l1[[x+1,1]][SIdx[[1+x,1]], SIdx[[1+x,2]], SIdx[[1+x,3]], SIdx[[1+x,4]]] l2[[x+1,1]][SIdx[[1+x,5]], SIdx[[1+x,6]], SIdx[[1+x,7]], SIdx[[1+x,8]]] l3[[x+1,1]][SIdx[[1+x,9]], SIdx[[1+x,10]], SIdx[[1+x,11]], SIdx[[1+x,12]]]
+					]/@Range[NumberOfSubgroups]
+				]
+			}
+		];
+
+		SolveSProd4[L1_, L2_, L3_, L4_, SIdx_] := Module[
+			{},
+			ReleaseHold[prod[L1, L2, L3, L4]/.subQuart1//.subProd]//.subQuart2/.{
+				prod[l1_, l2_, l3_, l4_] :> Times@@Join[
+					{
+						l1[[1,1]] l2[[1,1]] l3[[1,1]] l4[[1,1]] l1[[1,2]][SIdx[[1,1]], SIdx[[1,2]], SIdx[[1,3]], SIdx[[1,4]], SIdx[[1,5]], SIdx[[1,6]], SIdx[[1,7]], SIdx[[1,8]]] l2[[1,2]][SIdx[[1,9]], SIdx[[1,10]], SIdx[[1,11]], SIdx[[1,12]], SIdx[[1,13]], SIdx[[1,14]], SIdx[[1,15]], SIdx[[1,16]]] l3[[1,2]][SIdx[[1,17]], SIdx[[1,18]], SIdx[[1,19]], SIdx[[1,20]], SIdx[[1,21]], SIdx[[1,22]], SIdx[[1,23]], SIdx[[1,24]]] l4[[1,2]][SIdx[[1,25]], SIdx[[1,26]], SIdx[[1,27]], SIdx[[1,28]], SIdx[[1,29]], SIdx[[1,30]], SIdx[[1,31]], SIdx[[1,32]]]
+					},
+					Function[{x},
+						l1[[x+1,1]][SIdx[[1+x,1]], SIdx[[1+x,2]], SIdx[[1+x,3]], SIdx[[1+x,4]]] l2[[x+1,1]][SIdx[[1+x,5]], SIdx[[1+x,6]], SIdx[[1+x,7]], SIdx[[1+x,8]]] l3[[x+1,1]][SIdx[[1+x,9]], SIdx[[1+x,10]], SIdx[[1+x,11]], SIdx[[1+x,12]]] l4[[x+1,1]][SIdx[[1+x,13]], SIdx[[1+x,14]], SIdx[[1+x,15]], SIdx[[1+x,16]]]
 					]/@Range[NumberOfSubgroups]
 				]
 			}
