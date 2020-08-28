@@ -1,5 +1,5 @@
 BeginPackage["ARGES`"];
-	$VersionARGES = "0.2.2"
+	$VersionARGES = "0.3.0"
 	Gauge::usage = "Specify gauge subgroup";
 	WeylFermion::usage = "Add Weyl fermion";
 	RealScalar::usage = "Add real scalar";
@@ -1709,7 +1709,8 @@ BeginPackage["ARGES`"];
 		];
 
 		BetaYukawa[pa_, pi_, pj_, la_, li_, lj_, 3] := Module[
-			{beta},
+			{beta, assHold},
+			ass
 			beta = 0;
 			beta +=  (
 				If[pa > Length[RealScalarList], 0, 
@@ -3722,7 +3723,7 @@ BeginPackage["ARGES`"];
 				]/@Range[NumberOfSubgroups]
 			],
 			Delta[ii_] :> Join[
-				{{del[ii], Mat[1]&, 1, 1, WeylFermionList[[ii,2]], WeylFermionList[[ii,2]]}},
+				{{del[ii], mat[1]&, 1, 1, WeylFermionList[[ii,2]], WeylFermionList[[ii,2]]}},
 				Function[{x}, {KroneckerDelta[#2,#3]&, 1, FMultiplicity[ii,x], FMultiplicity[ii,x]}]/@Range[NumberOfSubgroups]
 			]
 		}];
@@ -4862,7497 +4863,1618 @@ BeginPackage["ARGES`"];
 				$Assumptions=assHold;
 				sum
 			],
-			K1[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						QuarticProd[
-							Quartic[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]],  
-							Quartic[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]],  
-							Quartic[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]
-						]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			K1L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						QuarticProd[
-							Quartic[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]],
-							Quartic[ss6/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]],  
-							Quartic[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]],
-							Quartic[ss6/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-						]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			K1Y[aa_,ii_, jj_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						QuarticProd[
-							Quartic[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]],
-							Quartic[ss6/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]],
-							Quartic[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  
-						] * BetaYukawa[ss6[0], ii[[1]], jj[[1]], ss6/@Range[1,NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0] 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			T3L1[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			T3L2[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			T3L4[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], cc, dd]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			T3L5[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], cc, dd]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			T3L6[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			T3L8[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]] 
-							
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			K3[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] 
-						)
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			K4[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]] 
-						)
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			K5[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] 
-						)
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			K6[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[bb, ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] 
-						)
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			K3L[aa_, xx_, yy_, zz_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss8/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] 
-						) Lam[ss8/@Range[0,NumberOfSubgroups+2], xx, yy, zz] 
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			K4L[aa_, xx_, yy_, zz_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss8/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]] 
-						) Lam[ss8/@Range[0,NumberOfSubgroups+2], xx, yy, zz] 
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			K5L[aa_, xx_, yy_, zz_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss8/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] 
-						) Lam[ss8/@Range[0,NumberOfSubgroups+2], xx, yy, zz] 
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			K6L[aa_, xx_, yy_, zz_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss8/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] 
-						) Lam[ss8/@Range[0,NumberOfSubgroups+2], xx, yy, zz] 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4a[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4b[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4c[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4d[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4e[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4f[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4g[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4h[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4i[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4j[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4k[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4l[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4m[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss3/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4n[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4o[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4p[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4q[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  * 
-							Lam[ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss4/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4r[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			C4s[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss6[1], 1, RealScalarList[[ss6[0], 2,1]]},
-									{ss7[1], 1, RealScalarList[[ss7[0], 2,1]]},
-									{ss8[1], 1, RealScalarList[[ss8[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]},
-									{ss6[2], 1, RealScalarList[[ss6[0], 2,2]]},
-									{ss7[2], 1, RealScalarList[[ss7[0], 2,2]]},
-									{ss8[2], 1, RealScalarList[[ss8[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss6[x+2], 1, SMultiplicity[ss6[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss7[x+2], 1, SMultiplicity[ss7[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss8[x+2], 1, SMultiplicity[ss8[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[bb, ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[dd, ss4/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]]  *
-							Lam[ss5/@Range[0,NumberOfSubgroups+2], ss6/@Range[0,NumberOfSubgroups+2], ss7/@Range[0,NumberOfSubgroups+2], ss8/@Range[0,NumberOfSubgroups+2]] 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]},
-					{ss6[0], 1, Length[RealScalarList]},
-					{ss7[0], 1, Length[RealScalarList]},
-					{ss8[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q2Y2[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							
-							YukTrace[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]] + 
-							YukTraceAdj[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-						) * 
-						QuarticProd[
-							Quartic[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]],  
-							Quartic[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-						]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y41[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y42[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y43[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y44[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]							
-						) * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y61[aa_, bb_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y62[aa_, bb_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2],  bb] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2],  bb]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y63[aa_, bb_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y64[aa_, bb_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y65[aa_, bb_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y66[aa_, bb_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2]]
-						) * (
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y67[aa_, bb_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * (
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y68[aa_, bb_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y69[aa_, bb_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y610[aa_, bb_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q2Y2L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]}
-
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]+
-							YukTraceAdj[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-						) * 
-						QuarticProd[
-							Quartic[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]],
-							Quartic[ss5/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]],
-							Quartic[ss5/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-						]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q2Y2Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]}
-
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]+
-							YukTraceAdj[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-						) * 
-						QuarticProd[
-							Quartic[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]],
-							Quartic[ss5/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-						] *
-						BetaYukawa[ss5[0], ii[[1]], jj[[1]], ss5/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y41L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * 
-						Lam[ss4/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]] *
-						Lam[ss4/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y41Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * 
-						Lam[ss4/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]] *
-						BetaYukawa[ss4[0], ii[[1]], jj[[1]], ss4/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y41L2[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTraceAdj[ss4/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTrace[ss4/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * 
-						Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]] *
-						Lam[ss4/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y41Y2[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTraceAdj[ss4/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTrace[ss4/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * 
-						Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]] *
-						BetaYukawa[ss4[0], ii[[1]], jj[[1]], ss4/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y42L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, ss4/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
-						Lam[ss4/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y42Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, ss4/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
-						BetaYukawa[ss4[0], ii[[1]], jj[[1]], ss4/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y43L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, ss4/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
-						Lam[ss4/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y43Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, ss4/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
-						BetaYukawa[ss4[0], ii[[1]], jj[[1]], ss4/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y44L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]							
-						) * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, ss4/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
-						Lam[ss4/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y44Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]							
-						) * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, ss4/@Range[0,NumberOfSubgroups+2], ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
-						BetaYukawa[ss4[0], ii[[1]], jj[[1]], ss4/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y61L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) *
-						Lam[ss3/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y61Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) *
-						BetaYukawa[ss3[0], ii[[1]], jj[[1]], ss3/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y62L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2],  ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2],  ss3/@Range[0, NumberOfSubgroups+2]]
-						) *
-						Lam[ss3/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y62Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2],  ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2],  ss3/@Range[0, NumberOfSubgroups+2]]
-						) *
-						BetaYukawa[ss3[0], ii[[1]], jj[[1]], ss3/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y63L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]]
-						) *
-						Lam[ss3/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y63Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]]
-						) *
-						BetaYukawa[ss3[0], ii[[1]], jj[[1]], ss3/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y64L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) *
-						Lam[ss3/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y64Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) *
-						BetaYukawa[ss3[0], ii[[1]], jj[[1]], ss3/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y65L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]]
-						) *
-						Lam[ss3/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y65Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]]
-						) *
-						BetaYukawa[ss3[0], ii[[1]], jj[[1]], ss3/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y65L2[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]]
-						) *
-						Lam[ss3/@Range[0,NumberOfSubgroups+2], aa, cc, dd]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y65Y2[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]]
-						) *
-						BetaYukawa[ss3[0], ii[[1]], jj[[1]], ss3/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y66L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * (
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[ss3/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y66Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * (
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * BetaYukawa[ss3[0], ii[[1]], jj[[1]], ss3/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y67L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * (
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[ss3/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y67Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * (
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * BetaYukawa[ss3[0], ii[[1]], jj[[1]], ss3/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y68L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) *
-						Lam[ss3/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y68Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) *
-						BetaYukawa[ss3[0], ii[[1]], jj[[1]], ss3/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y69L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) *
-						Lam[ss3/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y69Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) *
-						BetaYukawa[ss3[0], ii[[1]], jj[[1]], ss3/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y610L[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]]
-						) *
-						Lam[ss3/@Range[0,NumberOfSubgroups+2], bb, cc, dd]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y610Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]]
-						) *
-						BetaYukawa[ss3[0], ii[[1]], jj[[1]], ss3/@Range[1, NumberOfSubgroups+2], ii[[2;;]], jj[[2;;]], 0]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q3Y21[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]}
-
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]+
-							YukTraceAdj[ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-						) * 
-						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] * 
-						Lam[cc, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]] *
-						Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]
-						
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q3Y22[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]}
-
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]+
-							YukTraceAdj[ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]]
-						) * 
-						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] * 
-						Lam[cc, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]] *
-						Lam[dd, ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2], ss5/@Range[0,NumberOfSubgroups+2]]
-						
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q2Y41[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]							
-						) * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
-						) * 
-						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
-						Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q2Y42[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]							
-						) * (
-							YukTrace[ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
-						) * 
-						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
-						Lam[cc, dd, ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q2Y43[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
-						) * 
-						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
-						Lam[cc, dd, ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q2Y44[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
-						) * 
-						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]] *
-						Lam[cc, dd, ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q2Y45[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
-						) * 
-						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
-						Lam[cc, dd, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q2Y46[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * 
-						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
-						Lam[cc, dd, ss1/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q2Y47[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
-						) * 
-						Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]] *
-						Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q2Y48[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss4/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss4/@Range[0, NumberOfSubgroups+2]]
-						) * 
-						Lam[aa, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2]] *
-						Lam[bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q2Y49[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
-						) * 
-						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
-						Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q2Y410[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
-						) * 
-						Lam[aa, bb, ss1/@Range[0,NumberOfSubgroups+2], ss2/@Range[0,NumberOfSubgroups+2]] *
-						Lam[cc, ss2/@Range[0,NumberOfSubgroups+2], ss3/@Range[0,NumberOfSubgroups+2], ss4/@Range[0,NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y601[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y602[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y603[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y604[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y605[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, dd,  ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, dd,  ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y606[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y607[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y608[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, dd, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2]]
-						) * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] + 
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] 
-						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y609[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, ss3/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2]]
-						) * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] + 
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] 
-						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y610[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, ss1/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, ss1/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y611[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y612[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss2/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y613[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], dd, ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y614[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[cc, bb, dd, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, bb, dd, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y615[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[bb, ss1/@Range[0, NumberOfSubgroups+2], cc, ss2/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[bb, ss1/@Range[0, NumberOfSubgroups+2], cc, ss2/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y616[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[bb, cc, ss2/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[bb, cc, ss2/@Range[0, NumberOfSubgroups+2], dd, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Q1Y617[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], cc, ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], cc, ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y4Y41[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						) * (
-							YukTrace[cc, dd, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, dd, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						)
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y4Y42[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2]]
-						) * (
-							YukTrace[cc, dd, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, dd, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						)
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y4Y43[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2]]
-						) * (
-							YukTrace[cc, ss1/@Range[0, NumberOfSubgroups+2], dd, ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[cc, ss1/@Range[0, NumberOfSubgroups+2], dd, ss2/@Range[0, NumberOfSubgroups+2]]
-						)
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y6Y21[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], cc, dd, ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], cc, dd, ss2/@Range[0, NumberOfSubgroups+2]]
-						) * (
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						)
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y6Y22[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, bb, cc, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2],  dd] +
-							YukTraceAdj[aa, bb, cc, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2],  dd]
-						) * (
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						)
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y6Y23[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[dd, ss1/@Range[0, NumberOfSubgroups+2], aa, cc, bb, ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[dd, ss1/@Range[0, NumberOfSubgroups+2], aa, cc, bb, ss2/@Range[0, NumberOfSubgroups+2]]
-						) * (
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-						)
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y801[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, cc, dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, cc, dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y802[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, cc, dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, cc, dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y803[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, cc, dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, cc, dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y804[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], cc, dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], cc, dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y805[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss1/@Range[0, NumberOfSubgroups+2], cc, dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss1/@Range[0, NumberOfSubgroups+2], cc, dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y806[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], cc, dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], cc, dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y807[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, cc, ss2/@Range[0, NumberOfSubgroups+2], dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, cc, ss2/@Range[0, NumberOfSubgroups+2], dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y808[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, cc, ss2/@Range[0, NumberOfSubgroups+2], dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, cc, ss2/@Range[0, NumberOfSubgroups+2], dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y809[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], cc, ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], cc, ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y810[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], cc, ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], cc, ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y811[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], cc, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], cc, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y812[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, cc, ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, cc, ss2/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y813[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, cc, ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, cc, ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y814[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, cc, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, cc, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y815[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], cc, ss2/@Range[0, NumberOfSubgroups+2], dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], cc, ss2/@Range[0, NumberOfSubgroups+2], dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y816[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], cc, ss1/@Range[0, NumberOfSubgroups+2], dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], cc, ss1/@Range[0, NumberOfSubgroups+2], dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y817[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss1/@Range[0, NumberOfSubgroups+2], cc, ss2/@Range[0, NumberOfSubgroups+2], dd] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss1/@Range[0, NumberOfSubgroups+2], cc, ss2/@Range[0, NumberOfSubgroups+2], dd]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y818[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], cc, dd, ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], cc, dd, ss2/@Range[0, NumberOfSubgroups+2]]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y819[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], cc, dd, ss1/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], cc, dd, ss1/@Range[0, NumberOfSubgroups+2]]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y820[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss1/@Range[0, NumberOfSubgroups+2], cc, dd, ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], bb, ss1/@Range[0, NumberOfSubgroups+2], cc, dd, ss2/@Range[0, NumberOfSubgroups+2]]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y821[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[aa, ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], cc, ss1/@Range[0, NumberOfSubgroups+2], dd, ss2/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[aa, ss1/@Range[0, NumberOfSubgroups+2], bb, ss2/@Range[0, NumberOfSubgroups+2], cc, ss1/@Range[0, NumberOfSubgroups+2], dd, ss2/@Range[0, NumberOfSubgroups+2]]
-						) 
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y822[aa_, bb_, cc_, dd_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], cc, ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], cc, ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], dd, ss3/@Range[0, NumberOfSubgroups+2]]
-						) * Lam[aa, bb, ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2]]
-
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
+			K1[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #3],  
+					Quartic[bb, #1, #4, #5],  
+					Quartic[#2, #3, #4, #5]
+				]
+			],
+			K1L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #3],  
+					Quartic[#6, #1, #4, #5],  
+					Quartic[#2, #3, #4, #5],
+					Quartic[#6, bb, cc, dd]
+				]
+			],
+			K1Y[aa_,ii_, jj_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #3],
+					Quartic[#6, #1, #4, #5],
+					Quartic[#2, #3, #4, #5],
+					Yuk[#6, ii, jj]
+				]
+			],
+			T3L1[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #3],
+					Quartic[bb, #1, #4, #5],
+					Quartic[cc, #2, #4, #6],
+					Quartic[dd, #3, #5, #6]
+				]
+			],
+			T3L2[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #3],
+					Quartic[bb, #1, #2, #4],
+					Quartic[cc, #3, #5, #6],
+					Quartic[dd, #4, #5, #6]
+				]
+			],
+			T3L4[aa_, bb_, cc_, dd_] :> 
+			ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[#1, #5, #3, #4],
+					Quartic[#3, #4, #2, #6],
+					Quartic[#5, #6, cc, dd]
+				]
+			],
+			T3L5[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[#1, #3, #4, #5],
+					Quartic[#3, #4, #5, #6],
+					Quartic[#2, #6, cc, dd]
+				]
+			],
+			T3L6[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, #1, #3, #4],
+					Quartic[dd, #2, #5, #6],
+					Quartic[#3, #4, #5, #6]
+				]
+			],
+			T3L8[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, #1, #3, #4],
+					Quartic[dd, #4, #5, #6],
+					Quartic[#2, #3, #5, #6]
+				]
+			],
+			K3[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #3],
+					Quartic[#2, #3, #4, #5],
+					Quartic[#4, #5, #6, #7],
+					Quartic[bb, #1, #6, #7]
+				]
+			],
+			K4[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #3],
+					Quartic[#3, #5, #6, #7],
+					Quartic[#4, #5, #6, #7],
+					Quartic[bb, #1, #2, #4]
+				]
+			],
+			K5[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #3],
+					Quartic[#2, #4, #5, #6],
+					Quartic[#3, #5, #6, #7],
+					Quartic[bb, #1, #4, #7]
+				]
+			],
+			K6[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #3],
+					Quartic[#1, #2, #4, #5],
+					Quartic[#3, #5, #6, #7],
+					Quartic[bb, #4, #6, #7]
+				]
+			],
+			K3L[aa_, xx_, yy_, zz_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #3],
+					Quartic[#2, #3, #4, #5],
+					Quartic[#4, #5, #6, #7],
+					Quartic[#8, #1, #6, #7],
+					Quartic[#8, xx, yy, zz]
+				]
+			],
+			K4L[aa_, xx_, yy_, zz_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #3],
+					Quartic[#3, #5, #6, #7],
+					Quartic[#4, #5, #6, #7],
+					Quartic[#8, #1, #2, #4],
+					Quartic[#8, xx, yy, zz]
+				]
+			],
+			K5L[aa_, xx_, yy_, zz_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #3],
+					Quartic[#2, #4, #5, #6],
+					Quartic[#3, #5, #6, #7],
+					Quartic[#8, #1, #4, #7],
+					Quartic[#8, xx, yy, zz]
+				]
+			],
+			K6L[aa_, xx_, yy_, zz_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #3],
+					Quartic[#1, #2, #4, #5],
+					Quartic[#3, #5, #6, #7],
+					Quartic[#8, #4, #6, #7],
+					Quartic[#8, xx, yy, zz]
+				]
+			],
+			C4a[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, dd, #3, #4],
+					Quartic[#2, #4, #5, #6],
+					Quartic[#1, #5, #7, #8],
+					Quartic[#3, #6, #7, #8]
+				]
+			],
+			C4b[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, dd, #3, #4],
+					Quartic[#2, #4, #5, #6],
+					Quartic[#1, #3, #7, #8],
+					Quartic[#5, #6, #7, #8]
+				]
+			],
+			C4c[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, dd, #3, #1],
+					Quartic[#2, #4, #5, #6],
+					Quartic[#3, #4, #7, #8],
+					Quartic[#5, #6, #7, #8]
+				]
+			],
+			C4d[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[#1, #3, #4, #5],
+					Quartic[#2, #3, #4, #6],
+					Quartic[cc, #5, #7, #8],
+					Quartic[dd, #6, #7, #8]
+				]
+			],
+			C4e[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, #1, #3, #4],
+					Quartic[dd, #2, #3, #5],
+					Quartic[#4, #6, #7, #8],
+					Quartic[#5, #6, #7, #8]
+				]
+			],
+			C4f[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, #1, #3, #4],
+					Quartic[dd, #2, #5, #6],
+					Quartic[#3, #5, #7, #8],
+					Quartic[#4, #6, #7, #8]
+				]
+			],
+			C4g[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, #1, #3, #4],
+					Quartic[dd, #2, #5, #6],
+					Quartic[#3, #4, #7, #8],
+					Quartic[#5, #6, #7, #8]
+				]
+			],
+			C4h[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[#1, #3, #4, #5],
+					Quartic[cc, #4, #5, #6],
+					Quartic[#2, #3, #7, #8],
+					Quartic[dd, #6, #7, #8]
+				]
+			],
+			C4i[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[#1, #3, #4, #5],
+					Quartic[cc, #4, #5, #6],
+					Quartic[#2, #6, #7, #8],
+					Quartic[dd, #3, #7, #8]
+				]
+			],
+			C4j[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, #1, #3, #4],
+					Quartic[dd, #3, #4, #5],
+					Quartic[#2, #6, #7, #8],
+					Quartic[#5, #6, #7, #8]
+				]
+			],
+			C4k[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, #1, #3, #4],
+					Quartic[dd, #6, #7, #8],
+					Quartic[#3, #4, #5, #6],
+					Quartic[#2, #5, #7, #8]
+				]
+			],
+			C4l[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, #1, #3, #4],
+					Quartic[dd, #3, #7, #8],
+					Quartic[#2, #4, #5, #6],
+					Quartic[#5, #6, #7, #8]
+				]
+			],
+			C4m[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, #1, #3, #4],
+					Quartic[dd, #3, #7, #8],
+					Quartic[#2, #5, #6, #8],
+					Quartic[#4, #5, #6, #7]
+				]
+			],
+			C4n[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, #1, #3, #4],
+					Quartic[dd, #6, #7, #8],
+					Quartic[#2, #3, #5, #6],
+					Quartic[#4, #5, #7, #8]
+				]
+			],
+			C4o[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #3],
+					Quartic[bb, #1, #2, #4],
+					Quartic[cc, #3, #5, #6],
+					Quartic[dd, #4, #7, #8],
+					Quartic[#5, #6, #7, #8]
+				]
+			],
+			C4p[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #4],
+					Quartic[bb, #1, #3, #5],
+					Quartic[cc, #2, #3, #6],
+					Quartic[dd, #6, #7, #8],
+					Quartic[#4, #5, #7, #8]
+				]
+			],
+			C4q[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, bb, #1, #2],
+					Quartic[#1, #3, #4, #5],
+					Quartic[#2, #3, #6, #7],
+					Quartic[cc, #4, #6, #8],
+					Quartic[dd, #5, #7, #8]
+				]
+			],
+			C4r[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #3],
+					Quartic[bb, #1, #2, #4],
+					Quartic[cc, #4, #5, #6],
+					Quartic[dd, #6, #7, #8],
+					Quartic[#3, #5, #7, #8]
+				]
+			],
+			C4s[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					Quartic[aa, #1, #2, #5],
+					Quartic[bb, #2, #3, #6],
+					Quartic[cc, #3, #4, #7],
+					Quartic[dd, #4, #1, #8],
+					Quartic[#5, #6, #7, #8]
+				]
+			],
+			Q2Y2[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukTr[#3, #4] + AdjYukTr[#3, #4],
+					Quartic[aa, #1, #2, #3],
+					Quartic[bb, #1, #2, #4]
+				]
+			],
+			Q1Y41[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, #3] + AdjYukTr[aa, #1, #2, #3] ,
+					Quartic[bb, #1, #2, #3]
+				]
+			],
+			Q1Y42[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, #2, #3, #3] + AdjYukTr[#1, #2, #3, #3] ,
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Q1Y43[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, #3, #2, #3] + AdjYukTr[#1, #3, #2, #3] ,
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Q1Y44[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, #3] + AdjYukTr[#1, #3],
+					YukTr[#2, #3] + AdjYukTr[#2, #3],
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Y61[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #1, bb, #2, #2] + AdjYukTr[aa, #1, #1, bb, #2, #2]
+				]
+			],
+			Y62[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #1, #2, #2, bb] + AdjYukTr[aa, #1, #1, #2, #2, bb]
+				]
+			],
+			Y63[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, bb, #2, #1] + AdjYukTr[aa, #1, #2, bb, #2, #1]
+				]
+			],
+			Y64[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, bb, #1, #2] + AdjYukTr[aa, #1, #2, bb, #1, #2]
+				]
+			],
+			Y65[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, bb, #2, #2, #1] + AdjYukTr[aa, #1, bb, #2, #2, #1]
+				]
+			],
+			Y66[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, bb, #2] + AdjYukTr[aa, #1, bb, #2],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				]
+			],
+			Y67[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, bb, #1, #2] + AdjYukTr[aa, bb, #1, #2],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				]
+			],
+			Y68[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, bb, #2, #1, #2] + AdjYukTr[aa, #1, bb, #2, #1, #2]
+				]
+			],
+			Y69[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, bb, #1, #2, #1, #2] + AdjYukTr[aa, bb, #1, #2, #1, #2]
+				]
+			],
+			Y610[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, bb, #1, #2, #2, #1] + AdjYukTr[aa, bb, #1, #2, #2, #1]
+				]
+			],
+			Q2Y2L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#3, #4] + AdjYukTr[#3, #4],
+					Quartic[aa, #1, #2, #3],
+					Quartic[#5, #1, #2, #4],
+					Quartic[#5, bb, cc, dd]
+				]
+			],
+			Q2Y2Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[#3, #4] + AdjYukTr[#3, #4],
+					Quartic[aa, #1, #2, #3],
+					Quartic[#5, #1, #2, #4],
+					Yuk[#5, ii, jj]
+				]
+			],
+			Q1Y41L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, #3] + AdjYukTr[aa, #1, #2, #3],
+					Quartic[#4, #1, #2, #3],
+					Quartic[#4, bb, cc, dd]
+				]
+			],
+			Q1Y41Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, #3] + AdjYukTr[aa, #1, #2, #3],
+					Quartic[#4, #1, #2, #3],
+					Yuk[#4, ii, jj]
+				]
+			],
+			Q1Y41L2[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#4, #1, #2, #3] + AdjYukTr[#4, #1, #2, #3],
+					Quartic[aa, #1, #2, #3],
+					Quartic[#4, bb, cc, dd]
+				]
+			],
+			Q1Y41Y2[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[#4, #1, #2, #3] + AdjYukTr[#4, #1, #2, #3],
+					Quartic[aa, #1, #2, #3],
+					Yuk[#4, ii, jj]
+				]
+			],
+			Q1Y42L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, #2, #3, #3] + AdjYukTr[#1, #2, #3, #3],
+					Quartic[aa, #4, #1, #2],
+					Quartic[#4, bb, cc, dd]
+				]
+			],
+			Q1Y42Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, #2, #3, #3] + AdjYukTr[#1, #2, #3, #3],
+					Quartic[aa, #4, #1, #2],
+					Yuk[#4, ii, jj]
+				]
+			],
+			Q1Y43L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, #3, #2, #3] + AdjYukTr[#1, #3, #2, #3],
+					Quartic[aa, #4, #1, #2],
+					Quartic[#4, bb, cc, dd]
+				]
+			],
+			Q1Y43Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, #3, #2, #3] + AdjYukTr[#1, #3, #2, #3],
+					Quartic[aa, #4, #1, #2],
+					Yuk[#4, ii, jj]
+				]
+			],
+			Q1Y44L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, #3] + AdjYukTr[#1, #3],
+					YukTr[#2, #3] + AdjYukTr[#2, #3],
+					Quartic[aa, #4, #1, #2],
+					Quartic[#4, bb, cc, dd]
+				]
+			],
+			Q1Y44Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, #3] + AdjYukTr[#1, #3],
+					YukTr[#2, #3] + AdjYukTr[#2, #3],
+					Quartic[aa, #4, #1, #2],
+					Yuk[#4, ii, jj]
+				]
+			],
+			Y61L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #1, #3, #2, #2] + AdjYukTr[aa, #1, #1, #3, #2, #2],
+					Quartic[#3, bb, cc, dd]
+				]
+			],
+			Y61Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #1, #3, #2, #2] + AdjYukTr[aa, #1, #1, #3, #2, #2],
+					Yuk[#3, ii, jj]
+				]
+			],
+			Y62L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #1, #2, #2, #3] + AdjYukTr[aa, #1, #1, #2, #2, #3],
+					Quartic[#3, bb, cc, dd]
+				]
+			],
+			Y62Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #1, #2, #2, #3] + AdjYukTr[aa, #1, #1, #2, #2, #3],
+					Yuk[#3, ii, jj]
+				]
+			],
+			Y63L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, #3, #2, #1] + AdjYukTr[aa, #1, #2, #3, #2, #1],
+					Quartic[#3, bb, cc, dd]
+				]
+			],
+			Y63Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, #3, #2, #1] + AdjYukTr[aa, #1, #2, #3, #2, #1],
+					Yuk[#3, ii, jj]
+				]
+			],
+			Y64L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, #3, #1, #2] + AdjYukTr[aa, #1, #2, #3, #1, #2],
+					Quartic[#3, bb, cc, dd]
+				]
+			],
+			Y64Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, #3, #1, #2] + AdjYukTr[aa, #1, #2, #3, #1, #2],
+					Yuk[#3, ii, jj]
+				]
+			],
+			Y65L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #3, #2, #2, #1] + AdjYukTr[aa, #1, #3, #2, #2, #1],
+					Quartic[#3, bb, cc, dd]
+				]
+			],
+			Y65Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #3, #2, #2, #1] + AdjYukTr[aa, #1, #3, #2, #2, #1],
+					Yuk[#3, ii, jj]
+				]
+			],
+			Y65L2[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#3, #1, aa, #2, #2, #1] + AdjYukTr[#3, #1, aa, #2, #2, #1],
+					Quartic[#3, bb, cc, dd]
+				]
+			],
+			Y65Y2[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[#3, #1, aa, #2, #2, #1] + AdjYukTr[#3, #1, aa, #2, #2, #1],
+					Yuk[#3, ii, jj]
+				]
+			],
+			Y66L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #3, #2] + AdjYukTr[aa, #1, #3, #2],
+					YukTr[#1, #2] + AdjYukTr[#1, #2],
+					Quartic[#3, bb, cc, dd]
+				]
+			],
+			Y66Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #3, #2] + AdjYukTr[aa, #1, #3, #2],
+					YukTr[#1, #2] + AdjYukTr[#1, #2],
+					Yuk[#3, ii, jj]
+				]
+			],
+			Y67L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #3, #1, #2] + AdjYukTr[aa, #3, #1, #2],
+					YukTr[#1, #2] + AdjYukTr[#1, #2],
+					Quartic[#3, bb, cc, dd]
+				]
+			],
+			Y67Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #3, #1, #2] + AdjYukTr[aa, #3, #1, #2],
+					YukTr[#1, #2] + AdjYukTr[#1, #2],
+					Yuk[#3, ii, jj]
+				]
+			],
+			Y68L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #3, #2, #1, #2] + AdjYukTr[aa, #1, #3, #2, #1, #2],
+					Quartic[#3, bb, cc, dd]
+				]
+			],
+			Y68Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #3, #2, #1, #2] + AdjYukTr[aa, #1, #3, #2, #1, #2],
+					Yuk[#3, ii, jj]
+				]
+			],
+			Y69L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #3, #1, #2, #1, #2] + AdjYukTr[aa, #3, #1, #2, #1, #2],
+					Quartic[#3, bb, cc, dd]
+				]
+			],
+			Y69Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #3, #1, #2, #1, #2] + AdjYukTr[aa, #3, #1, #2, #1, #2],
+					Yuk[#3, ii, jj]
+				]
+			],
+			Y610L[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #3, #1, #2, #2, #1] + AdjYukTr[aa, #3, #1, #2, #2, #1],
+					Quartic[#3, bb, cc, dd]
+				]
+			],
+			Y610Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #3, #1, #2, #2, #1] + AdjYukTr[aa, #3, #1, #2, #2, #1],
+					Yuk[#3, ii, jj]
+				]
+			],
+			Q3Y21[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#3, #4] + AdjYukTr[#3, #4],
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, #1, #3, #5],
+					Quartic[dd, #2, #4, #5]
+				]
+			],
+			Q3Y22[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, #3] + AdjYukTr[#1, #3],
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, #3, #4, #5],
+					Quartic[dd, #2, #4, #5]
+				]
+			],
+			Q2Y41[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, #3] + AdjYukTr[#1, #3],
+					YukTr[#2, #4] + AdjYukTr[#2, #4],
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, dd, #3, #4]
+				]
+			],
+			Q2Y42[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, #3] + AdjYukTr[#1, #3],
+					YukTr[#3, #4] + AdjYukTr[#3, #4],
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, dd, #2, #4]
+				]
+			],
+			Q2Y43[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, #2, #3, #4] + AdjYukTr[#1, #2, #3, #4],
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, dd, #3, #4]
+				]
+			],
+			Q2Y44[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, #2, #3, #4] + AdjYukTr[#1, #2, #3, #4],
+					Quartic[aa, bb, #1, #3],
+					Quartic[cc, dd, #2, #4]
+				]
+			],
+			Q2Y45[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#2, #3, #3, #4] + AdjYukTr[#2, #3, #3, #4],
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, dd, #1, #4]
+				]
+			],
+			Q2Y46[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#2, #3, #4, #3] + AdjYukTr[#2, #3, #4, #3],
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, dd, #1, #4]
+				]
+			],
+			Q2Y47[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, dd, #3, #4] + AdjYukTr[cc, dd, #3, #4],
+					Quartic[aa, #1, #2, #3],
+					Quartic[bb, #1, #2, #4]
+				]
+			],
+			Q2Y48[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, #3, dd, #4] + AdjYukTr[cc, #3, dd, #4],
+					Quartic[aa, #1, #2, #3],
+					Quartic[bb, #1, #2, #4]
+				]
+			],
+			Q2Y49[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[dd, #1, #3, #4] + AdjYukTr[dd, #1, #3, #4],
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, #2, #3, #4]
+				]
+			],
+			Q2Y410[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[dd, #3, #1, #4] + AdjYukTr[dd, #3, #1, #4],
+					Quartic[aa, bb, #1, #2],
+					Quartic[cc, #2, #3, #4]
+				]
+			],
+			Q1Y601[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, dd, #3, #1, #2, #3] + AdjYukTr[cc, dd, #3, #1, #2, #3],
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Q1Y602[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, #3, dd, #1, #3, #2] + AdjYukTr[cc, #3, dd, #1, #3, #2],
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Q1Y603[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, #3, #3, dd, #1, #2] + AdjYukTr[cc, #3, #3, dd, #1, #2],
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Q1Y604[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, dd, #1, #3, #3, #2] + AdjYukTr[cc, dd, #1, #3, #3, #2],
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Q1Y605[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, dd, #3, #3, #1, #2] + AdjYukTr[cc, dd, #3, #3, #1, #2],
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Q1Y606[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, dd, #3, #1, #3, #2] + AdjYukTr[cc, dd, #3, #1, #3, #2],
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Q1Y607[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, #3, dd, #3, #1, #2] + AdjYukTr[cc, #3, dd, #3, #1, #2],
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Q1Y608[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, dd, #3, #1] + AdjYukTr[cc, dd, #3, #1],
+					YukTr[#2, #3] + AdjYukTr[#2, #3],
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Q1Y609[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, #3, dd, #1] + AdjYukTr[cc, #3, dd, #1],
+					YukTr[#2, #3] + AdjYukTr[#2, #3],
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Q1Y610[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, #1, dd, #3, #3, #2] + AdjYukTr[cc, #1, dd, #3, #3, #2],
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Q1Y611[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, #1, #3, dd, #3, #2] + AdjYukTr[cc, #1, #3, dd, #3, #2],
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Q1Y612[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, #3, #1, #3, dd, #2] + AdjYukTr[cc, #3, #1, #3, dd, #2],
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Q1Y613[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, #1, #3, dd, #2, #3] + AdjYukTr[cc, #1, #3, dd, #2, #3],
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Q1Y614[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[cc, bb, dd, #1, #2, #3] + AdjYukTr[cc, bb, dd, #1, #2, #3],
+					Quartic[aa, #1, #2, #3]
+				]
+			],
+			Q1Y615[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[bb, #1, cc #2, dd, #3] + AdjYukTr[bb, #1, cc #2, dd, #3],
+					Quartic[aa, #1, #2, #3]
+				]
+			],
+			Q1Y616[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[bb, cc #2, dd, #1, #3] + AdjYukTr[bb, cc #2, dd, #1, #3],
+					Quartic[aa, #1, #2, #3]
+				]
+			],
+			Q1Y617[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, cc #3, #2, dd, #3] + AdjYukTr[#1, cc #3, #2, dd, #3],
+					Quartic[aa, bb, #1, #2]
+				]
+			],
+			Y4Y41[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, bb, #1, #2] + AdjYukTr[aa, bb, #1, #2],
+					YukTr[cc, dd, #1, #2] + AdjYukTr[cc, dd, #1, #2]
+				]
+			],
+			Y4Y42[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, bb, #2] + AdjYukTr[aa, #1, bb, #2],
+					YukTr[cc, dd, #1, #2] + AdjYukTr[cc, dd, #1, #2]
+				]
+			],
+			Y4Y43[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, bb, #2] + AdjYukTr[aa, #1, bb, #2],
+					YukTr[cc, #1, dd, #2] + AdjYukTr[cc, #1, dd, #2]
+				]
+			],
+			Y6Y21[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, bb, #1, cc, dd, #2] + AdjYukTr[aa, bb, #1, cc, dd, #2],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				]
+			],
+			Y6Y22[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, bb, cc, #1, #2, dd] + AdjYukTr[aa, bb, cc, #1, #2, dd],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				]
+			],
+			Y6Y23[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[dd, #1, aa, bb, cc,  #2] + AdjYukTr[dd, #1, aa, bb, cc,  #2],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				]
+			],
+			Y801[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #1, #2, #2, bb, cc, dd] + AdjYukTr[aa, #1, #1, #2, #2, bb, cc, dd]
+				]
+			],
+			Y802[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, #2, #1, bb, cc, dd] + AdjYukTr[aa, #1, #2, #2, #1, bb, cc, dd]
+				]
+			],
+			Y803[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, #1, #2, bb, cc, dd] + AdjYukTr[aa, #1, #2, #1, #2, bb, cc, dd]
+				]
+			],
+			Y804[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #1, #2, bb, #2, cc, dd] + AdjYukTr[aa, #1, #1, #2, bb, #2, cc, dd]
+				]
+			],
+			Y805[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, #2, bb, #1, cc, dd] + AdjYukTr[aa, #1, #2, #2, bb, #1, cc, dd]
+				]
+			],
+			Y806[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, #1, bb, #2, cc, dd] + AdjYukTr[aa, #1, #2, #1, bb, #2, cc, dd]
+				]
+			],
+			Y807[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #1, #2, bb, cc, #2, dd] + AdjYukTr[aa, #1, #1, #2, bb, cc, #2, dd]
+				]
+			],
+			Y808[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, #1, bb, cc, #2, dd] + AdjYukTr[aa, #1, #2, #1, bb, cc, #2, dd]
+				]
+			],
+			Y809[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #1, cc, #2, #2, bb, dd] + AdjYukTr[aa, #1, #1, cc, #2, #2, bb, dd]
+				]
+			],
+			Y810[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, cc, #2, #1, bb, dd] + AdjYukTr[aa, #1, #2, cc, #2, #1, bb, dd]
+				]
+			],
+			Y811[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, cc, #1, #2, bb, dd] + AdjYukTr[aa, #1, #2, cc, #1, #2, bb, dd]
+				]
+			],
+			Y812[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #1, bb, cc, #2, #2, dd] + AdjYukTr[aa, #1, #1, bb, cc, #2, #2, dd]
+				]
+			],
+			Y813[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, bb, cc, #2, #1, dd] + AdjYukTr[aa, #1, #2, bb, cc, #2, #1, dd]
+				]
+			],
+			Y814[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, bb, cc, #1, #2, dd] + AdjYukTr[aa, #1, #2, bb, cc, #1, #2, dd]
+				]
+			],
+			Y815[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #1, bb, #2, cc, #2, dd] + AdjYukTr[aa, #1, #1, bb, #2, cc, #2, dd]
+				]
+			],
+			Y816[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, bb, #2, cc, #1, dd] + AdjYukTr[aa, #1, #2, bb, #2, cc, #1, dd]
+				]
+			],
+			Y817[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, bb, #1, cc, #2, dd] + AdjYukTr[aa, #1, #2, bb, #1, cc, #2, dd]
+				]
+			],
+			Y818[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #1, bb, #2, cc, dd, #2] + AdjYukTr[aa, #1, #1, bb, #2, cc, dd, #2]
+				]
+			],
+			Y819[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, bb, #2, cc, dd, #1] + AdjYukTr[aa, #1, #2, bb, #2, cc, dd, #1]
+				]
+			],
+			Y820[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, #2, bb, #1, cc, dd, #2] + AdjYukTr[aa, #1, #2, bb, #1, cc, dd, #2]
+				]
+			],
+			Y821[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[aa, #1, bb, #2, cc, #1, dd, #2] + AdjYukTr[aa, #1, bb, #2, cc, #1, dd, #2]
+				]
+			],
+			Y822[aa_, bb_, cc_, dd_] :> ResolveContraction[
+				Contraction[
+					YukTr[#1, cc, #3, #2, dd, #3] + AdjYukTr[#1, cc, #3, #2, dd, #3],
+					Quartic[aa, bb, #1, #2]
+				]
 			]
 		}];
 
 		subYukawaInvariants := Dispatch[{
-			Y2Y2Y2[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], {aa, bb}] * (
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y2Y41[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], {aa, bb}] * (
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y2Y42[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], {aa, bb}] * (
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y4Y21[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], {aa, bb}] * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y4Y22[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], {aa, bb}] * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y4Y23a[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], {aa, bb}] * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y4Y23b[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], {aa, bb}] * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y601[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2],
-							ss1/@Range[0, NumberOfSubgroups+2],
-						{aa, bb}]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y602[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2],
-							ss1/@Range[0, NumberOfSubgroups+2],
-						{aa, bb}]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y603[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2],
-							ss1/@Range[0, NumberOfSubgroups+2],
-						{aa, bb}]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y604[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2], 
-							ss1/@Range[0, NumberOfSubgroups+2],
-							ss2/@Range[0, NumberOfSubgroups+2],
-						{aa, bb}]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y605[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss1/@Range[0, NumberOfSubgroups+2],
-							ss3/@Range[0, NumberOfSubgroups+2],
-						{aa, bb}]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y606[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2], 
-							ss1/@Range[0, NumberOfSubgroups+2],
-							ss3/@Range[0, NumberOfSubgroups+2],
-						{aa, bb}]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y607[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2], 
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2],
-							ss2/@Range[0, NumberOfSubgroups+2],
-						{aa, bb}]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y608[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2], 
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2],
-							ss3/@Range[0, NumberOfSubgroups+2],
-						{aa, bb}]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y609[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2],
-							ss3/@Range[0, NumberOfSubgroups+2],
-						{aa, bb}]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y610[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2],
-							ss2/@Range[0, NumberOfSubgroups+2],
-						{aa, bb}]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y611[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2],
-							ss3/@Range[0, NumberOfSubgroups+2],
-						{aa, bb}]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y612[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2],
-							ss3/@Range[0, NumberOfSubgroups+2],
-						{aa, bb}]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y613[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2],
-							ss2/@Range[0, NumberOfSubgroups+2],
-						{aa, bb}]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y614[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2],
-							ss3/@Range[0, NumberOfSubgroups+2],
-						{aa, bb}]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y615[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss1/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss2/@Range[0, NumberOfSubgroups+2], 
-							ss3/@Range[0, NumberOfSubgroups+2],
-							ss3/@Range[0, NumberOfSubgroups+2],
-						{aa, bb}]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y4Q1[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2], {aa, bb}] *
-						Lam[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y2Q2[aa_, bb_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]}
+			Y2Y2Y2[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, {aa, bb}],
+					YukTr[#1, #3] + AdjYukTr[#1, #3],
+					YukTr[#2, #3] + AdjYukTr[#2, #3]
+				]
 
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], {aa, bb}] *
-						Lam[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2], ss5/@Range[0, NumberOfSubgroups+2]] *
-						Lam[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2], ss5/@Range[0, NumberOfSubgroups+2]]
-						
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
 			],
-			Y2Y2Y2Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], aa, {ii, jj}] +
-							YukProd[aa, ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], {ii, jj}] 
-						) * (
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						) * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y2Y41Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], aa, {ii, jj}] +
-							YukProd[aa, ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], {ii, jj}]
-						) * (
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y2Y42Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], aa, {ii, jj}] +
-							YukProd[aa, ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], {ii, jj}]
-						) * (
-							YukTrace[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y4Y21Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], aa, {ii, jj}] +
-							YukProd[aa, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], {ii, jj}]
+			Y2Y41[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, {aa, bb}],
+					YukTr[#1, #3, #2, #3] + AdjYukTr[#1, #3, #2, #3]
+				]
 
-						) * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
 			],
-			Y4Y22Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], aa, {ii, jj}] +
-							YukProd[aa, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], {ii, jj}] 
-						) * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y4Y23aY[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], aa, {ii, jj}] +
-							YukProd[aa, ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], {ii, jj}]
-						) * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y4Y23bY[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], aa, {ii,jj}] +
-							YukProd[aa, ss3/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], {ii,jj}]
-						) * (
-							YukTrace[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]] +
-							YukTraceAdj[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2]]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y601Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-								aa,	
-								{ii, jj}
-							] + YukProd[
-								aa,
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-								{ii, jj}
-							]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y602Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-								aa,
-							{ii, jj}] + YukProd[
-								aa,
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-							{ii, jj}]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y603Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-								aa,
-							{ii, jj}] + YukProd[
-								aa,
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-							{ii, jj}]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y604Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2],
-								ss2/@Range[0, NumberOfSubgroups+2],
-								aa,
-							{ii, jj}] + YukProd[
-								aa,
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-							{ii, jj}]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y605Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2],
-								ss3/@Range[0, NumberOfSubgroups+2],
-								aa,
-							{ii, jj}] + YukProd[
-								aa,
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-							{ii, jj}]
+			Y2Y42[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, {aa, bb}],
+					YukTr[#1, #2, #3, #3] + AdjYukTr[#1, #2, #3, #3]
+				]
 
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
 			],
-			Y606Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2],
-								ss3/@Range[0, NumberOfSubgroups+2],
-								aa,
-							{ii, jj}] + YukProd[
-								aa,
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-							{ii, jj}]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y607Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2],
-								ss2/@Range[0, NumberOfSubgroups+2],
-								aa,
-							{ii, jj}] + YukProd[
-								aa,
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-							{ii, jj}]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y608Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss3/@Range[0, NumberOfSubgroups+2],
-								aa,
-							{ii, jj}] + YukProd[
-								aa,
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-							{ii, jj}]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y609Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2],
-								ss3/@Range[0, NumberOfSubgroups+2],
-								aa,
-							{ii, jj}] + YukProd[
-								aa,
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-							{ii, jj}]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y610Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2],
-								ss2/@Range[0, NumberOfSubgroups+2],
-								aa
-							{ii, jj}] + YukProd[
-								aa,
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-							{ii, jj}]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y611Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss3/@Range[0, NumberOfSubgroups+2],
-								aa,
-							{ii, jj}] + YukProd[
-								aa,
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-							{ii, jj}]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y612Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2],
-								ss3/@Range[0, NumberOfSubgroups+2],
-								aa,
-							{ii, jj}] + YukProd[
-								aa,
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-							{ii, jj}]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y613Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2],
-								ss2/@Range[0, NumberOfSubgroups+2],
-								aa,
-							{ii, jj}] + YukProd[
-								aa,
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-							{ii, jj}]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y614Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2],
-								ss3/@Range[0, NumberOfSubgroups+2],
-								aa,
-							{ii, jj}] + YukProd[
-								aa,
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-							{ii, jj}]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y615Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2],
-								ss3/@Range[0, NumberOfSubgroups+2],
-								aa,
-							{ii, jj}] + YukProd[
-								aa,
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss3/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss2/@Range[0, NumberOfSubgroups+2], 
-								ss1/@Range[0, NumberOfSubgroups+2],
-								ss1/@Range[0, NumberOfSubgroups+2],
-							{ii, jj}]
-						)
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y4Q1Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, ss4, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]}
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2], aa, {ii, jj}] +
-							YukProd[aa, ss4/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], {ii, jj}]
-						) *
-						Lam[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2]]
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
-			],
-			Y2Q2Y[aa_, ii_, jj_] :> Module[
-				{ss1, ss2, ss3, ss4, ss5, sum, assHold},
-				assHold=$Assumptions;
-				sum = Sum[
-					ApplyDistribute[
-						Function[contr,
-							ContractSum@@Join[
-								{
-									contr,
-									{ss1[1], 1, RealScalarList[[ss1[0], 2,1]]},
-									{ss2[1], 1, RealScalarList[[ss2[0], 2,1]]},
-									{ss3[1], 1, RealScalarList[[ss3[0], 2,1]]},
-									{ss4[1], 1, RealScalarList[[ss4[0], 2,1]]},
-									{ss5[1], 1, RealScalarList[[ss5[0], 2,1]]},
-									{ss1[2], 1, RealScalarList[[ss1[0], 2,2]]},
-									{ss2[2], 1, RealScalarList[[ss2[0], 2,2]]},
-									{ss3[2], 1, RealScalarList[[ss3[0], 2,2]]},
-									{ss4[2], 1, RealScalarList[[ss4[0], 2,2]]},
-									{ss5[2], 1, RealScalarList[[ss5[0], 2,2]]}
+			Y4Y21[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #3, #1, {aa, bb}],
+					YukTr[#2, #3] + AdjYukTr[#2, #3]
 
-								},
-								Function[{x}, {ss1[x+2], 1, SMultiplicity[ss1[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss2[x+2], 1, SMultiplicity[ss2[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss3[x+2], 1, SMultiplicity[ss3[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss4[x+2], 1, SMultiplicity[ss4[0], x]}]/@Range[NumberOfSubgroups],
-								Function[{x}, {ss5[x+2], 1, SMultiplicity[ss5[0], x]}]/@Range[NumberOfSubgroups]
-							]
-						],
-						(
-							YukProd[ss1/@Range[0, NumberOfSubgroups+2], ss2/@Range[0, NumberOfSubgroups+2], aa, {ii,jj}] +
-							YukProd[aa, ss2/@Range[0, NumberOfSubgroups+2], ss1/@Range[0, NumberOfSubgroups+2], {ii,jj}]
-						) *
-						Lam[ss1/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2], ss5/@Range[0, NumberOfSubgroups+2]] *
-						Lam[ss2/@Range[0, NumberOfSubgroups+2], ss3/@Range[0, NumberOfSubgroups+2], ss4/@Range[0, NumberOfSubgroups+2], ss5/@Range[0, NumberOfSubgroups+2]]
-						
-					],
-					{ss1[0], 1, Length[RealScalarList]},
-					{ss2[0], 1, Length[RealScalarList]},
-					{ss3[0], 1, Length[RealScalarList]},
-					{ss4[0], 1, Length[RealScalarList]},
-					{ss5[0], 1, Length[RealScalarList]}
-				];
-				$Assumptions=assHold;
-				sum
+				]
+
+			],
+			Y4Y22[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukProd[#2, #1, #1, #3, {aa, bb}],
+					YukTr[#2, #3] + AdjYukTr[#2, #3]
+				]
+
+			],
+			Y4Y23a[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukProd[#2, #1, #3, #1, {aa, bb}],
+					YukTr[#2, #3] + AdjYukTr[#2, #3]
+				]
+
+			],
+			Y4Y23b[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #1, #3, {aa, bb}],
+					YukTr[#2, #3] + AdjYukTr[#2, #3]
+				]
+
+			],
+			Y601[aa_, bb_] :> ResolveContraction[
+				Contraction@YukProd[
+					#1,
+					#2,
+					#3,
+					#3,
+					#2,
+					#1,
+					{aa, bb}
+				]
+
+			],
+			Y602[aa_, bb_] :> ResolveContraction[
+				Contraction@YukProd[
+					#1,
+					#2,
+					#2,
+					#3,
+					#3,
+					#1,
+					{aa, bb}
+				]
+
+			],
+			Y603[aa_, bb_] :> ResolveContraction[
+				Contraction@YukProd[
+					#1,
+					#2,
+					#3,
+					#2,
+					#3,
+					#1,
+					{aa, bb}
+				]
+
+			],
+			Y604[aa_, bb_] :> ResolveContraction[
+				Contraction@YukProd[
+					#1,
+					#2,
+					#3,
+					#3,
+					#1,
+					#2,
+					{aa, bb}
+				]
+
+			],
+			Y605[aa_, bb_] :> ResolveContraction[
+				Contraction@YukProd[
+					#1,
+					#2,
+					#3,
+					#2,
+					#1,
+					#3,
+					{aa, bb}
+				]
+
+			],
+			Y606[aa_, bb_] :> ResolveContraction[
+				Contraction@YukProd[
+					#1,
+					#2,
+					#2,
+					#3,
+					#1,
+					#3,
+					{aa, bb}
+				]
+
+			],
+			Y607[aa_, bb_] :> ResolveContraction[
+				Contraction@YukProd[
+					#1,
+					#2,
+					#3,
+					#1,
+					#3,
+					#2,
+					{aa, bb}
+				]
+
+			],
+			Y608[aa_, bb_] :> ResolveContraction[
+				Contraction@YukProd[
+					#1,
+					#2,
+					#3,
+					#1,
+					#2,
+					#3,
+					{aa, bb}
+				]
+
+			],
+			Y609[aa_, bb_] :> ResolveContraction[
+				Contraction@YukProd[
+					#1,
+					#2,
+					#2,
+					#1,
+					#3,
+					#3,
+					{aa, bb}
+				]
+
+			],
+			Y610[aa_, bb_] :> ResolveContraction[
+				Contraction@YukProd[
+					#1,
+					#2,
+					#1,
+					#3,
+					#3,
+					#2,
+					{aa, bb}
+				]
+
+			],
+			Y611[aa_, bb_] :> ResolveContraction[
+				Contraction@YukProd[
+					#1,
+					#2,
+					#1,
+					#3,
+					#2,
+					#3,
+					{aa, bb}
+				]
+
+			],
+			Y612[aa_, bb_] :> ResolveContraction[
+				Contraction@YukProd[
+					#1,
+					#2,
+					#1,
+					#2,
+					#3,
+					#3,
+					{aa, bb}
+				]
+
+			],
+			Y613[aa_, bb_] :> ResolveContraction[
+				Contraction@YukProd[
+					#1,
+					#1,
+					#2,
+					#3,
+					#3,
+					#2,
+					{aa, bb}
+				]
+
+			],
+			Y614[aa_, bb_] :> ResolveContraction[
+				Contraction@YukProd[
+					#1,
+					#1,
+					#2,
+					#3,
+					#2,
+					#3,
+					{aa, bb}
+				]
+
+			],
+			Y615[aa_, bb_] :> ResolveContraction[
+				Contraction@YukProd[
+					#1,
+					#1,
+					#2,
+					#2,
+					#3,
+					#3,
+					{aa, bb}
+				]
+
+			],
+			Y4Q1[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #3, #4, {aa, bb}],
+					Quartic[#1, #2, #3, #4]
+				]
+
+			],
+			Y2Q2[aa_, bb_] :> ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, {aa, bb}],
+					Quartic[#1, #3, #4, #5],
+					Quartic[#2, #3, #4, #5]
+				]
+
+			],
+			Y2Y2Y2Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, aa, {ii,jj}] + YukProd[aa, #2, #1, {ii,jj}],
+					YukTr[#1, #3] + AdjYukTr[#1, #3],
+					YukTr[#2, #3] + AdjYukTr[#2, #3]
+				]
+
+			],
+			Y2Y41Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, aa, {ii, jj}] + YukProd[aa, #2, #1, {ii, jj}],
+					YukTr[#1, #3, #2, #3] + AdjYukTr[#1, #3, #2, #3]
+				]
+
+			],
+			Y2Y42Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, aa, {ii, jj}] + YukProd[aa, #2, #1, {ii, jj}],
+					YukTr[#1, #2, #3, #3] + AdjYukTr[#1, #2, #3, #3]
+				]
+
+			],
+			Y4Y21Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #3, #1, aa, {ii, jj}] + YukProd[aa, #1, #3, #2, #1, {ii, jj}],
+					YukTr[#2, #3] + AdjYukTr[#2, #3]
+				]
+
+			],
+			Y4Y22Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[#2, #1, #1, #3, aa, {ii, jj}] + YukProd[aa, #3, #1, #1, #2, {ii, jj}],
+					YukTr[#2, #3] + AdjYukTr[#2, #3]
+				]
+
+			],
+			Y4Y23aY[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[#2, #1, #3, #1, aa, {ii, jj}] + YukProd[aa, #1, #3, #1, #2, {ii, jj}],
+					YukTr[#2, #3] + AdjYukTr[#2, #3]
+				]
+			],
+			Y4Y23bY[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #1, #3, aa, {ii, jj}] + YukProd[aa, #3, #1, #2, #1, {ii, jj}],
+					YukTr[#2, #3] + AdjYukTr[#2, #3]
+				]
+			],
+			Y601Y[aa_, ii_, jj_] :> ResolveContraction[
+				ontraction[
+					YukProd[
+						#1,
+						#2,
+						#3,
+						#3,
+						#2,
+						#1,
+						aa,
+						{ii, jj}
+					] + YukProd[
+						aa,
+						#1,
+						#2,
+						#3,
+						#3,
+						#2,
+						#1,
+						{ii, jj}
+					]
+				]
+			],
+			Y602Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[
+						#1,
+						#2,
+						#2,
+						#3,
+						#3,
+						#1,
+						aa,
+						{ii, jj}
+					] + YukProd[
+						aa,
+						#1,
+						#3,
+						#3,
+						#2,
+						#2,
+						#1,
+						{ii, jj}
+					]
+				]
+			],
+			Y603Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[
+						#1,
+						#2,
+						#3,
+						#2,
+						#3,
+						#1,
+						aa,
+						{ii, jj}
+					] + YukProd[
+						aa,
+						#1,
+						#3,
+						#2,
+						#3,
+						#2,
+						#1,
+						{ii, jj}
+					]
+				]
+			],
+			Y604Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[
+						#1,
+						#2,
+						#3,
+						#3,
+						#1,
+						#2,
+						aa,
+						{ii, jj}
+					] + YukProd[
+						aa,
+						#2,
+						#1,
+						#3,
+						#3,
+						#2,
+						#1,
+						{ii, jj}
+					]
+				]
+			],
+			Y605Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[
+						#1,
+						#2,
+						#3,
+						#2,
+						#1,
+						#3,
+						aa,
+						{ii, jj}
+					] + YukProd[
+						aa,
+						#3,
+						#1,
+						#2,
+						#3,
+						#2,
+						#1,
+						{ii, jj}
+					]
+				]
+			],
+			Y606Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[
+						#1,
+						#2,
+						#2,
+						#3,
+						#1,
+						#3,
+						aa,
+						{ii, jj}
+					] + YukProd[
+						aa,
+						#3,
+						#1,
+						#3,
+						#2,
+						#2,
+						#1,
+						{ii, jj}
+					]
+				]
+			],
+			Y607Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[
+						#1,
+						#2,
+						#3,
+						#1,
+						#3,
+						#2,
+						aa,
+						{ii, jj}
+					] + YukProd[
+						aa,
+						#2,
+						#3,
+						#1,
+						#3,
+						#2,
+						#1,
+						{ii, jj}
+					]
+				]
+			],
+			Y608Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[
+						#1,
+						#2,
+						#3,
+						#1,
+						#2,
+						#3,
+						aa,
+						{ii, jj}
+					] + YukProd[
+						aa,
+						#3,
+						#2,
+						#1,
+						#3,
+						#2,
+						#1,
+						{ii, jj}
+					]
+				]
+			],
+			Y609Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[
+						#1,
+						#2,
+						#2,
+						#1,
+						#3,
+						#3,
+						aa,
+						{ii, jj}
+					] + YukProd[
+						aa,
+						#3,
+						#3,
+						#1,
+						#2,
+						#2,
+						#1,
+						{ii, jj}
+					]
+				]
+			],
+			Y610Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[
+						#1,
+						#2,
+						#1,
+						#3,
+						#3,
+						#2,
+						aa,
+						{ii, jj}
+					] + YukProd[
+						aa,
+						#2,
+						#3,
+						#3,
+						#1,
+						#2,
+						#1,
+						{ii, jj}
+					]
+				]
+			],
+			Y611Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[
+						#1,
+						#2,
+						#1,
+						#3,
+						#2,
+						#3,
+						aa,
+						{ii, jj}
+					] + YukProd[
+						aa,
+						#3,
+						#2,
+						#3,
+						#1,
+						#2,
+						#1,
+						{ii, jj}
+					]
+				]
+			],
+			Y612Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[
+						#1,
+						#2,
+						#1,
+						#2,
+						#3,
+						#3,
+						aa,
+						{ii, jj}
+					] + YukProd[
+						aa,
+						#3,
+						#3,
+						#2,
+						#1,
+						#2,
+						#1,
+						{ii, jj}
+					]
+				]
+			],
+			Y613Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[
+						#1,
+						#1,
+						#2,
+						#3,
+						#3,
+						#2,
+						aa,
+						{ii, jj}
+					] + YukProd[
+						aa,
+						#2,
+						#3,
+						#3,
+						#2,
+						#1,
+						#1,
+						{ii, jj}
+					]
+				]
+			],
+			Y614Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[
+						#1,
+						#1,
+						#2,
+						#3,
+						#2,
+						#3,
+						aa,
+						{ii, jj}
+					] + YukProd[
+						aa,
+						#3,
+						#2,
+						#3,
+						#2,
+						#1,
+						#1,
+						{ii, jj}
+					]
+				]
+			],
+			Y615Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[
+						#1,
+						#1,
+						#2,
+						#2,
+						#3,
+						#3,
+						aa,
+						{ii, jj}
+					] + YukProd[
+						aa,
+						#3,
+						#3,
+						#2,
+						#2,
+						#1,
+						#1,
+						{ii, jj}
+					]
+				]
+			],
+			Y4Q1Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #3, #4, aa, {ii, jj}] + YukProd[aa, #4, #3, #2, #1, aa, {ii, jj}],
+					Quartic[#1, #2, #3, #4]
+				]
+			],
+			Y2Q2Y[aa_, ii_, jj_] :> ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, aa, {ii, jj}] + YukProd[aa, #2, #1, {ii, jj}],
+					Quartic[#1, #3, #4, #5],
+					Quartic[#2, #3, #4, #5]
+				]
 			]
 		}];
 
@@ -12610,7 +6732,7 @@ BeginPackage["ARGES`"];
 				symList == {} || sVarList == {} || Dimensions[symList][[1]] <= 0,
 				Return[0];
 			];
-			For[split=1, split<=Dimensions[symList][[1]], split++,
+			For[split=1, split<=Length[symList], split++,
 				If[
 					!(MemberQ[symList[[split, 1, 2]], Mat[___], Infinity]),
 					Return[Assuming[Element[sumInd1,Integers]&&(sumInd1>0)&&Element[sumInd2,Integers]&&(sumInd2>0),
@@ -12647,7 +6769,7 @@ BeginPackage["ARGES`"];
 				symList == {} || sVarList == {} || Dimensions[symList][[1]] <= 0,
 				Return[0];
 			];
-			For[split=1, split<=Dimensions[symList][[1]], split++,
+			For[split=1, split<=Length[symList], split++,
 				If[
 					!(MemberQ[symList[[split, 1, 2]], Mat[___], Infinity]),
 					Return[Assuming[Element[sumInd1,Integers]&&(sumInd1>0)&&Element[sumInd2,Integers]&&(sumInd2>0)&&Element[sumInd3,Integers]&&(sumInd3>0),
@@ -12685,6 +6807,7 @@ BeginPackage["ARGES`"];
 		];
 
 		(* helper function to separate matrices and contractions in fermion generations from Yukawa products *)
+		mat[A_][___] := mat[A];
 		Mat[A_][___] := Mat[A];
 
 		(* Shortcuts *)
@@ -12750,60 +6873,6 @@ BeginPackage["ARGES`"];
 			Prepend[
 				Function[x, {Y1[[3+x]], Y2[[3+x]], Y3[[3+x]], Y4[[3+x]], Y5[[3+x]], Y6[[3+x]], Y7[[3+x]], Y8[[3+x]]}]/@Range[NumberOfSubgroups], 
 				{Y1[[2]], Y1[[3]], Y2[[2]], Y2[[3]], Y3[[2]], Y3[[3]], Y4[[2]], Y4[[3]], Y5[[2]], Y5[[3]], Y6[[2]], Y6[[3]], Y7[[2]], Y7[[3]], Y8[[2]], Y8[[3]]}
-			]
-		];
-
-		YukProd[Y1_, Y2_, {i1_ ,i2_}] := SolveProd2[
-			Yuk[Y1[[1]]], adj@Yuk[Y2[[1]]],
-			i1, i2,
-			Prepend[
-				Function[x, {Y1[[3+x]], Y2[[3+x]]}]/@Range[NumberOfSubgroups], 
-				{Y1[[2]], Y1[[3]], Y2[[2]], Y2[[3]]}
-			]
-		];
-
-		YukProd[Y1_, Y2_, Y3_, {i1_ ,i2_}] := SolveProd3[
-			Yuk[Y1[[1]]], adj@Yuk[Y2[[1]]], Yuk[Y3[[1]]],
-			i1, i2, 
-			Prepend[
-				Function[x, {Y1[[3+x]], Y2[[3+x]], Y3[[3+x]]}]/@Range[NumberOfSubgroups], 
-				{Y1[[2]], Y1[[3]], Y2[[2]], Y2[[3]], Y3[[2]], Y3[[3]]}
-			]
-		];
-
-		YukProd[Y1_, Y2_, Y3_, Y4_, {i1_ ,i2_}] := SolveProd4[
-			Yuk[Y1[[1]]], adj@Yuk[Y2[[1]]], Yuk[Y3[[1]]], adj@Yuk[Y4[[1]]],
-			i1, i2, 
-			Prepend[
-				Function[x, {Y1[[3+x]], Y2[[3+x]], Y3[[3+x]], Y4[[3+x]]}]/@Range[NumberOfSubgroups], 
-				{Y1[[2]], Y1[[3]], Y2[[2]], Y2[[3]], Y3[[2]], Y3[[3]], Y4[[2]], Y4[[3]]}
-			]
-		];
-
-		YukProd[Y1_, Y2_, Y3_, Y4_, Y5_, {i1_ ,i2_}] := SolveProd5[
-			Yuk[Y1[[1]]], adj@Yuk[Y2[[1]]], Yuk[Y3[[1]]], adj@Yuk[Y4[[1]]], Yuk[Y5[[1]]],
-			i1, i2, 
-			Prepend[
-				Function[x, {Y1[[3+x]], Y2[[3+x]], Y3[[3+x]], Y4[[3+x]], Y5[[3+x]]}]/@Range[NumberOfSubgroups], 
-				{Y1[[2]], Y1[[3]], Y2[[2]], Y2[[3]], Y3[[2]], Y3[[3]], Y4[[2]], Y4[[3]], Y5[[2]], Y5[[3]]}
-			]
-		];
-
-		YukProd[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, {i1_ ,i2_}] := SolveProd6[
-			Yuk[Y1[[1]]], adj@Yuk[Y2[[1]]], Yuk[Y3[[1]]], adj@Yuk[Y4[[1]]], Yuk[Y5[[1]]], adj@Yuk[Y6[[1]]],
-			i1, i2, 
-			Prepend[
-				Function[x, {Y1[[3+x]], Y2[[3+x]], Y3[[3+x]], Y4[[3+x]], Y5[[3+x]], Y6[[3+x]]}]/@Range[NumberOfSubgroups], 
-				{Y1[[2]], Y1[[3]], Y2[[2]], Y2[[3]], Y3[[2]], Y3[[3]], Y4[[2]], Y4[[3]], Y5[[2]], Y5[[3]], Y6[[2]], Y6[[3]]}
-			]
-		];
-
-		YukProd[Y1_, Y2_, Y3_, Y4_, Y5_, Y6_, Y7_, {i1_ ,i2_}] := SolveProd7[
-			Yuk[Y1[[1]]], adj@Yuk[Y2[[1]]], Yuk[Y3[[1]]], adj@Yuk[Y4[[1]]], Yuk[Y5[[1]]], adj@Yuk[Y6[[1]]], Yuk[Y7[[1]]],
-			i1, i2, 
-			Prepend[
-				Function[x, {Y1[[3+x]], Y2[[3+x]], Y3[[3+x]], Y4[[3+x]], Y5[[3+x]], Y6[[3+x]], Y7[[3+x]]}]/@Range[NumberOfSubgroups], 
-				{Y1[[2]], Y1[[3]], Y2[[2]], Y2[[3]], Y3[[2]], Y3[[3]], Y4[[2]], Y4[[3]], Y5[[2]], Y5[[3]], Y6[[2]], Y6[[3]], Y7[[2]], Y7[[3]]}
 			]
 		];
 
@@ -13251,6 +7320,379 @@ BeginPackage["ARGES`"];
 			SimplifySum[\[CapitalLambda][g_, conj[ferm_], ferm_, ferm_, conj[ferm_]][a_, a_, b_, c_], SS1___, {a_, 1, aa_}, SS2___] :> SimplifySum[C2[ferm, g] KroneckerDelta[b,c], SS1, SS2] /; (MemberQ[WeylFermionList[[;;,1]], ferm]),
 			SimplifySum[A_] :> A,
 			SimplifySum[] :> 0
+		};
+
+		(* Solve complicated contractions *)
+		Contraction[] := 1;
+		Contraction[arg1___, arg2_ + arg3_, arg4___] := Contraction[arg1, arg2, arg4] + Contraction[arg1, arg3, arg4];
+		Contraction[arg1___, YukTr[indices__], arg2___] := Module[
+			{
+				highslot = Max[
+					Append[Cases[
+						Flatten[Join[Function[x, List@@x] /@ {arg1, arg2}, {indices}]], 
+						Slot[_]
+					] /. Slot[n_] :> n, 0]
+				]
+			}, 
+			Contraction[arg1, YukProd[indices, {Slot[highslot+1], Slot[highslot+1]}], arg2]
+		];
+		Contraction[arg1___, AdjYukTr[indices__], arg2___] := Module[
+			{
+				highslot = Max[
+					Append[Cases[
+						Flatten[Join[Function[x, List@@x] /@ {arg1, arg2}, {indices}]], 
+						Slot[_]
+					] /. Slot[n_] :> n, 0]
+				]
+			}, 
+			Contraction[arg1, AdjYukProd[indices, {Slot[highslot+1], Slot[highslot+1]}], arg2]
+		];
+		Contraction[arg1___, YukProd[indices__, {i_, j_}], arg2___] := Module[
+			{
+				highslot = Max[
+					Append[Cases[
+						Flatten[Join[Function[x, List@@x] /@ {arg1, arg2}, {indices, i, j}]], 
+						Slot[_]
+					] /. Slot[n_] :> n, 0]
+				]
+			},
+			Contraction[
+				arg1, 
+				Sequence@@(
+					YukProd[highslot+1, {}][{indices}, {i, j}] //. {
+						YukProd[n_, {yuks___}][{el_}, {k_, l_}] :> If[
+							OddQ[n-highslot],
+							{yuks, Yuk[el, k, l]},
+							{yuks, adj[Yuk[el, k, l]]}
+						],
+						YukProd[n_, {yuks___}][{el_, rest__}, {k_, l_}] :> If[
+							OddQ[n-highslot],
+							YukProd[n+1, {yuks, Yuk[el, k, Slot[n]]}][{rest}, {Slot[n], l}],
+							YukProd[n+1, {yuks, adj[Yuk[el, k, Slot[n]]]}][{rest}, {Slot[n], l}]
+						]
+					}
+				),
+				arg2
+			]
+		];
+		Contraction[arg1___, AdjYukProd[indices__, {i_, j_}], arg2___] := Module[
+			{
+				highslot = Max[
+					Append[Cases[
+						Flatten[Join[Function[x, List@@x] /@ {arg1, arg2}, {indices, i, j}]], 
+						Slot[_]
+					] /. Slot[n_] :> n, 0]
+				]
+			},
+			Contraction[
+				arg1, 
+				Sequence@@(
+					YukProd[highslot+1, {}][{indices}, {i, j}] //. {
+						YukProd[n_, {yuks___}][{el_}, {k_, l_}] :> If[
+							EvenQ[n-highslot],
+							{yuks, Yuk[el, k, l]},
+							{yuks, adj[Yuk[el, k, l]]}
+						],
+						YukProd[n_, {yuks___}][{el_, rest__}, {k_, l_}] :> If[
+							EvenQ[n-highslot],
+							YukProd[n+1, {yuks, Yuk[el, k, Slot[n]]}][{rest}, {Slot[n], l}],
+							YukProd[n+1, {yuks, adj[Yuk[el, k, Slot[n]]]}][{rest}, {Slot[n], l}]
+						]
+					}
+				),
+				arg2
+			]
+		];
+
+		ResolveContraction[expr_] := (
+			ApplyDistribute[
+				Function[
+					x, x /. {
+						prod[qq___] :> Module[
+							{ss, gg},
+							(* contraction of global indices *)
+							ContractSum[
+								prod[qq] //. {
+									prod[A___, Quart[n_, a_, b_, c_, d_], B___] :> (
+										ListQuarticSym[[n, 1]] * ListQuarticSym[[n, 7]][
+											a[[2]] /. Slot[i_] :> ss[i, 1], 
+											a[[3]] /. Slot[i_] :> ss[i, 2],
+											b[[2]] /. Slot[i_] :> ss[i, 1], 
+											b[[3]] /. Slot[i_] :> ss[i, 2], 
+											c[[2]] /. Slot[i_] :> ss[i, 1], 
+											c[[3]] /. Slot[i_] :> ss[i, 2], 
+											d[[2]] /. Slot[i_] :> ss[i, 1], 
+											d[[3]] /. Slot[i_] :> ss[i, 1]
+										] * prod[A, B]
+									),
+									prod[A___, adj[transpose[yuk[n_, s_, i_, j_]]], B___] :> (
+										(conj[ListYukawa[[n, 1]]] //. subProd) * 
+										Evaluate[Refine[Conjugate[ListYukawa[[n, 6]][
+											s[[2]] /. Slot[k_] :> ss[k, 1], 
+											s[[3]] /. Slot[k_] :> ss[k, 2],
+											i[[2]] /. Slot[k_] :> ss[k], 
+											j[[2]] /. Slot[k_] :> ss[k]
+										]]]] * prod[A, B]
+									),
+									prod[A___, adj[yuk[n_, s_, i_, j_]], B___] :> (
+										(adj[ListYukawa[[n, 1]]] //. subProd) * 
+										Evaluate[Refine[Conjugate[ListYukawa[[n, 6]][
+											s[[2]] /. Slot[k_] :> ss[k, 1], 
+											s[[3]] /. Slot[k_] :> ss[k, 2],
+											j[[2]] /. Slot[k_] :> ss[k], 
+											i[[2]] /. Slot[k_] :> ss[k]
+										]]]] * prod[A, B]
+									),
+									prod[A___, transpose[yuk[n_, s_, i_, j_]], B___] :> (
+										(adj[conj[ListYukawa[[n, 1]]]] //. subProd) * 
+										Evaluate[Refine[ListYukawa[[n, 6]][
+											s[[2]] /. Slot[k_] :> ss[k, 1], 
+											s[[3]] /. Slot[k_] :> ss[k, 2],
+											j[[2]] /. Slot[k_] :> ss[k], 
+											i[[2]] /. Slot[k_] :> ss[k]
+										]]] * prod[A, B]
+									),
+									prod[A___, yuk[n_, s_, i_, j_], B___] :> (
+										(ListYukawa[[n, 1]] //. subProd) * 
+										Evaluate[Refine[ListYukawa[[n, 6]][
+											s[[2]] /. Slot[k_] :> ss[k, 1], 
+											s[[3]] /. Slot[k_] :> ss[k, 2],
+											i[[2]] /. Slot[k_] :> ss[k], 
+											j[[2]] /. Slot[k_] :> ss[k]
+										]]] * prod[A, B]
+									),
+
+									prod[] -> 1
+								},
+								Sequence@@DeleteDuplicates[Join@@(
+									{qq} //. {
+										Quart[n_, a_, b_, c_, d_] :> Join@@(
+											Function[xx, 
+												{
+													{ss[xx[[2, 1]], 1], 1, RealScalarList[[xx[[1]], 2, 1]]},
+													{ss[xx[[2, 1]], 2], 1, RealScalarList[[xx[[1]], 2, 2]]}
+												}
+											] /@ Cases[{a, b, c, d}, {_, Slot[_], ___}]
+										),
+
+										adj[transpose[yuk[a___]]] :> yuk[a],
+										adj[yuk[a___]] :> yuk[a],
+										transpose[yuk[a___]] :> yuk[a],
+
+										yuk[n_, s_, i_, j_] :> Join[
+											If[
+												MatchQ[s, {_, Slot[_], ___}],
+												{
+													{ss[s[[2, 1]], 1], 1, RealScalarList[[s[[1]], 2, 1]]},
+													{ss[s[[2, 1]], 2], 1, RealScalarList[[s[[1]], 2, 2]]}
+												}, 
+												{}
+											],
+											Join@@(
+												Function[xx, 
+													{
+														{ss[xx[[2, 1]]], 1, WeylFermionList[[AdjWeylFermionList[[xx[[1]], 2]], 2]]}
+													}
+												] /@ Cases[{i, j}, {_, Slot[_], ___}]
+											)
+										]
+									}	
+								)]
+							] * Product[
+								(* contraction of gauge indices *)
+								ContractSum[
+									prod[qq] //. {
+										prod[A___, Quart[n_, a_, b_, c_, d_], B___] :> (
+											ListQuarticSym[[n, 6, ii]][
+												a[[3+ii]] /. Slot[i_] :> gg[i, ii],
+												b[[3+ii]] /. Slot[i_] :> gg[i, ii],
+												c[[3+ii]] /. Slot[i_] :> gg[i, ii],
+												d[[3+ii]] /. Slot[i_] :> gg[i, ii]
+											] * prod[A, B]
+										),
+
+										prod[A___, adj[transpose[yuk[n_, s_, i_, j_]]], B___] :> (
+											Evaluate[Refine[Conjugate[ListYukawa[[n, 5, ii]][
+												s[[3+ii]] /. Slot[k_] :> gg[k, ii],
+												i[[2+ii]] /. Slot[k_] :> gg[k, ii],
+												j[[2+ii]] /. Slot[k_] :> gg[k, ii]
+											]]]] * prod[A, B]
+										),
+
+										prod[A___, adj[yuk[n_, s_, i_, j_]], B___] :> (
+											Evaluate[Refine[Conjugate[ListYukawa[[n, 5, ii]][
+												s[[3+ii]] /. Slot[k_] :> gg[k, ii],
+												j[[2+ii]] /. Slot[k_] :> gg[k, ii],
+												i[[2+ii]] /. Slot[k_] :> gg[k, ii]
+											]]]] * prod[A, B]
+										),
+
+										prod[A___, transpose[yuk[n_, s_, i_, j_]], B___] :> (
+											Evaluate[Refine[ListYukawa[[n, 5, ii]][
+												s[[3+ii]] /. Slot[k_] :> gg[k, ii],
+												j[[2+ii]] /. Slot[k_] :> gg[k, ii],
+												i[[2+ii]] /. Slot[k_] :> gg[k, ii]
+											]]] * prod[A, B]
+										),
+
+										prod[A___, yuk[n_, s_, i_, j_], B___] :> (
+											Evaluate[Refine[ListYukawa[[n, 5, ii]][
+												s[[3+ii]] /. Slot[k_] :> gg[k, ii],
+												i[[2+ii]] /. Slot[k_] :> gg[k, ii],
+												j[[2+ii]] /. Slot[k_] :> gg[k, ii]
+											]]] * prod[A, B]
+										),
+
+										prod[] -> 1
+									},
+									Sequence@@DeleteDuplicates[Flatten[
+										{qq} //. {
+											Quart[n_, a_, b_, c_, d_] :> (
+												Function[xx, 
+													{gg[xx[[2, 1]], ii], 1, SMultiplicity[xx[[1]], ii]}
+												] /@ Cases[{a, b, c, d}, {_, Slot[_], ___}]
+											),
+
+											adj[transpose[yuk[a___]]] :> yuk[a],
+											adj[yuk[a___]] :> yuk[a],
+											transpose[yuk[a___]] :> yuk[a],
+
+											yuk[n_, s_, i_, j_] :> Join[
+												Function[xx, 
+													{gg[xx[[2, 1]], ii], 1, SMultiplicity[xx[[1]], ii]}
+												] /@ Cases[{s}, {_, Slot[_], ___}],
+												Function[xx, 
+													{gg[xx[[2, 1]], ii], 1, FMultiplicity[AdjWeylFermionList[[xx[[1]], 2]], ii]}
+												] /@ Cases[{i, j}, {_, Slot[_], ___}]
+											]
+
+										},
+										1	
+									]]
+								],
+								{ii, 1, NumberOfSubgroups}
+							]
+						]
+					}
+				],
+				(* insert and simplify field species first *)
+				expr /. Contraction[args__] :> ResolveSpecies[
+					{args} //. {
+						Quartic[a___, Slot[i_], b___] :> Quartic[a, ConstantArray[Slot[i], NumberOfSubgroups+3], b],
+						Yuk[Slot[i_], b___] :> Yuk[ConstantArray[Slot[i], NumberOfSubgroups+3], b],
+						Yuk[a__, Slot[i_], b___] :> Yuk[a, ConstantArray[Slot[i], NumberOfSubgroups+2], b]
+					}, 
+					prod[]
+				]
+			]
+
+		);
+
+		ResolveSpecies[l_, prod[___, 0]] := 0;
+		ResolveSpecies[{}, prd_] := prd;
+		ResolveSpecies[argList_List, prod[rest___]] := argList[[1]] /. {
+			Quartic[a_, b_, c_, d_] :> Module[
+				{HoldResolveSpecies, ss},
+				If[
+					Count[{a[[1]], b[[1]], c[[1]], d[[1]]}, Slot[_]] == 0,
+					HoldResolveSpecies[argList[[2;;]], prod[rest, Indexed[QuartMat, {a[[1]], b[[1]], c[[1]], d[[1]]}]]] /. Quart[n_] :> Quart[n, a, b, c, d] /. HoldResolveSpecies -> ResolveSpecies,
+					Sum@@Prepend[
+						Cases[{a[[1]], b[[1]], c[[1]], d[[1]]}, Slot[_]] /. Slot[n_] :> {ss[n], 1, Length[RealScalarList]},
+						HoldResolveSpecies[
+							argList[[2;;]], 
+							prod[
+								rest,
+								Indexed[
+									QuartMat,
+									{
+										If[MatchQ[a[[1]], Slot[_]], ss[a[[1,1]]], a[[1]]],
+										If[MatchQ[b[[1]], Slot[_]], ss[b[[1,1]]], b[[1]]],
+										If[MatchQ[c[[1]], Slot[_]], ss[c[[1,1]]], c[[1]]],
+										If[MatchQ[d[[1]], Slot[_]], ss[d[[1,1]]], d[[1]]]
+									}
+								] /. Quart[n_] :> Quart[n, a, b, c, d]  
+							]
+						] /. ( 
+							Cases[{a[[1]], b[[1]], c[[1]], d[[1]]}, Slot[_]] /. Slot[n_] :> RuleDelayed[{Slot[n], r___}, {ss[n], r}]
+						) /. HoldResolveSpecies -> ResolveSpecies 
+					] //. {
+						prod[aa___, bb_ + cc_, dd___] :> prod[aa, bb, dd] + prod[aa, cc, dd],
+						prod[___, 0, ___] :> 0
+					}
+				]	
+			],
+
+			adj[Yuk[s_, i_, j_]] :> Module[
+				{HoldResolveSpecies, ss},
+				If[
+					Count[{s[[1]], i[[1]], j[[1]]}, Slot[_]] == 0,
+					HoldResolveSpecies[argList[[2;;]], prod[rest, Indexed[AdjYukMat, {s[[1]], i[[1]], j[[1]]}]]] /. yuk[n_] :> yuk[n, s, i, j] /. HoldResolveSpecies -> ResolveSpecies,
+					Sum@@Prepend[
+						Join[
+							Cases[{i[[1]], j[[1]]}, Slot[_]] /. Slot[n_] :> {ss[n], 1, Length[AdjWeylFermionList]},
+							Cases[{s[[1]]}, Slot[_]] /. Slot[n_] :> {ss[n], 1, Length[RealScalarList]}
+						],
+						HoldResolveSpecies[
+							argList[[2;;]] /. Join[
+								Cases[{i[[1]], j[[1]]}, Slot[_]] /. Slot[n_] :> RuleDelayed[{Slot[n], r___}, {Indexed[AdjWeylFermionList, {ss[n], 3}], r}],
+								Cases[{s[[1]]}, Slot[_]] /. Slot[n_] :> RuleDelayed[{Slot[n], r___}, {ss[n], r}]
+							], 
+							prod[
+								rest,
+								Indexed[
+									AdjYukMat,
+									{
+										If[MatchQ[s[[1]], Slot[_]], ss[s[[1,1]]], s[[1]]],
+										If[MatchQ[i[[1]], Slot[_]], ss[i[[1,1]]], i[[1]]],
+										If[MatchQ[j[[1]], Slot[_]], ss[j[[1,1]]], j[[1]]]
+									}
+								] /. yuk[n_] :> yuk[n, s, i, j]
+							]  /. ( 
+								Cases[{s[[1]], i[[1]], j[[1]]}, Slot[_]] /. Slot[n_] :> RuleDelayed[{Slot[n], r___}, {ss[n], r}]
+							)
+						] /. HoldResolveSpecies -> ResolveSpecies 
+					] //. {
+						prod[aa___, bb_ + cc_, dd___] :> prod[aa, bb, dd] + prod[aa, cc, dd],
+						prod[___, 0, ___] :> 0
+					}
+				]
+			],
+
+			Yuk[s_, i_, j_] :> Module[
+				{HoldResolveSpecies, ss},
+				If[
+					Count[{s[[1]], i[[1]], j[[1]]}, Slot[_]] == 0,
+					HoldResolveSpecies[argList[[2;;]], prod[rest, Indexed[YukMat, {s[[1]], i[[1]], j[[1]]}]]] /. yuk[n_] :> yuk[n, s, i, j] /. HoldResolveSpecies -> ResolveSpecies,
+					Sum@@Prepend[
+						Join[
+							Cases[{i[[1]], j[[1]]}, Slot[_]] /. Slot[n_] :> {ss[n], 1, Length[AdjWeylFermionList]},
+							Cases[{s[[1]]}, Slot[_]] /. Slot[n_] :> {ss[n], 1, Length[RealScalarList]}
+						],
+						HoldResolveSpecies[
+							argList[[2;;]] /. Join[
+								Cases[{i[[1]], j[[1]]}, Slot[_]] /. Slot[n_] :> RuleDelayed[{Slot[n], r___}, {Indexed[AdjWeylFermionList, {ss[n], 3}], r}],
+								Cases[{s[[1]]}, Slot[_]] /. Slot[n_] :> RuleDelayed[{Slot[n], r___}, {ss[n], r}]
+							], 
+							prod[
+								rest,
+								Indexed[
+									YukMat,
+									{
+										If[MatchQ[s[[1]], Slot[_]], ss[s[[1,1]]], s[[1]]],
+										If[MatchQ[i[[1]], Slot[_]], ss[i[[1,1]]], i[[1]]],
+										If[MatchQ[j[[1]], Slot[_]], ss[j[[1,1]]], j[[1]]]
+									}
+								] /. yuk[n_] :> yuk[n, s, i, j]  
+							] /. ( 
+								Cases[{s[[1]], i[[1]], j[[1]]}, Slot[_]] /. Slot[n_] :> RuleDelayed[{Slot[n], r___}, {ss[n], r}]
+							) 
+						] /. HoldResolveSpecies -> ResolveSpecies 
+					] //. {
+						prod[aa___, bb_ + cc_, dd___] :> prod[aa, bb, dd] + prod[aa, cc, dd],
+						prod[___, 0, ___] :> 0
+					}
+				]
+			]
 		};
 
 		DisableNativeSums[disable_:True] := If[
