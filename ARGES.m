@@ -1709,10 +1709,9 @@ BeginPackage["ARGES`"];
 		];
 
 		BetaYukawa[pa_, pi_, pj_, la_, li_, lj_, 3] := Module[
-			{beta, assHold},
-			ass
+			{beta},
 			beta = 0;
-			beta +=  (
+			beta += (
 				If[pa > Length[RealScalarList], 0, 
 					24^3 (-1/16) K1Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
 					24^2 g3L[1] Q2Y2Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
@@ -1725,8 +1724,8 @@ BeginPackage["ARGES`"];
 					g3L[7] Y62Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
 					g3L[8] Y63Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
 					g3L[9] Y64Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					(g3L[10] + g3L[14])/2  Y65Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					(g3L[10] - g3L[14])/2  Y65Y2[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
+					(g3L[10] + g3L[14]) Y65Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
+					(g3L[10] - g3L[14]) Y65Y2[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
 					g3L[11] Y66Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
 					g3L[12] Y67Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
 					g3L[72] Y68Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
@@ -1756,8 +1755,424 @@ BeginPackage["ARGES`"];
 			beta += f3L[20] Y613Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
 			beta += f3L[21] Y614Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
 			beta += f3L[22] Y615Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[23] Y4Q1Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[24] Y2Q2Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += f3L[23] 24 Y4Q1Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += f3L[24] 24^2 Y2Q2Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+
+			(* lambda^2 y^3 *)
+			beta += f3L[25] 24^2 ResolveContraction@Contraction[
+				YukProd[#1, Prepend[la, pa], #2, {Prepend[li, pi], Prepend[lj, pj]}],
+				Quartic[#1, #3, #4, #5],
+				Quartic[#2, #3, #4, #5]
+			];
+			beta += f3L[26] 24^2 ResolveContraction@Contraction[
+				YukProd[#1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+				Quartic[Prepend[la, pa], #2, #4, #5],
+				Quartic[#1, #3, #4, #5]
+			];
+			beta += f3L[27] 24^2 ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[Prepend[la, pa], #1, #4, #5],
+					Quartic[#2, #3, #4, #5]
+				] + Contraction[
+					YukProd[#1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[Prepend[la, pa], #3, #4, #5],
+					Quartic[#2, #1, #4, #5]
+				]
+			];
+
+			(* lambda^1 tr(y^2) y^3 *)
+			beta += f3L[28] 24 ResolveContraction@Contraction[
+				YukProd[#1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+				Quartic[Prepend[la, pa], #1, #3, #4],
+				YukTr[#4, #2] + AdjYukTr[#4, #2]
+			];
+			beta += f3L[29] 24 ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[Prepend[la, pa], #1, #2, #4],
+					YukTr[#4, #3] + AdjYukTr[#4, #3]
+				] + Contraction[
+					YukProd[#1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[Prepend[la, pa], #2, #3, #4],
+					YukTr[#4, #1] + AdjYukTr[#4, #1]
+				]
+			];
+
+			(* lambda^1 y^5 -- *)
+			beta += f3L[30] 24 ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, Prepend[la, pa], #3, #4, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[#1, #2, #3, #4]
+				]
+			];
+			beta += f3L[31] 24 ResolveContraction[
+				Contraction[
+					YukProd[#1, Prepend[la, pa], #2, #3, #4, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[#1, #2, #3, #4]
+				] + Contraction[
+					YukProd[#1, #2, #3, Prepend[la, pa], #4, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[#1, #2, #3, #4]
+				]
+			];
+
+			(* -- lambda^1 y^5 *)
+			beta += f3L[32] 24 ResolveContraction[
+				Contraction[
+					YukProd[#4, #1, #2, #3, #4, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[Prepend[la, pa], #1, #2, #3]
+				]
+			];
+			beta += f3L[33] 24 ResolveContraction[
+				Contraction[
+					YukProd[#1, #4, #2, #4, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[Prepend[la, pa], #1, #2, #3]
+				]
+			];
+			beta += f3L[34] 24 ResolveContraction[
+				Contraction[
+					YukProd[#1, #4, #4, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[Prepend[la, pa], #1, #2, #3]
+				] + Contraction[
+					YukProd[#1, #2, #4, #4, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[Prepend[la, pa], #1, #2, #3]
+				]
+			];
+			beta += f3L[35] 24 ResolveContraction[
+				Contraction[
+					YukProd[#4, #4, #1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[Prepend[la, pa], #1, #2, #3]
+				] + Contraction[
+					YukProd[#1, #2, #3, #4, #4, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[Prepend[la, pa], #1, #2, #3]
+				]
+			];
+			beta += f3L[36] 24 ResolveContraction[
+				Contraction[
+					YukProd[#4, #1, #4, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[Prepend[la, pa], #1, #2, #3]
+				] + Contraction[
+					YukProd[#1, #2, #4, #3, #4, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[Prepend[la, pa], #1, #2, #3]
+				]
+			];
+			beta += f3L[37] 24 ResolveContraction[
+				Contraction[
+					YukProd[#4, #1, #2, #4, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[Prepend[la, pa], #1, #2, #3]
+				] + Contraction[
+					YukProd[#1, #4, #2, #3, #4, {Prepend[li, pi], Prepend[lj, pj]}],
+					Quartic[Prepend[la, pa], #1, #2, #3]
+				]
+			];
+
+			(* -- tr(y^4) y^3 *)
+			beta += f3L[38] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[Prepend[la, pa], #1, #2, #3] + AdjYukTr[Prepend[la, pa], #1, #2, #3]
+				]
+			];
+			beta += f3L[39] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[Prepend[la, pa], #1, #3, #2] + AdjYukTr[Prepend[la, pa], #1, #3, #2]
+				] + Contraction[
+					YukProd[#1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[Prepend[la, pa], #2, #1, #3] + AdjYukTr[Prepend[la, pa], #2, #1, #3]
+				]
+			];
+
+			(* tr(y^4) y^3 -- *)
+			beta += f3L[40] ResolveContraction[
+				Contraction[
+					YukProd[#1, Prepend[la, pa], #2, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #3, #2, #3] + AdjYukTr[#1, #3, #2, #3]
+				] 
+			];
+			beta += f3L[41] ResolveContraction[
+				Contraction[
+					YukProd[#1, Prepend[la, pa], #2, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #2, #3, #3] + AdjYukTr[#1, #2, #3, #3]
+				] 
+			];
+
+			(* tr(y^2) tr(y^2) y^3 -- *)
+			beta += f3L[42] ResolveContraction[
+				Contraction[
+					YukProd[#1, Prepend[la, pa], #2, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #3] + AdjYukTr[#1, #3],
+					YukTr[#2, #3] + AdjYukTr[#2, #3]
+				] 
+			];
+
+			(* tr(y^2) y^5 -- *)
+			beta += f3L[43] ResolveContraction[
+				Contraction[
+					YukProd[#3, #1, Prepend[la, pa], #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				] 
+			];
+			beta += f3L[44] ResolveContraction[
+				Contraction[
+					YukProd[#1, #3, Prepend[la, pa], #3, #2, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				] 
+			];
+			beta += f3L[45] ResolveContraction[
+				Contraction[
+					YukProd[#1, #3, Prepend[la, pa], #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				] + Contraction[
+					YukProd[#3, #1, Prepend[la, pa], #3, #2, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				]
+			];
+			beta += f3L[46] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #3, Prepend[la, pa], #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				] + Contraction[
+					YukProd[#3, Prepend[la, pa], #3, #1, #2, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				]
+			];
+			beta += f3L[47] ResolveContraction[
+				Contraction[
+					YukProd[#3, #1, #2, Prepend[la, pa], #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				] + Contraction[
+					YukProd[#3, Prepend[la, pa], #1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				]
+			];
+			beta += f3L[48] ResolveContraction[
+				Contraction[
+					YukProd[#1, #3, #2, Prepend[la, pa], #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				] + Contraction[
+					YukProd[#3, Prepend[la, pa], #1, #3, #2, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				]
+			];
+			beta += f3L[49] ResolveContraction[
+				Contraction[
+					YukProd[#3, #1, #3, Prepend[la, pa], #2, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				] + Contraction[
+					YukProd[#2, Prepend[la, pa], #3, #1, #3, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				]
+			];
+			beta += f3L[50] ResolveContraction[
+				Contraction[
+					YukProd[#1, #3, #3, Prepend[la, pa], #2, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				] + Contraction[
+					YukProd[#2, Prepend[la, pa], #3, #3, #1, {Prepend[li, pi], Prepend[lj, pj]}],
+					YukTr[#1, #2] + AdjYukTr[#1, #2]
+				]
+			];
+
+			(* y^7 *)
+			beta += f3L[51] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #3, Prepend[la, pa], #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[52] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #3, Prepend[la, pa], #3, #1, #2, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#2, #1, #3, Prepend[la, pa], #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[53] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #3, Prepend[la, pa], #2, #3, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#1, #3, #2, Prepend[la, pa], #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[54] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #3, Prepend[la, pa], #2, #1, #3, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#3, #1, #2, Prepend[la, pa], #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[55] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #3, Prepend[la, pa], #1, #3, #2, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#2, #3, #1, Prepend[la, pa], #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[56] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #3, Prepend[la, pa], #1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#3, #2, #1, Prepend[la, pa], #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[57] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #1, Prepend[la, pa], #3, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[58] ResolveContraction[
+				Contraction[
+					YukProd[#2, #1, #1, Prepend[la, pa], #3, #3, #2, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[59] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, #1, Prepend[la, pa], #3, #3, #2, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#2, #1, #1, Prepend[la, pa], #3, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[60] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, Prepend[la, pa], #3, #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#1, #2, #3, #3, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[61] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, Prepend[la, pa], #3, #3, #1, #2, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#2, #1, #3, #3, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[62] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, Prepend[la, pa], #3, #2, #3, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#1, #3, #2, #3, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[63] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, Prepend[la, pa], #3, #1, #3, #2, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#2, #3, #1, #3, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[64] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, Prepend[la, pa], #3, #2, #1, #3, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#3, #1, #2, #3, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[65] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, Prepend[la, pa], #3, #1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#3, #2, #1, #3, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[66] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, Prepend[la, pa], #2, #3, #3, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#1, #3, #3, #2, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[67] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, Prepend[la, pa], #1, #3, #3, #2, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#2, #3, #3, #1, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[68] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, Prepend[la, pa], #2, #3, #1, #3, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#3, #1, #3, #2, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[69] ResolveContraction[
+				Contraction[
+					YukProd[#1, #2, Prepend[la, pa], #1, #3, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#3, #2, #3, #1, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[70] ResolveContraction[
+				Contraction[
+					YukProd[#1, Prepend[la, pa], #2, #2, #3, #3, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#1, #3, #3, #2, #2, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[71] ResolveContraction[
+				Contraction[
+					YukProd[#1, Prepend[la, pa], #2, #3, #2, #3, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#1, #3, #2, #3, #2, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[72] ResolveContraction[
+				Contraction[
+					YukProd[#1, Prepend[la, pa], #2, #3, #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#1, #2, #3, #3, #2, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[73] ResolveContraction[
+				Contraction[
+					YukProd[#1, Prepend[la, pa], #2, #3, #3, #1, #2, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#2, #1, #3, #3, #2, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[74] ResolveContraction[
+				Contraction[
+					YukProd[#1, Prepend[la, pa], #3, #2, #3, #1, #2, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#2, #1, #3, #2, #3, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[75] ResolveContraction[
+				Contraction[
+					YukProd[#1, Prepend[la, pa], #3, #3, #2, #1, #2, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#2, #1, #2, #3, #3, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[76] ResolveContraction[
+				Contraction[
+					YukProd[#1, Prepend[la, pa], #3, #2, #1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#3, #2, #1, #2, #3, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[77] ResolveContraction[
+				Contraction[
+					YukProd[#1, Prepend[la, pa], #2, #3, #1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#3, #2, #1, #3, #2, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[78] ResolveContraction[
+				Contraction[
+					YukProd[#1, Prepend[la, pa], #2, #1, #3, #3, #2, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#2, #3, #3, #1, #2, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			beta += f3L[79] ResolveContraction[
+				Contraction[
+					YukProd[#1, Prepend[la, pa], #2, #1, #3, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
+				] + Contraction[
+					YukProd[#3, #2, #3, #1, #2, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
+				]
+			];
+			
 
 			Return[beta/Power[4\[Pi], 6]];
 		];
@@ -2059,8 +2474,8 @@ BeginPackage["ARGES`"];
 					g3L[7] Y62L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
 					g3L[8] Y63L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
 					g3L[9] Y64L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					(g3L[10] + g3L[14])/2  Y65L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					(g3L[10] - g3L[14])/2  Y65L2[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					(g3L[10] + g3L[14]) Y65L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					(g3L[10] - g3L[14]) Y65L2[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
 					g3L[11] Y66L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
 					g3L[12] Y67L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
 					g3L[72] Y68L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
@@ -3311,8 +3726,8 @@ BeginPackage["ARGES`"];
 			gamma += f3L[20] Y613[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
 			gamma += f3L[21] Y614[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
 			gamma += f3L[22] Y615[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[23] Y4Q1[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[24] Y2Q2[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[23] 24 Y4Q1[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += f3L[24] 24^2 Y2Q2[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
 
 			Return[gamma/Power[4 \[Pi], 6]];
 		];
@@ -5844,7 +6259,6 @@ BeginPackage["ARGES`"];
 					YukProd[#1, #2, {aa, bb}],
 					YukTr[#1, #2, #3, #3] + AdjYukTr[#1, #2, #3, #3]
 				]
-
 			],
 			Y4Y21[aa_, bb_] :> ResolveContraction[
 				Contraction[
@@ -6119,7 +6533,7 @@ BeginPackage["ARGES`"];
 				]
 			],
 			Y601Y[aa_, ii_, jj_] :> ResolveContraction[
-				ontraction[
+				Contraction[
 					YukProd[
 						#1,
 						#2,
@@ -6465,7 +6879,7 @@ BeginPackage["ARGES`"];
 			],
 			Y4Q1Y[aa_, ii_, jj_] :> ResolveContraction[
 				Contraction[
-					YukProd[#1, #2, #3, #4, aa, {ii, jj}] + YukProd[aa, #4, #3, #2, #1, aa, {ii, jj}],
+					YukProd[#1, #2, #3, #4, aa, {ii, jj}] + YukProd[aa, #4, #3, #2, #1, {ii, jj}],
 					Quartic[#1, #2, #3, #4]
 				]
 			],
