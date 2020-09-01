@@ -1714,62 +1714,52 @@ BeginPackage["ARGES`"];
 			beta += (
 				If[pa > Length[RealScalarList], 0, 
 					24^3 (-1/16) K1Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					24^2 g3L[1] Q2Y2Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					24 (g3L[2] + g3L[13]) Q1Y41Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					24 (g3L[2] - g3L[13]) Q1Y41Y2[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					24 g3L[3] Q1Y42Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					24 g3L[4] Q1Y43Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					24 g3L[5] Q1Y44Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					g3L[6] Y61Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					g3L[7] Y62Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					g3L[8] Y63Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					g3L[9] Y64Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					(g3L[10] + g3L[14]) Y65Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					(g3L[10] - g3L[14]) Y65Y2[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					g3L[11] Y66Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					g3L[12] Y67Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					g3L[72] Y68Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					g3L[73] Y69Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
-					g3L[74] Y610Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]]
+					24^2 (-5/32) Q2Y2Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
+					24 (5/8) Q1Y41Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
+					24 (5/8) Q1Y41Y2[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
+					(1/32) Y61Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
+					(-3/16) Y62Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
+					(7/4) Y63Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
+					(3/2 Zeta[3] - 1) Y64Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
+					(7/16) Y65Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
+					(7/16) Y65Y2[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
+					(9/16) Y66Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
+					 Y67Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
+					(-3/4) Y68Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
+					(-3/8) Y69Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] +
+					(5/16) Y610Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]]
 				]
 			)//.subScalarInvariants;
-			beta += f3L[1] Y2Y2Y2Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[2] Y2Y41Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[3] Y2Y42Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[4] Y4Y21Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[5] Y4Y22Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[6] Y4Y23aY[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants; 
-			beta += f3L[7] Y4Y23bY[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[8] Y601Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[9] Y602Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[10] Y603Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[11] Y604Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[12] Y605Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[13] Y606Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[14] Y607Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[15] Y608Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[16] Y609Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[17] Y610Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[18] Y611Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[19] Y612Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[20] Y613Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[21] Y614Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[22] Y615Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[23] 24 Y4Q1Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
-			beta += f3L[24] 24^2 Y2Q2Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += (-3/32) Y2Y2Y2Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += (1/2) Y2Y41Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += Y2Y42Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += (9/32) Y4Y21Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += (-1/8) Y4Y22Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += (-3/32) Y4Y23aY[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants; 
+			beta += (-3/32) Y4Y23bY[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += (1/16) Y601Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += (-5/32) Y602Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += (-5/16) Y603Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += (1/4) Y604Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += (3/32) Y606Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += (3/2 Zeta[3]-1) Y608Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += (3/32) Y610Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += (1/2) Y611Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta +=  24 Y4Q1Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
+			beta += (-11/96) 24^2 Y2Q2Y[Prepend[la, pa], Prepend[li, pi], Prepend[lj, pj]] //. subYukawaInvariants;
 
 			(* lambda^2 y^3 *)
-			beta += f3L[25] 24^2 ResolveContraction@Contraction[
+			beta += (-3/8) 24^2 ResolveContraction@Contraction[
 				YukProd[#1, Prepend[la, pa], #2, {Prepend[li, pi], Prepend[lj, pj]}],
 				Quartic[#1, #3, #4, #5],
 				Quartic[#2, #3, #4, #5]
 			];
-			beta += f3L[26] 24^2 ResolveContraction@Contraction[
+			beta += (3/2) 24^2 ResolveContraction@Contraction[
 				YukProd[#1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
 				Quartic[Prepend[la, pa], #2, #4, #5],
 				Quartic[#1, #3, #4, #5]
 			];
-			beta += f3L[27] 24^2 ResolveContraction[
+			beta += (1/2) 24^2 ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
 					Quartic[Prepend[la, pa], #1, #4, #5],
@@ -1782,12 +1772,12 @@ BeginPackage["ARGES`"];
 			];
 
 			(* lambda^1 tr(y^2) y^3 *)
-			beta += f3L[28] 24 ResolveContraction@Contraction[
+			beta += (3/2) 24 ResolveContraction@Contraction[
 				YukProd[#1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
 				Quartic[Prepend[la, pa], #1, #3, #4],
 				YukTr[#4, #2] + AdjYukTr[#4, #2]
 			];
-			beta += f3L[29] 24 ResolveContraction[
+			beta += (1/2) 24 ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
 					Quartic[Prepend[la, pa], #1, #2, #4],
@@ -1800,13 +1790,13 @@ BeginPackage["ARGES`"];
 			];
 
 			(* lambda^1 y^5 -- *)
-			beta += f3L[30] 24 ResolveContraction[
+			beta += 2*24 ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, Prepend[la, pa], #3, #4, {Prepend[li, pi], Prepend[lj, pj]}],
 					Quartic[#1, #2, #3, #4]
 				]
 			];
-			beta += f3L[31] 24 ResolveContraction[
+			beta += 3*24 ResolveContraction[
 				Contraction[
 					YukProd[#1, Prepend[la, pa], #2, #3, #4, {Prepend[li, pi], Prepend[lj, pj]}],
 					Quartic[#1, #2, #3, #4]
@@ -1817,19 +1807,19 @@ BeginPackage["ARGES`"];
 			];
 
 			(* -- lambda^1 y^5 *)
-			beta += f3L[32] 24 ResolveContraction[
+			beta += 5*24 ResolveContraction[
 				Contraction[
 					YukProd[#4, #1, #2, #3, #4, {Prepend[li, pi], Prepend[lj, pj]}],
 					Quartic[Prepend[la, pa], #1, #2, #3]
 				]
 			];
-			beta += f3L[33] 24 ResolveContraction[
+			beta += 3*24 ResolveContraction[
 				Contraction[
 					YukProd[#1, #4, #2, #4, #3, {Prepend[li, pi], Prepend[lj, pj]}],
 					Quartic[Prepend[la, pa], #1, #2, #3]
 				]
 			];
-			beta += f3L[34] 24 ResolveContraction[
+			beta += (1/2) 24 ResolveContraction[
 				Contraction[
 					YukProd[#1, #4, #4, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
 					Quartic[Prepend[la, pa], #1, #2, #3]
@@ -1838,16 +1828,7 @@ BeginPackage["ARGES`"];
 					Quartic[Prepend[la, pa], #1, #2, #3]
 				]
 			];
-			beta += f3L[35] 24 ResolveContraction[
-				Contraction[
-					YukProd[#4, #4, #1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
-					Quartic[Prepend[la, pa], #1, #2, #3]
-				] + Contraction[
-					YukProd[#1, #2, #3, #4, #4, {Prepend[li, pi], Prepend[lj, pj]}],
-					Quartic[Prepend[la, pa], #1, #2, #3]
-				]
-			];
-			beta += f3L[36] 24 ResolveContraction[
+			beta += -24 ResolveContraction[
 				Contraction[
 					YukProd[#4, #1, #4, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
 					Quartic[Prepend[la, pa], #1, #2, #3]
@@ -1856,7 +1837,7 @@ BeginPackage["ARGES`"];
 					Quartic[Prepend[la, pa], #1, #2, #3]
 				]
 			];
-			beta += f3L[37] 24 ResolveContraction[
+			beta += 2*24 ResolveContraction[
 				Contraction[
 					YukProd[#4, #1, #2, #4, #3, {Prepend[li, pi], Prepend[lj, pj]}],
 					Quartic[Prepend[la, pa], #1, #2, #3]
@@ -1867,13 +1848,7 @@ BeginPackage["ARGES`"];
 			];
 
 			(* -- tr(y^4) y^3 *)
-			beta += f3L[38] ResolveContraction[
-				Contraction[
-					YukProd[#1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
-					YukTr[Prepend[la, pa], #1, #2, #3] + AdjYukTr[Prepend[la, pa], #1, #2, #3]
-				]
-			];
-			beta += f3L[39] ResolveContraction[
+			beta += 2*(3 Zeta[3] - 2) ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
 					YukTr[Prepend[la, pa], #1, #3, #2] + AdjYukTr[Prepend[la, pa], #1, #3, #2]
@@ -1884,13 +1859,13 @@ BeginPackage["ARGES`"];
 			];
 
 			(* tr(y^4) y^3 -- *)
-			beta += f3L[40] ResolveContraction[
+			beta += 5/4 ResolveContraction[
 				Contraction[
 					YukProd[#1, Prepend[la, pa], #2, {Prepend[li, pi], Prepend[lj, pj]}],
 					YukTr[#1, #3, #2, #3] + AdjYukTr[#1, #3, #2, #3]
 				] 
 			];
-			beta += f3L[41] ResolveContraction[
+			beta += 25/8 ResolveContraction[
 				Contraction[
 					YukProd[#1, Prepend[la, pa], #2, {Prepend[li, pi], Prepend[lj, pj]}],
 					YukTr[#1, #2, #3, #3] + AdjYukTr[#1, #2, #3, #3]
@@ -1898,7 +1873,7 @@ BeginPackage["ARGES`"];
 			];
 
 			(* tr(y^2) tr(y^2) y^3 -- *)
-			beta += f3L[42] ResolveContraction[
+			beta += -1/2 ResolveContraction[
 				Contraction[
 					YukProd[#1, Prepend[la, pa], #2, {Prepend[li, pi], Prepend[lj, pj]}],
 					YukTr[#1, #3] + AdjYukTr[#1, #3],
@@ -1907,19 +1882,19 @@ BeginPackage["ARGES`"];
 			];
 
 			(* tr(y^2) y^5 -- *)
-			beta += f3L[43] ResolveContraction[
+			beta += 2 ResolveContraction[
 				Contraction[
 					YukProd[#3, #1, Prepend[la, pa], #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
 					YukTr[#1, #2] + AdjYukTr[#1, #2]
 				] 
 			];
-			beta += f3L[44] ResolveContraction[
+			beta += -ResolveContraction[
 				Contraction[
 					YukProd[#1, #3, Prepend[la, pa], #3, #2, {Prepend[li, pi], Prepend[lj, pj]}],
 					YukTr[#1, #2] + AdjYukTr[#1, #2]
 				] 
 			];
-			beta += f3L[45] ResolveContraction[
+			beta += (-1/2) ResolveContraction[
 				Contraction[
 					YukProd[#1, #3, Prepend[la, pa], #2, #3, {Prepend[li, pi], Prepend[lj, pj]}],
 					YukTr[#1, #2] + AdjYukTr[#1, #2]
@@ -1928,16 +1903,7 @@ BeginPackage["ARGES`"];
 					YukTr[#1, #2] + AdjYukTr[#1, #2]
 				]
 			];
-			beta += f3L[46] ResolveContraction[
-				Contraction[
-					YukProd[#1, #2, #3, Prepend[la, pa], #3, {Prepend[li, pi], Prepend[lj, pj]}],
-					YukTr[#1, #2] + AdjYukTr[#1, #2]
-				] + Contraction[
-					YukProd[#3, Prepend[la, pa], #3, #1, #2, {Prepend[li, pi], Prepend[lj, pj]}],
-					YukTr[#1, #2] + AdjYukTr[#1, #2]
-				]
-			];
-			beta += f3L[47] ResolveContraction[
+			beta += (25/16) ResolveContraction[
 				Contraction[
 					YukProd[#3, #1, #2, Prepend[la, pa], #3, {Prepend[li, pi], Prepend[lj, pj]}],
 					YukTr[#1, #2] + AdjYukTr[#1, #2]
@@ -1946,7 +1912,7 @@ BeginPackage["ARGES`"];
 					YukTr[#1, #2] + AdjYukTr[#1, #2]
 				]
 			];
-			beta += f3L[48] ResolveContraction[
+			beta += 3/2 ResolveContraction[
 				Contraction[
 					YukProd[#1, #3, #2, Prepend[la, pa], #3, {Prepend[li, pi], Prepend[lj, pj]}],
 					YukTr[#1, #2] + AdjYukTr[#1, #2]
@@ -1955,7 +1921,7 @@ BeginPackage["ARGES`"];
 					YukTr[#1, #2] + AdjYukTr[#1, #2]
 				]
 			];
-			beta += f3L[49] ResolveContraction[
+			beta += -3/2 ResolveContraction[
 				Contraction[
 					YukProd[#3, #1, #3, Prepend[la, pa], #2, {Prepend[li, pi], Prepend[lj, pj]}],
 					YukTr[#1, #2] + AdjYukTr[#1, #2]
@@ -1964,7 +1930,7 @@ BeginPackage["ARGES`"];
 					YukTr[#1, #2] + AdjYukTr[#1, #2]
 				]
 			];
-			beta += f3L[50] ResolveContraction[
+			beta += -1/2 ResolveContraction[
 				Contraction[
 					YukProd[#1, #3, #3, Prepend[la, pa], #2, {Prepend[li, pi], Prepend[lj, pj]}],
 					YukTr[#1, #2] + AdjYukTr[#1, #2]
@@ -1975,197 +1941,184 @@ BeginPackage["ARGES`"];
 			];
 
 			(* y^7 *)
-			beta += f3L[51] ResolveContraction[
+			beta += 4 ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, #3, Prepend[la, pa], #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[52] ResolveContraction[
+			beta += -3 ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, #3, Prepend[la, pa], #3, #1, #2, {Prepend[li, pi], Prepend[lj, pj]}]
-				] + Contraction[
-					YukProd[#2, #1, #3, Prepend[la, pa], #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[53] ResolveContraction[
+			beta += (6 Zeta[3] - 5) ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, #3, Prepend[la, pa], #2, #3, #1, {Prepend[li, pi], Prepend[lj, pj]}]
-				] + Contraction[
-					YukProd[#1, #3, #2, Prepend[la, pa], #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[54] ResolveContraction[
+			beta += (6 Zeta[3] - 2) ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, #3, Prepend[la, pa], #2, #1, #3, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#3, #1, #2, Prepend[la, pa], #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[55] ResolveContraction[
-				Contraction[
-					YukProd[#1, #2, #3, Prepend[la, pa], #1, #3, #2, {Prepend[li, pi], Prepend[lj, pj]}]
-				] + Contraction[
-					YukProd[#2, #3, #1, Prepend[la, pa], #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
-				]
-			];
-			beta += f3L[56] ResolveContraction[
+			beta += 2 ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, #3, Prepend[la, pa], #1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
-				] + Contraction[
-					YukProd[#3, #2, #1, Prepend[la, pa], #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[57] ResolveContraction[
+			beta += -2 ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, #1, Prepend[la, pa], #3, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[58] ResolveContraction[
+			beta += -1/2 ResolveContraction[
 				Contraction[
 					YukProd[#2, #1, #1, Prepend[la, pa], #3, #3, #2, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[59] ResolveContraction[
+			beta += -3/2 ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, #1, Prepend[la, pa], #3, #3, #2, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#2, #1, #1, Prepend[la, pa], #3, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[60] ResolveContraction[
+			beta += 2 ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, Prepend[la, pa], #3, #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#1, #2, #3, #3, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[61] ResolveContraction[
+			beta += -3/2 ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, Prepend[la, pa], #3, #3, #1, #2, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#2, #1, #3, #3, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[62] ResolveContraction[
+			beta += -1 ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, Prepend[la, pa], #3, #2, #3, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#1, #3, #2, #3, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[63] ResolveContraction[
+			beta += (6 Zeta[3] - 3) ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, Prepend[la, pa], #3, #1, #3, #2, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#2, #3, #1, #3, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[64] ResolveContraction[
+			beta += -4 ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, Prepend[la, pa], #3, #2, #1, #3, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#3, #1, #2, #3, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[65] ResolveContraction[
+			beta += (6 Zeta[3] - 2) ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, Prepend[la, pa], #3, #1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#3, #2, #1, #3, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[66] ResolveContraction[
+			beta += - ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, Prepend[la, pa], #2, #3, #3, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#1, #3, #3, #2, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[67] ResolveContraction[
+			beta += -1/2 ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, Prepend[la, pa], #1, #3, #3, #2, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#2, #3, #3, #1, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[68] ResolveContraction[
+			beta += -3 ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, Prepend[la, pa], #2, #3, #1, #3, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#3, #1, #3, #2, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[69] ResolveContraction[
+			beta += ResolveContraction[
 				Contraction[
 					YukProd[#1, #2, Prepend[la, pa], #1, #3, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#3, #2, #3, #1, Prepend[la, pa], #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[70] ResolveContraction[
+			beta += -1/2 ResolveContraction[
 				Contraction[
 					YukProd[#1, Prepend[la, pa], #2, #2, #3, #3, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#1, #3, #3, #2, #2, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[71] ResolveContraction[
+			beta += -ResolveContraction[
 				Contraction[
 					YukProd[#1, Prepend[la, pa], #2, #3, #2, #3, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#1, #3, #2, #3, #2, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[72] ResolveContraction[
+			beta += 7/16 ResolveContraction[
 				Contraction[
 					YukProd[#1, Prepend[la, pa], #2, #3, #3, #2, #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#1, #2, #3, #3, #2, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[73] ResolveContraction[
+			beta += 1/2 ResolveContraction[
 				Contraction[
 					YukProd[#1, Prepend[la, pa], #2, #3, #3, #1, #2, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#2, #1, #3, #3, #2, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[74] ResolveContraction[
+			beta += -2 ResolveContraction[
 				Contraction[
 					YukProd[#1, Prepend[la, pa], #3, #2, #3, #1, #2, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#2, #1, #3, #2, #3, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[75] ResolveContraction[
+			beta += -3/2 ResolveContraction[
 				Contraction[
 					YukProd[#1, Prepend[la, pa], #3, #3, #2, #1, #2, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#2, #1, #2, #3, #3, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[76] ResolveContraction[
+			beta += ResolveContraction[
 				Contraction[
 					YukProd[#1, Prepend[la, pa], #3, #2, #1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#3, #2, #1, #2, #3, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[77] ResolveContraction[
+			beta += (6 Zeta[3] - 3) ResolveContraction[
 				Contraction[
 					YukProd[#1, Prepend[la, pa], #2, #3, #1, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#3, #2, #1, #3, #2, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[78] ResolveContraction[
+			beta += 3/2 ResolveContraction[
 				Contraction[
 					YukProd[#1, Prepend[la, pa], #2, #1, #3, #3, #2, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
 					YukProd[#2, #3, #3, #1, #2, Prepend[la, pa], #1, {Prepend[li, pi], Prepend[lj, pj]}]
 				]
 			];
-			beta += f3L[79] ResolveContraction[
+			beta += 2 ResolveContraction[
 				Contraction[
 					YukProd[#1, Prepend[la, pa], #2, #1, #3, #2, #3, {Prepend[li, pi], Prepend[lj, pj]}]
 				] + Contraction[
@@ -2464,83 +2417,71 @@ BeginPackage["ARGES`"];
 			beta +=  24 (
 				If[pa > Length[RealScalarList], 0, 
 					24^3 (-1/16) K1L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					24^2 g3L[1] Q2Y2L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					24 (g3L[2] + g3L[13]) Q1Y41L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					24 (g3L[2] - g3L[13]) Q1Y41L2[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					24 g3L[3] Q1Y42L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					24 g3L[4] Q1Y43L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					24 g3L[5] Q1Y44L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					g3L[6] Y61L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					g3L[7] Y62L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					g3L[8] Y63L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					g3L[9] Y64L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					(g3L[10] + g3L[14]) Y65L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					(g3L[10] - g3L[14]) Y65L2[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					g3L[11] Y66L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					g3L[12] Y67L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					g3L[72] Y68L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					g3L[73] Y69L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-					g3L[74] Y610L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]
+					24^2 (-5/32) Q2Y2L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					24 (5/8) Q1Y41L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					24 (5/8) Q1Y41L2[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					(1/32) Y61L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					(-3/16) Y62L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					(7/4) Y63L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					(3/2 Zeta[3] - 1) Y64L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					(7/16) Y65L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					(7/16) Y65L2[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					(9/16) Y66L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					 Y67L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					(-3/4) Y68L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					(-3/8) Y69L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+					(5/16) Y610L[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]]
 				] +
 				If[pb > Length[RealScalarList], 0,
 					24^3 (-1/16) K1L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					24^2 g3L[1] Q2Y2L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					24 (g3L[2] + g3L[13]) Q1Y41L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					24 (g3L[2] - g3L[13]) Q1Y41L2[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					24 g3L[3] Q1Y42L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					24 g3L[4] Q1Y43L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					24 g3L[5] Q1Y44L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					g3L[6] Y61L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					g3L[7] Y62L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					g3L[8] Y63L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					g3L[9] Y64L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					(g3L[10] + g3L[14])  Y65L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					(g3L[10] - g3L[14])  Y65L2[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					g3L[11] Y66L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					g3L[12] Y67L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					g3L[72] Y68L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					g3L[73] Y69L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
-					g3L[74] Y610L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]]
+					24^2 (-5/32) Q2Y2L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+					24 (5/8) Q1Y41L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+					24 (5/8) Q1Y41L2[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+					(1/32) Y61L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+					(-3/16) Y62L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+					(7/4) Y63L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+					(3/2 Zeta[3] - 1) Y64L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+					(7/16) Y65L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+					(7/16) Y65L2[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+					(9/16) Y66L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+					 Y67L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+					(-3/4) Y68L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+					(-3/8) Y69L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
+					(5/16) Y610L[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]]
 				] +
 				If[pc > Length[RealScalarList], 0, 
 					24^3 (-1/16) K1L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					24^2 g3L[1] Q2Y2L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					24 (g3L[2] + g3L[13]) Q1Y41L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					24 (g3L[2] - g3L[13]) Q1Y41L2[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					24 g3L[3] Q1Y42L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					24 g3L[4] Q1Y43L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					24 g3L[5] Q1Y44L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					g3L[6] Y61L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					g3L[7] Y62L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					g3L[8] Y63L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					g3L[9] Y64L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					(g3L[10] + g3L[14])  Y65L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					(g3L[10] - g3L[14])  Y65L2[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					g3L[11] Y66L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					g3L[12] Y67L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					g3L[72] Y68L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					g3L[73] Y69L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-					g3L[74] Y610L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
+					24^2 (-5/32) Q2Y2L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+					24 (5/8) Q1Y41L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+					24 (5/8) Q1Y41L2[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+					(1/32) Y61L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+					(-3/16) Y62L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+					(7/4) Y63L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+					(3/2 Zeta[3] - 1) Y64L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+					(7/16) Y65L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+					(7/16) Y65L2[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+					(9/16) Y66L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+					 Y67L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+					(-3/4) Y68L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+					(-3/8) Y69L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
+					(5/16) Y610L[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
 				] +
 				If[pd > Length[RealScalarList], 0, 
 					24^3 (-1/16) K1L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					24^2 g3L[1] Q2Y2L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					24 (g3L[2] + g3L[13]) Q1Y41L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					24 (g3L[2] - g3L[13]) Q1Y41L2[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					24 g3L[3] Q1Y42L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					24 g3L[4] Q1Y43L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					24 g3L[5] Q1Y44L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					g3L[6] Y61L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					g3L[7] Y62L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					g3L[8] Y63L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					g3L[9] Y64L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					(g3L[10] + g3L[14]) Y65L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					(g3L[10] - g3L[14]) Y65L2[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					g3L[11] Y66L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					g3L[12] Y67L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					g3L[72] Y68L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					g3L[73] Y69L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
-					g3L[74] Y610L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]]
+					24^2 (-5/32) Q2Y2L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+					24 (5/8) Q1Y41L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+					24 (5/8) Q1Y41L2[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+					(1/32) Y61L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+					(-3/16) Y62L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+					(7/4) Y63L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+					(3/2 Zeta[3] - 1) Y64L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+					(7/16) Y65L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+					(7/16) Y65L2[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+					(9/16) Y66L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+					 Y67L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+					(-3/4) Y68L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+					(-3/8) Y69L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]] +
+					(5/16) Y610L[Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc]]
 				] 
 			)//.subScalarInvariants;
 			beta += 24^4 (12 Zeta[3]) (
@@ -3241,17 +3182,14 @@ BeginPackage["ARGES`"];
 				Y820[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
 			) //. subScalarInvariants;
 			beta += g3L[64] (
-				Y822[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-				Y822[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
-				Y822[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]]
+				Y821[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
+				Y821[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Y821[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]]
 			) //. subScalarInvariants;
 			beta += g3L[65] (
-				Y822[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-				Y822[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
 				Y822[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
-				Y822[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
-				Y822[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
-				Y822[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]]
+				Y822[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
+				Y822[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]]
 			) //. subScalarInvariants;
 			beta += g3L[66] (
 				Y4Y41[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
@@ -3705,29 +3643,22 @@ BeginPackage["ARGES`"];
 		FGamma[f1_, f2_, l1_, l2_, 3] := Module[
 			{gamma},
 			gamma = 0;
-			gamma += f3L[1] Y2Y2Y2[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[2] Y2Y41[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[3] Y2Y42[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[4] Y4Y21[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[5] Y4Y22[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += (f3L[6] Y4Y23a[Prepend[l1,f1], Prepend[l2,f2]] + f3L[7] Y4Y23b[Prepend[l1,f1], Prepend[l2,f2]])//. subYukawaInvariants;
-			gamma += f3L[8] Y601[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[9] Y602[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[10] Y603[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[11] Y604[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[12] Y605[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[13] Y606[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[14] Y607[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[15] Y608[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[16] Y609[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[17] Y610[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[18] Y611[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[19] Y612[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[20] Y613[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[21] Y614[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[22] Y615[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[23] 24 Y4Q1[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
-			gamma += f3L[24] 24^2 Y2Q2[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += (-3/32) Y2Y2Y2[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += (1/2) Y2Y41[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += Y2Y42[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += (9/32) Y4Y21[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += (-1/8) Y4Y22[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += ((-3/32) Y4Y23a[Prepend[l1,f1], Prepend[l2,f2]] + (-3/32) Y4Y23b[Prepend[l1,f1], Prepend[l2,f2]])//. subYukawaInvariants;
+			gamma += (1/16) Y601[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += (-5/32) Y602[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += (-5/16) Y603[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += (1/4) Y604[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += (3/32) Y606[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += (3/2 Zeta[3]-1) Y608[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += (3/32) Y610[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += (1/2) Y611[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma +=  24 Y4Q1[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
+			gamma += (-11/96) 24^2 Y2Q2[Prepend[l1,f1], Prepend[l2,f2]] //. subYukawaInvariants;
 
 			Return[gamma/Power[4 \[Pi], 6]];
 		];
@@ -3766,21 +3697,18 @@ BeginPackage["ARGES`"];
 			{gamma},
 			gamma = 0;
 			gamma += 24^3 (-1/16) K1[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
-			gamma += 24^2 g3L[1] Q2Y2[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
-			gamma += 24 g3L[2] (Q1Y41[Prepend[la,pa], Prepend[lb,pb]] + Q1Y41[Prepend[lb,pb], Prepend[la,pa]])  //. subScalarInvariants;
-			gamma += 24 g3L[3] Q1Y42[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
-			gamma += 24 g3L[4] Q1Y43[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
-			gamma += 24 g3L[5] Q1Y44[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
-			gamma += g3L[6] Y61[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
-			gamma += g3L[7] Y62[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
-			gamma += g3L[8] Y63[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
-			gamma += g3L[9] Y64[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
-			gamma += g3L[10] (Y65[Prepend[la,pa], Prepend[lb,pb]] + Y65[Prepend[lb,pb], Prepend[la,pa]]) //. subScalarInvariants;
-			gamma += g3L[11] Y66[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
-			gamma += g3L[12] Y67[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
-			gamma += g3L[72] Y68[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
-			gamma += g3L[73] Y69[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
-			gamma += g3L[74] Y610[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			gamma += 24^2 (-5/32) Q2Y2[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			gamma += 24 (5/8) (Q1Y41[Prepend[la,pa], Prepend[lb,pb]] + Q1Y41[Prepend[lb,pb], Prepend[la,pa]])  //. subScalarInvariants;
+			gamma += (1/32) Y61[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			gamma += (-3/16) Y62[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			gamma += (7/4) Y63[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			gamma += (3/2 Zeta[3] - 1) Y64[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			gamma += (7/16) (Y65[Prepend[la,pa], Prepend[lb,pb]] + Y65[Prepend[lb,pb], Prepend[la,pa]]) //. subScalarInvariants;
+			gamma += (9/16) Y66[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			gamma +=  Y67[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			gamma += (-3/4) Y68[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			gamma += (-3/8) Y69[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
+			gamma += (5/16) Y610[Prepend[la,pa], Prepend[lb,pb]]  //. subScalarInvariants;
 			Return[gamma/Power[4 \[Pi], 6]];
 		]; 
 
@@ -4138,7 +4066,7 @@ BeginPackage["ARGES`"];
 				]/@Range[NumberOfSubgroups]
 			],
 			Delta[ii_] :> Join[
-				{{del[ii], mat[1]&, 1, 1, WeylFermionList[[ii,2]], WeylFermionList[[ii,2]]}},
+				{{del[ii], Mat[1]&, 1, 1, WeylFermionList[[ii,2]], WeylFermionList[[ii,2]]}},
 				Function[{x}, {KroneckerDelta[#2,#3]&, 1, FMultiplicity[ii,x], FMultiplicity[ii,x]}]/@Range[NumberOfSubgroups]
 			]
 		}];
@@ -5602,25 +5530,6 @@ BeginPackage["ARGES`"];
 					Quartic[bb, #1, #2, #3]
 				]
 			],
-			Q1Y42[aa_, bb_] :> ResolveContraction[
-				Contraction[
-					YukTr[#1, #2, #3, #3] + AdjYukTr[#1, #2, #3, #3] ,
-					Quartic[aa, bb, #1, #2]
-				]
-			],
-			Q1Y43[aa_, bb_] :> ResolveContraction[
-				Contraction[
-					YukTr[#1, #3, #2, #3] + AdjYukTr[#1, #3, #2, #3] ,
-					Quartic[aa, bb, #1, #2]
-				]
-			],
-			Q1Y44[aa_, bb_] :> ResolveContraction[
-				Contraction[
-					YukTr[#1, #3] + AdjYukTr[#1, #3],
-					YukTr[#2, #3] + AdjYukTr[#2, #3],
-					Quartic[aa, bb, #1, #2]
-				]
-			],
 			Y61[aa_, bb_] :> ResolveContraction[
 				Contraction[
 					YukTr[aa, #1, #1, bb, #2, #2] + AdjYukTr[aa, #1, #1, bb, #2, #2]
@@ -5714,50 +5623,6 @@ BeginPackage["ARGES`"];
 				Contraction[
 					YukTr[#4, #1, #2, #3] + AdjYukTr[#4, #1, #2, #3],
 					Quartic[aa, #1, #2, #3],
-					Yuk[#4, ii, jj]
-				]
-			],
-			Q1Y42L[aa_, bb_, cc_, dd_] :> ResolveContraction[
-				Contraction[
-					YukTr[#1, #2, #3, #3] + AdjYukTr[#1, #2, #3, #3],
-					Quartic[aa, #4, #1, #2],
-					Quartic[#4, bb, cc, dd]
-				]
-			],
-			Q1Y42Y[aa_, ii_, jj_] :> ResolveContraction[
-				Contraction[
-					YukTr[#1, #2, #3, #3] + AdjYukTr[#1, #2, #3, #3],
-					Quartic[aa, #4, #1, #2],
-					Yuk[#4, ii, jj]
-				]
-			],
-			Q1Y43L[aa_, bb_, cc_, dd_] :> ResolveContraction[
-				Contraction[
-					YukTr[#1, #3, #2, #3] + AdjYukTr[#1, #3, #2, #3],
-					Quartic[aa, #4, #1, #2],
-					Quartic[#4, bb, cc, dd]
-				]
-			],
-			Q1Y43Y[aa_, ii_, jj_] :> ResolveContraction[
-				Contraction[
-					YukTr[#1, #3, #2, #3] + AdjYukTr[#1, #3, #2, #3],
-					Quartic[aa, #4, #1, #2],
-					Yuk[#4, ii, jj]
-				]
-			],
-			Q1Y44L[aa_, bb_, cc_, dd_] :> ResolveContraction[
-				Contraction[
-					YukTr[#1, #3] + AdjYukTr[#1, #3],
-					YukTr[#2, #3] + AdjYukTr[#2, #3],
-					Quartic[aa, #4, #1, #2],
-					Quartic[#4, bb, cc, dd]
-				]
-			],
-			Q1Y44Y[aa_, ii_, jj_] :> ResolveContraction[
-				Contraction[
-					YukTr[#1, #3] + AdjYukTr[#1, #3],
-					YukTr[#2, #3] + AdjYukTr[#2, #3],
-					Quartic[aa, #4, #1, #2],
 					Yuk[#4, ii, jj]
 				]
 			],
@@ -6085,7 +5950,7 @@ BeginPackage["ARGES`"];
 			],
 			Q1Y617[aa_, bb_, cc_, dd_] :> ResolveContraction[
 				Contraction[
-					YukTr[#1, cc #3, #2, dd, #3] + AdjYukTr[#1, cc #3, #2, dd, #3],
+					YukTr[cc #1, #3, dd, #2, #3] + AdjYukTr[cc #1, #3, dd, #2, #3],
 					Quartic[aa, bb, #1, #2]
 				]
 			],
@@ -6232,8 +6097,7 @@ BeginPackage["ARGES`"];
 			],
 			Y822[aa_, bb_, cc_, dd_] :> ResolveContraction[
 				Contraction[
-					YukTr[#1, cc, #3, #2, dd, #3] + AdjYukTr[#1, cc, #3, #2, dd, #3],
-					Quartic[aa, bb, #1, #2]
+					YukTr[aa, #1, bb, #2, cc, #2, dd, #1] + AdjYukTr[aa, #1, bb, #2, cc, #1, dd, #2]
 				]
 			]
 		}];
@@ -6337,18 +6201,6 @@ BeginPackage["ARGES`"];
 				]
 
 			],
-			Y605[aa_, bb_] :> ResolveContraction[
-				Contraction@YukProd[
-					#1,
-					#2,
-					#3,
-					#2,
-					#1,
-					#3,
-					{aa, bb}
-				]
-
-			],
 			Y606[aa_, bb_] :> ResolveContraction[
 				Contraction@YukProd[
 					#1,
@@ -6361,18 +6213,6 @@ BeginPackage["ARGES`"];
 				]
 
 			],
-			Y607[aa_, bb_] :> ResolveContraction[
-				Contraction@YukProd[
-					#1,
-					#2,
-					#3,
-					#1,
-					#3,
-					#2,
-					{aa, bb}
-				]
-
-			],
 			Y608[aa_, bb_] :> ResolveContraction[
 				Contraction@YukProd[
 					#1,
@@ -6380,18 +6220,6 @@ BeginPackage["ARGES`"];
 					#3,
 					#1,
 					#2,
-					#3,
-					{aa, bb}
-				]
-
-			],
-			Y609[aa_, bb_] :> ResolveContraction[
-				Contraction@YukProd[
-					#1,
-					#2,
-					#2,
-					#1,
-					#3,
 					#3,
 					{aa, bb}
 				]
@@ -6416,54 +6244,6 @@ BeginPackage["ARGES`"];
 					#1,
 					#3,
 					#2,
-					#3,
-					{aa, bb}
-				]
-
-			],
-			Y612[aa_, bb_] :> ResolveContraction[
-				Contraction@YukProd[
-					#1,
-					#2,
-					#1,
-					#2,
-					#3,
-					#3,
-					{aa, bb}
-				]
-
-			],
-			Y613[aa_, bb_] :> ResolveContraction[
-				Contraction@YukProd[
-					#1,
-					#1,
-					#2,
-					#3,
-					#3,
-					#2,
-					{aa, bb}
-				]
-
-			],
-			Y614[aa_, bb_] :> ResolveContraction[
-				Contraction@YukProd[
-					#1,
-					#1,
-					#2,
-					#3,
-					#2,
-					#3,
-					{aa, bb}
-				]
-
-			],
-			Y615[aa_, bb_] :> ResolveContraction[
-				Contraction@YukProd[
-					#1,
-					#1,
-					#2,
-					#2,
-					#3,
 					#3,
 					{aa, bb}
 				]
@@ -6624,29 +6404,6 @@ BeginPackage["ARGES`"];
 					]
 				]
 			],
-			Y605Y[aa_, ii_, jj_] :> ResolveContraction[
-				Contraction[
-					YukProd[
-						#1,
-						#2,
-						#3,
-						#2,
-						#1,
-						#3,
-						aa,
-						{ii, jj}
-					] + YukProd[
-						aa,
-						#3,
-						#1,
-						#2,
-						#3,
-						#2,
-						#1,
-						{ii, jj}
-					]
-				]
-			],
 			Y606Y[aa_, ii_, jj_] :> ResolveContraction[
 				Contraction[
 					YukProd[
@@ -6670,29 +6427,6 @@ BeginPackage["ARGES`"];
 					]
 				]
 			],
-			Y607Y[aa_, ii_, jj_] :> ResolveContraction[
-				Contraction[
-					YukProd[
-						#1,
-						#2,
-						#3,
-						#1,
-						#3,
-						#2,
-						aa,
-						{ii, jj}
-					] + YukProd[
-						aa,
-						#2,
-						#3,
-						#1,
-						#3,
-						#2,
-						#1,
-						{ii, jj}
-					]
-				]
-			],
 			Y608Y[aa_, ii_, jj_] :> ResolveContraction[
 				Contraction[
 					YukProd[
@@ -6710,29 +6444,6 @@ BeginPackage["ARGES`"];
 						#2,
 						#1,
 						#3,
-						#2,
-						#1,
-						{ii, jj}
-					]
-				]
-			],
-			Y609Y[aa_, ii_, jj_] :> ResolveContraction[
-				Contraction[
-					YukProd[
-						#1,
-						#2,
-						#2,
-						#1,
-						#3,
-						#3,
-						aa,
-						{ii, jj}
-					] + YukProd[
-						aa,
-						#3,
-						#3,
-						#1,
-						#2,
 						#2,
 						#1,
 						{ii, jj}
@@ -6780,98 +6491,6 @@ BeginPackage["ARGES`"];
 						#3,
 						#1,
 						#2,
-						#1,
-						{ii, jj}
-					]
-				]
-			],
-			Y612Y[aa_, ii_, jj_] :> ResolveContraction[
-				Contraction[
-					YukProd[
-						#1,
-						#2,
-						#1,
-						#2,
-						#3,
-						#3,
-						aa,
-						{ii, jj}
-					] + YukProd[
-						aa,
-						#3,
-						#3,
-						#2,
-						#1,
-						#2,
-						#1,
-						{ii, jj}
-					]
-				]
-			],
-			Y613Y[aa_, ii_, jj_] :> ResolveContraction[
-				Contraction[
-					YukProd[
-						#1,
-						#1,
-						#2,
-						#3,
-						#3,
-						#2,
-						aa,
-						{ii, jj}
-					] + YukProd[
-						aa,
-						#2,
-						#3,
-						#3,
-						#2,
-						#1,
-						#1,
-						{ii, jj}
-					]
-				]
-			],
-			Y614Y[aa_, ii_, jj_] :> ResolveContraction[
-				Contraction[
-					YukProd[
-						#1,
-						#1,
-						#2,
-						#3,
-						#2,
-						#3,
-						aa,
-						{ii, jj}
-					] + YukProd[
-						aa,
-						#3,
-						#2,
-						#3,
-						#2,
-						#1,
-						#1,
-						{ii, jj}
-					]
-				]
-			],
-			Y615Y[aa_, ii_, jj_] :> ResolveContraction[
-				Contraction[
-					YukProd[
-						#1,
-						#1,
-						#2,
-						#2,
-						#3,
-						#3,
-						aa,
-						{ii, jj}
-					] + YukProd[
-						aa,
-						#3,
-						#3,
-						#2,
-						#2,
-						#1,
 						#1,
 						{ii, jj}
 					]
@@ -7221,7 +6840,6 @@ BeginPackage["ARGES`"];
 		];
 
 		(* helper function to separate matrices and contractions in fermion generations from Yukawa products *)
-		mat[A_][___] := mat[A];
 		Mat[A_][___] := Mat[A];
 
 		(* Shortcuts *)
