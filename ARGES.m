@@ -2769,17 +2769,11 @@ BeginPackage["ARGES`"];
 			) //. subScalarInvariants;
 			beta += 24 g3L[39] (
 				Q1Y613[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-				Q1Y613[Prepend[la, pa], Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc]] +
 				Q1Y613[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
-				Q1Y613[Prepend[la, pa], Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb]] +
 				Q1Y613[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
-				Q1Y613[Prepend[la, pa], Prepend[ld, pd], Prepend[lc, pc], Prepend[lb, pb]] +
 				Q1Y613[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
-				Q1Y613[Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa]] +
 				Q1Y613[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
-				Q1Y613[Prepend[lb, pb], Prepend[ld, pd], Prepend[lc, pc], Prepend[la, pa]] +
-				Q1Y613[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]] +
-				Q1Y613[Prepend[lc, pc], Prepend[ld, pd], Prepend[lb, pb], Prepend[la, pa]]
+				Q1Y613[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
 			) //. subScalarInvariants;
 			beta += 24 g3L[40] (
 				Q1Y614[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
@@ -2826,14 +2820,6 @@ BeginPackage["ARGES`"];
 				Q1Y616[Prepend[ld,pd],Prepend[lb,pb],Prepend[lc,pc],Prepend[la,pa]]+
 				Q1Y616[Prepend[ld,pd],Prepend[lc,pc],Prepend[la,pa],Prepend[lb,pb]]+
 				Q1Y616[Prepend[ld,pd],Prepend[lc,pc],Prepend[lb,pb],Prepend[la,pa]]
-			) //. subScalarInvariants;
-			beta += 24 g3L[43] (
-				Q1Y617[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
-				Q1Y617[Prepend[la, pa], Prepend[lc, pc], Prepend[lb, pb], Prepend[ld, pd]] +
-				Q1Y617[Prepend[la, pa], Prepend[ld, pd], Prepend[lb, pb], Prepend[lc, pc]] +
-				Q1Y617[Prepend[lb, pb], Prepend[lc, pc], Prepend[la, pa], Prepend[ld, pd]] +
-				Q1Y617[Prepend[lb, pb], Prepend[ld, pd], Prepend[la, pa], Prepend[lc, pc]] +
-				Q1Y617[Prepend[lc, pc], Prepend[ld, pd], Prepend[la, pa], Prepend[lb, pb]]
 			) //. subScalarInvariants;
 			beta += g3L[44] (
 				Y801[Prepend[la, pa], Prepend[lb, pb], Prepend[lc, pc], Prepend[ld, pd]] +
@@ -5946,12 +5932,6 @@ BeginPackage["ARGES`"];
 				Contraction[
 					YukTr[bb, cc #2, dd, #1, #3] + AdjYukTr[bb, cc #2, dd, #1, #3],
 					Quartic[aa, #1, #2, #3]
-				]
-			],
-			Q1Y617[aa_, bb_, cc_, dd_] :> ResolveContraction[
-				Contraction[
-					YukTr[cc #1, #3, dd, #2, #3] + AdjYukTr[cc #1, #3, dd, #2, #3],
-					Quartic[aa, bb, #1, #2]
 				]
 			],
 			Y4Y41[aa_, bb_, cc_, dd_] :> ResolveContraction[
