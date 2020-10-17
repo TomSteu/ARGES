@@ -71,7 +71,7 @@ BeginPackage["ARGES`"];
 		];
 
 		Sqr[x_] := x*x;
-		Eps[a_Integer, b_Integer] := (KroneckerDelta[a,1] KroneckerDelta[b,2] - KroneckerDelta[a,2] KroneckerDelta[b,1]);
+		Eps[a_, b_] := (KroneckerDelta[a,1] KroneckerDelta[b,2] - KroneckerDelta[a,2] KroneckerDelta[b,1]);
 		subAlpha = {\[Alpha][g_] :> Sqr[g/(4 \[Pi])]};
 
 		(* Interfaces to define the theory *)
