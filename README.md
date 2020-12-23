@@ -1,2 +1,2 @@
 # ARGES
-Advanced Renormalization Group Equation Simplifier
+Advanced Renormalisation Group Equation Simplifier.
