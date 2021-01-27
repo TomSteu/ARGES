@@ -3,7 +3,7 @@ Advanced Renormalisation Group Equation Simplifier.
 
 When using ARGES, please cite the publication [arXiv:2012.12955](https://arxiv.org/abs/2012.12955), which also contains installation instructions as well as short introduction with examples.
 
-The package consists of a standalone Wolfram Language file `ARGES.m`, which can be obtained from this repository.
+The package consists of a standalone Wolfram Language file `ARGES.m`, which can be obtained from [this repository](https://github.com/TomSteu/ARGES).
 It can be loaded to a running kernel by invoking
 ```
 Get["/path/to/ARGES.m", ARGES`];
