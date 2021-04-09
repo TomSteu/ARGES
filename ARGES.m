@@ -7498,7 +7498,7 @@ BeginPackage["ARGES`"];
 											c[[2]] /. Slot[i_] :> ss[i, 1], 
 											c[[3]] /. Slot[i_] :> ss[i, 2], 
 											d[[2]] /. Slot[i_] :> ss[i, 1], 
-											d[[3]] /. Slot[i_] :> ss[i, 1]
+											d[[3]] /. Slot[i_] :> ss[i, 2]
 										] * prod[A, B]
 									),
 									prod[A___, adj[transpose[yuk[n_, s_, i_, j_]]], B___] :> (
