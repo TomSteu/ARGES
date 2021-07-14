@@ -13,3 +13,5 @@ or for convenience moved to a location contained in `$Path`, in which case it is
 << ARGES`
 ```
 If no output is produced by the method of choice, the package is initialised correctly and can be used. Check the [publication](https://arxiv.org/abs/2012.12955) to get started.
+
+Note that the main repository has been migrated to [gitlab](https://gitlab.com/tomsteu/arges).
